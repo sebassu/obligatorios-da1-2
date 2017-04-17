@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Domain;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Unit_tests
 {
@@ -7,7 +8,7 @@ namespace Unit_tests
     {
         private static User testingUser;
 
-        [ClassInitialize]
+        [TestInitialize]
         public void TestSetUp()
         {
             testingUser = new User();
