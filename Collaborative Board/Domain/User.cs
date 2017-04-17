@@ -1,24 +1,26 @@
 ﻿using Exceptions;
-using System.Linq;
 
 namespace Domain
 {
     public class User
     {
-        private string name;
-        public string Name
+        private string firstName;
+        public string FirstName
         {
             get
             {
-                return name;
+                return firstName;
             }
             set
             {
-                if (string.IsNullOrEmpty(value) || !value.ToCharArray().All(c => char.IsLetter(c)))
+                if (Utilities.IsValidName(value))
                 {
                     throw new UserException("Invalid name recieved.");
                 }
-                name = value;
+                else
+                {
+                    firstName = value;
+                }
             }
         }
     }

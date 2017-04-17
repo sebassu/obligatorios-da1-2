@@ -18,43 +18,43 @@ namespace Unit_tests
         [TestMethod]
         public void SetValidName1Test()
         {
-            testingUser.Name = "Mario";
-            Assert.AreEqual("Mario", testingUser.Name);
+            testingUser.FirstName = "Mario";
+            Assert.AreEqual("Mario", testingUser.FirstName);
         }
 
         [TestMethod]
         public void SetValidName2Test()
         {
-            testingUser.Name = "Gabriel";
-            Assert.AreEqual("Gabriel", testingUser.Name);
+            testingUser.FirstName = "Gabriel";
+            Assert.AreEqual("Gabriel", testingUser.FirstName);
         }
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
         public void SetInvalidNameNumbersTest()
         {
-            testingUser.Name = "1234";
+            testingUser.FirstName = "1234";
         }
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
         public void SetInvalidNamePunctuationTest()
         {
-            testingUser.Name = "!@.$#%   *-/";
+            testingUser.FirstName = "!@.$#%   *-/";
         }
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
         public void SetInvalidNameEmptyTest()
         {
-            testingUser.Name = "";
+            testingUser.FirstName = "";
         }
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
         public void SetInvalidNameNullTest()
         {
-            testingUser.Name = null;
+            testingUser.FirstName = null;
         }
     }
 }
