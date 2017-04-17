@@ -42,5 +42,12 @@ namespace Unit_tests
         {
             testingUser.Name = "!@.$#%   *-/";
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
+        public void SetInvalidNameEmptyTest()
+        {
+            testingUser.Name = "";
+        }
     }
 }
