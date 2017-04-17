@@ -15,10 +15,17 @@ namespace Unit_tests
         }
 
         [TestMethod]
-        public void SetValidNameTest()
+        public void SetValidName1Test()
         {
             testingUser.Name = "Mario";
             Assert.AreEqual("Mario", testingUser.Name);
+        }
+
+        [TestMethod]
+        public void SetValidName2Test()
+        {
+            testingUser.Name = "Gabriel";
+            Assert.AreEqual("Gabriel", testingUser.Name);
         }
     }
 }
