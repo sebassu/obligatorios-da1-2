@@ -2,13 +2,6 @@
 {
     public class User
     {
-        public string Name
-        {
-            get
-            {
-                return "Mario";
-            }
-            set { }
-        }
+        public string Name { get; set; }
     }
 }
