@@ -14,8 +14,7 @@ namespace Domain
             }
             set
             {
-                var characters = value.ToCharArray();
-                if (value == "" || !characters.All(c => char.IsLetter(c)))
+                if (string.IsNullOrEmpty(value) || !value.ToCharArray().All(c => char.IsLetter(c)))
                 {
                     throw new UserException("Invalid name recieved.");
                 }
