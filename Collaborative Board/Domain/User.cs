@@ -15,11 +15,11 @@ namespace Domain
             {
                 if (Utilities.IsValidName(value))
                 {
-                    throw new UserException("Invalid name recieved.");
+                    firstName = value;
                 }
                 else
                 {
-                    firstName = value;
+                    throw new UserException("Invalid name recieved.");
                 }
             }
         }
