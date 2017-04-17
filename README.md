@@ -1,2 +1,11 @@
-# Obligatorio-166296-194973
-Primer y segundo obligatorio de "Diseño de Aplicaciones I", de los estudiantes Sebastián Delfino Halm y Sebastián Uriarte Güimil. Grupo M5A, Universidad ORT Uruguay, 2017.
+﻿# Diseño de Aplicaciones I.
+
+###### Primer y segundo obligatorio.
+-Sebastián Delfino Halm, Nº de estudiante: 166296.
+-Sebastián Uriarte Güimil, Nº de estudiante: 194973.
+
+Docentes: Alejandro Tocar Bluth y Ramiro Eugenio Visca Zanoni.
+
+Grupo M5A
+Universidad ORT Uruguay
+Primer semestre de 2017
