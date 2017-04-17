@@ -15,7 +15,7 @@ namespace Domain
             {
                 if (Utilities.IsValidName(value))
                 {
-                    firstName = value;
+                    firstName = value.Trim();
                 }
                 else
                 {
