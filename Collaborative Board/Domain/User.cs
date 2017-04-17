@@ -16,7 +16,7 @@ namespace Domain
                 var characters = value.ToCharArray();
                 foreach (var character in characters)
                 {
-                    if (Char.IsDigit(character))
+                    if (!Char.IsLetter(character))
                     {
                         throw new UserException("Invalid name recieved.");
                     }
