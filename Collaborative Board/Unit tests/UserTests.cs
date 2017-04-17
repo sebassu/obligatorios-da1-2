@@ -34,5 +34,12 @@ namespace Unit_tests
         {
             testingUser.Name = "1234";
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
+        public void SetInvalidNamePunctuationTest()
+        {
+            testingUser.Name = "!@.$#%   *-/";
+        }
     }
 }
