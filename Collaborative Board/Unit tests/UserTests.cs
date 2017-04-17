@@ -27,5 +27,12 @@ namespace Unit_tests
             testingUser.Name = "Gabriel";
             Assert.AreEqual("Gabriel", testingUser.Name);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
+        public void SetInvalidNameNumbersTest()
+        {
+            testingUser.Name = "1234";
+        }
     }
 }
