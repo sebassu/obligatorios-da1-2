@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Exceptions;
+using System.Linq;
 
 namespace Domain
 {
@@ -14,12 +15,9 @@ namespace Domain
             set
             {
                 var characters = value.ToCharArray();
-                foreach (var character in characters)
+                if (!characters.All(c => char.IsLetter(c)))
                 {
-                    if (!Char.IsLetter(character))
-                    {
-                        throw new UserException("Invalid name recieved.");
-                    }
+                    throw new UserException("Invalid name recieved.");
                 }
                 name = value;
             }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Domain
+namespace Exceptions
 {
     public class UserException : ArgumentException
     {

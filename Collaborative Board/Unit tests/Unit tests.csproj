@@ -59,6 +59,10 @@
       <Project>{e2d4611c-b91b-4250-bab2-83fa754108d4}</Project>
       <Name>Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Exceptions\Exceptions.csproj">
+      <Project>{82815c65-5a9e-44b6-bdec-9327a5cb94f9}</Project>
+      <Name>Exceptions</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
