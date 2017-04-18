@@ -1,6 +1,7 @@
 ﻿using Domain;
 using Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace Unit_tests
 {
@@ -146,6 +147,30 @@ namespace Unit_tests
         {
             testingUser.Email = "!$A_b.%c=d*-ef@ex^am#pl-e.com";
             Assert.AreEqual("!$A_b.%c=d*-ef@ex^am#pl-e.com", testingUser.Email);
+        }
+
+        [TestMethod]
+        public void SetValidBirthdateTest()
+        {
+            DateTime birthdateToSet = new DateTime(1995, 10, 27);
+            testingUser.Birthdate = birthDateToSet;
+            Assert.AreEqual(birthdateToSet, testingUser.Birthdate);
+        }
+
+        [TestMethod]
+        public void SetValidBirthdateCloseTest()
+        {
+            DateTime birthdateToSet = new DateTime(2017, 4, 17);
+            testingUser.Birthdate = birthDateToSet;
+            Assert.AreEqual(birthdateToSet, testingUser.Birthdate);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
+        public void SetInvalidBirthdateTest()
+        {
+            DateTime birthdateToSet = new DateTime(2020, 3, 31);
+            testingUser.Birthdate = birthdateToSet;
         }
     }
 }
