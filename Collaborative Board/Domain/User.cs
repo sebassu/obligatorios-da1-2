@@ -9,10 +9,7 @@ namespace Domain
         private string firstName;
         public string FirstName
         {
-            get
-            {
-                return firstName;
-            }
+            get { return firstName; }
             set
             {
                 if (Utilities.IsValidName(value))
@@ -29,10 +26,7 @@ namespace Domain
         private string lastName;
         public string LastName
         {
-            get
-            {
-                return lastName;
-            }
+            get { return lastName; }
             set
             {
                 if (Utilities.IsValidName(value))
@@ -41,7 +35,7 @@ namespace Domain
                 }
                 else
                 {
-                    throw new UserException("Invalid last name recieved:" + value + ".");
+                    throw new UserException("Invalid last name recieved: " + value + ".");
                 }
             }
         }
@@ -49,10 +43,7 @@ namespace Domain
         private MailAddress email;
         public string Email
         {
-            get
-            {
-                return email.ToString();
-            }
+            get { return email.ToString(); }
             set
             {
                 try
@@ -61,7 +52,25 @@ namespace Domain
                 }
                 catch (SystemException)
                 {
-                    throw new UserException("Invalid email recieved:" + value + ".");
+                    throw new UserException("Invalid email recieved: " + value + ".");
+                }
+            }
+        }
+
+        private DateTime birthdate;
+        public DateTime Birthdate
+        {
+            get { return birthdate; }
+            set
+            {
+                var dateToSet = value.Date;
+                if (Utilities.IsBeforeToday(dateToSet))
+                {
+                    birthdate = dateToSet;
+                }
+                else
+                {
+                    throw new UserException("Invalid birthdate recieved: " + value.ToString("d") + ".");
                 }
             }
         }

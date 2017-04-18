@@ -153,7 +153,7 @@ namespace Unit_tests
         public void SetValidBirthdateTest()
         {
             DateTime birthdateToSet = new DateTime(1995, 10, 27);
-            testingUser.Birthdate = birthDateToSet;
+            testingUser.Birthdate = birthdateToSet;
             Assert.AreEqual(birthdateToSet, testingUser.Birthdate);
         }
 
@@ -161,7 +161,7 @@ namespace Unit_tests
         public void SetValidBirthdateCloseTest()
         {
             DateTime birthdateToSet = new DateTime(2017, 4, 17);
-            testingUser.Birthdate = birthDateToSet;
+            testingUser.Birthdate = birthdateToSet;
             Assert.AreEqual(birthdateToSet, testingUser.Birthdate);
         }
 

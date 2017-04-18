@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace Domain
 {
@@ -17,6 +18,12 @@ namespace Domain
         private static bool IsValidCharacter(char aChar)
         {
             return char.IsLetter(aChar) || char.IsWhiteSpace(aChar);
+        }
+
+        public static bool IsBeforeToday(DateTime value)
+        {
+            var todaysDate = DateTime.Now.Date;
+            return value.CompareTo(todaysDate) < 0;
         }
     }
 }
