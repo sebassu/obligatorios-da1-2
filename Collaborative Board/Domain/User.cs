@@ -19,8 +19,7 @@ namespace Domain
                 }
                 else
                 {
-                    throw new UserException("Invalid first name recieved:"
-                        + value + ".");
+                    throw new UserException("Invalid first name recieved:" + value + ".");
                 }
             }
         }
@@ -40,8 +39,7 @@ namespace Domain
                 }
                 else
                 {
-                    throw new UserException("Invalid last name recieved:"
-                        + value + ".");
+                    throw new UserException("Invalid last name recieved:" + value + ".");
                 }
             }
         }

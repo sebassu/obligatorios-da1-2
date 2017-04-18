@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Exceptions
+﻿namespace Exceptions
 {
-    public class UserException : ArgumentException
+    public class UserException : BoardException
     {
         public UserException(string message) : base(message) { }
     }
