@@ -1,4 +1,6 @@
 ﻿using Exceptions;
+using System;
+using System.Net.Mail;
 
 namespace Domain
 {
@@ -40,6 +42,26 @@ namespace Domain
                 else
                 {
                     throw new UserException("Invalid last name recieved:" + value + ".");
+                }
+            }
+        }
+
+        private MailAddress email;
+        public string Email
+        {
+            get
+            {
+                return email.ToString();
+            }
+            set
+            {
+                try
+                {
+                    email = new MailAddress(value);
+                }
+                catch (SystemException)
+                {
+                    throw new UserException("Invalid email recieved:" + value + ".");
                 }
             }
         }
