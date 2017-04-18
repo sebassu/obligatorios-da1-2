@@ -19,7 +19,29 @@ namespace Domain
                 }
                 else
                 {
-                    throw new UserException("Invalid name recieved.");
+                    throw new UserException("Invalid first name recieved:"
+                        + value + ".");
+                }
+            }
+        }
+
+        private string lastName;
+        public string LastName
+        {
+            get
+            {
+                return lastName;
+            }
+            set
+            {
+                if (Utilities.IsValidName(value))
+                {
+                    lastName = value.Trim();
+                }
+                else
+                {
+                    throw new UserException("Invalid last name recieved:"
+                        + value + ".");
                 }
             }
         }
