@@ -40,7 +40,7 @@ namespace Unit_tests
         [ExpectedException(typeof(UserException))]
         public void SetInvalidFirstNamePunctuationTest()
         {
-            testingUser.FirstName = "!@.$#%   *-/";
+            testingUser.FirstName = "!@.$#% *-/";
         }
 
         [TestMethod]
@@ -82,7 +82,7 @@ namespace Unit_tests
         [ExpectedException(typeof(UserException))]
         public void SetInvalidLastNamePunctuationTest()
         {
-            testingUser.LastName = "!@.$#%   *-/";
+            testingUser.LastName = "!@.$#% *-/";
         }
 
         [TestMethod]
@@ -97,6 +97,55 @@ namespace Unit_tests
         public void SetInvalidLastNameNullTest()
         {
             testingUser.LastName = null;
+        }
+
+        [TestMethod]
+        public void SetValidEmailTest()
+        {
+            testingUser.Email = "sebastian.uriarteg@gmail.com";
+            Assert.AreEqual("sebastian.uriarteg@gmail.com", testingUser.Email);
+        }
+
+        [TestMethod]
+        public void SetValidEmailTrimTest()
+        {
+            testingUser.Email = "  sdelfinoh@gmail.com  ";
+            Assert.AreEqual("sdelfinoh@gmail.com", testingUser.Email);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
+        public void SetInvalidEmailWordsTest()
+        {
+            testingUser.Email = "Universidad ORT Uruguay";
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
+        public void SetInvalidEmailNoHostTest()
+        {
+            testingUser.Email = "valid_Beginning@";
+        }
+
+        [TestMethod]
+        public void SetValidEmailNoDotComTest()
+        {
+            testingUser.Email = "zaphod@slartibartfast";
+            Assert.AreEqual("zaphod@slartibartfast", testingUser.Email);
+        }
+
+        [TestMethod]
+        public void SetValidEmailNoLettersTest()
+        {
+            testingUser.Email = "123@$789";
+            Assert.AreEqual("123@$789", testingUser.Email);
+        }
+
+        [TestMethod]
+        public void SetValidEmailUnexpectedCharactersTest()
+        {
+            testingUser.Email = "!$A_b.%c=d*-ef@ex^am#pl-e.com";
+            Assert.AreEqual("!$A_b.%c=d*-ef@ex^am#pl-e.com", testingUser.Email);
         }
     }
 }
