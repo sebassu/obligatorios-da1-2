@@ -74,5 +74,28 @@ namespace Domain
                 }
             }
         }
+
+        private string password;
+
+        public string Password
+        {
+            get { return password; }
+            set
+            {
+                if (IsValidPassword(value))
+                {
+                    password = value;
+                }
+                else
+                {
+                    throw new UserException("Invalid password recieved: " + value + ".");
+                }
+            }
+        }
+
+        private static bool IsValidPassword(string password)
+        {
+            return !string.IsNullOrWhiteSpace(password) && password.Length < 21 && password.Length > 5;
+        }
     }
 }
