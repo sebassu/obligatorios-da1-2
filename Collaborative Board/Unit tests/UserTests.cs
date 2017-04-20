@@ -172,5 +172,53 @@ namespace Unit_tests
             DateTime birthdateToSet = new DateTime(2020, 3, 31);
             testingUser.Birthdate = birthdateToSet;
         }
+
+        [TestMethod]
+        public void SetOnlyLettersPasswordTest()
+        {
+            testingUser.Password = "holaChau";
+            Assert.AreEqual("holaChau", testingUser.Password);
+        }
+
+        [TestMethod]
+        public void SetValidPasswordTest()
+        {
+            testingUser.Password = "pS8#11";
+            Assert.AreEqual("pS8#11", testingUser.Password);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
+        public void SetInvalidPasswordEmptyTest()
+        {
+            testingUser.Password = "";
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
+        public void SetInvalidPasswordNullTest()
+        {
+            testingUser.Password = null;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
+        public void SetInvalidPasswordTooShortTest()
+        {
+            testingUser.Password = "pass2";
+            Assert.AreEqual("pass2", testingUser.Password);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
+        public void SetInvalidPasswordTooLongTest()
+        {
+            testingUser.Password = "password201543sdre#ts";
+            Assert.AreEqual("password201543sdre#ts", testingUser.Password);
+        }
+
+
+
+
     }
 }
