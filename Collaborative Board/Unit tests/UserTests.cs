@@ -183,8 +183,15 @@ namespace Unit_tests
         [TestMethod]
         public void SetValidPasswordTest()
         {
-            testingUser.Password = "pS8#11";
-            Assert.AreEqual("pS8#11", testingUser.Password);
+            testingUser.Password = "pS8a11";
+            Assert.AreEqual("pS8a11", testingUser.Password);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
+        public void SetInvalidPasswordTest()
+        {
+            testingUser.Password = "pS8a11#.!";
         }
 
         [TestMethod]

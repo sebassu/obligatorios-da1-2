@@ -1,5 +1,6 @@
 ﻿using Exceptions;
 using System;
+using System.Linq;
 using System.Net.Mail;
 
 namespace Domain
@@ -95,7 +96,7 @@ namespace Domain
 
         private static bool IsValidPassword(string password)
         {
-            return !string.IsNullOrWhiteSpace(password) && password.Length < 21 && password.Length > 5;
+            return !string.IsNullOrWhiteSpace(password) && password.ToCharArray().All(c => char.IsLetterOrDigit(c)) && password.Length < 21 && password.Length > 5;
         }
     }
 }
