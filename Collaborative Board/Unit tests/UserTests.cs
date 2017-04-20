@@ -188,28 +188,28 @@ namespace Unit_tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(UserException))]
+        [ExpectedException(typeof(PasswordException))]
         public void SetInvalidPasswordTest()
         {
             testingUser.Password = "pS8a11#.!";
         }
 
         [TestMethod]
-        [ExpectedException(typeof(UserException))]
+        [ExpectedException(typeof(PasswordException))]
         public void SetInvalidPasswordEmptyTest()
         {
             testingUser.Password = "";
         }
 
         [TestMethod]
-        [ExpectedException(typeof(UserException))]
+        [ExpectedException(typeof(PasswordException))]
         public void SetInvalidPasswordNullTest()
         {
             testingUser.Password = null;
         }
 
         [TestMethod]
-        [ExpectedException(typeof(UserException))]
+        [ExpectedException(typeof(PasswordException))]
         public void SetInvalidPasswordTooShortTest()
         {
             testingUser.Password = "pass2";
@@ -217,7 +217,7 @@ namespace Unit_tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(UserException))]
+        [ExpectedException(typeof(PasswordException))]
         public void SetInvalidPasswordTooLongTest()
         {
             testingUser.Password = "password201543sdre#ts";

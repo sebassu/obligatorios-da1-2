@@ -76,27 +76,19 @@ namespace Domain
             }
         }
 
-        private string password;
-
+        private Password password;
         public string Password
         {
-            get { return password; }
+            get { return password.PasswordValue; }
             set
             {
-                if (IsValidPassword(value))
-                {
-                    password = value;
-                }
-                else
-                {
-                    throw new UserException("Invalid password recieved: " + value + ".");
-                }
+                password.PasswordValue = value;
             }
         }
 
-        private static bool IsValidPassword(string password)
+        public User()
         {
-            return !string.IsNullOrWhiteSpace(password) && password.ToCharArray().All(c => char.IsLetterOrDigit(c)) && password.Length < 21 && password.Length > 5;
+            password = new Password();
         }
     }
 }
