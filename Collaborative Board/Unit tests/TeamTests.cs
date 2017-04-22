@@ -50,5 +50,13 @@ namespace Unit_tests
         {
             testingTeam.Name = null;
         }
+
+        [TestMethod]
+        public void ValidCreationDateTest()
+        {
+            DateTime creationDate = new DateTime();
+            testingTeam.CreationDate = creationDate;
+            Assert.AreEqual(DateTime.Now.Date, testingTeam.CreationDate.Date);
+        }
     }
 }
