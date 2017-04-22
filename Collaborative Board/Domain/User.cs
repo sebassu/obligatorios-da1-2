@@ -87,6 +87,11 @@ namespace Domain
             }
         }
 
+        public virtual bool HasAdministrationPrivileges
+        {
+            get { return false; }
+        }
+
         internal static User InstanceForTestingPurposes()
         {
             return new User();

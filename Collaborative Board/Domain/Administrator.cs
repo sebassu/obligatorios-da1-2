@@ -4,6 +4,11 @@ namespace Domain
 {
     public class Administrator : User
     {
+        public override bool HasAdministrationPrivileges
+        {
+            get { return true; }
+        }
+
         new public static Administrator NamesEmailBirthdatePassword(string aFirstName, string aLastName,
             string anEmail, DateTime aBirthdate, string aPassword)
         {
