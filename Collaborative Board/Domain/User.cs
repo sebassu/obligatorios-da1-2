@@ -1,6 +1,5 @@
 ﻿using Exceptions;
 using System;
-using System.Linq;
 using System.Net.Mail;
 
 namespace Domain

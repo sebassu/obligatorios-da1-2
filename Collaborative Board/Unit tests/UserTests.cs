@@ -13,7 +13,17 @@ namespace Unit_tests
         [TestInitialize]
         public void TestSetUp()
         {
-            testingUser = new User();
+            testingUser = User.UserForTestingPurposes();
+        }
+
+        [TestMethod]
+        public void UserForTestingPurposesTest()
+        {
+            Assert.AreEqual("Nombre inválido.", testingUser.FirstName);
+            Assert.AreEqual("Apellido inválido.", testingUser.FirstName);
+            Assert.AreEqual("mailInvalido@usuarioInvalido", testingUser.Email);
+            Assert.AreEqual(null, testingUser.Birthdate);
+            Assert.AreEqual("ContraseñaInvalida", testingUser.Password);
         }
 
         [TestMethod]
@@ -169,7 +179,7 @@ namespace Unit_tests
         [ExpectedException(typeof(UserException))]
         public void SetInvalidBirthdateTest()
         {
-            DateTime birthdateToSet = new DateTime(2020, 3, 31);
+            DateTime birthdateToSet = new DateTime(2112, 3, 31);
             testingUser.Birthdate = birthdateToSet;
         }
 
@@ -224,8 +234,66 @@ namespace Unit_tests
             Assert.AreEqual("password201543sdre#ts", testingUser.Password);
         }
 
+        [TestMethod]
+        public void ParameterFactoryMethodValidTest()
+        {
+            DateTime birthdateToSet = DateTime.Now;
+            testingUser = User.NamesEmailBirthdatePassword("Emilio", "Ravenna", "ravenna@simuladores.com",
+                birthdateToSet, "contraseñaValida123");
+            Assert.AreEqual("Emilio", testingUser.FirstName);
+            Assert.AreEqual("Ravenna", testingUser.FirstName);
+            Assert.AreEqual("ravenna@simuladores.com", testingUser.Email);
+            Assert.AreEqual(birthdateToSet, testingUser.Birthdate);
+            Assert.AreEqual("contraseñaValida123", testingUser.Password);
+        }
 
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
+        public void ParameterFactoryMethodInvalidFirstNameTest()
+        {
+            testingUser = User.NamesEmailBirthdatePassword("1&6 1a2-*!3", "Ravenna", "ravenna@simuladores.com",
+                DateTime.Now, "contraseñaValida123");
+        }
 
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
+        public void ParameterFactoryMethodInvalidLastNameTest()
+        {
+            testingUser = User.NamesEmailBirthdatePassword("Emilio", ";#d1 -($!#", "ravenna@simuladores.com.ar",
+                DateTime.Now, "contraseñaValida123");
+        }
 
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
+        public void ParameterFactoryMethodInvalidEmailTest()
+        {
+            testingUser = User.NamesEmailBirthdatePassword("Emilio", "Ravenna", "12@ $^#&",
+                DateTime.Now, "contraseñaValida123");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
+        public void ParameterFactoryMethodInvalidBirthdateTest()
+        {
+            DateTime birthdateToSet = new DateTime(2112, 7, 31);
+            testingUser = User.NamesEmailBirthdatePassword("Emilio", "Ravenna", "ravenna@simuladores.com.ar",
+                DateTime.Now, "contraseñaValida123");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
+        public void ParameterFactoryMethodInvalidPasswordTest()
+        {
+            testingUser = User.NamesEmailBirthdatePassword("Emilio", "Ravenna", "ravenna@simuladores.com.ar",
+                DateTime.Now, "contraseñaValida123");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(PasswordException))]
+        public void ParameterFactoryMethodInvalidPasswordTest()
+        {
+            testingUser = User.NamesEmailBirthdatePassword("Emilio", "Ravenna", "ravenna@simuladores.com.ar",
+                DateTime.Now, "@%^# 521D(%$");
+        }
     }
 }
