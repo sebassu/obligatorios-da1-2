@@ -286,5 +286,30 @@ namespace Unit_tests
             testingUser = User.NamesEmailBirthdatePassword("Emilio", "Ravenna", "ravenna@simuladores.com.ar",
                 DateTime.Now, "@%^# 521D(%$");
         }
+
+        [TestMethod]
+        public void ToStringTest1()
+        {
+            Assert.AreEqual("Nombre inválido. Apellido inválido. <mailInvalido@usuarioInvalido>", testingUser.ToString());
+        }
+
+        [TestMethod]
+        public void ToStringTest2()
+        {
+            testingUser.FirstName = "Mario";
+            testingUser.LastName = "Santos";
+            testingUser.Email = "santos@simuladores.com.ar";
+            Assert.AreEqual("Mario Santos <santos@simuladores.com.ar>", testingUser.ToString());
+        }
+
+        [TestMethod]
+        public void ToStringTest3()
+        {
+            testingUser.FirstName = "Gabriel";
+            testingUser.LastName = "Medina";
+            testingUser.Email = "medina@simuladores.com.ar";
+            Assert.AreEqual(testingUser.FirstName + " " + testingUser.LastName + "<"
+                + testingUser.Email + ">", testingUser.ToString());
+        }
     }
 }
