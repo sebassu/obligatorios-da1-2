@@ -370,5 +370,19 @@ namespace Unit_tests
             object testingUserAsObject = testingUser;
             Assert.AreEqual(testingUserAsObject.GetHashCode(), testingUser.GetHashCode());
         }
+
+        [TestMethod]
+        public void HasAdministratorPrivilegesTest1()
+        {
+            Assert.IsFalse(testingUser.HasAdministrationPrivileges);
+        }
+
+        [TestMethod]
+        public void HasAdministratorPrivilegesTest2()
+        {
+            testingUser = User.NamesEmailBirthdatePassword("Pablo", "Lamponne", "lamponne@simuladores.com",
+                DateTime.Now, "contraseñaValida123");
+            Assert.IsFalse(testingUser.HasAdministrationPrivileges);
+        }
     }
 }

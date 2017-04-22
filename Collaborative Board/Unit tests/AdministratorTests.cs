@@ -80,5 +80,19 @@ namespace Unit_tests
             testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio", "Ravenna", "ravenna@simuladores.com.ar",
                 DateTime.Now, "@%^# 521D(%$");
         }
+
+        [TestMethod]
+        public void HasAdministratorPrivilegesTest1()
+        {
+            Assert.IsTrue(testingAdministrator.HasAdministrationPrivileges);
+        }
+
+        [TestMethod]
+        public void HasAdministratorPrivilegesTest2()
+        {
+            testingAdministrator = Administrator.NamesEmailBirthdatePassword("Mario", "Santos", "santos@simuladores.com",
+                DateTime.Now, "contraseñaValida123");
+            Assert.IsTrue(testingAdministrator.HasAdministrationPrivileges);
+        }
     }
 }
