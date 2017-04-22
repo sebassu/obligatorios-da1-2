@@ -11,7 +11,7 @@ namespace Domain
 
         private string passwordValue;
 
-        public string PasswordValue
+        internal string PasswordValue
         {
             get { return passwordValue; }
             set
@@ -40,6 +40,11 @@ namespace Domain
         private static bool HasValidLength(string value)
         {
             return value.Length <= maximumLength && value.Length >= minimunLength;
+        }
+
+        internal Password()
+        {
+            passwordValue = "Contraseña inválida.";
         }
     }
 }

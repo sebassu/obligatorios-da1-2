@@ -20,10 +20,10 @@ namespace Domain
             return char.IsLetter(aChar) || char.IsWhiteSpace(aChar);
         }
 
-        public static bool IsBeforeToday(DateTime value)
+        public static bool IsTodayOrBefore(DateTime value)
         {
             var todaysDate = DateTime.Now.Date;
-            return value.CompareTo(todaysDate) < 0;
+            return value.CompareTo(todaysDate) <= 0;
         }
     }
 }

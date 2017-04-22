@@ -20,10 +20,9 @@ namespace Unit_tests
         public void UserForTestingPurposesTest()
         {
             Assert.AreEqual("Nombre inválido.", testingUser.FirstName);
-            Assert.AreEqual("Apellido inválido.", testingUser.FirstName);
+            Assert.AreEqual("Apellido inválido.", testingUser.LastName);
             Assert.AreEqual("mailInvalido@usuarioInvalido", testingUser.Email);
-            Assert.AreEqual(null, testingUser.Birthdate);
-            Assert.AreEqual("ContraseñaInvalida", testingUser.Password);
+            Assert.AreEqual("Contraseña inválida.", testingUser.Password);
         }
 
         [TestMethod]
@@ -237,11 +236,11 @@ namespace Unit_tests
         [TestMethod]
         public void ParameterFactoryMethodValidTest()
         {
-            DateTime birthdateToSet = DateTime.Now;
+            DateTime birthdateToSet = DateTime.Now.Date;
             testingUser = User.NamesEmailBirthdatePassword("Emilio", "Ravenna", "ravenna@simuladores.com",
                 birthdateToSet, "contraseñaValida123");
             Assert.AreEqual("Emilio", testingUser.FirstName);
-            Assert.AreEqual("Ravenna", testingUser.FirstName);
+            Assert.AreEqual("Ravenna", testingUser.LastName);
             Assert.AreEqual("ravenna@simuladores.com", testingUser.Email);
             Assert.AreEqual(birthdateToSet, testingUser.Birthdate);
             Assert.AreEqual("contraseñaValida123", testingUser.Password);
@@ -267,7 +266,7 @@ namespace Unit_tests
         [ExpectedException(typeof(UserException))]
         public void ParameterFactoryMethodInvalidEmailTest()
         {
-            testingUser = User.NamesEmailBirthdatePassword("Emilio", "Ravenna", "12@ $^#&",
+            testingUser = User.NamesEmailBirthdatePassword("Emilio", "Ravenna", "12! $^#&",
                 DateTime.Now, "contraseñaValida123");
         }
 
@@ -277,15 +276,7 @@ namespace Unit_tests
         {
             DateTime birthdateToSet = new DateTime(2112, 7, 31);
             testingUser = User.NamesEmailBirthdatePassword("Emilio", "Ravenna", "ravenna@simuladores.com.ar",
-                DateTime.Now, "contraseñaValida123");
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(UserException))]
-        public void ParameterFactoryMethodInvalidPasswordTest()
-        {
-            testingUser = User.NamesEmailBirthdatePassword("Emilio", "Ravenna", "ravenna@simuladores.com.ar",
-                DateTime.Now, "contraseñaValida123");
+                birthdateToSet, "contraseñaValida123");
         }
 
         [TestMethod]

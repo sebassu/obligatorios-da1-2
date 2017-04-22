@@ -1,7 +1,9 @@
 ﻿using Exceptions;
 using System;
 using System.Net.Mail;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("Unit tests")]
 namespace Domain
 {
     public class User
@@ -64,7 +66,7 @@ namespace Domain
             set
             {
                 var dateToSet = value.Date;
-                if (Utilities.IsBeforeToday(dateToSet))
+                if (Utilities.IsTodayOrBefore(dateToSet))
                 {
                     birthdate = dateToSet;
                 }
@@ -85,9 +87,37 @@ namespace Domain
             }
         }
 
-        public User()
+        internal static User UserForTestingPurposes()
+        {
+            User result = new User()
+            {
+                firstName = "Nombre inválido.",
+                lastName = "Apellido inválido.",
+                email = new MailAddress("mailInvalido@usuarioInvalido")
+            };
+            return result;
+        }
+
+        private User()
         {
             password = new Password();
+            birthdate = DateTime.Now;
+        }
+
+        public static User NamesEmailBirthdatePassword(string aFirstName, string aLastName,
+            string anEmail, DateTime aBirthdate, string aPassword)
+        {
+            return new User(aFirstName, aLastName, anEmail, aBirthdate, aPassword);
+        }
+
+        private User(string aFirstName, string aLastName, string anEmail, DateTime aBirthdate, string aPassword)
+            : this()
+        {
+            FirstName = aFirstName;
+            LastName = aLastName;
+            Email = anEmail;
+            Birthdate = aBirthdate;
+            Password = aPassword;
         }
     }
 }
