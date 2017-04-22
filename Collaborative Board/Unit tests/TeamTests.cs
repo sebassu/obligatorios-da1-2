@@ -13,7 +13,16 @@ namespace Unit_tests
         [TestInitialize]
         public void TestSetUp()
         {
-            testingTeam = new Team();
+            testingTeam = Team.TeamForTestingPurposes();
+        }
+
+        [TestMethod]
+        public void TeamForTestingPurposesTest()
+        {
+            Assert.AreEqual("Nombre inválido.", testingTeam.Name);
+            Assert.AreEqual(null, testingTeam.CreationDate);
+            Assert.AreEqual(null, testingTeam.Description);
+            Assert.AreEqual(0, testingTeam.MaximumMembers);
         }
 
         [TestMethod]
@@ -107,5 +116,38 @@ namespace Unit_tests
         {
             testingTeam.MaximumMembers = -10;
         }
+
+        [TestMethod]
+        public void ParameterFactoryMethodValidTest()
+        {
+            DateTime creationDateToSet = DateTime.Now;
+            testingTeam = Team.NameCreationDateDescriptionMaximumMembers("Equipo1", creationDateToSet, "No hace tareas.", 10);
+            Assert.AreEqual("Equipo1", testingTeam.Name);
+            Assert.AreEqual(creationDateToSet, testingTeam.CreationDate);
+            Assert.AreEqual("No hace tareas.", testingTeam.Description);
+            Assert.AreEqual(10, testingTeam.MaximumMembers);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(TeamException))]
+        public void ParameterFactoryMethodInvalidNameTest()
+        {
+            testingTeam = Team.NameCreationDateDescriptionMaximumMembers("Equipo#11.32!", DateTime.Now, "Tareas:", 5);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(TeamException))]
+        public void ParameterFactoryMethodInvalidMaximumNumberTest()
+        {
+            testingTeam = Team.NameCreationDateDescriptionMaximumMembers("Equipo2", DateTime.Now, "Tareas:", 0);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(TeamException))]
+        public void ParameterFactoryMethodInvalidDescriptionTest()
+        {
+            testingTeam = Team.NameCreationDateDescriptionMaximumMembers("Equipo3", DateTime.Now, "", 5);
+        }
+
     }
 }
