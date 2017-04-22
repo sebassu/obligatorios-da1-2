@@ -79,5 +79,47 @@ namespace Unit_tests
         {
             testingTeam.Description = null;
         }
+
+        [TestMethod]
+        public void SetValidMaximumMembersTest()
+        {
+            testingTeam.MaximumMembers = 35;
+            Assert.AreEqual(35, testingTeam.MaximumMembers);
+        }
+
+        [TestMethod]
+        public void SetValidOnlyOneMemberTest()
+        {
+            testingTeam.MaximumMembers = 1;
+            Assert.AreEqual(1, testingTeam.MaximumMembers);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(TeamException))]
+        public void SetInvalidZeroMemberTest()
+        {
+            testingTeam.MaximumMembers = 0;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(TeamException))]
+        public void SetInvalidNegativeMembersTest()
+        {
+            testingTeam.MaximumMembers = -10;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(TeamException))]
+        public void SetInvalidMaximumMembersEmptyTest()
+        {
+            testingTeam.MaximumMembers = "";
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(TeamException))]
+        public void SetInvalidMaximumMembersNullTest()
+        {
+            testingTeam.MaximumMembers = null;
+        }
     }
 }
