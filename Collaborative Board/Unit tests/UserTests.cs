@@ -312,5 +312,43 @@ namespace Unit_tests
             Assert.AreEqual(testingUser.FirstName + " " + testingUser.LastName + " <"
                 + testingUser.Email + ">", testingUser.ToString());
         }
+
+        [TestMethod]
+        public void EqualsReflexiveTest()
+        {
+            Assert.AreEqual(testingUser, testingUser);
+        }
+
+        [TestMethod]
+        public void EqualsSymmetricTest()
+        {
+            User secondTestingUser = User.UserForTestingPurposes();
+            Assert.AreEqual(testingUser, secondTestingUser);
+            Assert.AreEqual(secondTestingUser, testingUser);
+        }
+
+        [TestMethod]
+        public void EqualsTransitiveTest()
+        {
+            testingUser = User.NamesEmailBirthdatePassword("A", "B", "mail@example.com",
+                DateTime.Now, "C");
+            User secondTestingUser = User.NamesEmailBirthdatePassword("D", "E", "mail@example.com",
+                DateTime.Now, "F");
+            User thirdTestingUser = User.NamesEmailBirthdatePassword("G", "H", "mail@example.com",
+                    DateTime.Now, "G");
+            Assert.AreEqual(testingUser, secondTestingUser);
+            Assert.AreEqual(secondTestingUser, thirdTestingUser);
+            Assert.AreEqual(testingUser, thirdTestingUser);
+        }
+
+        [TestMethod]
+        public void EqualsDifferentUsersTest()
+        {
+            testingUser = User.NamesEmailBirthdatePassword("Same first name", "Same last name", "first@different.com",
+                DateTime.Now, "SamePassword");
+            User secondTestingUser = User.NamesEmailBirthdatePassword("Same first name", "Same last name", "second@different.com",
+                DateTime.Now, "SamePassword");
+            Assert.AreNotEqual(testingUser, secondTestingUser);
+        }
     }
 }
