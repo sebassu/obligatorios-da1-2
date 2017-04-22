@@ -120,5 +120,12 @@ namespace Unit_tests
             Assert.AreEqual(testingAdministrator.FirstName + " " + testingAdministrator.LastName + " <"
                 + testingAdministrator.Email + "> (Admin.)", testingAdministrator.ToString());
         }
+
+        [TestMethod]
+        public void AdministratorResetPasswordTest()
+        {
+            string resultObtained = testingAdministrator.ResetPassword();
+            Assert.AreEqual(resultObtained, testingAdministrator.Password);
+        }
     }
 }

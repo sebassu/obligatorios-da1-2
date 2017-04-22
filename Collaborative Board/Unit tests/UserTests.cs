@@ -384,5 +384,12 @@ namespace Unit_tests
                 DateTime.Now, "contraseñaValida123");
             Assert.IsFalse(testingUser.HasAdministrationPrivileges);
         }
+
+        [TestMethod]
+        public void UserResetPasswordTest()
+        {
+            string resultObtained = testingUser.ResetPassword();
+            Assert.AreEqual(resultObtained, testingUser.Password);
+        }
     }
 }
