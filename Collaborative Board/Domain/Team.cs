@@ -6,6 +6,8 @@ namespace Domain
 {
     public class Team
     {
+        private const int minimumMembers = 1;
+
         private string name;
         public string Name
         {
@@ -67,7 +69,7 @@ namespace Domain
             }
             set
             {
-                if (value > 0)
+                if (value >= minimumMembers)
                 {
                     maximumMembers = value;
                 }
