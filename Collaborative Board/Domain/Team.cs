@@ -111,5 +111,11 @@ namespace Domain
             Description = aDescription;
             MaximumMembers = aMaximumMembers;
         }
+
+        public override string ToString()
+        {
+            return name;
+        }
+
     }
 }

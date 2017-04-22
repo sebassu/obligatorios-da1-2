@@ -158,7 +158,7 @@ namespace Unit_tests
         public void ToStringTest2()
         {
             testingTeam.Name = "Equipo10";
-            Assert.AreEqual("Equipo 10", testingTeam.ToString());
+            Assert.AreEqual("Equipo10", testingTeam.ToString());
         }
 
         [TestMethod]
