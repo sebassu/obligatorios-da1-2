@@ -290,7 +290,8 @@ namespace Unit_tests
         [TestMethod]
         public void ToStringTest1()
         {
-            Assert.AreEqual("Nombre inválido. Apellido inválido. <mailInvalido@usuarioInvalido>", testingUser.ToString());
+            Assert.AreEqual("Nombre inválido. Apellido inválido. <mailInvalido@usuarioInvalido>",
+                testingUser.ToString());
         }
 
         [TestMethod]
@@ -308,7 +309,7 @@ namespace Unit_tests
             testingUser.FirstName = "Gabriel";
             testingUser.LastName = "Medina";
             testingUser.Email = "medina@simuladores.com.ar";
-            Assert.AreEqual(testingUser.FirstName + " " + testingUser.LastName + "<"
+            Assert.AreEqual(testingUser.FirstName + " " + testingUser.LastName + " <"
                 + testingUser.Email + ">", testingUser.ToString());
         }
     }

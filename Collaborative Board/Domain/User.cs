@@ -119,5 +119,10 @@ namespace Domain
             Birthdate = aBirthdate;
             Password = aPassword;
         }
+
+        public override string ToString()
+        {
+            return firstName + " " + lastName + " <" + Email + ">";
+        }
     }
 }
