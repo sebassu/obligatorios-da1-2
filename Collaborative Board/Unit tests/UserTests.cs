@@ -1,6 +1,7 @@
 ﻿using System;
 using Domain;
 using Exceptions;
+using System.Threading;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -386,10 +387,19 @@ namespace Unit_tests
         }
 
         [TestMethod]
-        public void UserResetPasswordTest()
+        public void UserResetPasswordModificationTest()
         {
             string resultObtained = testingUser.ResetPassword();
             Assert.AreEqual(resultObtained, testingUser.Password);
+        }
+
+        [TestMethod]
+        public void UserResetPasswordRandomnessTest()
+        {
+            string firstResultObtained = testingUser.ResetPassword();
+            Thread.Sleep(12);
+            string secondResultObtained = testingUser.ResetPassword();
+            Assert.AreNotEqual(firstResultObtained, secondResultObtained);
         }
     }
 }

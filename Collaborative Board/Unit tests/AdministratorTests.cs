@@ -1,6 +1,7 @@
 ﻿using System;
 using Domain;
 using Exceptions;
+using System.Threading;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -126,6 +127,15 @@ namespace Unit_tests
         {
             string resultObtained = testingAdministrator.ResetPassword();
             Assert.AreEqual(resultObtained, testingAdministrator.Password);
+        }
+
+        [TestMethod]
+        public void AdministratorResetPasswordRandomnessTest()
+        {
+            string firstResultObtained = testingAdministrator.ResetPassword();
+            Thread.Sleep(12);
+            string secondResultObtained = testingAdministrator.ResetPassword();
+            Assert.AreNotEqual(firstResultObtained, secondResultObtained);
         }
     }
 }

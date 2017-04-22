@@ -15,11 +15,6 @@ namespace Domain
             return aString.ToCharArray().All(c => IsLetterOrSpace(c));
         }
 
-        public static bool ContainsOnlyLettersOrDigits(string aString)
-        {
-            return aString.ToCharArray().All(c => char.IsLetterOrDigit(c));
-        }
-
         private static bool IsLetterOrSpace(char aChar)
         {
             return char.IsLetter(aChar) || char.IsWhiteSpace(aChar);
