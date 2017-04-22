@@ -25,5 +25,18 @@ namespace Domain
                 }
             }
         }
+        private DateTime creationDate = DateTime.Now;
+
+        public DateTime CreationDate
+        {
+            get
+            {
+                return creationDate;
+            }
+            set
+            {
+
+            }
+        }
     }
 }
