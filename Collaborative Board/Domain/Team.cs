@@ -15,7 +15,7 @@ namespace Domain
             }
             set
             {
-                if (!string.IsNullOrEmpty(value) && value.ToCharArray().All(c => char.IsLetterOrDigit(c)))
+                if (Utilities.IsValidTeamName(value))
                 {
                     name = value;
                 }
