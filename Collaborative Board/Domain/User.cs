@@ -124,5 +124,27 @@ namespace Domain
         {
             return firstName + " " + lastName + " <" + Email + ">";
         }
+
+        public override bool Equals(object parameterObject)
+        {
+            if (parameterObject is User userToCompareAgainst)
+            {
+                return HasSameEmail(userToCompareAgainst);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool HasSameEmail(User aUser)
+        {
+            return email.Equals(aUser.email);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

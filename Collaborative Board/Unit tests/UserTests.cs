@@ -1,11 +1,13 @@
-﻿using Domain;
+﻿using System;
+using Domain;
 using Exceptions;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace Unit_tests
 {
     [TestClass]
+    [ExcludeFromCodeCoverage]
     public class UserTests
     {
         private static User testingUser;
@@ -222,7 +224,6 @@ namespace Unit_tests
         public void SetInvalidPasswordTooShortTest()
         {
             testingUser.Password = "pass2";
-            Assert.AreEqual("pass2", testingUser.Password);
         }
 
         [TestMethod]
@@ -230,7 +231,6 @@ namespace Unit_tests
         public void SetInvalidPasswordTooLongTest()
         {
             testingUser.Password = "password201543sdre#ts";
-            Assert.AreEqual("password201543sdre#ts", testingUser.Password);
         }
 
         [TestMethod]
@@ -331,11 +331,11 @@ namespace Unit_tests
         public void EqualsTransitiveTest()
         {
             testingUser = User.NamesEmailBirthdatePassword("A", "B", "mail@example.com",
-                DateTime.Now, "C");
+                DateTime.Now, "Password1");
             User secondTestingUser = User.NamesEmailBirthdatePassword("D", "E", "mail@example.com",
-                DateTime.Now, "F");
+                DateTime.Now, "Password2");
             User thirdTestingUser = User.NamesEmailBirthdatePassword("G", "H", "mail@example.com",
-                    DateTime.Now, "G");
+                    DateTime.Now, "Password3");
             Assert.AreEqual(testingUser, secondTestingUser);
             Assert.AreEqual(secondTestingUser, thirdTestingUser);
             Assert.AreEqual(testingUser, thirdTestingUser);
@@ -349,6 +349,26 @@ namespace Unit_tests
             User secondTestingUser = User.NamesEmailBirthdatePassword("Same first name", "Same last name", "second@different.com",
                 DateTime.Now, "SamePassword");
             Assert.AreNotEqual(testingUser, secondTestingUser);
+        }
+
+        [TestMethod]
+        public void EqualsNullTest()
+        {
+            Assert.AreNotEqual(testingUser, null);
+        }
+
+        [TestMethod]
+        public void EqualsDifferentTypesTest()
+        {
+            object someRandomObject = new object();
+            Assert.AreNotEqual(testingUser, someRandomObject);
+        }
+
+        [TestMethod]
+        public void GetHashCodeTest()
+        {
+            object testingUserAsObject = testingUser;
+            Assert.AreEqual(testingUserAsObject.GetHashCode(), testingUser.GetHashCode());
         }
     }
 }
