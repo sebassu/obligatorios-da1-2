@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Exceptions;
+﻿using Exceptions;
 
 namespace Domain
 {
