@@ -34,7 +34,7 @@ namespace Domain
 
         private static bool HasOnlyValidCharacters(string value)
         {
-            return value.ToCharArray().All(c => char.IsLetterOrDigit(c));
+            return Utilities.ContainsOnlyLettersOrDigits(value);
         }
 
         private static bool HasValidLength(string value)

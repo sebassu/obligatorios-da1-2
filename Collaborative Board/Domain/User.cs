@@ -77,31 +77,26 @@ namespace Domain
             }
         }
 
-        private Password password;
+        private Password usersPassword = new Password();
         public string Password
         {
-            get { return password.PasswordValue; }
+            get { return usersPassword.PasswordValue; }
             set
             {
-                password.PasswordValue = value;
+                usersPassword.PasswordValue = value;
             }
         }
 
         internal static User UserForTestingPurposes()
         {
-            User result = new User()
-            {
-                firstName = "Nombre inválido.",
-                lastName = "Apellido inválido.",
-                email = new MailAddress("mailInvalido@usuarioInvalido")
-            };
-            return result;
+            return new User();
         }
 
         private User()
         {
-            password = new Password();
-            birthdate = DateTime.Now;
+            firstName = "Nombre inválido.";
+            lastName = "Apellido inválido.";
+            email = new MailAddress("mailInvalido@usuarioInvalido");
         }
 
         public static User NamesEmailBirthdatePassword(string aFirstName, string aLastName,
@@ -111,7 +106,6 @@ namespace Domain
         }
 
         private User(string aFirstName, string aLastName, string anEmail, DateTime aBirthdate, string aPassword)
-            : this()
         {
             FirstName = aFirstName;
             LastName = aLastName;
