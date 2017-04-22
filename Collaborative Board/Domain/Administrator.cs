@@ -24,5 +24,10 @@ namespace Domain
         }
 
         protected Administrator() : base() { }
+
+        public override string ToString()
+        {
+            return String.Concat(base.ToString(), " (Admin.)");
+        }
     }
 }
