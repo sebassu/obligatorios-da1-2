@@ -94,5 +94,31 @@ namespace Unit_tests
                 DateTime.Now, "contraseñaValida123");
             Assert.IsTrue(testingAdministrator.HasAdministrationPrivileges);
         }
+
+        [TestMethod]
+        public void ToStringTest1()
+        {
+            Assert.AreEqual("Nombre inválido. Apellido inválido. <mailInvalido@usuarioInvalido> (Admin.)",
+                testingAdministrator.ToString());
+        }
+
+        [TestMethod]
+        public void ToStringTest2()
+        {
+            testingAdministrator.FirstName = "Mario";
+            testingAdministrator.LastName = "Santos";
+            testingAdministrator.Email = "santos@simuladores.com.ar";
+            Assert.AreEqual("Mario Santos <santos@simuladores.com.ar> (Admin.)", testingAdministrator.ToString());
+        }
+
+        [TestMethod]
+        public void ToStringTest3()
+        {
+            testingAdministrator.FirstName = "Gabriel";
+            testingAdministrator.LastName = "Medina";
+            testingAdministrator.Email = "medina@simuladores.com.ar";
+            Assert.AreEqual(testingAdministrator.FirstName + " " + testingAdministrator.LastName + " <"
+                + testingAdministrator.Email + "> (Admin.)", testingAdministrator.ToString());
+        }
     }
 }
