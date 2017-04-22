@@ -33,9 +33,27 @@ namespace Domain
             {
                 return creationDate;
             }
+            set { }
+        }
+
+        private string description;
+
+        public string Description
+        {
+            get
+            {
+                return description;
+            }
             set
             {
-
+                if (!string.IsNullOrEmpty(value))
+                {
+                    description = value;
+                }
+                else
+                {
+                    throw new TeamException("Descripción inválida: " + value + ".");
+                }
             }
         }
     }
