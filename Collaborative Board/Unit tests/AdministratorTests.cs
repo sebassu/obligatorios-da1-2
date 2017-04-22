@@ -28,7 +28,7 @@ namespace Unit_tests
         }
 
         [TestMethod]
-        public void ParameterFactoryMethodValidTest()
+        public void AdministratorParameterFactoryMethodValidTest()
         {
             DateTime birthdateToSet = DateTime.Now.Date;
             testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio", "Ravenna", "ravenna@simuladores.com",
@@ -42,7 +42,7 @@ namespace Unit_tests
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
-        public void ParameterFactoryMethodInvalidFirstNameTest()
+        public void AdministratorParameterFactoryMethodInvalidFirstNameTest()
         {
             testingAdministrator = Administrator.NamesEmailBirthdatePassword("1&6 1a2-*!3", "Ravenna", "ravenna@simuladores.com",
                 DateTime.Now, "contraseñaValida123");
@@ -50,7 +50,7 @@ namespace Unit_tests
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
-        public void ParameterFactoryMethodInvalidLastNameTest()
+        public void AdministratorParameterFactoryMethodInvalidLastNameTest()
         {
             testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio", ";#d1 -($!#", "ravenna@simuladores.com.ar",
                 DateTime.Now, "contraseñaValida123");
@@ -58,7 +58,7 @@ namespace Unit_tests
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
-        public void ParameterFactoryMethodInvalidEmailTest()
+        public void AdministratorParameterFactoryMethodInvalidEmailTest()
         {
             testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio", "Ravenna", "12! $^#&",
                 DateTime.Now, "contraseñaValida123");
@@ -66,7 +66,7 @@ namespace Unit_tests
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
-        public void ParameterFactoryMethodInvalidBirthdateTest()
+        public void AdministratorParameterFactoryMethodInvalidBirthdateTest()
         {
             DateTime birthdateToSet = new DateTime(2112, 7, 31);
             testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio", "Ravenna", "ravenna@simuladores.com.ar",
@@ -75,20 +75,20 @@ namespace Unit_tests
 
         [TestMethod]
         [ExpectedException(typeof(PasswordException))]
-        public void ParameterFactoryMethodInvalidPasswordTest()
+        public void AdministratorParameterFactoryMethodInvalidPasswordTest()
         {
             testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio", "Ravenna", "ravenna@simuladores.com.ar",
                 DateTime.Now, "@%^# 521D(%$");
         }
 
         [TestMethod]
-        public void HasAdministratorPrivilegesTest1()
+        public void AdministratorHasAdministratorPrivilegesDefaultTest()
         {
             Assert.IsTrue(testingAdministrator.HasAdministrationPrivileges);
         }
 
         [TestMethod]
-        public void HasAdministratorPrivilegesTest2()
+        public void AdministratorHasAdministratorPrivilegesParametersTest()
         {
             testingAdministrator = Administrator.NamesEmailBirthdatePassword("Mario", "Santos", "santos@simuladores.com",
                 DateTime.Now, "contraseñaValida123");
@@ -96,14 +96,14 @@ namespace Unit_tests
         }
 
         [TestMethod]
-        public void ToStringTest1()
+        public void AdministratorToStringTest1()
         {
             Assert.AreEqual("Nombre inválido. Apellido inválido. <mailInvalido@usuarioInvalido> (Admin.)",
                 testingAdministrator.ToString());
         }
 
         [TestMethod]
-        public void ToStringTest2()
+        public void AdministratorToStringTest2()
         {
             testingAdministrator.FirstName = "Mario";
             testingAdministrator.LastName = "Santos";
@@ -112,7 +112,7 @@ namespace Unit_tests
         }
 
         [TestMethod]
-        public void ToStringTest3()
+        public void AdministratorToStringTest3()
         {
             testingAdministrator.FirstName = "Gabriel";
             testingAdministrator.LastName = "Medina";

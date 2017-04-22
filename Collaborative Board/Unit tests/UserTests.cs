@@ -28,14 +28,14 @@ namespace Unit_tests
         }
 
         [TestMethod]
-        public void SetValidFirstNameTest()
+        public void UserSetValidFirstNameTest()
         {
             testingUser.FirstName = "Mario";
             Assert.AreEqual("Mario", testingUser.FirstName);
         }
 
         [TestMethod]
-        public void SetValidFirstNameCompoundTest()
+        public void UserSetValidFirstNameCompoundTest()
         {
             testingUser.FirstName = "  Juan Martín  ";
             Assert.AreEqual("Juan Martín", testingUser.FirstName);
@@ -43,41 +43,41 @@ namespace Unit_tests
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
-        public void SetInvalidFirstNameNumbersTest()
+        public void UserSetInvalidFirstNameNumbersTest()
         {
             testingUser.FirstName = "1234";
         }
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
-        public void SetInvalidFirstNamePunctuationTest()
+        public void UserSetInvalidFirstNamePunctuationTest()
         {
             testingUser.FirstName = "!@.$#% *-/";
         }
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
-        public void SetInvalidFirstNameEmptyTest()
+        public void UserSetInvalidFirstNameEmptyTest()
         {
             testingUser.FirstName = "";
         }
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
-        public void SetInvalidFirstNameNullTest()
+        public void UserSetInvalidFirstNameNullTest()
         {
             testingUser.FirstName = null;
         }
 
         [TestMethod]
-        public void SetValidLastNameTest()
+        public void UserSetValidLastNameTest()
         {
             testingUser.LastName = "Santos";
             Assert.AreEqual("Santos", testingUser.LastName);
         }
 
         [TestMethod]
-        public void SetValidLastNameCompoundTest()
+        public void UserSetValidLastNameCompoundTest()
         {
             testingUser.LastName = "  García Morales  ";
             Assert.AreEqual("García Morales", testingUser.LastName);
@@ -85,41 +85,41 @@ namespace Unit_tests
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
-        public void SetInvalidLastNameNumbersTest()
+        public void UserSetInvalidLastNameNumbersTest()
         {
             testingUser.LastName = "5678";
         }
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
-        public void SetInvalidLastNamePunctuationTest()
+        public void UserSetInvalidLastNamePunctuationTest()
         {
             testingUser.LastName = "!@.$#% *-/";
         }
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
-        public void SetInvalidLastNameEmptyTest()
+        public void UserSetInvalidLastNameEmptyTest()
         {
             testingUser.LastName = "";
         }
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
-        public void SetInvalidLastNameNullTest()
+        public void UserSetInvalidLastNameNullTest()
         {
             testingUser.LastName = null;
         }
 
         [TestMethod]
-        public void SetValidEmailTest()
+        public void UserSetValidEmailTest()
         {
             testingUser.Email = "sebastian.uriarteg@gmail.com";
             Assert.AreEqual("sebastian.uriarteg@gmail.com", testingUser.Email);
         }
 
         [TestMethod]
-        public void SetValidEmailTrimTest()
+        public void UserSetValidEmailTrimTest()
         {
             testingUser.Email = "  sdelfinoh@gmail.com  ";
             Assert.AreEqual("sdelfinoh@gmail.com", testingUser.Email);
@@ -127,41 +127,41 @@ namespace Unit_tests
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
-        public void SetInvalidEmailWordsTest()
+        public void UserSetInvalidEmailWordsTest()
         {
             testingUser.Email = "Universidad ORT Uruguay";
         }
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
-        public void SetInvalidEmailNoHostTest()
+        public void UserSetInvalidEmailNoHostTest()
         {
             testingUser.Email = "valid_Beginning@";
         }
 
         [TestMethod]
-        public void SetValidEmailNoDotComTest()
+        public void UserSetValidEmailNoDotComTest()
         {
             testingUser.Email = "zaphod@slartibartfast";
             Assert.AreEqual("zaphod@slartibartfast", testingUser.Email);
         }
 
         [TestMethod]
-        public void SetValidEmailNoLettersTest()
+        public void UserSetValidEmailNoLettersTest()
         {
             testingUser.Email = "123@$789";
             Assert.AreEqual("123@$789", testingUser.Email);
         }
 
         [TestMethod]
-        public void SetValidEmailUnexpectedCharactersTest()
+        public void UserSetValidEmailUnexpectedCharactersTest()
         {
             testingUser.Email = "!$A_b.%c=d*-ef@ex^am#pl-e.com";
             Assert.AreEqual("!$A_b.%c=d*-ef@ex^am#pl-e.com", testingUser.Email);
         }
 
         [TestMethod]
-        public void SetValidBirthdateTest()
+        public void UserSetValidBirthdateTest()
         {
             DateTime birthdateToSet = new DateTime(1995, 10, 27);
             testingUser.Birthdate = birthdateToSet;
@@ -169,7 +169,7 @@ namespace Unit_tests
         }
 
         [TestMethod]
-        public void SetValidBirthdateCloseTest()
+        public void UserSetValidBirthdateCloseTest()
         {
             DateTime birthdateToSet = new DateTime(2017, 4, 17);
             testingUser.Birthdate = birthdateToSet;
@@ -178,21 +178,21 @@ namespace Unit_tests
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
-        public void SetInvalidBirthdateTest()
+        public void UserSetInvalidBirthdateTest()
         {
             DateTime birthdateToSet = new DateTime(2112, 3, 31);
             testingUser.Birthdate = birthdateToSet;
         }
 
         [TestMethod]
-        public void SetOnlyLettersPasswordTest()
+        public void UserSetOnlyLettersPasswordTest()
         {
             testingUser.Password = "holaChau";
             Assert.AreEqual("holaChau", testingUser.Password);
         }
 
         [TestMethod]
-        public void SetValidPasswordTest()
+        public void UserSetValidPasswordTest()
         {
             testingUser.Password = "pS8a11";
             Assert.AreEqual("pS8a11", testingUser.Password);
@@ -200,41 +200,41 @@ namespace Unit_tests
 
         [TestMethod]
         [ExpectedException(typeof(PasswordException))]
-        public void SetInvalidPasswordTest()
+        public void UserSetInvalidPasswordTest()
         {
             testingUser.Password = "pS8a11#.!";
         }
 
         [TestMethod]
         [ExpectedException(typeof(PasswordException))]
-        public void SetInvalidPasswordEmptyTest()
+        public void UserSetInvalidPasswordEmptyTest()
         {
             testingUser.Password = "";
         }
 
         [TestMethod]
         [ExpectedException(typeof(PasswordException))]
-        public void SetInvalidPasswordNullTest()
+        public void UserSetInvalidPasswordNullTest()
         {
             testingUser.Password = null;
         }
 
         [TestMethod]
         [ExpectedException(typeof(PasswordException))]
-        public void SetInvalidPasswordTooShortTest()
+        public void UserSetInvalidPasswordTooShortTest()
         {
             testingUser.Password = "pass2";
         }
 
         [TestMethod]
         [ExpectedException(typeof(PasswordException))]
-        public void SetInvalidPasswordTooLongTest()
+        public void UserSetInvalidPasswordTooLongTest()
         {
             testingUser.Password = "password201543sdre#ts";
         }
 
         [TestMethod]
-        public void ParameterFactoryMethodValidTest()
+        public void UserParameterFactoryMethodValidTest()
         {
             DateTime birthdateToSet = DateTime.Now.Date;
             testingUser = User.NamesEmailBirthdatePassword("Emilio", "Ravenna", "ravenna@simuladores.com",
@@ -248,7 +248,7 @@ namespace Unit_tests
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
-        public void ParameterFactoryMethodInvalidFirstNameTest()
+        public void UserParameterFactoryMethodInvalidFirstNameTest()
         {
             testingUser = User.NamesEmailBirthdatePassword("1&6 1a2-*!3", "Ravenna", "ravenna@simuladores.com",
                 DateTime.Now, "contraseñaValida123");
@@ -256,7 +256,7 @@ namespace Unit_tests
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
-        public void ParameterFactoryMethodInvalidLastNameTest()
+        public void UserParameterFactoryMethodInvalidLastNameTest()
         {
             testingUser = User.NamesEmailBirthdatePassword("Emilio", ";#d1 -($!#", "ravenna@simuladores.com.ar",
                 DateTime.Now, "contraseñaValida123");
@@ -264,7 +264,7 @@ namespace Unit_tests
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
-        public void ParameterFactoryMethodInvalidEmailTest()
+        public void UserParameterFactoryMethodInvalidEmailTest()
         {
             testingUser = User.NamesEmailBirthdatePassword("Emilio", "Ravenna", "12! $^#&",
                 DateTime.Now, "contraseñaValida123");
@@ -272,7 +272,7 @@ namespace Unit_tests
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
-        public void ParameterFactoryMethodInvalidBirthdateTest()
+        public void UserParameterFactoryMethodInvalidBirthdateTest()
         {
             DateTime birthdateToSet = new DateTime(2112, 7, 31);
             testingUser = User.NamesEmailBirthdatePassword("Emilio", "Ravenna", "ravenna@simuladores.com.ar",
@@ -281,21 +281,21 @@ namespace Unit_tests
 
         [TestMethod]
         [ExpectedException(typeof(PasswordException))]
-        public void ParameterFactoryMethodInvalidPasswordTest()
+        public void UserParameterFactoryMethodInvalidPasswordTest()
         {
             testingUser = User.NamesEmailBirthdatePassword("Emilio", "Ravenna", "ravenna@simuladores.com.ar",
                 DateTime.Now, "@%^# 521D(%$");
         }
 
         [TestMethod]
-        public void ToStringTest1()
+        public void UserToStringTest1()
         {
             Assert.AreEqual("Nombre inválido. Apellido inválido. <mailInvalido@usuarioInvalido>",
                 testingUser.ToString());
         }
 
         [TestMethod]
-        public void ToStringTest2()
+        public void UserToStringTest2()
         {
             testingUser.FirstName = "Mario";
             testingUser.LastName = "Santos";
@@ -304,7 +304,7 @@ namespace Unit_tests
         }
 
         [TestMethod]
-        public void ToStringTest3()
+        public void UserToStringTest3()
         {
             testingUser.FirstName = "Gabriel";
             testingUser.LastName = "Medina";
@@ -314,13 +314,13 @@ namespace Unit_tests
         }
 
         [TestMethod]
-        public void EqualsReflexiveTest()
+        public void UserEqualsReflexiveTest()
         {
             Assert.AreEqual(testingUser, testingUser);
         }
 
         [TestMethod]
-        public void EqualsSymmetricTest()
+        public void UserEqualsSymmetricTest()
         {
             User secondTestingUser = User.InstanceForTestingPurposes();
             Assert.AreEqual(testingUser, secondTestingUser);
@@ -328,7 +328,7 @@ namespace Unit_tests
         }
 
         [TestMethod]
-        public void EqualsTransitiveTest()
+        public void UserEqualsTransitiveTest()
         {
             testingUser = User.NamesEmailBirthdatePassword("A", "B", "mail@example.com",
                 DateTime.Now, "Password1");
@@ -342,7 +342,7 @@ namespace Unit_tests
         }
 
         [TestMethod]
-        public void EqualsDifferentUsersTest()
+        public void UserEqualsDifferentUsersTest()
         {
             testingUser = User.NamesEmailBirthdatePassword("Same first name", "Same last name", "first@different.com",
                 DateTime.Now, "SamePassword");
@@ -352,33 +352,33 @@ namespace Unit_tests
         }
 
         [TestMethod]
-        public void EqualsNullTest()
+        public void UserEqualsNullTest()
         {
             Assert.AreNotEqual(testingUser, null);
         }
 
         [TestMethod]
-        public void EqualsDifferentTypesTest()
+        public void UserEqualsDifferentTypesTest()
         {
             object someRandomObject = new object();
             Assert.AreNotEqual(testingUser, someRandomObject);
         }
 
         [TestMethod]
-        public void GetHashCodeTest()
+        public void UserGetHashCodeTest()
         {
             object testingUserAsObject = testingUser;
             Assert.AreEqual(testingUserAsObject.GetHashCode(), testingUser.GetHashCode());
         }
 
         [TestMethod]
-        public void HasAdministratorPrivilegesTest1()
+        public void UserHasAdministratorPrivilegesDefaultTest()
         {
             Assert.IsFalse(testingUser.HasAdministrationPrivileges);
         }
 
         [TestMethod]
-        public void HasAdministratorPrivilegesTest2()
+        public void UserHasAdministratorPrivilegesParametersTest()
         {
             testingUser = User.NamesEmailBirthdatePassword("Pablo", "Lamponne", "lamponne@simuladores.com",
                 DateTime.Now, "contraseñaValida123");
