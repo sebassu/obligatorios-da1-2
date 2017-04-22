@@ -58,5 +58,26 @@ namespace Unit_tests
             testingTeam.CreationDate = creationDate;
             Assert.AreEqual(DateTime.Now.Date, testingTeam.CreationDate.Date);
         }
+
+        [TestMethod]
+        public void SetValidDescriptionTest()
+        {
+            testingTeam.Description = "Esto es una breve descripción del equipo.";
+            Assert.AreEqual("Esto es una breve descripción del equipo.", testingTeam.Description);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(TeamException))]
+        public void SetInvalidDescriptionEmptyTest()
+        {
+            testingTeam.Description = "";
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(TeamException))]
+        public void SetInvalidDescriptionNullTest()
+        {
+            testingTeam.Description = null;
+        }
     }
 }
