@@ -107,19 +107,5 @@ namespace Unit_tests
         {
             testingTeam.MaximumMembers = -10;
         }
-
-        [TestMethod]
-        [ExpectedException(typeof(TeamException))]
-        public void SetInvalidMaximumMembersEmptyTest()
-        {
-            testingTeam.MaximumMembers = "";
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(TeamException))]
-        public void SetInvalidMaximumMembersNullTest()
-        {
-            testingTeam.MaximumMembers = null;
-        }
     }
 }

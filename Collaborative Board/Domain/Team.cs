@@ -56,5 +56,26 @@ namespace Domain
                 }
             }
         }
+
+        private int maximumMembers;
+
+        public int MaximumMembers
+        {
+            get
+            {
+                return maximumMembers;
+            }
+            set
+            {
+                if (value > 0)
+                {
+                    maximumMembers = value;
+                }
+                else
+                {
+                    throw new TeamException("Máxima cantidad de miembros inválida: " + value + ".");
+                }
+            }
+        }
     }
 }
