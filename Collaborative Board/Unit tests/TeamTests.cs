@@ -20,8 +20,7 @@ namespace Unit_tests
         public void TeamForTestingPurposesTest()
         {
             Assert.AreEqual("Nombre inválido.", testingTeam.Name);
-            Assert.AreEqual(null, testingTeam.CreationDate);
-            Assert.AreEqual(null, testingTeam.Description);
+            Assert.AreEqual("Descripción inválida.", testingTeam.Description);
             Assert.AreEqual(0, testingTeam.MaximumMembers);
         }
 

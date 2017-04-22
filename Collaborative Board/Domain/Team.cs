@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
 using Exceptions;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("Unit tests")]
 namespace Domain
 {
     public class Team
@@ -78,6 +80,36 @@ namespace Domain
                     throw new TeamException("Máxima cantidad de miembros inválida: " + value + ".");
                 }
             }
+        }
+
+        internal static Team TeamForTestingPurposes()
+        {
+            Team result = new Team()
+            {
+                name = "Nombre inválido.",
+                description = "Descripción inválida.",
+                maximumMembers = 0
+            };
+            return result;
+        }
+
+        private Team()
+        {
+            creationDate = DateTime.Now;
+        }
+
+        public static Team NameCreationDateDescriptionMaximumMembers(string aName, DateTime aCreationDate, string aDescription, int aMaximimMembers)
+        {
+            return new Team(aName, aCreationDate, aDescription, aMaximimMembers);
+        }
+
+        private Team(string aName, DateTime aCreationDate, string aDescription, int aMaximumMembers) 
+            : this()
+        {
+            Name = aName;
+            CreationDate = aCreationDate;
+            Description = aDescription;
+            MaximumMembers = aMaximumMembers;
         }
     }
 }
