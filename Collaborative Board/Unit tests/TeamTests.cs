@@ -148,5 +148,26 @@ namespace Unit_tests
             testingTeam = Team.NameCreationDateDescriptionMaximumMembers("Equipo3", DateTime.Now, "", 5);
         }
 
+        [TestMethod]
+        public void ToStringTest1()
+        {
+            Assert.AreEqual("Nombre inválido.", testingTeam.ToString());
+        }
+
+        [TestMethod]
+        public void ToStringTest2()
+        {
+            testingTeam.Name = "Equipo10";
+            Assert.AreEqual("Equipo 10", testingTeam.ToString());
+        }
+
+        [TestMethod]
+        public void ToStringTest3()
+        {
+            testingTeam.Name = "Equipo15";
+            Assert.AreEqual(testingTeam.Name, testingTeam.ToString());
+        }
+
+
     }
 }
