@@ -1,7 +1,7 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Domain;
+using Exceptions;
+using System;
 
 namespace Unit_tests
 {
@@ -10,13 +10,11 @@ namespace Unit_tests
     {
         private static Team testingTeam;
 
-        [ClassInitialize]
+        [TestInitialize]
         public void TestSetUp()
         {
             testingTeam = new Team();
         }
-
-        private TestContext testContextInstance;
 
         [TestMethod]
         public void SetValidNameTest()
