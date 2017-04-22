@@ -87,12 +87,12 @@ namespace Domain
             }
         }
 
-        internal static User UserForTestingPurposes()
+        internal static User InstanceForTestingPurposes()
         {
             return new User();
         }
 
-        private User()
+        protected User()
         {
             firstName = "Nombre inválido.";
             lastName = "Apellido inválido.";
@@ -105,7 +105,7 @@ namespace Domain
             return new User(aFirstName, aLastName, anEmail, aBirthdate, aPassword);
         }
 
-        private User(string aFirstName, string aLastName, string anEmail, DateTime aBirthdate, string aPassword)
+        protected User(string aFirstName, string aLastName, string anEmail, DateTime aBirthdate, string aPassword)
         {
             FirstName = aFirstName;
             LastName = aLastName;

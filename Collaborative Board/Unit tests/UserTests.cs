@@ -15,7 +15,7 @@ namespace Unit_tests
         [TestInitialize]
         public void TestSetUp()
         {
-            testingUser = User.UserForTestingPurposes();
+            testingUser = User.InstanceForTestingPurposes();
         }
 
         [TestMethod]
@@ -322,7 +322,7 @@ namespace Unit_tests
         [TestMethod]
         public void EqualsSymmetricTest()
         {
-            User secondTestingUser = User.UserForTestingPurposes();
+            User secondTestingUser = User.InstanceForTestingPurposes();
             Assert.AreEqual(testingUser, secondTestingUser);
             Assert.AreEqual(secondTestingUser, testingUser);
         }
