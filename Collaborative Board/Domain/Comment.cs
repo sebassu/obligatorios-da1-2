@@ -29,6 +29,8 @@ namespace Domain
             get { return creationDate; }
         }
 
+        public User Creator { get; private set; }
+
         public static Comment InstanceForTestingPurposes()
         {
             return new Comment();
@@ -37,6 +39,24 @@ namespace Domain
         private Comment()
         {
             text = "Comentario inválido.";
+        }
+
+        internal static Comment CreatorText(User aUser, string someText)
+        {
+            return new Comment(aUser, someText);
+        }
+
+        private Comment(User aUser, string someText)
+        {
+            if (aUser != null)
+            {
+                Text = someText;
+                Creator = aUser;
+            }
+            else
+            {
+                throw new CommentException("Usuario inválido (nulo) recibido.");
+            }
         }
     }
 }
