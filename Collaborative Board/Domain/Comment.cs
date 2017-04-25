@@ -1,4 +1,5 @@
 ﻿using Exceptions;
+using System;
 
 namespace Domain
 {
@@ -20,6 +21,12 @@ namespace Domain
                     text = value;
                 }
             }
+        }
+
+        private DateTime creationDate = DateTime.Now;
+        public DateTime CreationDate
+        {
+            get { return creationDate; }
         }
 
         public static Comment InstanceForTestingPurposes()
