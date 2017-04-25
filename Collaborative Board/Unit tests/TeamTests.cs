@@ -119,10 +119,9 @@ namespace Unit_tests
         [TestMethod]
         public void TeamParameterFactoryMethodValidTest()
         {
-            DateTime creationDateToSet = DateTime.Now;
-            testingTeam = Team.NameCreationDateDescriptionMaximumMembers("Equipo1", creationDateToSet, "No hace tareas.", 10);
+            testingTeam = Team.NameDescriptionMaximumMembers("Equipo1", "No hace tareas.", 10);
             Assert.AreEqual("Equipo1", testingTeam.Name);
-            Assert.AreEqual(creationDateToSet, testingTeam.CreationDate);
+            Assert.AreEqual(DateTime.Now.Date, testingTeam.CreationDate.Date);
             Assert.AreEqual("No hace tareas.", testingTeam.Description);
             Assert.AreEqual(10, testingTeam.MaximumMembers);
         }
@@ -131,21 +130,21 @@ namespace Unit_tests
         [ExpectedException(typeof(TeamException))]
         public void TeamParameterFactoryMethodInvalidNameTest()
         {
-            testingTeam = Team.NameCreationDateDescriptionMaximumMembers("Equipo#11.32!", DateTime.Now, "Tareas:", 5);
+            testingTeam = Team.NameDescriptionMaximumMembers("Equipo#11.32!", "Tareas:", 5);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
         public void TeamParameterFactoryMethodInvalidMaximumNumberTest()
         {
-            testingTeam = Team.NameCreationDateDescriptionMaximumMembers("Equipo2", DateTime.Now, "Tareas:", 0);
+            testingTeam = Team.NameDescriptionMaximumMembers("Equipo2", "Tareas:", 0);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
         public void TeamParameterFactoryMethodInvalidDescriptionTest()
         {
-            testingTeam = Team.NameCreationDateDescriptionMaximumMembers("Equipo3", DateTime.Now, "", 5);
+            testingTeam = Team.NameDescriptionMaximumMembers("Equipo3", "", 5);
         }
 
         [TestMethod]
@@ -169,13 +168,12 @@ namespace Unit_tests
         }
 
         [TestMethod]
-        public void TeamAddValidUserTest1()
+        public void TeamAddValidUserTest()
         {
-            DateTime creationDateToSet = DateTime.Now;
-            testingTeam = Team.NameCreationDateDescriptionMaximumMembers("Equipo1", creationDateToSet, "No hace tareas.", 10);
+            testingTeam = Team.NameDescriptionMaximumMembers("Equipo1", "No hace tareas.", 10);
             User aUser = User.InstanceForTestingPurposes();
-            testingTeam.Members.AddUsers(aUser);
-            CollectionAssert.Contains(testingTeam.Members,aUser)
+            testingTeam.AddMember(aUser);
+            CollectionAssert.Contains(testingTeam.Members, aUser);
         }
 
 

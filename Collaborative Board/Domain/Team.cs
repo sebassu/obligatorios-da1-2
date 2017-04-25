@@ -2,6 +2,8 @@
 using System.Linq;
 using Exceptions;
 using System.Runtime.CompilerServices;
+using System.Collections.Generic;
+using System.Collections;
 
 [assembly: InternalsVisibleTo("Unit tests")]
 namespace Domain
@@ -82,6 +84,29 @@ namespace Domain
             }
         }
 
+        private List<User> members = new List<User>();
+
+        public IList Members
+        {
+            get
+            {
+                return members.AsReadOnly();
+            }
+        }
+
+        public void AddMember(User aMember)
+        {
+            if (!members.Contains(aMember) && members.Count < maximumMembers)
+            {
+                members.Add(aMember);
+            }
+            else
+            {
+                throw new TeamException("Miembro no válido o equipo completo.");
+            }
+        }
+
+
         internal static Team TeamForTestingPurposes()
         {
             Team result = new Team()
@@ -98,16 +123,15 @@ namespace Domain
             creationDate = DateTime.Now;
         }
 
-        public static Team NameCreationDateDescriptionMaximumMembers(string aName, DateTime aCreationDate, string aDescription, int aMaximimMembers)
+        public static Team NameDescriptionMaximumMembers(string aName, string aDescription, int aMaximimMembers)
         {
-            return new Team(aName, aCreationDate, aDescription, aMaximimMembers);
+            return new Team(aName, aDescription, aMaximimMembers);
         }
 
-        private Team(string aName, DateTime aCreationDate, string aDescription, int aMaximumMembers) 
+        private Team(string aName, string aDescription, int aMaximumMembers) 
             : this()
         {
             Name = aName;
-            CreationDate = aCreationDate;
             Description = aDescription;
             MaximumMembers = aMaximumMembers;
         }
