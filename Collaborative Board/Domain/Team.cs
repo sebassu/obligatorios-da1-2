@@ -113,7 +113,7 @@ namespace Domain
 
         public void RemoveMember(User aMember)
         {
-            if (members.Count > minimumMembers && members.Contains(aMember))
+            if (IsPossibleToRemove(aMember))
             {
                 members.Remove(aMember);
             }
@@ -121,6 +121,11 @@ namespace Domain
             {
                 throw new TeamException("Miembro no válido o equipo con mínimo de miembros.");
             }
+        }
+
+        private bool IsPossibleToRemove(User aMember)
+        {
+            return members.Count > minimumMembers && members.Contains(aMember);
         }
 
         internal static Team TeamForTestingPurposes()
