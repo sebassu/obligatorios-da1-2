@@ -96,7 +96,7 @@ namespace Domain
 
         public void AddMember(User aMember)
         {
-            if (!members.Contains(aMember) && members.Count < maximumMembers)
+            if (IsPossibleToAdd(aMember))
             {
                 members.Add(aMember);
             }
@@ -106,6 +106,10 @@ namespace Domain
             }
         }
 
+        private bool IsPossibleToAdd(User aMember)
+        {
+            return members.Count < maximumMembers && !members.Contains(aMember);
+        }
 
         internal static Team TeamForTestingPurposes()
         {
