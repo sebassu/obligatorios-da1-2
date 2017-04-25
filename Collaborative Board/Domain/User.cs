@@ -1,5 +1,5 @@
-﻿using Exceptions;
-using System;
+﻿using System;
+using Exceptions;
 using System.Net.Mail;
 using System.Runtime.CompilerServices;
 
@@ -77,22 +77,32 @@ namespace Domain
             }
         }
 
-        private Password usersPassword = new Password();
+        private Password password = new Password();
         public string Password
         {
-            get { return usersPassword.PasswordValue; }
+            get { return password.PasswordValue; }
             set
             {
-                usersPassword.PasswordValue = value;
+                password.PasswordValue = value;
             }
         }
 
-        internal static User UserForTestingPurposes()
+        public virtual bool HasAdministrationPrivileges
+        {
+            get { return false; }
+        }
+
+        public string ResetPassword()
+        {
+            return password.Reset();
+        }
+
+        internal static User InstanceForTestingPurposes()
         {
             return new User();
         }
 
-        private User()
+        protected User()
         {
             firstName = "Nombre inválido.";
             lastName = "Apellido inválido.";
@@ -105,7 +115,7 @@ namespace Domain
             return new User(aFirstName, aLastName, anEmail, aBirthdate, aPassword);
         }
 
-        private User(string aFirstName, string aLastName, string anEmail, DateTime aBirthdate, string aPassword)
+        protected User(string aFirstName, string aLastName, string anEmail, DateTime aBirthdate, string aPassword)
         {
             FirstName = aFirstName;
             LastName = aLastName;
