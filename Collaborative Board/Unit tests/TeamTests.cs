@@ -25,14 +25,14 @@ namespace Unit_tests
         }
 
         [TestMethod]
-        public void SetValidNameTest()
+        public void TeamSetValidNameTest()
         {
             testingTeam.Name = "Equipo1";
             Assert.AreEqual("Equipo1", testingTeam.Name);
         }
 
         [TestMethod]
-        public void SetValidNameTest2()
+        public void TeamSetValidNameTest2()
         {
             testingTeam.Name = "EquipoNuevo";
             Assert.AreEqual("EquipoNuevo", testingTeam.Name);
@@ -40,27 +40,27 @@ namespace Unit_tests
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
-        public void SetInvalidNamePunctuationTest()
+        public void TeamSetInvalidNamePunctuationTest()
         {
             testingTeam.Name = "Equipo.#/!";
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
-        public void SetInvalidNameEmptyTest()
+        public void TeamSetInvalidNameEmptyTest()
         {
             testingTeam.Name = "";
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
-        public void SetInvalidNameNullTest()
+        public void TeamSetInvalidNameNullTest()
         {
             testingTeam.Name = null;
         }
 
         [TestMethod]
-        public void ValidCreationDateTest()
+        public void TeamValidCreationDateTest()
         {
             DateTime creationDate = new DateTime();
             testingTeam.CreationDate = creationDate;
@@ -68,7 +68,7 @@ namespace Unit_tests
         }
 
         [TestMethod]
-        public void SetValidDescriptionTest()
+        public void TeamSetValidDescriptionTest()
         {
             testingTeam.Description = "Esto es una breve descripción del equipo.";
             Assert.AreEqual("Esto es una breve descripción del equipo.", testingTeam.Description);
@@ -76,27 +76,27 @@ namespace Unit_tests
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
-        public void SetInvalidDescriptionEmptyTest()
+        public void TeamSetInvalidDescriptionEmptyTest()
         {
             testingTeam.Description = "";
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
-        public void SetInvalidDescriptionNullTest()
+        public void TeamSetInvalidDescriptionNullTest()
         {
             testingTeam.Description = null;
         }
 
         [TestMethod]
-        public void SetValidMaximumMembersTest()
+        public void TeamSetValidMaximumMembersTest()
         {
             testingTeam.MaximumMembers = 35;
             Assert.AreEqual(35, testingTeam.MaximumMembers);
         }
 
         [TestMethod]
-        public void SetValidOnlyOneMemberTest()
+        public void TeamSetValidOnlyOneMemberTest()
         {
             testingTeam.MaximumMembers = 1;
             Assert.AreEqual(1, testingTeam.MaximumMembers);
@@ -104,20 +104,20 @@ namespace Unit_tests
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
-        public void SetInvalidZeroMemberTest()
+        public void TeamSetInvalidZeroMemberTest()
         {
             testingTeam.MaximumMembers = 0;
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
-        public void SetInvalidNegativeMembersTest()
+        public void TeamSetInvalidNegativeMembersTest()
         {
             testingTeam.MaximumMembers = -10;
         }
 
         [TestMethod]
-        public void ParameterFactoryMethodValidTest()
+        public void TeamParameterFactoryMethodValidTest()
         {
             DateTime creationDateToSet = DateTime.Now;
             testingTeam = Team.NameCreationDateDescriptionMaximumMembers("Equipo1", creationDateToSet, "No hace tareas.", 10);
@@ -129,43 +129,53 @@ namespace Unit_tests
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
-        public void ParameterFactoryMethodInvalidNameTest()
+        public void TeamParameterFactoryMethodInvalidNameTest()
         {
             testingTeam = Team.NameCreationDateDescriptionMaximumMembers("Equipo#11.32!", DateTime.Now, "Tareas:", 5);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
-        public void ParameterFactoryMethodInvalidMaximumNumberTest()
+        public void TeamParameterFactoryMethodInvalidMaximumNumberTest()
         {
             testingTeam = Team.NameCreationDateDescriptionMaximumMembers("Equipo2", DateTime.Now, "Tareas:", 0);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
-        public void ParameterFactoryMethodInvalidDescriptionTest()
+        public void TeamParameterFactoryMethodInvalidDescriptionTest()
         {
             testingTeam = Team.NameCreationDateDescriptionMaximumMembers("Equipo3", DateTime.Now, "", 5);
         }
 
         [TestMethod]
-        public void ToStringTest1()
+        public void TeamToStringTest1()
         {
             Assert.AreEqual("Nombre inválido.", testingTeam.ToString());
         }
 
         [TestMethod]
-        public void ToStringTest2()
+        public void TeamToStringTest2()
         {
             testingTeam.Name = "Equipo10";
             Assert.AreEqual("Equipo10", testingTeam.ToString());
         }
 
         [TestMethod]
-        public void ToStringTest3()
+        public void TeamToStringTest3()
         {
             testingTeam.Name = "Equipo15";
             Assert.AreEqual(testingTeam.Name, testingTeam.ToString());
+        }
+
+        [TestMethod]
+        public void TeamAddValidUserTest1()
+        {
+            DateTime creationDateToSet = DateTime.Now;
+            testingTeam = Team.NameCreationDateDescriptionMaximumMembers("Equipo1", creationDateToSet, "No hace tareas.", 10);
+            User aUser = User.InstanceForTestingPurposes();
+            testingTeam.Members.AddUsers(aUser);
+            CollectionAssert.Contains(testingTeam.Members,aUser)
         }
 
 
