@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using System;
+using Domain;
 using Exceptions;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -7,7 +8,7 @@ namespace Unit_tests
 {
     [TestClass]
     [ExcludeFromCodeCoverage]
-    public class CommentTest
+    public class CommentTests
     {
         private static Comment testingComment;
 
@@ -66,6 +67,13 @@ namespace Unit_tests
         public void CommentSetInvalidTextNullTest()
         {
             testingComment.Text = null;
+        }
+
+        [TestMethod]
+        public void CommentCreationDateTest()
+        {
+            DateTime todaysDate = DateTime.Now.Date;
+            Assert.AreEqual(todaysDate, testingComment.CreationDate.Date);
         }
     }
 }
