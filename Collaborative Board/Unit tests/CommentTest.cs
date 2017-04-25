@@ -1,4 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using Domain;
+using Exceptions;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Unit_tests
@@ -12,11 +14,17 @@ namespace Unit_tests
         [TestInitialize]
         public void TestSetUp()
         {
-            testingComment = CommentTest.InstanceForTestingPurposes();
+            testingComment = Comment.InstanceForTestingPurposes();
         }
 
         [TestMethod]
-        public void CommentSetTextValid()
+        public void CommentForTestingPurposesTest()
+        {
+            Assert.AreEqual("Comentario inválido.", testingComment.Text);
+        }
+
+        [TestMethod]
+        public void CommentSetValidTextTest()
         {
             string validTextContent = "TODO: Crear la interfaz gráfica.";
             testingComment.Text = validTextContent;
@@ -24,7 +32,7 @@ namespace Unit_tests
         }
 
         [TestMethod]
-        public void UserSetInvalidFirstNameNumbersTest()
+        public void CommentSetValidTextNumbersTest()
         {
             string validTextContent = "123456";
             testingComment.Text = validTextContent;
@@ -32,7 +40,7 @@ namespace Unit_tests
         }
 
         [TestMethod]
-        public void UserSetInvalidFirstNamePunctuationTest()
+        public void CommentSetValidTextPunctuationTest()
         {
             string validTextContent = "!@.$#% *-/)(#&^$%^@ !@#";
             testingComment.Text = validTextContent;
@@ -41,14 +49,21 @@ namespace Unit_tests
 
         [TestMethod]
         [ExpectedException(typeof(CommentException))]
-        public void UserSetInvalidLastNameEmptyTest()
+        public void CommentSetInvalidTextSpacesTest()
+        {
+            testingComment.Text = " \n\n  \t\t \n\t  ";
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(CommentException))]
+        public void CommentSetInvalidTextEmptyTest()
         {
             testingComment.Text = "";
         }
 
         [TestMethod]
         [ExpectedException(typeof(CommentException))]
-        public void UserSetInvalidLastNameNullTest()
+        public void CommentSetInvalidTextNullTest()
         {
             testingComment.Text = null;
         }

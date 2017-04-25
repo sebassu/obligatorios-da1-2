@@ -58,6 +58,13 @@ namespace Unit_tests
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
+        public void UserSetInvalidFirstNameSpacesTest()
+        {
+            testingUser.FirstName = " \n\n  \t\t \n\t  ";
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
         public void UserSetInvalidFirstNameEmptyTest()
         {
             testingUser.FirstName = "";
