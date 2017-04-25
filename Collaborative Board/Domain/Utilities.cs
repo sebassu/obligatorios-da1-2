@@ -5,6 +5,11 @@ namespace Domain
 {
     public static class Utilities
     {
+        public static bool IsNotNull(object anObject)
+        {
+            return anObject != null;
+        }
+
         public static bool IsValidName(string aString)
         {
             return !string.IsNullOrWhiteSpace(aString) && ContainsOnlyLettersOrSpaces(aString);
@@ -22,8 +27,7 @@ namespace Domain
 
         public static bool IsTodayOrBefore(DateTime value)
         {
-            var todaysDate = DateTime.Now.Date;
-            return value.CompareTo(todaysDate) <= 0;
+            return value <= DateTime.Today;
         }
     }
 }

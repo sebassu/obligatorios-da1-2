@@ -1,5 +1,5 @@
-﻿using Exceptions;
-using System;
+﻿using System;
+using Exceptions;
 
 namespace Domain
 {
@@ -48,15 +48,20 @@ namespace Domain
 
         private Comment(User aUser, string someText)
         {
-            if (aUser != null)
+            if (Utilities.IsNotNull(aUser))
             {
-                Text = someText;
-                Creator = aUser;
+                SetAttributes(aUser, someText);
             }
             else
             {
                 throw new CommentException("Usuario inválido (nulo) recibido.");
             }
+        }
+
+        private void SetAttributes(User aUser, string someText)
+        {
+            Text = someText;
+            Creator = aUser;
         }
     }
 }

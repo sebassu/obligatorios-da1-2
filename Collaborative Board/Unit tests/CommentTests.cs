@@ -40,7 +40,7 @@ namespace Unit_tests
         {
             string someText = "Falta resolver el issue 12-3.";
             User creator = User.NamesEmailBirthdatePassword("Emilio", "Ravenna", "ravenna@simuladores.com",
-                DateTime.Now.Date, "contraseñaValida123");
+                DateTime.Today, "contraseñaValida123");
             testingComment = Comment.CreatorText(creator, someText);
             Assert.AreEqual(creator, testingComment.Creator);
             Assert.AreEqual(someText, testingComment.Text);
@@ -118,8 +118,7 @@ namespace Unit_tests
         [TestMethod]
         public void CommentCreationDateTest()
         {
-            DateTime todaysDate = DateTime.Now.Date;
-            Assert.AreEqual(todaysDate, testingComment.CreationDate.Date);
+            Assert.AreEqual(DateTime.Today, testingComment.CreationDate.Date);
         }
     }
 }

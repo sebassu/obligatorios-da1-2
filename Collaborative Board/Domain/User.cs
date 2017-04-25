@@ -20,7 +20,7 @@ namespace Domain
                 }
                 else
                 {
-                    throw new UserException("Invalid first name recieved:" + value + ".");
+                    throw new UserException("Nombre inválido recibido: " + value + ".");
                 }
             }
         }
@@ -37,7 +37,7 @@ namespace Domain
                 }
                 else
                 {
-                    throw new UserException("Invalid last name recieved: " + value + ".");
+                    throw new UserException("Apellido inválido recibido: " + value + ".");
                 }
             }
         }
@@ -54,7 +54,7 @@ namespace Domain
                 }
                 catch (SystemException)
                 {
-                    throw new UserException("Invalid email recieved: " + value + ".");
+                    throw new UserException("Email inválido recibido: " + value + ".");
                 }
             }
         }
@@ -72,7 +72,8 @@ namespace Domain
                 }
                 else
                 {
-                    throw new UserException("Invalid birthdate recieved: " + value.ToString("d") + ".");
+                    throw new UserException("Fecha de nacimiento inválida recibida: "
+                        + value.ToString("d") + ".");
                 }
             }
         }
