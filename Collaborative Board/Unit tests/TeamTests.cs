@@ -237,6 +237,7 @@ namespace Unit_tests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(TeamException))]
         public void TeamRemoveNotAMemberTest()
         {
             testingTeam = Team.NameDescriptionMaximumMembers("Equipo1", "No hace tareas.", 10);

@@ -111,6 +111,18 @@ namespace Domain
             return members.Count < maximumMembers && !members.Contains(aMember);
         }
 
+        public void RemoveMember(User aMember)
+        {
+            if (members.Count > minimumMembers && members.Contains(aMember))
+            {
+                members.Remove(aMember);
+            }
+            else
+            {
+                throw new TeamException("Miembro no válido o equipo con mínimo de miembros.");
+            }
+        }
+
         internal static Team TeamForTestingPurposes()
         {
             Team result = new Team()
