@@ -14,7 +14,7 @@ namespace Domain
             get { return firstName; }
             set
             {
-                if (Utilities.IsValidName(value))
+                if (IsValidName(value))
                 {
                     firstName = value.Trim();
                 }
@@ -25,13 +25,18 @@ namespace Domain
             }
         }
 
+        public bool IsValidName(string aString)
+        {
+            return !string.IsNullOrEmpty(aString) && Utilities.ContainsOnlyLettersOrSpaces(aString);
+        }
+
         private string lastName;
         public string LastName
         {
             get { return lastName; }
             set
             {
-                if (Utilities.IsValidName(value))
+                if (IsValidName(value))
                 {
                     lastName = value.Trim();
                 }

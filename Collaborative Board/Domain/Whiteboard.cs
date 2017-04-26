@@ -16,7 +16,7 @@ namespace Domain
             }
             set
             {
-                if (!string.IsNullOrEmpty(value) && value.ToCharArray().All(c => char.IsLetterOrDigit(c)))
+                if (IsValidName(value))
                 {
                     name = value;
                 }
@@ -26,6 +26,12 @@ namespace Domain
                 }
             }
         }
+
+        public bool IsValidName(string aString)
+        {
+            return !string.IsNullOrEmpty(aString) && Utilities.ContainsOnlyLettersOrNumbersOrSpaces(aString);
+        }
+
 
         private string description;
 

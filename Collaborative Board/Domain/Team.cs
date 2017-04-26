@@ -21,7 +21,7 @@ namespace Domain
             }
             set
             {
-                if (Utilities.IsValidTeamName(value))
+                if (IsValidName(value))
                 {
                     name = value;
                 }
@@ -31,6 +31,12 @@ namespace Domain
                 }
             }
         }
+
+        public bool IsValidName(string aString)
+        {
+            return !string.IsNullOrEmpty(aString) && Utilities.ContainsOnlyLettersOrNumbersOrSpaces(aString);
+        }
+
         private DateTime creationDate = DateTime.Now;
 
         public DateTime CreationDate
