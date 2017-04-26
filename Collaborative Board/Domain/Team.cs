@@ -31,7 +31,7 @@ namespace Domain
 
         public bool IsValidTeamName(string value)
         {
-            return !string.IsNullOrEmpty(value) && Utilities.ContainsOnlyLettersOrNumbers(value);
+            return !string.IsNullOrEmpty(value) && Utilities.ContainsOnlyLettersDigitsOrSpaces(value);
         }
 
         private readonly DateTime creationDate = DateTime.Now;
@@ -126,7 +126,7 @@ namespace Domain
             return members.Count > minimumMembers && members.Contains(aMember);
         }
 
-        internal static Team TeamForTestingPurposes()
+        internal static Team InstanceForTestingPurposes()
         {
             return new Team();
         }

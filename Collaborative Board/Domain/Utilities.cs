@@ -1,34 +1,33 @@
 using System;
 using System.Linq;
 
-
 namespace Domain
 {
     public static class Utilities
     {
-        public static bool ContainsOnlyLettersOrNumbers(string aString)
-        {
-            return aString.ToCharArray().All(c => char.IsLetterOrDigit(c));
-        }
-
         public static bool IsNotNull(object anObject)
         {
             return anObject != null;
         }
 
-        public static bool IsValidName(string aString)
+        public static bool ContainsOnlyLettersDigitsOrSpaces(string aString)
         {
-            return !string.IsNullOrWhiteSpace(aString) && ContainsOnlyLettersOrSpaces(aString);
+            return aString.ToCharArray().All(c => IsLetterDigitOrSpace(c));
         }
 
-        private static bool ContainsOnlyLettersOrSpaces(string aString)
+        private static bool IsLetterDigitOrSpace(char aCharacter)
+        {
+            return char.IsLetterOrDigit(aCharacter) || char.IsWhiteSpace(aCharacter);
+        }
+
+        public static bool ContainsOnlyLettersOrSpaces(string aString)
         {
             return aString.ToCharArray().All(c => IsLetterOrSpace(c));
         }
 
-        private static bool IsLetterOrSpace(char aChar)
+        private static bool IsLetterOrSpace(char aCharacter)
         {
-            return char.IsLetter(aChar) || char.IsWhiteSpace(aChar);
+            return char.IsLetter(aCharacter) || char.IsWhiteSpace(aCharacter);
         }
 
         public static bool IsTodayOrBefore(DateTime value)

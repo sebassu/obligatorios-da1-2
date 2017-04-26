@@ -16,7 +16,7 @@ namespace Domain
             get { return firstName; }
             set
             {
-                if (Utilities.IsValidName(value))
+                if (IsValidName(value))
                 {
                     firstName = value.Trim();
                 }
@@ -33,7 +33,7 @@ namespace Domain
             get { return lastName; }
             set
             {
-                if (Utilities.IsValidName(value))
+                if (IsValidName(value))
                 {
                     lastName = value.Trim();
                 }
@@ -42,6 +42,11 @@ namespace Domain
                     throw new UserException("Apellido inválido recibido: " + value + ".");
                 }
             }
+        }
+
+        public bool IsValidName(string aString)
+        {
+            return !string.IsNullOrWhiteSpace(aString) && Utilities.ContainsOnlyLettersOrSpaces(aString);
         }
 
         private MailAddress email;
