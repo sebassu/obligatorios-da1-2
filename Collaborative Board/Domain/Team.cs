@@ -144,17 +144,18 @@ namespace Domain
             creationDate = DateTime.Now;
         }
 
-        public static Team NameDescriptionMaximumMembers(string aName, string aDescription, int aMaximimMembers)
+        public static Team CreatorNameDescriptionMaximumMembers(User creator, string aName, string aDescription, int aMaximimMembers)
         {
-            return new Team(aName, aDescription, aMaximimMembers);
+            return new Team(creator, aName, aDescription, aMaximimMembers);
         }
 
-        private Team(string aName, string aDescription, int aMaximumMembers) 
+        private Team(User creator, string aName, string aDescription, int aMaximumMembers) 
             : this()
         {
             Name = aName;
             Description = aDescription;
             MaximumMembers = aMaximumMembers;
+            members.Add(creator);
         }
 
         public override string ToString()

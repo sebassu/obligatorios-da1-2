@@ -119,7 +119,9 @@ namespace Unit_tests
         [TestMethod]
         public void TeamParameterFactoryMethodValidTest()
         {
-            testingTeam = Team.NameDescriptionMaximumMembers("Equipo1", "No hace tareas.", 10);
+            DateTime aBirthdate = new DateTime(1990, 05, 05);
+            User creator = User.NamesEmailBirthdatePassword("Creator", "Team", "creador@usuario.com", aBirthdate, "password125");
+            testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo1", "No hace tareas.", 10);
             Assert.AreEqual("Equipo1", testingTeam.Name);
             Assert.AreEqual(DateTime.Now.Date, testingTeam.CreationDate.Date);
             Assert.AreEqual("No hace tareas.", testingTeam.Description);
@@ -130,21 +132,27 @@ namespace Unit_tests
         [ExpectedException(typeof(TeamException))]
         public void TeamParameterFactoryMethodInvalidNameTest()
         {
-            testingTeam = Team.NameDescriptionMaximumMembers("Equipo#11.32!", "Tareas:", 5);
+            DateTime aBirthdate = new DateTime(1990, 05, 05);
+            User creator = User.NamesEmailBirthdatePassword("Creator", "Team", "creador@usuario.com", aBirthdate, "password125");
+            testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo#11.32!", "Tareas:", 5);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
         public void TeamParameterFactoryMethodInvalidMaximumNumberTest()
         {
-            testingTeam = Team.NameDescriptionMaximumMembers("Equipo2", "Tareas:", 0);
+            DateTime aBirthdate = new DateTime(1990, 05, 05);
+            User creator = User.NamesEmailBirthdatePassword("Creator", "Team", "creador@usuario.com", aBirthdate, "password125");
+            testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo2", "Tareas:", 0);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
         public void TeamParameterFactoryMethodInvalidDescriptionTest()
         {
-            testingTeam = Team.NameDescriptionMaximumMembers("Equipo3", "", 5);
+            DateTime aBirthdate = new DateTime(1990, 05, 05);
+            User creator = User.NamesEmailBirthdatePassword("Creator", "Team", "creador@usuario.com", aBirthdate, "password125");
+            testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo3", "", 5);
         }
 
         [TestMethod]
@@ -170,7 +178,9 @@ namespace Unit_tests
         [TestMethod]
         public void TeamAddValidMemberTest()
         {
-            testingTeam = Team.NameDescriptionMaximumMembers("Equipo1", "No hace tareas.", 10);
+            DateTime aBirthdate = new DateTime(1990, 05, 05);
+            User creator = User.NamesEmailBirthdatePassword("Creator", "Team", "creador@usuario.com", aBirthdate, "password125");
+            testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo1", "No hace tareas.", 10);
             User aUser = User.InstanceForTestingPurposes();
             testingTeam.AddMember(aUser);
             CollectionAssert.Contains(testingTeam.Members, aUser);
@@ -179,9 +189,10 @@ namespace Unit_tests
         [TestMethod]
         public void TeamAddValidMembersTest()
         {
-            testingTeam = Team.NameDescriptionMaximumMembers("Equipo1", "No hace tareas.", 10);
-            User aUser = User.InstanceForTestingPurposes();
             DateTime aBirthdate = new DateTime(1990, 05, 05);
+            User creator = User.NamesEmailBirthdatePassword("Creator", "Team", "creador@usuario.com", aBirthdate, "password125");
+            testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo1", "No hace tareas.", 10);
+            User aUser = User.InstanceForTestingPurposes();
             User bUser = User.NamesEmailBirthdatePassword("Nombre", "Apellido", "mail@usuario.com", aBirthdate, "password123");
             testingTeam.AddMember(aUser);
             testingTeam.AddMember(bUser);
@@ -193,8 +204,9 @@ namespace Unit_tests
         [ExpectedException(typeof(TeamException))]
         public void TeamAddSameMemberTest()
         {
-            testingTeam = Team.NameDescriptionMaximumMembers("Equipo1", "No hace tareas.", 10);
             DateTime aBirthdate = new DateTime(1990, 05, 05);
+            User creator = User.NamesEmailBirthdatePassword("Creator", "Team", "creador@usuario.com", aBirthdate, "password125");
+            testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo1", "No hace tareas.", 10);
             User aUser = User.NamesEmailBirthdatePassword("Nombre", "Apellido", "mail@usuario.com", aBirthdate, "password123");
             User bUser = User.NamesEmailBirthdatePassword("Name", "LastName", "mail@usuario.com", aBirthdate, "password122");
             testingTeam.AddMember(aUser);
@@ -205,23 +217,21 @@ namespace Unit_tests
         [ExpectedException(typeof(TeamException))]
         public void TeamAddTooManyMembersTest()
         {
-            testingTeam = Team.NameDescriptionMaximumMembers("Equipo1", "No hace tareas.", 1);
             DateTime aBirthdate = new DateTime(1990, 05, 05);
+            User creator = User.NamesEmailBirthdatePassword("Creator", "Team", "creador@usuario.com", aBirthdate, "password125");
+            testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo1", "No hace tareas.", 1);
             User aUser = User.NamesEmailBirthdatePassword("Nombre", "Apellido", "mail@usuario.com", aBirthdate, "password123");
-            User bUser = User.NamesEmailBirthdatePassword("Name", "LastName", "mail@usuario.com", aBirthdate, "password122");
             testingTeam.AddMember(aUser);
-            testingTeam.AddMember(bUser);
         }
 
         [TestMethod]
         public void TeamRemoveMemberTest()
         {
-            testingTeam = Team.NameDescriptionMaximumMembers("Equipo1", "No hace tareas.", 10);
-            User aUser = User.InstanceForTestingPurposes();
             DateTime aBirthdate = new DateTime(1990, 05, 05);
-            User bUser = User.NamesEmailBirthdatePassword("Name", "LastName", "mail@usuario.com", aBirthdate, "password122");
+            User creator = User.NamesEmailBirthdatePassword("Creator", "Team", "creador@usuario.com", aBirthdate, "password125");
+            testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo1", "No hace tareas.", 10);
+            User aUser = User.InstanceForTestingPurposes();
             testingTeam.AddMember(aUser);
-            testingTeam.AddMember(bUser);
             testingTeam.RemoveMember(aUser);
             CollectionAssert.DoesNotContain(testingTeam.Members, aUser);
         }
@@ -230,28 +240,23 @@ namespace Unit_tests
         [ExpectedException(typeof(TeamException))]
         public void TeamRemoveUniqueMemberTest()
         {
-            testingTeam = Team.NameDescriptionMaximumMembers("Equipo1", "No hace tareas.", 10);
-            User aUser = User.InstanceForTestingPurposes();
-            testingTeam.AddMember(aUser);
-            testingTeam.RemoveMember(aUser);
+            DateTime aBirthdate = new DateTime(1990, 05, 05);
+            User creator = User.NamesEmailBirthdatePassword("Creator", "Team", "creador@usuario.com", aBirthdate, "password125");
+            testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo1", "No hace tareas.", 10);
+            testingTeam.RemoveMember(creator);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
         public void TeamRemoveNotAMemberTest()
         {
-            testingTeam = Team.NameDescriptionMaximumMembers("Equipo1", "No hace tareas.", 10);
-            User aUser = User.InstanceForTestingPurposes();
             DateTime aBirthdate = new DateTime(1990, 05, 05);
+            User creator = User.NamesEmailBirthdatePassword("Creator", "Team", "creador@usuario.com", aBirthdate, "password125");
+            testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo1", "No hace tareas.", 10);
+            User aUser = User.InstanceForTestingPurposes();
             User bUser = User.NamesEmailBirthdatePassword("Name", "LastName", "mail@usuari.com", aBirthdate, "password122");
             testingTeam.AddMember(aUser);
             testingTeam.RemoveMember(bUser);
         }
-
-
-
-
-
-
     }
 }
