@@ -161,5 +161,33 @@ namespace Unit_tests
         {
             testingComment.ResolutionDate();
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(CommentException))]
+        public void CommentResolveResolvedCommentSameUserInvalidTest()
+        {
+            User aUser = User.InstanceForTestingPurposes();
+            testingComment.Resolve(aUser);
+            Assert.IsTrue(testingComment.IsResolved);
+            Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate().Date);
+            Assert.AreEqual(testingComment.Resolver, aUser);
+            CollectionAssert.Contains(aUser.CommentsResolved, testingComment);
+            testingComment.Resolve(aUser);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(CommentException))]
+        public void CommentResolveResolvedCommentDifferentUserInvalidTest()
+        {
+            User aUser = User.InstanceForTestingPurposes();
+            testingComment.Resolve(aUser);
+            Assert.IsTrue(testingComment.IsResolved);
+            Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate().Date);
+            Assert.AreEqual(testingComment.Resolver, aUser);
+            CollectionAssert.Contains(aUser.CommentsResolved, testingComment);
+            User differentUser = User.NamesEmailBirthdatePassword("Mario", "Santos", "santos@simuladores.com",
+                DateTime.Today, "contraseñaValida123");
+            testingComment.Resolve(differentUser);
+        }
     }
 }

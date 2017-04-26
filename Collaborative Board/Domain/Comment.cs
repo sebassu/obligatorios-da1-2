@@ -32,6 +32,9 @@ namespace Domain
         public User Creator { get; private set; }
 
         private DateTime resolutionDate;
+
+        // Created as a method since generating a Property raises a warning in Visual Studio
+        // due to an exception being thrown, result of DateTime being a non-nullable type.
         public DateTime ResolutionDate()
         {
             if (resolutionDate != DateTime.MinValue)
@@ -56,25 +59,42 @@ namespace Domain
             }
             else
             {
-                if (Utilities.IsNotNull(aUser))
-                {
-                    Resolver = aUser;
-                    resolutionDate = DateTime.Now;
-                    aUser.commentsResolved.Add(this);
-                }
-                else
-                {
-                    throw new CommentException("Usuario inválido (nulo) recibido.");
-                }
+                ProcessResolutionIfPossible(aUser);
             }
+        }
+
+        private void ProcessResolutionIfPossible(User aUser)
+        {
+            if (Utilities.IsNotNull(aUser))
+            {
+                SetResolutionAttributes(aUser);
+            }
+            else
+            {
+                throw new CommentException("Usuario inválido (nulo) recibido.");
+            }
+        }
+
+        private void SetResolutionAttributes(User aUser)
+        {
+            Resolver = aUser;
+            aUser.AddResolvedComment(this);
+            resolutionDate = DateTime.Now;
         }
 
         public bool IsResolved
         {
             get
             {
-                return (resolutionDate != DateTime.MinValue);
+                return ResolutionDateWasSet();
             }
+        }
+
+        // Valid since resolutionDate will never be set to DateTime.MinValue, which represents 
+        // a date that already long ago passed.
+        private bool ResolutionDateWasSet()
+        {
+            return (resolutionDate != DateTime.MinValue);
         }
 
         public static Comment InstanceForTestingPurposes()
@@ -96,7 +116,7 @@ namespace Domain
         {
             if (Utilities.IsNotNull(aUser))
             {
-                SetAttributes(aUser, someText);
+                SetCreationAttributes(aUser, someText);
             }
             else
             {
@@ -104,7 +124,7 @@ namespace Domain
             }
         }
 
-        private void SetAttributes(User aUser, string someText)
+        private void SetCreationAttributes(User aUser, string someText)
         {
             Text = someText;
             Creator = aUser;

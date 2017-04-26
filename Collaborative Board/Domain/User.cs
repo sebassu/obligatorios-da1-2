@@ -100,13 +100,18 @@ namespace Domain
             return password.Reset();
         }
 
-        internal List<Comment> commentsResolved = new List<Comment>();
+        private List<Comment> commentsResolved = new List<Comment>();
         public IList CommentsResolved
         {
             get
             {
                 return commentsResolved.AsReadOnly();
             }
+        }
+
+        internal void AddResolvedComment(Comment aComment)
+        {
+            commentsResolved.Add(aComment);
         }
 
         internal static User InstanceForTestingPurposes()
