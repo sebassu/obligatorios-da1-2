@@ -119,6 +119,8 @@ namespace Domain
             }
         }
 
+        public User Creator {get; private set;} 
+
         internal static Whiteboard WhiteboardForTestingPurposes()
         {
             Whiteboard result = new Whiteboard()
@@ -130,5 +132,29 @@ namespace Domain
             };
             return result;
         }
+
+        private Whiteboard()
+        {
+            Creator = User.InstanceForTestingPurposes();
+            ownerTeam = Team.TeamForTestingPurposes();
+        }
+
+        public static Whiteboard CreatorNameDescriptionOwnerTeamWidthHeight(User creator, string aName, string aDescription, Team anOwnerTeam, int width, int height)
+        {
+            return new Whiteboard(creator, aName, aDescription, anOwnerTeam, width, height);
+        }
+
+        private Whiteboard(User aCreator, string aName, string aDescription, Team anOwnerTeam, int aWidth, int aHeight)
+            : this()
+        {
+            Creator = aCreator;
+            Name = aName;
+            Description = aDescription;
+            OwnerTeam = anOwnerTeam;
+            Width = aWidth;
+            Height = aHeight;
+        }
+
+
     }
 }

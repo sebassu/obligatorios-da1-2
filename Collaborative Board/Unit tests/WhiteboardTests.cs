@@ -162,14 +162,14 @@ namespace Unit_tests
             User creator = User.InstanceForTestingPurposes();
             testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator, "Pizarron1", "Descripción de pizarrón", ownerTeam, 500, 500);
             Assert.AreEqual("Pizarron1", testingWhiteboard.Name);
-            Assert.AreEqual("Descripción de pizarrón.", testingWhiteboard.Description);
+            Assert.AreEqual("Descripción de pizarrón", testingWhiteboard.Description);
             Assert.AreEqual(ownerTeam, testingWhiteboard.OwnerTeam);
             Assert.AreEqual(500, testingWhiteboard.Width);
             Assert.AreEqual(500, testingWhiteboard.Height);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(TeamException))]
+        [ExpectedException(typeof(WhiteboardException))]
         public void WhiteboardParameterFactoryMethodInvalidNameTest()
         {
             Team ownerTeam = Team.TeamForTestingPurposes();
@@ -178,16 +178,16 @@ namespace Unit_tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(TeamException))]
+        [ExpectedException(typeof(WhiteboardException))]
         public void WhiteboardParameterFactoryMethodInvalidDescriptionTest()
         {
             Team ownerTeam = Team.TeamForTestingPurposes();
             User creator = User.InstanceForTestingPurposes();
-            testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator, "Pizarron2", "", ownerTeam, 0);
+            testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator, "Pizarron2", "", ownerTeam, 100, 100);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(TeamException))]
+        [ExpectedException(typeof(WhiteboardException))]
         public void WhiteboardParameterFactoryMethodInvalidWidthTest()
         {
             Team ownerTeam = Team.TeamForTestingPurposes();
@@ -196,7 +196,7 @@ namespace Unit_tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(TeamException))]
+        [ExpectedException(typeof(WhiteboardException))]
         public void WhiteboardParameterFactoryMethodInvalidHeightTest()
         {
             Team ownerTeam = Team.TeamForTestingPurposes();
