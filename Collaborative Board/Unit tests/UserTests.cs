@@ -397,7 +397,7 @@ namespace Unit_tests
         public void UserResetPasswordRandomnessTest()
         {
             string firstResultObtained = testingUser.ResetPassword();
-            Thread.Sleep(12);
+            Thread.Sleep(15);
             string secondResultObtained = testingUser.ResetPassword();
             Assert.AreNotEqual(firstResultObtained, secondResultObtained);
         }

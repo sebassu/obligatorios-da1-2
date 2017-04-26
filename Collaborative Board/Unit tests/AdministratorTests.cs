@@ -133,7 +133,7 @@ namespace Unit_tests
         public void AdministratorResetPasswordRandomnessTest()
         {
             string firstResultObtained = testingAdministrator.ResetPassword();
-            Thread.Sleep(12);
+            Thread.Sleep(15);
             string secondResultObtained = testingAdministrator.ResetPassword();
             Assert.AreNotEqual(firstResultObtained, secondResultObtained);
         }
