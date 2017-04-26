@@ -79,14 +79,42 @@ namespace Domain
 
         public int Width
         {
-            get; set;
+            get
+            {
+                return width;
+            }
+            set
+            {
+                if (value > 0)
+                {
+                    width = value;
+                }
+                else
+                {
+                    throw new WhiteboardException("Altura de pizarrón inválida: " + value + ".");
+                }
+            }
         }
 
         private int height;
 
         public int Height
         {
-            get; set;
+            get
+            {
+                return height;
+            }
+            set
+            {
+                if (value > 0)
+                {
+                    height = value;
+                }
+                else
+                {
+                    throw new WhiteboardException("Altura de pizarrón inválida: " + value + ".");
+                }
+            }
         }
 
         internal static Whiteboard WhiteboardForTestingPurposes()
