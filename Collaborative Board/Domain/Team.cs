@@ -12,10 +12,7 @@ namespace Domain
         private string name;
         public string Name
         {
-            get
-            {
-                return name;
-            }
+            get { return name; }
             set
             {
                 if (IsValidTeamName(value))
@@ -37,19 +34,13 @@ namespace Domain
         private readonly DateTime creationDate = DateTime.Now;
         public DateTime CreationDate
         {
-            get
-            {
-                return creationDate;
-            }
+            get { return creationDate; }
         }
 
         private string description;
         public string Description
         {
-            get
-            {
-                return description;
-            }
+            get { return description; }
             set
             {
                 if (string.IsNullOrEmpty(value))
@@ -66,10 +57,7 @@ namespace Domain
         private int maximumMembers;
         public int MaximumMembers
         {
-            get
-            {
-                return maximumMembers;
-            }
+            get { return maximumMembers; }
             set
             {
                 if (value >= minimumMembers)
@@ -78,7 +66,8 @@ namespace Domain
                 }
                 else
                 {
-                    throw new TeamException("Máxima cantidad de miembros inválida: " + value + ".");
+                    throw new TeamException("Máxima cantidad de miembros inválida: "
+                        + value + ".");
                 }
             }
         }
@@ -92,11 +81,11 @@ namespace Domain
             }
         }
 
-        public void AddMember(User aMember)
+        public void AddMember(User aUser)
         {
-            if (IsPossibleToAdd(aMember))
+            if (IsPossibleToAdd(aUser))
             {
-                members.Add(aMember);
+                members.Add(aUser);
             }
             else
             {
@@ -109,21 +98,17 @@ namespace Domain
             return members.Count < maximumMembers && !members.Contains(aMember);
         }
 
-        public void RemoveMember(User aMember)
+        public void RemoveMember(User aUser)
         {
-            if (IsPossibleToRemove(aMember))
-            {
-                members.Remove(aMember);
-            }
-            else
+            if (!UserWasRemoved(aUser))
             {
                 throw new TeamException("Miembro no válido o equipo con mínimo de miembros.");
             }
         }
 
-        private bool IsPossibleToRemove(User aMember)
+        private bool UserWasRemoved(User aUser)
         {
-            return members.Count > minimumMembers && members.Contains(aMember);
+            return members.Count > minimumMembers && members.Remove(aUser);
         }
 
         internal static Team InstanceForTestingPurposes()
@@ -150,6 +135,28 @@ namespace Domain
             Description = aDescription;
             MaximumMembers = aMaximumMembers;
             members.Add(creator);
+        }
+
+        public override bool Equals(object parameterObject)
+        {
+            if (parameterObject is Team teamToCompareAgainst)
+            {
+                return HasSameName(teamToCompareAgainst);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool HasSameName(Team aTeam)
+        {
+            return name.Equals(aTeam.name);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
 
         public override string ToString()

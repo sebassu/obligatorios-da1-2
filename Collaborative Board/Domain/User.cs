@@ -144,11 +144,6 @@ namespace Domain
             Password = aPassword;
         }
 
-        public override string ToString()
-        {
-            return firstName + " " + lastName + " <" + Email + ">";
-        }
-
         public override bool Equals(object parameterObject)
         {
             if (parameterObject is User userToCompareAgainst)
@@ -169,6 +164,11 @@ namespace Domain
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return firstName + " " + lastName + " <" + Email + ">";
         }
     }
 }

@@ -341,5 +341,12 @@ namespace Unit_tests
             object someRandomObject = new object();
             Assert.AreNotEqual(testingTeam, someRandomObject);
         }
+
+        [TestMethod]
+        public void TeamGetHashCodeTest()
+        {
+            object testingTeamAsObject = testingTeam;
+            Assert.AreEqual(testingTeamAsObject.GetHashCode(), testingTeam.GetHashCode());
+        }
     }
 }

@@ -7,8 +7,6 @@
 
 **Docentes:** Alejandro Tocar Bluth y Ramiro Eugenio Visca Zanoni.
 
-Grupo M5A.
-
-Universidad ORT Uruguay.
-
+Grupo M5A.<br/>
+Universidad ORT Uruguay.<br/>
 Primer semestre, 2017.
