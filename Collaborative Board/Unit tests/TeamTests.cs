@@ -1,11 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Domain;
-using Exceptions;
+﻿using Domain;
 using System;
+using Exceptions;
+using System.Diagnostics.CodeAnalysis;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Unit_tests
 {
     [TestClass]
+    [ExcludeFromCodeCoverage]
     public class TeamTests
     {
         private static Team testingTeam;
@@ -62,9 +64,7 @@ namespace Unit_tests
         [TestMethod]
         public void TeamValidCreationDateTest()
         {
-            DateTime creationDate = new DateTime();
-            testingTeam.CreationDate = creationDate;
-            Assert.AreEqual(DateTime.Now.Date, testingTeam.CreationDate.Date);
+            Assert.AreEqual(DateTime.Today, testingTeam.CreationDate.Date);
         }
 
         [TestMethod]
@@ -123,9 +123,10 @@ namespace Unit_tests
             User creator = User.NamesEmailBirthdatePassword("Creator", "Team", "creador@usuario.com", aBirthdate, "password125");
             testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo1", "No hace tareas.", 10);
             Assert.AreEqual("Equipo1", testingTeam.Name);
-            Assert.AreEqual(DateTime.Now.Date, testingTeam.CreationDate.Date);
+            Assert.AreEqual(DateTime.Today, testingTeam.CreationDate.Date);
             Assert.AreEqual("No hace tareas.", testingTeam.Description);
             Assert.AreEqual(10, testingTeam.MaximumMembers);
+            CollectionAssert.Contains(testingTeam.Members, creator);
         }
 
         [TestMethod]

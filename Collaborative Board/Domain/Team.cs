@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Linq;
 using Exceptions;
-using System.Runtime.CompilerServices;
 using System.Collections.Generic;
 using System.Collections;
 
-[assembly: InternalsVisibleTo("Unit tests")]
 namespace Domain
 {
     public class Team
@@ -21,7 +18,7 @@ namespace Domain
             }
             set
             {
-                if (Utilities.IsValidTeamName(value))
+                if (IsValidTeamName(value))
                 {
                     name = value;
                 }
@@ -31,19 +28,22 @@ namespace Domain
                 }
             }
         }
-        private DateTime creationDate = DateTime.Now;
 
+        public bool IsValidTeamName(string value)
+        {
+            return !string.IsNullOrEmpty(value) && Utilities.ContainsOnlyLettersOrNumbers(value);
+        }
+
+        private readonly DateTime creationDate = DateTime.Now;
         public DateTime CreationDate
         {
             get
             {
                 return creationDate;
             }
-            set { }
         }
 
         private string description;
-
         public string Description
         {
             get
@@ -52,19 +52,18 @@ namespace Domain
             }
             set
             {
-                if (!string.IsNullOrEmpty(value))
+                if (string.IsNullOrEmpty(value))
                 {
-                    description = value;
+                    throw new TeamException("Descripción inválida: " + value + ".");
                 }
                 else
                 {
-                    throw new TeamException("Descripción inválida: " + value + ".");
+                    description = value;
                 }
             }
         }
 
         private int maximumMembers;
-
         public int MaximumMembers
         {
             get
@@ -84,8 +83,7 @@ namespace Domain
             }
         }
 
-        private List<User> members = new List<User>();
-
+        private readonly List<User> members = new List<User>();
         public IList Members
         {
             get
@@ -130,27 +128,23 @@ namespace Domain
 
         internal static Team TeamForTestingPurposes()
         {
-            Team result = new Team()
-            {
-                name = "Nombre inválido.",
-                description = "Descripción inválida.",
-                maximumMembers = 0
-            };
-            return result;
+            return new Team();
         }
 
         private Team()
         {
-            creationDate = DateTime.Now;
+            name = "Nombre inválido.";
+            description = "Descripción inválida.";
+            maximumMembers = 0;
         }
 
-        public static Team CreatorNameDescriptionMaximumMembers(User creator, string aName, string aDescription, int aMaximimMembers)
+        public static Team CreatorNameDescriptionMaximumMembers(User creator, string aName,
+            string aDescription, int aMaximimMembers)
         {
             return new Team(creator, aName, aDescription, aMaximimMembers);
         }
 
-        private Team(User creator, string aName, string aDescription, int aMaximumMembers) 
-            : this()
+        private Team(User creator, string aName, string aDescription, int aMaximumMembers)
         {
             Name = aName;
             Description = aDescription;
@@ -162,6 +156,5 @@ namespace Domain
         {
             return name;
         }
-
     }
 }

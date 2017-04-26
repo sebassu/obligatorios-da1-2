@@ -31,7 +31,7 @@ namespace Unit_tests
         [TestMethod]
         public void AdministratorParameterFactoryMethodValidTest()
         {
-            DateTime birthdateToSet = DateTime.Now.Date;
+            DateTime birthdateToSet = DateTime.Today;
             testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio", "Ravenna", "ravenna@simuladores.com",
                 birthdateToSet, "contraseñaValida123");
             Assert.AreEqual("Emilio", testingAdministrator.FirstName);

@@ -1,6 +1,8 @@
 ﻿using System;
 using Exceptions;
 using System.Net.Mail;
+using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("Unit tests")]
@@ -20,7 +22,7 @@ namespace Domain
                 }
                 else
                 {
-                    throw new UserException("Invalid first name recieved:" + value + ".");
+                    throw new UserException("Nombre inválido recibido: " + value + ".");
                 }
             }
         }
@@ -37,7 +39,7 @@ namespace Domain
                 }
                 else
                 {
-                    throw new UserException("Invalid last name recieved: " + value + ".");
+                    throw new UserException("Apellido inválido recibido: " + value + ".");
                 }
             }
         }
@@ -54,7 +56,7 @@ namespace Domain
                 }
                 catch (SystemException)
                 {
-                    throw new UserException("Invalid email recieved: " + value + ".");
+                    throw new UserException("Email inválido recibido: " + value + ".");
                 }
             }
         }
@@ -72,12 +74,13 @@ namespace Domain
                 }
                 else
                 {
-                    throw new UserException("Invalid birthdate recieved: " + value.ToString("d") + ".");
+                    throw new UserException("Fecha de nacimiento inválida recibida: "
+                        + value.ToString("d") + ".");
                 }
             }
         }
 
-        private Password password = new Password();
+        private readonly Password password = new Password();
         public string Password
         {
             get { return password.PasswordValue; }
@@ -87,14 +90,25 @@ namespace Domain
             }
         }
 
-        public virtual bool HasAdministrationPrivileges
-        {
-            get { return false; }
-        }
+        public virtual bool HasAdministrationPrivileges => false;
 
         public string ResetPassword()
         {
             return password.Reset();
+        }
+
+        private readonly List<Comment> commentsResolved = new List<Comment>();
+        public IList CommentsResolved
+        {
+            get
+            {
+                return commentsResolved.AsReadOnly();
+            }
+        }
+
+        internal void AddResolvedComment(Comment aComment)
+        {
+            commentsResolved.Add(aComment);
         }
 
         internal static User InstanceForTestingPurposes()
@@ -115,7 +129,8 @@ namespace Domain
             return new User(aFirstName, aLastName, anEmail, aBirthdate, aPassword);
         }
 
-        protected User(string aFirstName, string aLastName, string anEmail, DateTime aBirthdate, string aPassword)
+        protected User(string aFirstName, string aLastName, string anEmail,
+            DateTime aBirthdate, string aPassword)
         {
             FirstName = aFirstName;
             LastName = aLastName;

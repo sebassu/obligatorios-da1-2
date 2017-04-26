@@ -3,7 +3,7 @@
 namespace Exceptions
 {
     [Serializable]
-    public class TeamException : ArgumentException
+    public class TeamException : BoardException
     {
         public TeamException(string message) : base(message) { }
     }

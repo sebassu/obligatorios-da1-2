@@ -6,21 +6,16 @@ namespace Domain
 {
     public static class Utilities
     {
-        public static bool IsValidTeamName(string aString)
+        public static bool ContainsOnlyLettersOrNumbers(string aString)
         {
-            return !string.IsNullOrEmpty(aString) && ContainsOnlyLettersOrNumbers(aString);
+            return aString.ToCharArray().All(c => char.IsLetterOrDigit(c));
         }
 
-        private static bool ContainsOnlyLettersOrNumbers(string aString)
+        public static bool IsNotNull(object anObject)
         {
-            return aString.ToCharArray().All(c => CharacterIsNumberOrDigit(c));
+            return anObject != null;
         }
 
-        private static bool CharacterIsNumberOrDigit(char aChar)
-        {
-            return char.IsLetterOrDigit(aChar);
-		}
-		
         public static bool IsValidName(string aString)
         {
             return !string.IsNullOrWhiteSpace(aString) && ContainsOnlyLettersOrSpaces(aString);
@@ -38,8 +33,7 @@ namespace Domain
 
         public static bool IsTodayOrBefore(DateTime value)
         {
-            var todaysDate = DateTime.Now.Date;
-            return value.CompareTo(todaysDate) <= 0;
+            return value <= DateTime.Today;
         }
     }
 }
