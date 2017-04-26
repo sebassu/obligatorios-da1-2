@@ -96,5 +96,61 @@ namespace Unit_tests
         {
             testingWhiteboard.OwnerTeam = null;
         }
+
+        [TestMethod]
+        public void WhiteboardSetValidWidhtTest()
+        {
+            testingWhiteboard.Width = 1532;
+            Assert.AreEqual(1532, testingWhiteboard.Width);
+        }
+
+        [TestMethod]
+        public void WhiteboardSetValidMinimumWidthTest()
+        {
+            testingWhiteboard.Width = 1;
+            Assert.AreEqual(1, testingWhiteboard.Width);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(WhiteboardException))]
+        public void WhiteboardSetInvalidWidthTest()
+        {
+            testingWhiteboard.Width = -40;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(WhiteboardException))]
+        public void WhiteboardSetInvalidMinimumWidthTest()
+        {
+            testingWhiteboard.Width = 0;
+        }
+
+        [TestMethod]
+        public void WhiteboardSetValidHeightTest()
+        {
+            testingWhiteboard.Height = 2500;
+            Assert.AreEqual(2500, testingWhiteboard.Height);
+        }
+
+        [TestMethod]
+        public void WhiteboardSetValidMinimumHeightTest()
+        {
+            testingWhiteboard.Height = 1;
+            Assert.AreEqual(1, testingWhiteboard.Height);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(WhiteboardException))]
+        public void WhiteboardSetInvalidHeightTest()
+        {
+            testingWhiteboard.Height = -10;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(WhiteboardException))]
+        public void WhiteboardSetInvalidMinimumHeightTest()
+        {
+            testingWhiteboard.Height = 0;
+        }
     }
 }
