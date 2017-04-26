@@ -58,7 +58,21 @@ namespace Domain
 
         public Team OwnerTeam
         {
-            get; set;
+            get
+            {
+                return ownerTeam;
+            }
+            set
+            {
+                if (Utilities.IsNotNull(value))
+                {
+                    ownerTeam = value;
+                }
+                else
+                {
+                    throw new WhiteboardException("El nombre del equipo no es válido: " + value + ".");
+                }
+            }
         }
 
         private int width;

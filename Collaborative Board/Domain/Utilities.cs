@@ -41,5 +41,10 @@ namespace Domain
             var todaysDate = DateTime.Now.Date;
             return value.CompareTo(todaysDate) <= 0;
         }
+
+        public static bool IsNotNull(Object anObject)
+        {
+            return anObject != null;
+        }
     }
 }

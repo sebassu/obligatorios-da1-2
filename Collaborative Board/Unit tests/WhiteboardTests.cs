@@ -23,7 +23,6 @@ namespace Unit_tests
         {
             Assert.AreEqual("Nombre inválido", testingWhiteboard.Name);
             Assert.AreEqual("Descripción inválida.", testingWhiteboard.Description);
-            Assert.AreEqual("EquipoInvalido", testingWhiteboard.OwnerTeam);
         }
 
         [TestMethod]
