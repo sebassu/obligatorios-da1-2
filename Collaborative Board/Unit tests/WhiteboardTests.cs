@@ -23,6 +23,7 @@ namespace Unit_tests
         {
             Assert.AreEqual("Nombre inválido", testingWhiteboard.Name);
             Assert.AreEqual("Descripción inválida.", testingWhiteboard.Description);
+            Assert.AreEqual("EquipoInvalido", testingWhiteboard.OwnerTeam);
         }
 
         [TestMethod]
@@ -78,6 +79,23 @@ namespace Unit_tests
         public void WhiteboardSetInvalidDescriptionEmptyTest()
         {
             testingWhiteboard.Description = "";
+        }
+
+        [TestMethod]
+        public void WhiteboardSetValidOwnerTeamTest()
+        {
+            DateTime aBirthdate = new DateTime(1990, 05, 05);
+            User creator = User.NamesEmailBirthdatePassword("Creator", "Team", "creador@usuario.com", aBirthdate, "password125");
+            Team owner = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo1", "No hace tareas.", 10);
+            testingWhiteboard.OwnerTeam = owner;
+            Assert.AreEqual(owner, testingWhiteboard.OwnerTeam);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(WhiteboardException))]
+        public void WhiteboardSetOwnerTeamNullTest()
+        {
+            testingWhiteboard.OwnerTeam = null;
         }
     }
 }
