@@ -2,6 +2,8 @@
 using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Domain;
+using Exceptions;
 
 namespace Unit_tests
 {
@@ -20,10 +22,6 @@ namespace Unit_tests
         public void WhiteboradForTestingPurposesTest()
         {
             Assert.AreEqual("Nombre inválido", testingWhiteboard.Name);
-            Assert.AreEqual("Descripción inválida.", testingWhiteboard.Description);
-            Assert.AreEqual("EquipoInvalido", testingWhiteboard.Team);
-            Assert.AreEqual(1, testingWhiteboard.Width);
-            Assert.AreEqual(1, testingWhiteboard.Height);
         }
 
         [TestMethod]
