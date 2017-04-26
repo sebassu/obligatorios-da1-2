@@ -154,5 +154,54 @@ namespace Unit_tests
         {
             testingWhiteboard.Height = 0;
         }
+
+        [TestMethod]
+        public void WhiteboardParameterFactoryMethodValidTest()
+        {
+            Team ownerTeam = Team.TeamForTestingPurposes();
+            User creator = User.InstanceForTestingPurposes();
+            testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator, "Pizarron1", "Descripción de pizarrón", ownerTeam, 500, 500);
+            Assert.AreEqual("Pizarron1", testingWhiteboard.Name);
+            Assert.AreEqual("Descripción de pizarrón.", testingWhiteboard.Description);
+            Assert.AreEqual(ownerTeam, testingWhiteboard.OwnerTeam);
+            Assert.AreEqual(500, testingWhiteboard.Width);
+            Assert.AreEqual(500, testingWhiteboard.Height);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(TeamException))]
+        public void WhiteboardParameterFactoryMethodInvalidNameTest()
+        {
+            Team ownerTeam = Team.TeamForTestingPurposes();
+            User creator = User.InstanceForTestingPurposes();
+            testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator, "Pizarron#11.32!", "Tareas:", ownerTeam, 500, 500);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(TeamException))]
+        public void WhiteboardParameterFactoryMethodInvalidDescriptionTest()
+        {
+            Team ownerTeam = Team.TeamForTestingPurposes();
+            User creator = User.InstanceForTestingPurposes();
+            testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator, "Pizarron2", "", ownerTeam, 0);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(TeamException))]
+        public void WhiteboardParameterFactoryMethodInvalidWidthTest()
+        {
+            Team ownerTeam = Team.TeamForTestingPurposes();
+            User creator = User.InstanceForTestingPurposes();
+            testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator, "Equipo3", "Descripción de pizarrón", ownerTeam, 0, 100);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(TeamException))]
+        public void WhiteboardParameterFactoryMethodInvalidHeightTest()
+        {
+            Team ownerTeam = Team.TeamForTestingPurposes();
+            User creator = User.InstanceForTestingPurposes();
+            testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator, "Equipo3", "Descripción de pizarrón", ownerTeam, 100, 0);
+        }
     }
 }
