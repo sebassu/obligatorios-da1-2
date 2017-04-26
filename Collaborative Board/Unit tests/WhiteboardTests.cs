@@ -22,6 +22,7 @@ namespace Unit_tests
         public void WhiteboradForTestingPurposesTest()
         {
             Assert.AreEqual("Nombre inválido", testingWhiteboard.Name);
+            Assert.AreEqual("Descripción inválida.", testingWhiteboard.Description);
         }
 
         [TestMethod]
@@ -56,6 +57,27 @@ namespace Unit_tests
         public void WhiteboardSetInvalidNameNullTest()
         {
             testingWhiteboard.Name = null;
+        }
+
+        [TestMethod]
+        public void WhiteboardSetValidDescriptionTest()
+        {
+            testingWhiteboard.Description = "Esto es una breve descripción del pizarrón.";
+            Assert.AreEqual("Esto es una breve descripción del pizarrón.", testingWhiteboard.Description);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(WhiteboardException))]
+        public void WhiteboardSetInvalidDescriptionNullTest()
+        {
+            testingWhiteboard.Description = null;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(WhiteboardException))]
+        public void WhiteboardSetInvalidDescriptionEmptyTest()
+        {
+            testingWhiteboard.Description = "";
         }
     }
 }
