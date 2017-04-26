@@ -6,6 +6,8 @@ namespace Domain
 {
     public class Whiteboard
     {
+        private static int minimumHeightWidth = 1;
+
         private string name;
 
         public string Name
@@ -85,7 +87,7 @@ namespace Domain
             }
             set
             {
-                if (value > 0)
+                if (value >= minimumHeightWidth)
                 {
                     width = value;
                 }
@@ -106,7 +108,7 @@ namespace Domain
             }
             set
             {
-                if (value > 0)
+                if (value >= minimumHeightWidth)
                 {
                     height = value;
                 }
