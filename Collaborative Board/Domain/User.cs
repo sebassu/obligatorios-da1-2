@@ -1,6 +1,8 @@
 ﻿using System;
 using Exceptions;
 using System.Net.Mail;
+using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("Unit tests")]
@@ -98,6 +100,15 @@ namespace Domain
             return password.Reset();
         }
 
+        internal List<Comment> commentsResolved = new List<Comment>();
+        public IList CommentsResolved
+        {
+            get
+            {
+                return commentsResolved.AsReadOnly();
+            }
+        }
+
         internal static User InstanceForTestingPurposes()
         {
             return new User();
@@ -116,7 +127,8 @@ namespace Domain
             return new User(aFirstName, aLastName, anEmail, aBirthdate, aPassword);
         }
 
-        protected User(string aFirstName, string aLastName, string anEmail, DateTime aBirthdate, string aPassword)
+        protected User(string aFirstName, string aLastName, string anEmail,
+            DateTime aBirthdate, string aPassword)
         {
             FirstName = aFirstName;
             LastName = aLastName;

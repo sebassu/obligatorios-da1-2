@@ -24,6 +24,7 @@ namespace Unit_tests
             Assert.IsNull(testingComment.Creator);
             Assert.AreEqual("Comentario inválido.", testingComment.Text);
             Assert.IsFalse(testingComment.IsResolved);
+            Assert.IsNull(testingComment.Resolver);
         }
 
         [TestMethod]
@@ -127,22 +128,24 @@ namespace Unit_tests
         [TestMethod]
         public void CommentResolutionValidTest1()
         {
-            User resolver = User.InstanceForTestingPurposes();
-            testingComment.Resolve(resolver);
+            User aUser = User.InstanceForTestingPurposes();
+            testingComment.Resolve(aUser);
             Assert.IsTrue(testingComment.IsResolved);
-            Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate);
-            CollectionAssert.Contains(resolver.CommentsSolved, testingComment);
+            Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate().Date);
+            Assert.AreEqual(testingComment.Resolver, aUser);
+            CollectionAssert.Contains(aUser.CommentsResolved, testingComment);
         }
 
         [TestMethod]
         public void CommentResolutionValidTest2()
         {
-            User resolver = User.NamesEmailBirthdatePassword("Mario", "Santos", "santos@simuladores.com",
+            User aUser = User.NamesEmailBirthdatePassword("Mario", "Santos", "santos@simuladores.com",
                 DateTime.Today, "contraseñaValida123");
-            testingComment.Resolve(resolver);
+            testingComment.Resolve(aUser);
             Assert.IsTrue(testingComment.IsResolved);
-            Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate);
-            CollectionAssert.Contains(resolver.CommentsResolved, testingComment);
+            Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate().Date);
+            Assert.AreEqual(testingComment.Resolver, aUser);
+            CollectionAssert.Contains(aUser.CommentsResolved, testingComment);
         }
 
         [TestMethod]
@@ -150,6 +153,13 @@ namespace Unit_tests
         public void CommentResolutionNullUserInvalidTest()
         {
             testingComment.Resolve(null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(CommentException))]
+        public void CommentResolutionDateOfUnresolvedInvalidTest()
+        {
+            testingComment.ResolutionDate();
         }
     }
 }
