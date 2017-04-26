@@ -37,7 +37,21 @@ namespace Domain
 
         public string Description
         {
-            get; set;
+            get
+            {
+                return description;
+            }
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    description = value;
+                }
+                else
+                {
+                    throw new WhiteboardException("Descripción inválida: " + value + ".");
+                }
+            }
         }
 
         private Team ownerTeam;
