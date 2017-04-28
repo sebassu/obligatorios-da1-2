@@ -27,6 +27,11 @@ namespace Domain
             }
         }
 
+        public bool IsValidName(string aString)
+        {
+            return !string.IsNullOrEmpty(aString) && Utilities.ContainsOnlyLettersOrSpaces(aString);
+        }
+
         private string lastName;
         public string LastName
         {
