@@ -203,5 +203,25 @@ namespace Unit_tests
             User creator = User.InstanceForTestingPurposes();
             testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator, "Equipo3", "Descripción de pizarrón", ownerTeam, 100, 0);
         }
+
+        [TestMethod]
+        public void WhiteboardToStringTest1()
+        {
+            Assert.AreEqual("Nombre inválido.", testingWhiteboard.ToString());
+        }
+
+        [TestMethod]
+        public void WhiteboardToStringTest2()
+        {
+            testingWhiteboard.Name = "Equipo10";
+            Assert.AreEqual("Equipo10", testingWhiteboard.ToString());
+        }
+
+        [TestMethod]
+        public void WhiteboardToStringTest3()
+        {
+            testingWhiteboard.Name = "Equipo15";
+            Assert.AreEqual(testingWhiteboard.Name, testingWhiteboard.ToString());
+        }
     }
 }
