@@ -29,7 +29,7 @@ namespace Domain
 
         public bool IsValidName(string aString)
         {
-            return !string.IsNullOrEmpty(aString) && Utilities.ContainsOnlyLettersOrSpaces(aString);
+            return !string.IsNullOrWhiteSpace(aString) && Utilities.ContainsOnlyLettersOrSpaces(aString);
         }
 
         private string lastName;
@@ -47,11 +47,6 @@ namespace Domain
                     throw new UserException("Apellido inválido recibido: " + value + ".");
                 }
             }
-        }
-
-        public bool IsValidName(string aString)
-        {
-            return !string.IsNullOrWhiteSpace(aString) && Utilities.ContainsOnlyLettersOrSpaces(aString);
         }
 
         private MailAddress email;

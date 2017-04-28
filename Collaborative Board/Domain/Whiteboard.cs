@@ -136,7 +136,7 @@ namespace Domain
         private Whiteboard()
         {
             Creator = User.InstanceForTestingPurposes();
-            ownerTeam = Team.TeamForTestingPurposes();
+            ownerTeam = Team.InstanceForTestingPurposes();
         }
 
         public static Whiteboard CreatorNameDescriptionOwnerTeamWidthHeight(User creator, string aName, string aDescription, Team anOwnerTeam, int width, int height)

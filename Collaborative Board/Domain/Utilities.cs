@@ -12,7 +12,7 @@ namespace Domain
 
         public static bool ContainsOnlyLettersDigitsOrSpaces(string aString)
         {
-            return aString.ToCharArray().All(c => IsLetterDigitOrSpace(c));
+            return aString.ToCharArray().All(c => ContainsOnlyLettersOrNumbersOrSpaces(aString));
         }
 
         private static bool CharacterIsNumberOrDigit(char aChar)
@@ -37,7 +37,7 @@ namespace Domain
 
         private static bool IsLetterOrSpace(char aChar)
         {
-            return char.IsLetter(aCharacter) || char.IsWhiteSpace(aCharacter);
+            return char.IsLetter(aChar) || char.IsWhiteSpace(aChar);
         }
 
         public static bool IsTodayOrBefore(DateTime value)
