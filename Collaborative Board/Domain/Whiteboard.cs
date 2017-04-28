@@ -154,8 +154,10 @@ namespace Domain
             Width = aWidth;
             Height = aHeight;
         }
-
-
+        public override string ToString()
+        {
+            return name;
+        }
 
 
     }

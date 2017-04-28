@@ -207,7 +207,7 @@ namespace Unit_tests
         [TestMethod]
         public void WhiteboardToStringTest1()
         {
-            Assert.AreEqual("Nombre inválido.", testingWhiteboard.ToString());
+            Assert.AreEqual("Nombre inválido", testingWhiteboard.ToString());
         }
 
         [TestMethod]
