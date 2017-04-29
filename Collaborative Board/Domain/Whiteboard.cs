@@ -123,5 +123,32 @@ namespace Domain
         {
             return name;
         }
+
+        public override bool Equals(object parameterObject)
+        {
+            if (parameterObject is Whiteboard whiteboardToCompareAgainst)
+            {
+                return HasSameOwnerTeam(whiteboardToCompareAgainst) && HasSameName(whiteboardToCompareAgainst);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool HasSameName(Whiteboard aWhiteboard)
+        {
+            return name.Equals(aWhiteboard.name);
+        }
+
+        private bool HasSameOwnerTeam(Whiteboard aWhiteboard)
+        {
+            return OwnerTeam == aWhiteboard.OwnerTeam;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

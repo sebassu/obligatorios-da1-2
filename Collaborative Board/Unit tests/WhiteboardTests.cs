@@ -216,5 +216,72 @@ namespace Unit_tests
             testingWhiteboard.Name = "Equipo15";
             Assert.AreEqual(testingWhiteboard.Name, testingWhiteboard.ToString());
         }
+
+        [TestMethod]
+        public void WhiteboardEqualsReflexiveTest()
+        {
+            Assert.AreEqual(testingWhiteboard, testingWhiteboard);
+        }
+
+        [TestMethod]
+        public void WhiteboardEqualsSymmetricTest()
+        {
+            Whiteboard secondTestingWhiteboard = Whiteboard.InstanceForTestingPurposes();
+            Assert.AreEqual(testingWhiteboard, secondTestingWhiteboard);
+            Assert.AreEqual(secondTestingWhiteboard, testingWhiteboard);
+        }
+
+        [TestMethod]
+        public void WhiteboardEqualsTransitiveTest()
+        {
+            User creator = User.InstanceForTestingPurposes();
+            Team aTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Same name",
+                "Description 1", 10);
+            testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
+                "Pizarron1", "Descripción 1.", aTeam, 100, 100);
+            Whiteboard secondTestingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
+                "Pizarron1", "Descripción 2.", aTeam, 50, 50);
+            Whiteboard thirdTestingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
+                "Pizarron1", "Descripción 3.", aTeam, 25, 25);
+            Assert.AreEqual(testingWhiteboard, secondTestingWhiteboard);
+            Assert.AreEqual(secondTestingWhiteboard, thirdTestingWhiteboard);
+            Assert.AreEqual(testingWhiteboard, thirdTestingWhiteboard);
+        }
+
+        [TestMethod]
+        public void WhiteboardEqualsDifferentTeamsTest()
+        {
+            User creator = User.InstanceForTestingPurposes();
+            Team oneTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "One name",
+                "Same descriptions", 10);
+            Team secondTeam = Team.CreatorNameDescriptionMaximumMembers(creator,
+                "Different name", "Same descriptions", 10);
+            testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
+                "Pizarron1", "Descripción 1.", oneTeam, 75, 75);
+            Whiteboard secondTestingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
+                "Pizarron1", "Descripción 2.", secondTeam, 25, 25);
+            Assert.AreNotEqual(testingWhiteboard, secondTestingWhiteboard);
+        }
+
+        [TestMethod]
+        public void WhiteboardEqualsNullTest()
+        {
+            Assert.AreNotEqual(testingWhiteboard, null);
+        }
+
+        [TestMethod]
+        public void WhiteboardEqualsDifferentTypesTest()
+        {
+            object someRandomObject = new object();
+            Assert.AreNotEqual(testingWhiteboard, someRandomObject);
+        }
+
+        [TestMethod]
+        public void WhiteboardGetHashCodeTest()
+        {
+            object testingWhiteboardAsObject = testingWhiteboard;
+            Assert.AreEqual(testingWhiteboardAsObject.GetHashCode(),
+                testingWhiteboard.GetHashCode());
+        }
     }
 }

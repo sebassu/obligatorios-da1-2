@@ -1,11 +1,13 @@
 ﻿using Domain;
 using Exceptions;
 using System.Windows;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Unit_tests
 {
     [TestClass]
+    [ExcludeFromCodeCoverage]
     public class ImageTests
     {
         private static Image testingImage;

@@ -71,6 +71,16 @@ namespace Domain
         private readonly List<User> members = new List<User>();
         public IList Members => members.AsReadOnly();
 
+        private readonly List<Whiteboard> createdWhiteboards = new List<Whiteboard>();
+
+        public IList CreatedWhiteboards
+        {
+            get
+            {
+                return createdWhiteboards.AsReadOnly();
+            }
+        }
+
         public void AddMember(User aUser)
         {
             if (IsPossibleToAdd(aUser))
@@ -99,6 +109,23 @@ namespace Domain
         private bool UserWasRemoved(User aUser)
         {
             return members.Count > minimumMembers && members.Remove(aUser);
+        }
+
+        public void AddWhiteboard(Whiteboard aWhiteboard)
+        {
+            if (IsPossibleToAddWhiteboard(aWhiteboard))
+            {
+                createdWhiteboards.Add(aWhiteboard);
+            }
+            else
+            {
+                throw new TeamException("Pizarrón no válido");
+            }
+        }
+
+        private bool IsPossibleToAddWhiteboard(Whiteboard aWhiteboard)
+        {
+            return !createdWhiteboards.Contains(aWhiteboard);
         }
 
         internal static Team InstanceForTestingPurposes()
