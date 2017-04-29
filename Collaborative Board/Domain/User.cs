@@ -103,13 +103,7 @@ namespace Domain
         }
 
         private readonly List<Comment> commentsResolved = new List<Comment>();
-        public IList CommentsResolved
-        {
-            get
-            {
-                return commentsResolved.AsReadOnly();
-            }
-        }
+        public IList CommentsResolved => commentsResolved.AsReadOnly();
 
         internal void AddResolvedComment(Comment aComment)
         {

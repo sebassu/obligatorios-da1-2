@@ -1,7 +1,7 @@
 ﻿using System;
 using Exceptions;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Domain
 {
@@ -21,7 +21,7 @@ namespace Domain
                 }
                 else
                 {
-                    throw new TeamException("Nombre inválido:" + value + ".");
+                    throw new TeamException("Nombre inválido: " + value + ".");
                 }
             }
         }
@@ -31,11 +31,7 @@ namespace Domain
             return !string.IsNullOrEmpty(value) && Utilities.ContainsOnlyLettersDigitsOrSpaces(value);
         }
 
-        private readonly DateTime creationDate = DateTime.Now;
-        public DateTime CreationDate
-        {
-            get { return creationDate; }
-        }
+        public DateTime CreationDate { get; } = DateTime.Now;
 
         private string description;
         public string Description
@@ -73,13 +69,7 @@ namespace Domain
         }
 
         private readonly List<User> members = new List<User>();
-        public IList Members
-        {
-            get
-            {
-                return members.AsReadOnly();
-            }
-        }
+        public IList Members => members.AsReadOnly();
 
         public void AddMember(User aUser)
         {

@@ -50,6 +50,8 @@
   <ItemGroup>
     <Compile Include="AdministratorTests.cs" />
     <Compile Include="CommentTests.cs" />
+    <Compile Include="TextBoxTest.cs" />
+    <Compile Include="ImageTests.cs" />
     <Compile Include="UserTests.cs" />
     <Compile Include="TeamTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

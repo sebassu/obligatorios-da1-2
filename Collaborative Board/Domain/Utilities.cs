@@ -12,12 +12,7 @@ namespace Domain
 
         public static bool ContainsOnlyLettersDigitsOrSpaces(string aString)
         {
-            return aString.ToCharArray().All(c => ContainsOnlyLettersOrNumbersOrSpaces(aString));
-        }
-
-        private static bool CharacterIsNumberOrDigit(char aChar)
-        {
-            return char.IsLetterOrDigit(aChar);
+            return aString.ToCharArray().All(c => IsLetterDigitOrSpace(c));
         }
 
         public static bool ContainsOnlyLettersOrSpaces(string aString)
@@ -25,14 +20,9 @@ namespace Domain
             return aString.ToCharArray().All(c => IsLetterOrSpace(c));
         }
 
-        public static bool ContainsOnlyLettersOrNumbersOrSpaces(string aString)
+        private static bool IsLetterDigitOrSpace(char aChar)
         {
-            return aString.ToCharArray().All(c => IsLetterOrDigitOrSpace(c));
-        }
-
-        private static bool IsLetterOrDigitOrSpace(char aChar)
-        {
-            return char.IsLetter(aChar) || char.IsWhiteSpace(aChar) || char.IsNumber(aChar);
+            return IsLetterOrSpace(aChar) || char.IsNumber(aChar);
         }
 
         private static bool IsLetterOrSpace(char aChar)

@@ -23,18 +23,14 @@ namespace Domain
             }
         }
 
-        private readonly DateTime creationDate = DateTime.Now;
-        public DateTime CreationDate
-        {
-            get { return creationDate; }
-        }
+        public DateTime CreationDate { get; } = DateTime.Now;
 
         public User Creator { get; private set; }
 
         private DateTime resolutionDate;
 
         // Created as a method since generating a Property raises a warning in Visual Studio
-        // due to an exception being thrown, result of DateTime being a non-nullable type.
+        // due to an exception being thrown.
         public DateTime ResolutionDate()
         {
             if (resolutionDate != DateTime.MinValue)
@@ -91,7 +87,8 @@ namespace Domain
         }
 
         // Valid since resolutionDate will never be set to DateTime.MinValue, which represents 
-        // a date that already long ago passed.
+        // a date that already passed. Usage of DateTime? (System.Nullable<DateTime>) was considered
+        // but decided against due to the boxing/unboxing overhead as well as the previous alternative.
         private bool ResolutionDateWasSet()
         {
             return (resolutionDate != DateTime.MinValue);

@@ -1,21 +1,18 @@
-﻿using System.Linq;
+﻿using System;
 using Exceptions;
-using System;
 
 namespace Domain
 {
     public class Whiteboard
     {
-        private static int minimumHeightWidth = 1;
+        private const int minimumWidth = 1;
+
+        private const int minimumHeight = 1;
 
         private string name;
-
         public string Name
         {
-            get
-            {
-                return name;
-            }
+            get { return name; }
             set
             {
                 if (IsValidName(value))
@@ -31,18 +28,13 @@ namespace Domain
 
         public bool IsValidName(string aString)
         {
-            return !string.IsNullOrEmpty(aString) && Utilities.ContainsOnlyLettersOrNumbersOrSpaces(aString);
+            return !string.IsNullOrEmpty(aString) && Utilities.ContainsOnlyLettersDigitsOrSpaces(aString);
         }
 
-
         private string description;
-
         public string Description
         {
-            get
-            {
-                return description;
-            }
+            get { return description; }
             set
             {
                 if (!string.IsNullOrEmpty(value))
@@ -51,34 +43,13 @@ namespace Domain
                 }
                 else
                 {
-                    throw new WhiteboardException("Descripción inválida: " + value + ".");
-                }
-            }
-        }
-
-        private Team ownerTeam;
-
-        public Team OwnerTeam
-        {
-            get
-            {
-                return ownerTeam;
-            }
-            set
-            {
-                if (Utilities.IsNotNull(value))
-                {
-                    ownerTeam = value;
-                }
-                else
-                {
-                    throw new WhiteboardException("El nombre del equipo no es válido: " + value + ".");
+                    throw new WhiteboardException("Descripción inválida: "
+                        + value + ".");
                 }
             }
         }
 
         private int width;
-
         public int Width
         {
             get
@@ -87,65 +58,61 @@ namespace Domain
             }
             set
             {
-                if (value >= minimumHeightWidth)
+                if (value >= minimumWidth)
                 {
                     width = value;
                 }
                 else
                 {
-                    throw new WhiteboardException("Altura de pizarrón inválida: " + value + ".");
+                    throw new WhiteboardException("Altura de pizarrón inválida: "
+                        + value + ".");
                 }
             }
         }
 
         private int height;
-
         public int Height
         {
-            get
-            {
-                return height;
-            }
+            get { return height; }
             set
             {
-                if (value >= minimumHeightWidth)
+                if (value >= minimumHeight)
                 {
                     height = value;
                 }
                 else
                 {
-                    throw new WhiteboardException("Altura de pizarrón inválida: " + value + ".");
+                    throw new WhiteboardException("Altura de pizarrón inválida: "
+                        + value + ".");
                 }
             }
         }
 
-        public User Creator {get; private set;} 
+        public User Creator { get; }
 
-        internal static Whiteboard WhiteboardForTestingPurposes()
+        public Team OwnerTeam { get; }
+
+        internal static Whiteboard InstanceForTestingPurposes()
         {
-            Whiteboard result = new Whiteboard()
-            {
-                name = "Nombre inválido",
-                description = "Descripción inválida.",
-                width = 1,
-                height = 1
-            };
-            return result;
+            return new Whiteboard();
         }
 
         private Whiteboard()
         {
-            Creator = User.InstanceForTestingPurposes();
-            ownerTeam = Team.InstanceForTestingPurposes();
+            name = "Nombre inválido";
+            description = "Descripción inválida.";
+            width = Int32.MaxValue;
+            height = Int32.MaxValue;
         }
 
-        public static Whiteboard CreatorNameDescriptionOwnerTeamWidthHeight(User creator, string aName, string aDescription, Team anOwnerTeam, int width, int height)
+        public static Whiteboard CreatorNameDescriptionOwnerTeamWidthHeight(User creator,
+            string aName, string aDescription, Team anOwnerTeam, int width, int height)
         {
             return new Whiteboard(creator, aName, aDescription, anOwnerTeam, width, height);
         }
 
-        private Whiteboard(User aCreator, string aName, string aDescription, Team anOwnerTeam, int aWidth, int aHeight)
-            : this()
+        private Whiteboard(User aCreator, string aName, string aDescription,
+            Team anOwnerTeam, int aWidth, int aHeight)
         {
             Creator = aCreator;
             Name = aName;
@@ -154,11 +121,10 @@ namespace Domain
             Width = aWidth;
             Height = aHeight;
         }
+
         public override string ToString()
         {
             return name;
         }
-
-
     }
 }
