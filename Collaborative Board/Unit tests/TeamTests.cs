@@ -348,5 +348,52 @@ namespace Unit_tests
             object testingTeamAsObject = testingTeam;
             Assert.AreEqual(testingTeamAsObject.GetHashCode(), testingTeam.GetHashCode());
         }
+
+        [TestMethod]
+        public void TeamAddValidWhiteboardTest()
+        {
+            DateTime aBirthdate = new DateTime(1990, 05, 05);
+            User creator = User.NamesEmailBirthdatePassword("Creator", "Team",
+                "creador@usuario.com", aBirthdate, "password125");
+            testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo 1",
+                "No hace tareas.", 10);
+            Whiteboard aWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator, "PizarronValido", "Descripcion de pizarron", testingTeam, 500, 500);
+            testingTeam.AddWhiteboard(aWhiteboard);
+            CollectionAssert.Contains(testingTeam.CreatedWhiteboards, aWhiteboard);
+        }
+
+        [TestMethod]
+        public void TeamAddValidWhiteboardsTest()
+        {
+            DateTime aBirthdate = new DateTime(1990, 05, 05);
+            User creator = User.NamesEmailBirthdatePassword("Creator", "Team",
+                "creador@usuario.com", aBirthdate, "password125");
+            testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo 1",
+                "No hace tareas.", 10);
+            Whiteboard aWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
+                "PizarronValido", "Descripcion de pizarron", testingTeam, 500, 500);
+            Whiteboard bWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
+                "PizarronNuevo", "Descripcion de pizarron", testingTeam, 1500, 1500);
+            testingTeam.AddWhiteboard(aWhiteboard);
+            testingTeam.AddWhiteboard(bWhiteboard);
+            CollectionAssert.Contains(testingTeam.CreatedWhiteboards, aWhiteboard);
+            CollectionAssert.Contains(testingTeam.CreatedWhiteboards, bWhiteboard);
+        }
+
+        [TestMethod]
+        public void TeammAddSameWhiteboardTest()
+        {
+            DateTime aBirthdate = new DateTime(1990, 05, 05);
+            User creator = User.NamesEmailBirthdatePassword("Creator", "Team",
+                "creador@usuario.com", aBirthdate, "password125");
+            testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo 1",
+                "No hace tareas.", 10);
+            Whiteboard aWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
+                "PizarronValido", "Descripcion de pizarron", testingTeam, 500, 500);
+            Whiteboard bWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
+               "PizarronValido", "Descripcion de pizarron2", testingTeam, 1500, 1500);
+            testingTeam.AddWhiteboard(aWhiteboard);
+            testingTeam.AddWhiteboard(bWhiteboard);
+        }
     }
 }
