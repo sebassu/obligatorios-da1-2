@@ -240,7 +240,7 @@ namespace Unit_tests
 
         [TestMethod]
         public void WhiteboardEqualsTransitiveTest()
-        {
+            {
             User creator = User.InstanceForTestingPurposes();
             Team aTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Same name",
                 "Description 1", 10);

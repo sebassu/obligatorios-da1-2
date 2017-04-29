@@ -159,6 +159,18 @@ namespace Domain
             return name;
         }
 
+        public override bool Equals(object parameterObject)
+        {
+            if (parameterObject is Whiteboard whiteboardToCompateAgainst)
+            {
+                return (ownerTeam.Equals(whiteboardToCompateAgainst.OwnerTeam) && name.Equals(whiteboardToCompateAgainst.name));
+            }
+            else
+            {
+                return false;
+            }
+        }
+
 
     }
 }
