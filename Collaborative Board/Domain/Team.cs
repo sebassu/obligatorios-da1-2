@@ -123,14 +123,19 @@ namespace Domain
 
         public void AddWhiteboard(Whiteboard aWhiteboard)
         {
-            if (!createdWhiteboards.Contains(aWhiteboard))
+            if (IsPossibleToAddWhiteboard(aWhiteboard))
             {
                 createdWhiteboards.Add(aWhiteboard);
             }
             else
             {
-                throw new TeamException("Pizarrón no válido"); 
+                throw new TeamException("Pizarrón no válido");
             }
+        }
+
+        private bool IsPossibleToAddWhiteboard(Whiteboard aWhiteboard)
+        {
+            return !createdWhiteboards.Contains(aWhiteboard);
         }
 
         internal static Team InstanceForTestingPurposes()
