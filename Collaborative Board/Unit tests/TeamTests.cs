@@ -381,7 +381,8 @@ namespace Unit_tests
         }
 
         [TestMethod]
-        public void TeammAddSameWhiteboardTest()
+        [ExpectedException(typeof(TeamException))]
+        public void TeamAddSameWhiteboardTest()
         {
             DateTime aBirthdate = new DateTime(1990, 05, 05);
             User creator = User.NamesEmailBirthdatePassword("Creator", "Team",

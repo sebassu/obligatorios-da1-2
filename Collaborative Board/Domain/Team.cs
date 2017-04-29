@@ -81,6 +81,16 @@ namespace Domain
             }
         }
 
+        private readonly List<Whiteboard> createdWhiteboards = new List<Whiteboard>();
+
+        public IList CreatedWhiteboards
+        {
+            get
+            {
+                return createdWhiteboards.AsReadOnly();
+            }
+        }
+
         public void AddMember(User aUser)
         {
             if (IsPossibleToAdd(aUser))
@@ -109,6 +119,18 @@ namespace Domain
         private bool UserWasRemoved(User aUser)
         {
             return members.Count > minimumMembers && members.Remove(aUser);
+        }
+
+        public void AddWhiteboard(Whiteboard aWhiteboard)
+        {
+            if (!createdWhiteboards.Contains(aWhiteboard))
+            {
+                createdWhiteboards.Add(aWhiteboard);
+            }
+            else
+            {
+                throw new TeamException("Pizarrón no válido"); 
+            }
         }
 
         internal static Team InstanceForTestingPurposes()
