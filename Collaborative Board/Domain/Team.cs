@@ -145,7 +145,7 @@ namespace Domain
                 throw new TeamException("Pizarrón no válido.");
             }
         }
-
+		
         private bool WhiteboardWasRemoved(Whiteboard aWhiteboard)
         {
             return !createdWhiteboards.Remove(aWhiteboard);
