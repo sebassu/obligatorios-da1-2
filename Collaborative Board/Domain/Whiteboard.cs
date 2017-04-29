@@ -163,7 +163,7 @@ namespace Domain
         {
             if (parameterObject is Whiteboard whiteboardToCompateAgainst)
             {
-                return (ownerTeam.Equals(whiteboardToCompateAgainst.OwnerTeam) && name.Equals(whiteboardToCompateAgainst.name));
+                return (HasSameOwnerTeam(whiteboardToCompateAgainst) && HasSameName(whiteboardToCompateAgainst));
             }
             else
             {
@@ -171,6 +171,14 @@ namespace Domain
             }
         }
 
+        private bool HasSameName(Whiteboard whiteboardToCompateAgainst)
+        {
+            return name.Equals(whiteboardToCompateAgainst.name);
+        }
 
+        private bool HasSameOwnerTeam(Whiteboard whiteboardToCompateAgainst)
+        {
+            return ownerTeam.Equals(whiteboardToCompateAgainst.OwnerTeam);
+        }
     }
 }
