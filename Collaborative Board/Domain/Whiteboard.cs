@@ -52,10 +52,7 @@ namespace Domain
         private int width;
         public int Width
         {
-            get
-            {
-                return width;
-            }
+            get { return width; }
             set
             {
                 if (value >= minimumWidth)

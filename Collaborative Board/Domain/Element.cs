@@ -1,4 +1,5 @@
 ﻿using Exceptions;
+using System.Windows;
 
 namespace Domain
 {
@@ -11,10 +12,7 @@ namespace Domain
         protected int width;
         public int Width
         {
-            get
-            {
-                return width;
-            }
+            get { return width; }
             set
             {
                 if (value >= minimumWidth)
@@ -45,6 +43,35 @@ namespace Domain
                         + value + ".");
                 }
             }
+        }
+
+        private Point origin = new Point(0, 0);
+
+        public void SetOriginPoint(Point newOrigin)
+        {
+            if (IsValidOriginPoint(newOrigin))
+            {
+                origin = newOrigin;
+            }
+            else
+            {
+                throw new ElementException("Punto de origen inválido recibido.");
+            }
+        }
+
+        private bool IsValidOriginPoint(Point aPoint)
+        {
+            return aPoint.X >= 0 && aPoint.Y >= 0;
+        }
+
+        public double RelativeX
+        {
+            get { return origin.X; }
+        }
+
+        public double RelativeY
+        {
+            get { return origin.Y; }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Domain;
 using Exceptions;
+using System.Windows;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Unit_tests
@@ -80,45 +81,45 @@ namespace Unit_tests
         }
 
         [TestMethod]
-        public void ImageSetValidRelativeXTest()
+        public void ImageSetValidOriginPointTest()
         {
-            testingImage.RelativeX = 45;
-            Assert.AreEqual(45, testingImage.RelativeX);
+            Point newOrigin = new Point(23, 37);
+            testingImage.SetOriginPoint(newOrigin);
+            Assert.AreEqual(newOrigin.X, testingImage.RelativeX);
+            Assert.AreEqual(newOrigin.Y, testingImage.RelativeY);
         }
 
         [TestMethod]
-        public void ImageSetValidMinimumRelativeXZeroTest()
+        public void ImageSetMinimumValidOriginPointTest()
         {
-            testingImage.RelativeX = 0;
-            Assert.AreEqual(0, testingImage.RelativeX);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ElementException))]
-        public void ImageSetInvalidNegativeRelativeXTest()
-        {
-            testingImage.RelativeX = -40;
-        }
-
-        [TestMethod]
-        public void ImageSetValidRelativeYTest()
-        {
-            testingImage.RelativeY = 90;
-            Assert.AreEqual(45, testingImage.RelativeX);
-        }
-
-        [TestMethod]
-        public void ImageSetValidMinimumRelativeYZeroTest()
-        {
-            testingImage.RelativeY = 0;
-            Assert.AreEqual(0, testingImage.RelativeX);
+            Point newOrigin = new Point(0, 0);
+            testingImage.SetOriginPoint(newOrigin);
+            Assert.AreEqual(newOrigin.X, testingImage.RelativeX);
+            Assert.AreEqual(newOrigin.Y, testingImage.RelativeY);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ElementException))]
-        public void ImageSetInvalidNegativeRelativeYTest()
+        public void ImageSetOriginPointInvalidXTest()
         {
-            testingImage.RelativeY = -2112;
+            Point newOrigin = new Point(-100, 10);
+            testingImage.SetOriginPoint(newOrigin);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ElementException))]
+        public void ImageSetOriginPointInvalidYTest()
+        {
+            Point newOrigin = new Point(200, -99);
+            testingImage.SetOriginPoint(newOrigin);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ElementException))]
+        public void ImageSetInvalidOriginPointTest()
+        {
+            Point newOrigin = new Point(-2112, -1000);
+            testingImage.SetOriginPoint(newOrigin);
         }
     }
 }

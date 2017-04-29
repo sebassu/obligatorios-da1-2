@@ -1,5 +1,6 @@
 ﻿using Domain;
 using Exceptions;
+using System.Windows;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Unit_tests
@@ -16,7 +17,7 @@ namespace Unit_tests
         }
 
         [TestMethod]
-        public void ImageForTestingPurposesTest()
+        public void TextBoxForTestingPurposesTest()
         {
             Whiteboard testingWhiteboard = Whiteboard.InstanceForTestingPurposes();
             Assert.AreEqual(0, testingTextBox.Width);
@@ -24,14 +25,14 @@ namespace Unit_tests
         }
 
         [TestMethod]
-        public void ImageSetValidWidthTest()
+        public void TextBoxSetValidWidthTest()
         {
             testingTextBox.Width = 1532;
             Assert.AreEqual(1532, testingTextBox.Width);
         }
 
         [TestMethod]
-        public void ImageSetValidMinimumWidthOneTest()
+        public void TextBoxSetValidMinimumWidthOneTest()
         {
             testingTextBox.Width = 1;
             Assert.AreEqual(1, testingTextBox.Width);
@@ -39,27 +40,27 @@ namespace Unit_tests
 
         [TestMethod]
         [ExpectedException(typeof(ElementException))]
-        public void ImageSetInvalidNegativeWidthTest()
+        public void TextBoxSetInvalidNegativeWidthTest()
         {
             testingTextBox.Width = -40;
         }
 
         [TestMethod]
         [ExpectedException(typeof(ElementException))]
-        public void ImageSetInvalidMinimumWidthZeroTest()
+        public void TextBoxSetInvalidMinimumWidthZeroTest()
         {
             testingTextBox.Width = 0;
         }
 
         [TestMethod]
-        public void ImageSetValidHeightTest()
+        public void TextBoxSetValidHeightTest()
         {
             testingTextBox.Height = 2500;
             Assert.AreEqual(2500, testingTextBox.Height);
         }
 
         [TestMethod]
-        public void ImageSetValidMinimumHeightOneTest()
+        public void TextBoxSetValidMinimumHeightOneTest()
         {
             testingTextBox.Height = 1;
             Assert.AreEqual(1, testingTextBox.Height);
@@ -67,58 +68,58 @@ namespace Unit_tests
 
         [TestMethod]
         [ExpectedException(typeof(ElementException))]
-        public void ImageSetInvalidNegativeHeightTest()
+        public void TextBoxSetInvalidNegativeHeightTest()
         {
             testingTextBox.Height = -10;
         }
 
         [TestMethod]
         [ExpectedException(typeof(ElementException))]
-        public void ImageSetInvalidMinimumHeightZeroTest()
+        public void TextBoxSetInvalidMinimumHeightZeroTest()
         {
             testingTextBox.Height = 0;
         }
 
         [TestMethod]
-        public void ImageSetValidRelativeXTest()
+        public void TextBoxSetValidOriginPointTest()
         {
-            testingTextBox.RelativeX = 45;
-            Assert.AreEqual(45, testingTextBox.RelativeX);
+            Point newOrigin = new Point(23, 37);
+            testingTextBox.SetOriginPoint(newOrigin);
+            Assert.AreEqual(newOrigin.X, testingTextBox.RelativeX);
+            Assert.AreEqual(newOrigin.Y, testingTextBox.RelativeY);
         }
 
         [TestMethod]
-        public void ImageSetValidMinimumRelativeXZeroTest()
+        public void TextBoxSetMinimumValidOriginPointTest()
         {
-            testingTextBox.RelativeX = 0;
-            Assert.AreEqual(0, testingTextBox.RelativeX);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ElementException))]
-        public void ImageSetInvalidNegativeRelativeXTest()
-        {
-            testingTextBox.RelativeX = -40;
-        }
-
-        [TestMethod]
-        public void ImageSetValidRelativeYTest()
-        {
-            testingTextBox.RelativeY = 90;
-            Assert.AreEqual(45, testingTextBox.RelativeX);
-        }
-
-        [TestMethod]
-        public void ImageSetValidMinimumRelativeYZeroTest()
-        {
-            testingTextBox.RelativeY = 0;
-            Assert.AreEqual(0, testingTextBox.RelativeX);
+            Point newOrigin = new Point(0, 0);
+            testingTextBox.SetOriginPoint(newOrigin);
+            Assert.AreEqual(newOrigin.X, testingTextBox.RelativeX);
+            Assert.AreEqual(newOrigin.Y, testingTextBox.RelativeY);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ElementException))]
-        public void ImageSetInvalidNegativeRelativeYTest()
+        public void TextBoxSetOriginPointInvalidXTest()
         {
-            testingTextBox.RelativeY = -2112;
+            Point newOrigin = new Point(-100, 10);
+            testingTextBox.SetOriginPoint(newOrigin);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ElementException))]
+        public void TextBoxSetOriginPointInvalidYTest()
+        {
+            Point newOrigin = new Point(200, -99);
+            testingTextBox.SetOriginPoint(newOrigin);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ElementException))]
+        public void TextBoxSetInvalidOriginPointTest()
+        {
+            Point newOrigin = new Point(-2112, -1000);
+            testingTextBox.SetOriginPoint(newOrigin);
         }
     }
 }
