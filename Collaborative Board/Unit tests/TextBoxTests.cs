@@ -5,120 +5,120 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Unit_tests
 {
     [TestClass]
-    public class ImageTests
+    public class TextBoxTests
     {
-        private static Image testingImage;
+        private static TextBox testingTextBox;
 
         [TestInitialize]
         public void TestSetUp()
         {
-            testingImage = Image.InstanceForTestingPurposes();
+            testingTextBox = TextBox.InstanceForTestingPurposes();
         }
 
         [TestMethod]
         public void ImageForTestingPurposesTest()
         {
             Whiteboard testingWhiteboard = Whiteboard.InstanceForTestingPurposes();
-            Assert.AreEqual(0, testingImage.Width);
-            Assert.AreEqual(0, testingImage.Height);
+            Assert.AreEqual(0, testingTextBox.Width);
+            Assert.AreEqual(0, testingTextBox.Height);
         }
 
         [TestMethod]
         public void ImageSetValidWidthTest()
         {
-            testingImage.Width = 1532;
-            Assert.AreEqual(1532, testingImage.Width);
+            testingTextBox.Width = 1532;
+            Assert.AreEqual(1532, testingTextBox.Width);
         }
 
         [TestMethod]
         public void ImageSetValidMinimumWidthOneTest()
         {
-            testingImage.Width = 1;
-            Assert.AreEqual(1, testingImage.Width);
+            testingTextBox.Width = 1;
+            Assert.AreEqual(1, testingTextBox.Width);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ElementException))]
         public void ImageSetInvalidNegativeWidthTest()
         {
-            testingImage.Width = -40;
+            testingTextBox.Width = -40;
         }
 
         [TestMethod]
         [ExpectedException(typeof(ElementException))]
         public void ImageSetInvalidMinimumWidthZeroTest()
         {
-            testingImage.Width = 0;
+            testingTextBox.Width = 0;
         }
 
         [TestMethod]
         public void ImageSetValidHeightTest()
         {
-            testingImage.Height = 2500;
-            Assert.AreEqual(2500, testingImage.Height);
+            testingTextBox.Height = 2500;
+            Assert.AreEqual(2500, testingTextBox.Height);
         }
 
         [TestMethod]
         public void ImageSetValidMinimumHeightOneTest()
         {
-            testingImage.Height = 1;
-            Assert.AreEqual(1, testingImage.Height);
+            testingTextBox.Height = 1;
+            Assert.AreEqual(1, testingTextBox.Height);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ElementException))]
         public void ImageSetInvalidNegativeHeightTest()
         {
-            testingImage.Height = -10;
+            testingTextBox.Height = -10;
         }
 
         [TestMethod]
         [ExpectedException(typeof(ElementException))]
         public void ImageSetInvalidMinimumHeightZeroTest()
         {
-            testingImage.Height = 0;
+            testingTextBox.Height = 0;
         }
 
         [TestMethod]
         public void ImageSetValidRelativeXTest()
         {
-            testingImage.RelativeX = 45;
-            Assert.AreEqual(45, testingImage.RelativeX);
+            testingTextBox.RelativeX = 45;
+            Assert.AreEqual(45, testingTextBox.RelativeX);
         }
 
         [TestMethod]
         public void ImageSetValidMinimumRelativeXZeroTest()
         {
-            testingImage.RelativeX = 0;
-            Assert.AreEqual(0, testingImage.RelativeX);
+            testingTextBox.RelativeX = 0;
+            Assert.AreEqual(0, testingTextBox.RelativeX);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ElementException))]
         public void ImageSetInvalidNegativeRelativeXTest()
         {
-            testingImage.RelativeX = -40;
+            testingTextBox.RelativeX = -40;
         }
 
         [TestMethod]
         public void ImageSetValidRelativeYTest()
         {
-            testingImage.RelativeY = 90;
-            Assert.AreEqual(45, testingImage.RelativeX);
+            testingTextBox.RelativeY = 90;
+            Assert.AreEqual(45, testingTextBox.RelativeX);
         }
 
         [TestMethod]
         public void ImageSetValidMinimumRelativeYZeroTest()
         {
-            testingImage.RelativeY = 0;
-            Assert.AreEqual(0, testingImage.RelativeX);
+            testingTextBox.RelativeY = 0;
+            Assert.AreEqual(0, testingTextBox.RelativeX);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ElementException))]
         public void ImageSetInvalidNegativeRelativeYTest()
         {
-            testingImage.RelativeY = -2112;
+            testingTextBox.RelativeY = -2112;
         }
     }
 }
