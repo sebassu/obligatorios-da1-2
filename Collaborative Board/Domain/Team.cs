@@ -138,6 +138,14 @@ namespace Domain
             return !createdWhiteboards.Contains(aWhiteboard);
         }
 
+        public void RemoveWhiteboard(Whiteboard aWhiteboard)
+        {
+            if (!createdWhiteboards.Remove(aWhiteboard))
+            {
+                throw new TeamException("Pizarrón no válido.");
+            }
+        }
+
         internal static Team InstanceForTestingPurposes()
         {
             return new Team();
