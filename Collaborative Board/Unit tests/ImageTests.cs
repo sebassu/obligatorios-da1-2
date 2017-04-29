@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Domain;
+using Exceptions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Unit_tests
 {
@@ -16,6 +18,7 @@ namespace Unit_tests
         [TestMethod]
         public void ImageForTestingPurposesTest()
         {
+            Whiteboard testingWhiteboard = Whiteboard.InstanceForTestingPurposes();
             Assert.AreEqual(0, testingImage.Width);
             Assert.AreEqual(0, testingImage.Height);
         }

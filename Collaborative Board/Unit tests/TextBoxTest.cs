@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Domain;
+using Exceptions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Unit_tests
 {
