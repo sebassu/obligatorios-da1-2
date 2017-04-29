@@ -140,10 +140,15 @@ namespace Domain
 
         public void RemoveWhiteboard(Whiteboard aWhiteboard)
         {
-            if (!createdWhiteboards.Remove(aWhiteboard))
+            if (WhiteboardWasRemoved(aWhiteboard))
             {
                 throw new TeamException("Pizarrón no válido.");
             }
+        }
+
+        private bool WhiteboardWasRemoved(Whiteboard aWhiteboard)
+        {
+            return !createdWhiteboards.Remove(aWhiteboard);
         }
 
         internal static Team InstanceForTestingPurposes()
