@@ -396,5 +396,34 @@ namespace Unit_tests
             testingTeam.AddWhiteboard(aWhiteboard);
             testingTeam.AddWhiteboard(bWhiteboard);
         }
+
+        [TestMethod]
+        public void TeamRemoveValidWhiteboardTest()
+        {
+            DateTime aBirthdate = new DateTime(1990, 05, 05);
+            User creator = User.NamesEmailBirthdatePassword("Creator", "Team",
+                "creador@usuario.com", aBirthdate, "password125");
+            testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo 1",
+                "No hace tareas.", 10);
+            Whiteboard aWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
+                "PizarronValido", "Descripcion de pizarron", testingTeam, 500, 500);
+            testingTeam.AddWhiteboard(aWhiteboard);
+            testingTeam.RemoveWhiteboard(aWhiteboard);
+            CollectionAssert.DoesNotContain(testingTeam.CreatedWhiteboards, aWhiteboard);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(TeamException))]
+        public void TeamRemoveNotAWhiteboardTest()
+        {
+            DateTime aBirthdate = new DateTime(1990, 05, 05);
+            User creator = User.NamesEmailBirthdatePassword("Creator", "Team",
+                "creador@usuario.com", aBirthdate, "password125");
+            testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator, 
+                "Equipo 1","No hace tareas.", 10);
+            Whiteboard aWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
+                "PizarronValido", "Descripcion de pizarron", testingTeam, 500, 500);
+            testingTeam.RemoveWhiteboard(aWhiteboard);
+        }
     }
 }
