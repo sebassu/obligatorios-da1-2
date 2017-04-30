@@ -34,8 +34,7 @@
             this.btnWhiteboards = new System.Windows.Forms.Button();
             this.btnInforms = new System.Windows.Forms.Button();
             this.btnUsers = new System.Windows.Forms.Button();
-            this.picExit = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.picExit)).BeginInit();
+            this.btnExit = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblHomeMenu
@@ -109,15 +108,15 @@
             this.btnUsers.MouseEnter += new System.EventHandler(this.btnUsers_MouseEnter);
             this.btnUsers.MouseLeave += new System.EventHandler(this.btnUsers_MouseLeave);
             // 
-            // picExit
+            // btnExit
             // 
-            this.picExit.Image = ((System.Drawing.Image)(resources.GetObject("picExit.Image")));
-            this.picExit.Location = new System.Drawing.Point(639, 436);
-            this.picExit.Name = "picExit";
-            this.picExit.Size = new System.Drawing.Size(80, 62);
-            this.picExit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picExit.TabIndex = 8;
-            this.picExit.TabStop = false;
+            this.btnExit.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnExit.BackgroundImage")));
+            this.btnExit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnExit.Location = new System.Drawing.Point(639, 436);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(80, 62);
+            this.btnExit.TabIndex = 8;
+            this.btnExit.UseVisualStyleBackColor = true;
             // 
             // UCAdministratorHome
             // 
@@ -125,7 +124,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.Controls.Add(this.picExit);
+            this.Controls.Add(this.btnExit);
             this.Controls.Add(this.lblHomeMenu);
             this.Controls.Add(this.btnTeams);
             this.Controls.Add(this.btnWhiteboards);
@@ -133,7 +132,6 @@
             this.Controls.Add(this.btnUsers);
             this.Name = "UCAdministratorHome";
             this.Size = new System.Drawing.Size(747, 538);
-            ((System.ComponentModel.ISupportInitialize)(this.picExit)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -146,6 +144,6 @@
         private System.Windows.Forms.Button btnWhiteboards;
         private System.Windows.Forms.Button btnInforms;
         private System.Windows.Forms.Button btnUsers;
-        private System.Windows.Forms.PictureBox picExit;
+        private System.Windows.Forms.Button btnExit;
     }
 }
