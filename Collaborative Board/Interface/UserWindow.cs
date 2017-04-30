@@ -10,11 +10,13 @@ using System.Windows.Forms;
 
 namespace Interface
 {
-    public partial class Form1 : Form
+    public partial class UserWindow : Form
     {
-        public Form1()
+        public UserWindow()
         {
             InitializeComponent();
+            pnlSystem.Controls.Clear();
+            pnlSystem.Controls.Add(new UCAdministratorHome(pnlSystem));   
         }
     }
 }
