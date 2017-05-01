@@ -57,6 +57,12 @@
     <Compile Include="UCAdministratorUsers.Designer.cs">
       <DependentUpon>UCAdministratorUsers.cs</DependentUpon>
     </Compile>
+    <Compile Include="UCAdministratorWhiteboards.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCAdministratorWhiteboards.Designer.cs">
+      <DependentUpon>UCAdministratorWhiteboards.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,6 +82,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UCAdministratorUsers.resx">
       <DependentUpon>UCAdministratorUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCAdministratorWhiteboards.resx">
+      <DependentUpon>UCAdministratorWhiteboards.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserWindow.resx">
       <DependentUpon>UserWindow.cs</DependentUpon>
