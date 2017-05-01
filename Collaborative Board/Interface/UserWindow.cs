@@ -8,7 +8,7 @@ namespace Interface
         {
             InitializeComponent();
             pnlSystem.Controls.Clear();
-            pnlSystem.Controls.Add(new UCAdministratorCommentsSolvedByUser(pnlSystem));   
+            pnlSystem.Controls.Add(new UCAddOrModifyUser(pnlSystem));   
         }
     }
 }

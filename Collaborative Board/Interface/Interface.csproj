@@ -45,6 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UCAddOrModifyUser.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCAddOrModifyUser.Designer.cs">
+      <DependentUpon>UCAddOrModifyUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="UCAdministratorCommentsSolvedByUser.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -63,11 +69,11 @@
     <Compile Include="UCAdministratorUsers.Designer.cs">
       <DependentUpon>UCAdministratorUsers.cs</DependentUpon>
     </Compile>
-    <Compile Include="UCAdministratorWhiteboards.cs">
+    <Compile Include="UCWhiteboards.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UCAdministratorWhiteboards.Designer.cs">
-      <DependentUpon>UCAdministratorWhiteboards.cs</DependentUpon>
+    <Compile Include="UCWhiteboards.Designer.cs">
+      <DependentUpon>UCWhiteboards.cs</DependentUpon>
     </Compile>
     <Compile Include="UCWhiteboardsCreatedByTeam.cs">
       <SubType>UserControl</SubType>
@@ -89,6 +95,9 @@
     <Compile Include="UCAdministratorHome.Designer.cs">
       <DependentUpon>UCAdministratorHome.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UCAddOrModifyUser.resx">
+      <DependentUpon>UCAddOrModifyUser.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UCAdministratorCommentsSolvedByUser.resx">
       <DependentUpon>UCAdministratorCommentsSolvedByUser.cs</DependentUpon>
     </EmbeddedResource>
@@ -98,8 +107,8 @@
     <EmbeddedResource Include="UCAdministratorUsers.resx">
       <DependentUpon>UCAdministratorUsers.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UCAdministratorWhiteboards.resx">
-      <DependentUpon>UCAdministratorWhiteboards.cs</DependentUpon>
+    <EmbeddedResource Include="UCWhiteboards.resx">
+      <DependentUpon>UCWhiteboards.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UCWhiteboardsCreatedByTeam.resx">
       <DependentUpon>UCWhiteboardsCreatedByTeam.cs</DependentUpon>

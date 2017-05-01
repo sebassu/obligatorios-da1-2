@@ -10,10 +10,10 @@ using System.Windows.Forms;
 
 namespace Interface
 {
-    public partial class UCAdministratorWhiteboards : UserControl
+    public partial class UCWhiteboards : UserControl
     {
         private Panel systemPanel;
-        public UCAdministratorWhiteboards(Panel systemPanel)
+        public UCWhiteboards(Panel systemPanel)
         {
             InitializeComponent();
             this.systemPanel = systemPanel;
