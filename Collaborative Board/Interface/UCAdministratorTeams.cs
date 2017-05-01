@@ -12,9 +12,11 @@ namespace Interface
 {
     public partial class UCAdministratorTeams : UserControl
     {
-        public UCAdministratorTeams()
+        private Panel systemPanel;
+        public UCAdministratorTeams(Panel systemPanel)
         {
             InitializeComponent();
+            this.systemPanel = systemPanel;
         }
 
         private void btnAdd_MouseEnter(object sender, EventArgs e)
