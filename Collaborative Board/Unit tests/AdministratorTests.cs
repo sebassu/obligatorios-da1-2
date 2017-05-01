@@ -32,8 +32,8 @@ namespace Unit_tests
         public void AdministratorParameterFactoryMethodValidTest()
         {
             DateTime birthdateToSet = DateTime.Today;
-            testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio", "Ravenna", "ravenna@simuladores.com",
-                birthdateToSet, "contraseñaValida123");
+            testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio", "Ravenna",
+                "ravenna@simuladores.com", birthdateToSet, "contraseñaValida123");
             Assert.AreEqual("Emilio", testingAdministrator.FirstName);
             Assert.AreEqual("Ravenna", testingAdministrator.LastName);
             Assert.AreEqual("ravenna@simuladores.com", testingAdministrator.Email);
@@ -45,24 +45,24 @@ namespace Unit_tests
         [ExpectedException(typeof(UserException))]
         public void AdministratorParameterFactoryMethodInvalidFirstNameTest()
         {
-            testingAdministrator = Administrator.NamesEmailBirthdatePassword("1&6 1a2-*!3", "Ravenna", "ravenna@simuladores.com",
-                DateTime.Now, "contraseñaValida123");
+            testingAdministrator = Administrator.NamesEmailBirthdatePassword("1&6 1a2-*!3", "Ravenna",
+                "ravenna@simuladores.com", DateTime.Now, "contraseñaValida123");
         }
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
         public void AdministratorParameterFactoryMethodInvalidLastNameTest()
         {
-            testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio", ";#d1 -($!#", "ravenna@simuladores.com.ar",
-                DateTime.Now, "contraseñaValida123");
+            testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio", ";#d1 -($!#",
+                "ravenna@simuladores.com.ar", DateTime.Now, "contraseñaValida123");
         }
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
         public void AdministratorParameterFactoryMethodInvalidEmailTest()
         {
-            testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio", "Ravenna", "12! $^#&",
-                DateTime.Now, "contraseñaValida123");
+            testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio",
+                "Ravenna", "12! $^#&", DateTime.Now, "contraseñaValida123");
         }
 
         [TestMethod]
@@ -70,16 +70,16 @@ namespace Unit_tests
         public void AdministratorParameterFactoryMethodInvalidBirthdateTest()
         {
             DateTime birthdateToSet = new DateTime(2112, 7, 31);
-            testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio", "Ravenna", "ravenna@simuladores.com.ar",
-                birthdateToSet, "contraseñaValida123");
+            testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio", "Ravenna",
+                "ravenna@simuladores.com.ar", birthdateToSet, "contraseñaValida123");
         }
 
         [TestMethod]
         [ExpectedException(typeof(PasswordException))]
         public void AdministratorParameterFactoryMethodInvalidPasswordTest()
         {
-            testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio", "Ravenna", "ravenna@simuladores.com.ar",
-                DateTime.Now, "@%^# 521D(%$");
+            testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio", "Ravenna",
+                "ravenna@simuladores.com.ar", DateTime.Now, "@%^# 521D(%$");
         }
 
         [TestMethod]
@@ -91,8 +91,8 @@ namespace Unit_tests
         [TestMethod]
         public void AdministratorHasAdministratorPrivilegesParametersTest()
         {
-            testingAdministrator = Administrator.NamesEmailBirthdatePassword("Mario", "Santos", "santos@simuladores.com",
-                DateTime.Now, "contraseñaValida123");
+            testingAdministrator = Administrator.NamesEmailBirthdatePassword("Mario", "Santos",
+                "santos@simuladores.com", DateTime.Now, "contraseñaValida123");
             Assert.IsTrue(testingAdministrator.HasAdministrationPrivileges);
         }
 
