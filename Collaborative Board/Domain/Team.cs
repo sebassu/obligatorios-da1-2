@@ -1,13 +1,13 @@
 ﻿using System;
 using Exceptions;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Domain
 {
     public class Team
     {
-        private const int minimumMembers = 1;
+        private const byte minimumMembers = 1;
 
         private string name;
         public string Name
@@ -21,21 +21,17 @@ namespace Domain
                 }
                 else
                 {
-                    throw new TeamException("Nombre inválido:" + value + ".");
+                    throw new TeamException("Nombre inválido: " + value + ".");
                 }
             }
         }
 
-        public bool IsValidTeamName(string value)
+        public static bool IsValidTeamName(string value)
         {
             return !string.IsNullOrEmpty(value) && Utilities.ContainsOnlyLettersDigitsOrSpaces(value);
         }
 
-        private readonly DateTime creationDate = DateTime.Now;
-        public DateTime CreationDate
-        {
-            get { return creationDate; }
-        }
+        public DateTime CreationDate { get; } = DateTime.Now;
 
         private string description;
         public string Description
@@ -73,16 +69,9 @@ namespace Domain
         }
 
         private readonly List<User> members = new List<User>();
-        public IList Members
-        {
-            get
-            {
-                return members.AsReadOnly();
-            }
-        }
+        public IList Members => members.AsReadOnly();
 
         private readonly List<Whiteboard> createdWhiteboards = new List<Whiteboard>();
-
         public IList CreatedWhiteboards
         {
             get
@@ -91,11 +80,12 @@ namespace Domain
             }
         }
 
-        public void AddMember(User aUser)
+        public void AddMember(User userToAdd)
         {
-            if (IsPossibleToAdd(aUser))
+            bool canBeMember = Utilities.IsNotNull(userToAdd) && IsPossibleToAdd(userToAdd);
+            if (canBeMember)
             {
-                members.Add(aUser);
+                members.Add(userToAdd);
             }
             else
             {
@@ -108,24 +98,24 @@ namespace Domain
             return members.Count < maximumMembers && !members.Contains(aMember);
         }
 
-        public void RemoveMember(User aUser)
+        public void RemoveMember(User userToRemove)
         {
-            if (!UserWasRemoved(aUser))
+            if (!WasRemoved(userToRemove))
             {
                 throw new TeamException("Miembro no válido o equipo con mínimo de miembros.");
             }
         }
 
-        private bool UserWasRemoved(User aUser)
+        private bool WasRemoved(User aUser)
         {
             return members.Count > minimumMembers && members.Remove(aUser);
         }
 
-        public void AddWhiteboard(Whiteboard aWhiteboard)
+        public void AddWhiteboard(Whiteboard whiteboardToAdd)
         {
-            if (IsPossibleToAddWhiteboard(aWhiteboard))
+            if (IsPossibleToAdd(whiteboardToAdd))
             {
-                createdWhiteboards.Add(aWhiteboard);
+                createdWhiteboards.Add(whiteboardToAdd);
             }
             else
             {
@@ -133,7 +123,7 @@ namespace Domain
             }
         }
 
-        private bool IsPossibleToAddWhiteboard(Whiteboard aWhiteboard)
+        private bool IsPossibleToAdd(Whiteboard aWhiteboard)
         {
             return !createdWhiteboards.Contains(aWhiteboard);
         }
@@ -158,28 +148,30 @@ namespace Domain
 
         private Team()
         {
+            User defaultCreator = User.InstanceForTestingPurposes();
             name = "Nombre inválido.";
             description = "Descripción inválida.";
-            maximumMembers = 0;
+            maximumMembers = int.MaxValue;
+            members.Add(defaultCreator);
         }
 
-        public static Team CreatorNameDescriptionMaximumMembers(User creator, string aName,
-            string aDescription, int aMaximimMembers)
+        public static Team CreatorNameDescriptionMaximumMembers(User creator, string name,
+            string description, int maximumMembers)
         {
-            return new Team(creator, aName, aDescription, aMaximimMembers);
+            return new Team(creator, name, description, maximumMembers);
         }
 
-        private Team(User creator, string aName, string aDescription, int aMaximumMembers)
+        private Team(User creator, string nameToSet, string descriptionToSet, int maximumMembersToSet)
         {
-            Name = aName;
-            Description = aDescription;
-            MaximumMembers = aMaximumMembers;
+            Name = nameToSet;
+            Description = descriptionToSet;
+            MaximumMembers = maximumMembersToSet;
             members.Add(creator);
         }
 
-        public override bool Equals(object parameterObject)
+        public override bool Equals(object obj)
         {
-            if (parameterObject is Team teamToCompareAgainst)
+            if (obj is Team teamToCompareAgainst)
             {
                 return HasSameName(teamToCompareAgainst);
             }

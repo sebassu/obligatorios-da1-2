@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Domain;
 using Exceptions;
+using System.Diagnostics.CodeAnalysis;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Unit_tests
 {
     [TestClass]
+    [ExcludeFromCodeCoverage]
     public class WhiteboardTests
     {
         private static Whiteboard testingWhiteboard;
@@ -15,16 +15,18 @@ namespace Unit_tests
         [TestInitialize]
         public void TestSetUp()
         {
-            testingWhiteboard = Whiteboard.WhiteboardForTestingPurposes();
+            testingWhiteboard = Whiteboard.InstanceForTestingPurposes();
         }
 
         [TestMethod]
-        public void WhiteboradForTestingPurposesTest()
+        public void WhiteboardForTestingPurposesTest()
         {
             Assert.AreEqual("Nombre inválido", testingWhiteboard.Name);
             Assert.AreEqual("Descripción inválida.", testingWhiteboard.Description);
-            Assert.AreEqual(1, testingWhiteboard.Width);
-            Assert.AreEqual(1, testingWhiteboard.Height);
+            Assert.AreEqual(int.MaxValue, testingWhiteboard.Width);
+            Assert.AreEqual(int.MaxValue, testingWhiteboard.Height);
+            Assert.IsNull(testingWhiteboard.Creator);
+            Assert.IsNull(testingWhiteboard.OwnerTeam);
         }
 
         [TestMethod]
@@ -64,8 +66,10 @@ namespace Unit_tests
         [TestMethod]
         public void WhiteboardSetValidDescriptionTest()
         {
-            testingWhiteboard.Description = "Esto es una breve descripción del pizarrón.";
-            Assert.AreEqual("Esto es una breve descripción del pizarrón.", testingWhiteboard.Description);
+            testingWhiteboard.Description = "Esto es una breve descripción " +
+                "del pizarrón.";
+            Assert.AreEqual("Esto es una breve descripción del pizarrón.",
+                testingWhiteboard.Description);
         }
 
         [TestMethod]
@@ -83,24 +87,7 @@ namespace Unit_tests
         }
 
         [TestMethod]
-        public void WhiteboardSetValidOwnerTeamTest()
-        {
-            DateTime aBirthdate = new DateTime(1990, 05, 05);
-            User creator = User.NamesEmailBirthdatePassword("Creator", "Team", "creador@usuario.com", aBirthdate, "password125");
-            Team owner = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo1", "No hace tareas.", 10);
-            testingWhiteboard.OwnerTeam = owner;
-            Assert.AreEqual(owner, testingWhiteboard.OwnerTeam);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(WhiteboardException))]
-        public void WhiteboardSetOwnerTeamNullTest()
-        {
-            testingWhiteboard.OwnerTeam = null;
-        }
-
-        [TestMethod]
-        public void WhiteboardSetValidWidhtTest()
+        public void WhiteboardSetValidWidthTest()
         {
             testingWhiteboard.Width = 1532;
             Assert.AreEqual(1532, testingWhiteboard.Width);
@@ -115,16 +102,16 @@ namespace Unit_tests
 
         [TestMethod]
         [ExpectedException(typeof(WhiteboardException))]
-        public void WhiteboardSetInvalidWidthTest()
+        public void WhiteboardSetInvalidMinimumWidthTest()
         {
-            testingWhiteboard.Width = -40;
+            testingWhiteboard.Width = 0;
         }
 
         [TestMethod]
         [ExpectedException(typeof(WhiteboardException))]
-        public void WhiteboardSetInvalidMinimumWidthTest()
+        public void WhiteboardSetInvalidNegativeWidthTest()
         {
-            testingWhiteboard.Width = 0;
+            testingWhiteboard.Width = -40;
         }
 
         [TestMethod]
@@ -143,26 +130,29 @@ namespace Unit_tests
 
         [TestMethod]
         [ExpectedException(typeof(WhiteboardException))]
-        public void WhiteboardSetInvalidHeightTest()
-        {
-            testingWhiteboard.Height = -10;
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(WhiteboardException))]
         public void WhiteboardSetInvalidMinimumHeightTest()
         {
             testingWhiteboard.Height = 0;
         }
 
         [TestMethod]
+        [ExpectedException(typeof(WhiteboardException))]
+        public void WhiteboardSetInvalidNegativeHeightTest()
+        {
+            testingWhiteboard.Width = -50;
+        }
+
+        [TestMethod]
         public void WhiteboardParameterFactoryMethodValidTest()
         {
-            Team ownerTeam = Team.InstanceForTestingPurposes();
             User creator = User.InstanceForTestingPurposes();
-            testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator, "Pizarron1", "Descripción de pizarrón", ownerTeam, 500, 500);
+            Team ownerTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Los Simuladores",
+                "Un grupo de gente que resuelve todo tipo de problemas.", 4);
+            testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
+                "Pizarron1", "Descripción de pizarrón", ownerTeam, 500, 500);
             Assert.AreEqual("Pizarron1", testingWhiteboard.Name);
             Assert.AreEqual("Descripción de pizarrón", testingWhiteboard.Description);
+            Assert.AreEqual(creator, testingWhiteboard.Creator);
             Assert.AreEqual(ownerTeam, testingWhiteboard.OwnerTeam);
             Assert.AreEqual(500, testingWhiteboard.Width);
             Assert.AreEqual(500, testingWhiteboard.Height);
@@ -174,7 +164,8 @@ namespace Unit_tests
         {
             Team ownerTeam = Team.InstanceForTestingPurposes();
             User creator = User.InstanceForTestingPurposes();
-            testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator, "Pizarron#11.32!", "Tareas:", ownerTeam, 500, 500);
+            testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
+                "Pizarron#11.32!", "Tareas:", ownerTeam, 500, 500);
         }
 
         [TestMethod]
@@ -183,7 +174,8 @@ namespace Unit_tests
         {
             Team ownerTeam = Team.InstanceForTestingPurposes();
             User creator = User.InstanceForTestingPurposes();
-            testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator, "Pizarron2", "", ownerTeam, 100, 100);
+            testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
+                "Pizarron2", "", ownerTeam, 100, 100);
         }
 
         [TestMethod]
@@ -192,7 +184,8 @@ namespace Unit_tests
         {
             Team ownerTeam = Team.InstanceForTestingPurposes();
             User creator = User.InstanceForTestingPurposes();
-            testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator, "Equipo3", "Descripción de pizarrón", ownerTeam, 0, 100);
+            testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
+                "Equipo3", "Descripción de pizarrón", ownerTeam, 0, 100);
         }
 
         [TestMethod]
@@ -201,7 +194,28 @@ namespace Unit_tests
         {
             Team ownerTeam = Team.InstanceForTestingPurposes();
             User creator = User.InstanceForTestingPurposes();
-            testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator, "Equipo3", "Descripción de pizarrón", ownerTeam, 100, 0);
+            testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
+                "Equipo3", "Descripción de pizarrón", ownerTeam, 100, 0);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(WhiteboardException))]
+        public void WhiteboardParameterFactoryMethodUserNotInTeamTest()
+        {
+            User creator = User.NamesEmailBirthdatePassword("Pablo", "Lamponne",
+                "lamponne@simuladores.com", DateTime.Today, "contraseñaValida123");
+            Team ownerTeam = Team.InstanceForTestingPurposes();
+            testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
+                "Equipo3", "Descripción de pizarrón", ownerTeam, 100, 50);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(WhiteboardException))]
+        public void WhiteboardParameterFactoryMethodNullTeamTest()
+        {
+            User creator = User.InstanceForTestingPurposes();
+            testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
+                "Equipo3", "Descripción de pizarrón", null, 100, 50);
         }
 
         [TestMethod]
@@ -233,20 +247,23 @@ namespace Unit_tests
         [TestMethod]
         public void WhiteboardEqualsSymmetricTest()
         {
-            Whiteboard secondTestingWhiteboard = Whiteboard.WhiteboardForTestingPurposes();
+            Whiteboard secondTestingWhiteboard = Whiteboard.InstanceForTestingPurposes();
             Assert.AreEqual(testingWhiteboard, secondTestingWhiteboard);
             Assert.AreEqual(secondTestingWhiteboard, testingWhiteboard);
         }
 
         [TestMethod]
         public void WhiteboardEqualsTransitiveTest()
-            {
+        {
             User creator = User.InstanceForTestingPurposes();
             Team aTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Same name",
                 "Description 1", 10);
-            testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator, "Pizarron1", "Descripción 1.", aTeam, 100, 100);
-            Whiteboard secondTestingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator, "Pizarron1", "Descripción 2.", aTeam, 50, 50);
-            Whiteboard thirdTestingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator, "Pizarron1", "Descripción 3.", aTeam, 25, 25);
+            testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
+                "Pizarron1", "Descripción 1.", aTeam, 100, 100);
+            Whiteboard secondTestingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
+                "Pizarron1", "Descripción 2.", aTeam, 50, 50);
+            Whiteboard thirdTestingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
+                "Pizarron1", "Descripción 3.", aTeam, 25, 25);
             Assert.AreEqual(testingWhiteboard, secondTestingWhiteboard);
             Assert.AreEqual(secondTestingWhiteboard, thirdTestingWhiteboard);
             Assert.AreEqual(testingWhiteboard, thirdTestingWhiteboard);
@@ -260,8 +277,10 @@ namespace Unit_tests
                 "Same descriptions", 10);
             Team secondTeam = Team.CreatorNameDescriptionMaximumMembers(creator,
                 "Different name", "Same descriptions", 10);
-            testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator, "Pizarron1", "Descripción 1.", oneTeam, 75, 75);
-            Whiteboard secondTestingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator, "Pizarron1", "Descripción 2.", secondTeam, 25, 25);
+            testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
+                "Pizarron1", "Descripción 1.", oneTeam, 75, 75);
+            Whiteboard secondTestingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
+                "Pizarron1", "Descripción 2.", secondTeam, 25, 25);
             Assert.AreNotEqual(testingWhiteboard, secondTestingWhiteboard);
         }
 
@@ -276,6 +295,78 @@ namespace Unit_tests
         {
             object someRandomObject = new object();
             Assert.AreNotEqual(testingWhiteboard, someRandomObject);
+        }
+
+        [TestMethod]
+        public void WhiteboardGetHashCodeTest()
+        {
+            object testingWhiteboardAsObject = testingWhiteboard;
+            Assert.AreEqual(testingWhiteboardAsObject.GetHashCode(),
+                testingWhiteboard.GetHashCode());
+        }
+
+        [TestMethod]
+        public void WhiteboardAddElementValidImageTest()
+        {
+            ElementWhiteboard image = ImageWhiteboard.InstanceForTestingPurposes();
+            testingWhiteboard.AddWhiteboardElement(image);
+            CollectionAssert.Contains(testingWhiteboard.Contents, image);
+        }
+
+        [TestMethod]
+        public void WhiteboardAddElementValidTextBoxTest()
+        {
+            ElementWhiteboard textBox = TextBoxWhiteboard.InstanceForTestingPurposes();
+            testingWhiteboard.AddWhiteboardElement(textBox);
+            CollectionAssert.Contains(testingWhiteboard.Contents, textBox);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(WhiteboardException))]
+        public void WhiteboardAddElementNullTest()
+        {
+            testingWhiteboard.AddWhiteboardElement(null);
+        }
+
+        [TestMethod]
+        public void WhiteboardRemoveElementValidImageTest()
+        {
+            ElementWhiteboard image = ImageWhiteboard.InstanceForTestingPurposes();
+            testingWhiteboard.AddWhiteboardElement(image);
+            testingWhiteboard.RemoveWhiteboardElement(image);
+            CollectionAssert.DoesNotContain(testingWhiteboard.Contents, image);
+        }
+
+        [TestMethod]
+        public void WhiteboardRemoveElementValidTextBoxTest()
+        {
+            ElementWhiteboard textBox = TextBoxWhiteboard.InstanceForTestingPurposes();
+            testingWhiteboard.AddWhiteboardElement(textBox);
+            testingWhiteboard.RemoveWhiteboardElement(textBox);
+            CollectionAssert.DoesNotContain(testingWhiteboard.Contents, textBox);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(WhiteboardException))]
+        public void WhiteboardRemoveElementNotAMemberImageTest()
+        {
+            ElementWhiteboard image = ImageWhiteboard.InstanceForTestingPurposes();
+            testingWhiteboard.RemoveWhiteboardElement(image);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(WhiteboardException))]
+        public void WhiteboardRemoveElementNotAMemberTextBoxTest()
+        {
+            ElementWhiteboard textBox = TextBoxWhiteboard.InstanceForTestingPurposes();
+            testingWhiteboard.RemoveWhiteboardElement(textBox);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(WhiteboardException))]
+        public void WhiteboardRemoveElementNullTest()
+        {
+            testingWhiteboard.RemoveWhiteboardElement(null);
         }
     }
 }

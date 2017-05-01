@@ -27,11 +27,6 @@ namespace Domain
             }
         }
 
-        public bool IsValidName(string aString)
-        {
-            return !string.IsNullOrWhiteSpace(aString) && Utilities.ContainsOnlyLettersOrSpaces(aString);
-        }
-
         private string lastName;
         public string LastName
         {
@@ -47,6 +42,11 @@ namespace Domain
                     throw new UserException("Apellido inválido recibido: " + value + ".");
                 }
             }
+        }
+
+        public static bool IsValidName(string value)
+        {
+            return !string.IsNullOrWhiteSpace(value) && Utilities.ContainsOnlyLettersOrSpaces(value);
         }
 
         private MailAddress email;
@@ -103,13 +103,7 @@ namespace Domain
         }
 
         private readonly List<Comment> commentsResolved = new List<Comment>();
-        public IList CommentsResolved
-        {
-            get
-            {
-                return commentsResolved.AsReadOnly();
-            }
-        }
+        public IList CommentsResolved => commentsResolved.AsReadOnly();
 
         internal void AddResolvedComment(Comment aComment)
         {
@@ -128,25 +122,25 @@ namespace Domain
             email = new MailAddress("mailInvalido@usuarioInvalido");
         }
 
-        public static User NamesEmailBirthdatePassword(string aFirstName, string aLastName,
-            string anEmail, DateTime aBirthdate, string aPassword)
+        public static User NamesEmailBirthdatePassword(string firstName, string lastName,
+            string email, DateTime birthdate, string password)
         {
-            return new User(aFirstName, aLastName, anEmail, aBirthdate, aPassword);
+            return new User(firstName, lastName, email, birthdate, password);
         }
 
-        protected User(string aFirstName, string aLastName, string anEmail,
-            DateTime aBirthdate, string aPassword)
+        protected User(string firstNameToSet, string lastNameToSet, string emailToSet,
+            DateTime birthdateToSet, string passwordToSet)
         {
-            FirstName = aFirstName;
-            LastName = aLastName;
-            Email = anEmail;
-            Birthdate = aBirthdate;
-            Password = aPassword;
+            FirstName = firstNameToSet;
+            LastName = lastNameToSet;
+            Email = emailToSet;
+            Birthdate = birthdateToSet;
+            Password = passwordToSet;
         }
 
-        public override bool Equals(object parameterObject)
+        public override bool Equals(object obj)
         {
-            if (parameterObject is User userToCompareAgainst)
+            if (obj is User userToCompareAgainst)
             {
                 return HasSameEmail(userToCompareAgainst);
             }
@@ -156,9 +150,9 @@ namespace Domain
             }
         }
 
-        private bool HasSameEmail(User aUser)
+        private bool HasSameEmail(User other)
         {
-            return email.Equals(aUser.email);
+            return email.Equals(other.email);
         }
 
         public override int GetHashCode()

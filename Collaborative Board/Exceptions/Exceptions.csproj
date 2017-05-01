@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="BoardException.cs" />
     <Compile Include="CommentException.cs" />
+    <Compile Include="ElementException.cs" />
     <Compile Include="PasswordException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserException.cs" />
