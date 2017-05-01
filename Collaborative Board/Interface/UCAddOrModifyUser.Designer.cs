@@ -42,8 +42,8 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnAccept = new System.Windows.Forms.Button();
             this.lblUserData = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.picMarker = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.picMarker)).BeginInit();
             this.SuspendLayout();
             // 
             // lblFirstName
@@ -171,15 +171,15 @@
             this.lblUserData.TabIndex = 12;
             this.lblUserData.Text = "Datos de usuario";
             // 
-            // pictureBox1
+            // picMarker
             // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(519, 249);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(214, 260);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 13;
-            this.pictureBox1.TabStop = false;
+            this.picMarker.Image = ((System.Drawing.Image)(resources.GetObject("picMarker.Image")));
+            this.picMarker.Location = new System.Drawing.Point(519, 249);
+            this.picMarker.Name = "picMarker";
+            this.picMarker.Size = new System.Drawing.Size(214, 260);
+            this.picMarker.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picMarker.TabIndex = 13;
+            this.picMarker.TabStop = false;
             // 
             // UCAddOrModifyUser
             // 
@@ -187,7 +187,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.picMarker);
             this.Controls.Add(this.lblUserData);
             this.Controls.Add(this.btnAccept);
             this.Controls.Add(this.btnCancel);
@@ -203,7 +203,7 @@
             this.Controls.Add(this.lblFirstName);
             this.Name = "UCAddOrModifyUser";
             this.Size = new System.Drawing.Size(747, 538);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picMarker)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -224,6 +224,6 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnAccept;
         private System.Windows.Forms.Label lblUserData;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox picMarker;
     }
 }

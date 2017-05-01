@@ -45,6 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UCAddOrModifyTeam.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCAddOrModifyTeam.Designer.cs">
+      <DependentUpon>UCAddOrModifyTeam.cs</DependentUpon>
+    </Compile>
     <Compile Include="UCAddOrModifyUser.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -95,6 +101,9 @@
     <Compile Include="UCAdministratorHome.Designer.cs">
       <DependentUpon>UCAdministratorHome.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UCAddOrModifyTeam.resx">
+      <DependentUpon>UCAddOrModifyTeam.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UCAddOrModifyUser.resx">
       <DependentUpon>UCAddOrModifyUser.cs</DependentUpon>
     </EmbeddedResource>
