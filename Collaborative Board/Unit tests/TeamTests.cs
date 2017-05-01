@@ -4,7 +4,7 @@ using Exceptions;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Unit_tests
+namespace UnitTests
 {
     [TestClass]
     [ExcludeFromCodeCoverage]

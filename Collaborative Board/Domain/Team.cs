@@ -113,32 +113,24 @@ namespace Domain
 
         public void AddWhiteboard(Whiteboard whiteboardToAdd)
         {
-            if (IsPossibleToAdd(whiteboardToAdd))
+            bool isPossibleToAddWhiteboard = !createdWhiteboards.Contains(whiteboardToAdd);
+            if (isPossibleToAddWhiteboard)
             {
                 createdWhiteboards.Add(whiteboardToAdd);
             }
             else
             {
-                throw new TeamException("Pizarrón no válido");
+                throw new TeamException("Pizarrón no válido recibido.");
             }
         }
 
-        private bool IsPossibleToAdd(Whiteboard aWhiteboard)
+        public void RemoveWhiteboard(Whiteboard someWhiteboard)
         {
-            return !createdWhiteboards.Contains(aWhiteboard);
-        }
-
-        public void RemoveWhiteboard(Whiteboard aWhiteboard)
-        {
-            if (WhiteboardWasRemoved(aWhiteboard))
+            bool whiteboardWasRemoved = createdWhiteboards.Remove(someWhiteboard);
+            if (!whiteboardWasRemoved)
             {
                 throw new TeamException("Pizarrón no válido.");
             }
-        }
-		
-        private bool WhiteboardWasRemoved(Whiteboard aWhiteboard)
-        {
-            return !createdWhiteboards.Remove(aWhiteboard);
         }
 
         internal static Team InstanceForTestingPurposes()

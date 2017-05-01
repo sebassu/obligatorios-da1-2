@@ -4,7 +4,7 @@ using Exceptions;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Unit_tests
+namespace UnitTests
 {
     [TestClass]
     [ExcludeFromCodeCoverage]
@@ -36,6 +36,7 @@ namespace Unit_tests
             Assert.AreEqual("Pizarron1", testingWhiteboard.Name);
         }
 
+        [TestMethod]
         public void WhiteboardSetValidNameTest2()
         {
             testingWhiteboard.Name = "PizarronNuevo";

@@ -4,7 +4,7 @@ using Exceptions;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Unit_tests
+namespace UnitTests
 {
     [TestClass]
     [ExcludeFromCodeCoverage]
@@ -42,8 +42,8 @@ namespace Unit_tests
         public void CommentParameterFactoryMethodValidTest2()
         {
             string someText = "Falta resolver el issue 12-3.";
-            User creator = User.NamesEmailBirthdatePassword("Emilio", "Ravenna", "ravenna@simuladores.com",
-                DateTime.Today, "contraseñaValida123");
+            User creator = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
+                "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");
             testingComment = Comment.CreatorText(creator, someText);
             Assert.AreEqual(creator, testingComment.Creator);
             Assert.AreEqual(someText, testingComment.Text);
@@ -139,8 +139,8 @@ namespace Unit_tests
         [TestMethod]
         public void CommentResolutionValidTest2()
         {
-            User aUser = User.NamesEmailBirthdatePassword("Mario", "Santos", "santos@simuladores.com",
-                DateTime.Today, "contraseñaValida123");
+            User aUser = User.NamesEmailBirthdatePassword("Mario", "Santos",
+                "santos@simuladores.com", DateTime.Today, "contraseñaValida123");
             testingComment.Resolve(aUser);
             Assert.IsTrue(testingComment.IsResolved);
             Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate().Date);
@@ -185,8 +185,8 @@ namespace Unit_tests
             Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate().Date);
             Assert.AreEqual(testingComment.Resolver, aUser);
             CollectionAssert.Contains(aUser.CommentsResolved, testingComment);
-            User differentUser = User.NamesEmailBirthdatePassword("Mario", "Santos", "santos@simuladores.com",
-                DateTime.Today, "contraseñaValida123");
+            User differentUser = User.NamesEmailBirthdatePassword("Mario", "Santos",
+                "santos@simuladores.com", DateTime.Today, "contraseñaValida123");
             testingComment.Resolve(differentUser);
         }
     }

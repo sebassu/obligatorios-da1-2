@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Unit_tests
+namespace UnitTests
 {
     [TestClass]
     [ExcludeFromCodeCoverage]
@@ -19,7 +19,7 @@ namespace Unit_tests
             testingTextBox = TextBoxWhiteboard.InstanceForTestingPurposes();
         }
 
-        private Whiteboard GenerateNonGenericTestSituation()
+        private static Whiteboard GenerateNonGenericTestSituation()
         {
             User creator = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
                 "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");

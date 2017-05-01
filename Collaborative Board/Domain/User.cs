@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("Unit tests")]
+[assembly: InternalsVisibleTo("UnitTests")]
 namespace Domain
 {
     public class User
