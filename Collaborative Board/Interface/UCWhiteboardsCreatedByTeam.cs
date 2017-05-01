@@ -2,6 +2,7 @@
 using System.Data;
 using System.Windows.Forms;
 using Domain;
+using System.Drawing;
 
 namespace Interface
 {
@@ -29,6 +30,16 @@ namespace Interface
         {
             dtpWhiteboardsCreatedFrom.CustomFormat = "dd/MM/yyyy";
             dtpWhiteboardsCreatedUntil.CustomFormat = "dd/MM/yyyy";
+        }
+
+        private void btnHome_MouseEnter(object sender, EventArgs e)
+        {
+            btnHome.Size = new Size(87, 67);
+        }
+
+        private void btnHome_MouseLeave(object sender, EventArgs e)
+        {
+            btnHome.Size = new Size(80, 62);
         }
     }
 }

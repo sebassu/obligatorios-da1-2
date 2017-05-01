@@ -39,6 +39,7 @@
             this.lblWhiteboardsCreatedUntil = new System.Windows.Forms.Label();
             this.dtpWhiteboardsCreatedFrom = new System.Windows.Forms.DateTimePicker();
             this.dtpWhiteboardsCreatedUntil = new System.Windows.Forms.DateTimePicker();
+            this.btnApplyFilters = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvWhiteboardsCreatedByTeam)).BeginInit();
             this.SuspendLayout();
             // 
@@ -51,6 +52,8 @@
             this.btnHome.Size = new System.Drawing.Size(80, 62);
             this.btnHome.TabIndex = 0;
             this.btnHome.UseVisualStyleBackColor = true;
+            this.btnHome.MouseEnter += new System.EventHandler(this.btnHome_MouseEnter);
+            this.btnHome.MouseLeave += new System.EventHandler(this.btnHome_MouseLeave);
             // 
             // btnExit
             // 
@@ -139,12 +142,24 @@
             this.dtpWhiteboardsCreatedUntil.Size = new System.Drawing.Size(118, 20);
             this.dtpWhiteboardsCreatedUntil.TabIndex = 9;
             // 
+            // btnApplyFilters
+            // 
+            this.btnApplyFilters.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.btnApplyFilters.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnApplyFilters.Location = new System.Drawing.Point(634, 145);
+            this.btnApplyFilters.Name = "btnApplyFilters";
+            this.btnApplyFilters.Size = new System.Drawing.Size(80, 36);
+            this.btnApplyFilters.TabIndex = 10;
+            this.btnApplyFilters.Text = "Aplicar";
+            this.btnApplyFilters.UseVisualStyleBackColor = false;
+            // 
             // UCWhiteboardsCreatedByTeam
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Controls.Add(this.btnApplyFilters);
             this.Controls.Add(this.dtpWhiteboardsCreatedUntil);
             this.Controls.Add(this.dtpWhiteboardsCreatedFrom);
             this.Controls.Add(this.lblWhiteboardsCreatedUntil);
@@ -176,5 +191,6 @@
         private System.Windows.Forms.Label lblWhiteboardsCreatedUntil;
         private System.Windows.Forms.DateTimePicker dtpWhiteboardsCreatedFrom;
         private System.Windows.Forms.DateTimePicker dtpWhiteboardsCreatedUntil;
+        private System.Windows.Forms.Button btnApplyFilters;
     }
 }

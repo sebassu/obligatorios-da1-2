@@ -45,6 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UCAdministratorCommentsSolvedByUser.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCAdministratorCommentsSolvedByUser.Designer.cs">
+      <DependentUpon>UCAdministratorCommentsSolvedByUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="UCAdministratorTeams.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -83,6 +89,9 @@
     <Compile Include="UCAdministratorHome.Designer.cs">
       <DependentUpon>UCAdministratorHome.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UCAdministratorCommentsSolvedByUser.resx">
+      <DependentUpon>UCAdministratorCommentsSolvedByUser.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UCAdministratorTeams.resx">
       <DependentUpon>UCAdministratorTeams.cs</DependentUpon>
     </EmbeddedResource>
