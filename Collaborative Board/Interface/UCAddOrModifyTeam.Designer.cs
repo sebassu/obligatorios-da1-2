@@ -29,85 +29,85 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UCAddOrModifyTeam));
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.lblName = new System.Windows.Forms.Label();
+            this.lblDescription = new System.Windows.Forms.Label();
+            this.lblMaximumAmmountUsers = new System.Windows.Forms.Label();
+            this.txtName = new System.Windows.Forms.TextBox();
+            this.lblTeamData = new System.Windows.Forms.Label();
+            this.numMaximumAmmountUsers = new System.Windows.Forms.NumericUpDown();
+            this.rtbDescription = new System.Windows.Forms.RichTextBox();
             this.btnAccept = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.picMarker = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numMaximumAmmountUsers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picMarker)).BeginInit();
             this.SuspendLayout();
             // 
-            // label1
+            // lblName
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(43, 150);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(66, 18);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Nombre:";
+            this.lblName.AutoSize = true;
+            this.lblName.BackColor = System.Drawing.Color.Transparent;
+            this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblName.Location = new System.Drawing.Point(43, 150);
+            this.lblName.Name = "lblName";
+            this.lblName.Size = new System.Drawing.Size(66, 18);
+            this.lblName.TabIndex = 0;
+            this.lblName.Text = "Nombre:";
             // 
-            // label2
+            // lblDescription
             // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(43, 266);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(91, 18);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Descripción:";
+            this.lblDescription.AutoSize = true;
+            this.lblDescription.BackColor = System.Drawing.Color.Transparent;
+            this.lblDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDescription.Location = new System.Drawing.Point(43, 266);
+            this.lblDescription.Name = "lblDescription";
+            this.lblDescription.Size = new System.Drawing.Size(91, 18);
+            this.lblDescription.TabIndex = 1;
+            this.lblDescription.Text = "Descripción:";
             // 
-            // label3
+            // lblMaximumAmmountUsers
             // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(43, 208);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(207, 18);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Cantidad máxima de usuarios:";
+            this.lblMaximumAmmountUsers.AutoSize = true;
+            this.lblMaximumAmmountUsers.BackColor = System.Drawing.Color.Transparent;
+            this.lblMaximumAmmountUsers.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMaximumAmmountUsers.Location = new System.Drawing.Point(43, 208);
+            this.lblMaximumAmmountUsers.Name = "lblMaximumAmmountUsers";
+            this.lblMaximumAmmountUsers.Size = new System.Drawing.Size(207, 18);
+            this.lblMaximumAmmountUsers.TabIndex = 2;
+            this.lblMaximumAmmountUsers.Text = "Cantidad máxima de usuarios:";
             // 
-            // textBox4
+            // txtName
             // 
-            this.textBox4.Location = new System.Drawing.Point(256, 151);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(222, 20);
-            this.textBox4.TabIndex = 10;
+            this.txtName.Location = new System.Drawing.Point(256, 151);
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(222, 20);
+            this.txtName.TabIndex = 10;
             // 
-            // label6
+            // lblTeamData
             // 
-            this.label6.AutoSize = true;
-            this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.label6.Font = new System.Drawing.Font("Segoe Script", 15.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(241, 81);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(192, 34);
-            this.label6.TabIndex = 13;
-            this.label6.Text = "Datos de equipo";
+            this.lblTeamData.AutoSize = true;
+            this.lblTeamData.BackColor = System.Drawing.Color.Transparent;
+            this.lblTeamData.Font = new System.Drawing.Font("Segoe Script", 15.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTeamData.Location = new System.Drawing.Point(241, 81);
+            this.lblTeamData.Name = "lblTeamData";
+            this.lblTeamData.Size = new System.Drawing.Size(192, 34);
+            this.lblTeamData.TabIndex = 13;
+            this.lblTeamData.Text = "Datos de equipo";
             // 
-            // numericUpDown1
+            // numMaximumAmmountUsers
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(256, 206);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(222, 20);
-            this.numericUpDown1.TabIndex = 14;
+            this.numMaximumAmmountUsers.Location = new System.Drawing.Point(256, 206);
+            this.numMaximumAmmountUsers.Name = "numMaximumAmmountUsers";
+            this.numMaximumAmmountUsers.Size = new System.Drawing.Size(222, 20);
+            this.numMaximumAmmountUsers.TabIndex = 14;
             // 
-            // richTextBox1
+            // rtbDescription
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(256, 266);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(222, 105);
-            this.richTextBox1.TabIndex = 15;
-            this.richTextBox1.Text = "";
+            this.rtbDescription.Location = new System.Drawing.Point(256, 266);
+            this.rtbDescription.Name = "rtbDescription";
+            this.rtbDescription.Size = new System.Drawing.Size(222, 105);
+            this.rtbDescription.TabIndex = 15;
+            this.rtbDescription.Text = "";
             // 
             // btnAccept
             // 
@@ -150,16 +150,16 @@
             this.Controls.Add(this.picMarker);
             this.Controls.Add(this.btnAccept);
             this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.richTextBox1);
-            this.Controls.Add(this.numericUpDown1);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.rtbDescription);
+            this.Controls.Add(this.numMaximumAmmountUsers);
+            this.Controls.Add(this.lblTeamData);
+            this.Controls.Add(this.txtName);
+            this.Controls.Add(this.lblMaximumAmmountUsers);
+            this.Controls.Add(this.lblDescription);
+            this.Controls.Add(this.lblName);
             this.Name = "UCAddOrModifyTeam";
             this.Size = new System.Drawing.Size(747, 538);
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numMaximumAmmountUsers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picMarker)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -168,13 +168,13 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.Label lblName;
+        private System.Windows.Forms.Label lblDescription;
+        private System.Windows.Forms.Label lblMaximumAmmountUsers;
+        private System.Windows.Forms.TextBox txtName;
+        private System.Windows.Forms.Label lblTeamData;
+        private System.Windows.Forms.NumericUpDown numMaximumAmmountUsers;
+        private System.Windows.Forms.RichTextBox rtbDescription;
         private System.Windows.Forms.Button btnAccept;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.PictureBox picMarker;

@@ -57,6 +57,12 @@
     <Compile Include="UCAddOrModifyUser.Designer.cs">
       <DependentUpon>UCAddOrModifyUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="UCAddOrModifyWhiteboard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCAddOrModifyWhiteboard.Designer.cs">
+      <DependentUpon>UCAddOrModifyWhiteboard.cs</DependentUpon>
+    </Compile>
     <Compile Include="UCAdministratorCommentsSolvedByUser.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -106,6 +112,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UCAddOrModifyUser.resx">
       <DependentUpon>UCAddOrModifyUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCAddOrModifyWhiteboard.resx">
+      <DependentUpon>UCAddOrModifyWhiteboard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UCAdministratorCommentsSolvedByUser.resx">
       <DependentUpon>UCAdministratorCommentsSolvedByUser.cs</DependentUpon>
