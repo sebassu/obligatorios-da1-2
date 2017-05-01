@@ -5,29 +5,29 @@ namespace Domain
 {
     public static class Utilities
     {
-        public static bool IsNotNull(object anObject)
+        public static bool IsNotNull(object value)
         {
-            return anObject != null;
+            return value != null;
         }
 
-        public static bool ContainsOnlyLettersDigitsOrSpaces(string aString)
+        public static bool ContainsOnlyLettersDigitsOrSpaces(string value)
         {
-            return aString.ToCharArray().All(c => IsLetterDigitOrSpace(c));
+            return value.ToCharArray().All(c => IsLetterDigitOrSpace(c));
         }
 
-        public static bool ContainsOnlyLettersOrSpaces(string aString)
+        public static bool ContainsOnlyLettersOrSpaces(string value)
         {
-            return aString.ToCharArray().All(c => IsLetterOrSpace(c));
+            return value.ToCharArray().All(c => IsLetterOrSpace(c));
         }
 
-        private static bool IsLetterDigitOrSpace(char aChar)
+        private static bool IsLetterDigitOrSpace(char value)
         {
-            return IsLetterOrSpace(aChar) || char.IsNumber(aChar);
+            return IsLetterOrSpace(value) || char.IsNumber(value);
         }
 
-        private static bool IsLetterOrSpace(char aChar)
+        private static bool IsLetterOrSpace(char value)
         {
-            return char.IsLetter(aChar) || char.IsWhiteSpace(aChar);
+            return char.IsLetter(value) || char.IsWhiteSpace(value);
         }
 
         public static bool IsTodayOrBefore(DateTime value)
