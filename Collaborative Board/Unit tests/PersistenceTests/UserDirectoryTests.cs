@@ -96,5 +96,25 @@ namespace UnitTests.PersistenceTests
             testingUserDirectory.AddNewUser("Gabriel David", "Medina",
                 "medina@simuladores.com", DateTime.Today, "*#1/-asd$ !@^9");
         }
+
+        [TestMethod]
+        public void UDirectoryRemoveUserValidTest()
+        {
+            User userToVerify = User.NamesEmailBirthdatePassword("Mario", "Santos",
+                "santos@simuladores.com", DateTime.Today, "contraseñaValida123");
+            testingUserDirectory.AddNewUser("Mario", "Santos",
+                "santos@simuladores.com", DateTime.Today, "contraseñaValida123");
+            testingUserDirectory.Remove(userToVerify);
+            CollectionAssert.DoesNotContain(testingUserDirectory.Elements, userToVerify);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
+        public void UDirectoryRemoveUserNotInDirectoryInvalidTest()
+        {
+            User userToVerify = User.NamesEmailBirthdatePassword("Mario", "Santos",
+                "santos@simuladores.com", DateTime.Today, "contraseñaValida123");
+            testingUserDirectory.Remove(userToVerify);
+        }
     }
 }
