@@ -1,6 +1,7 @@
 ﻿using Domain;
 using System;
 using Exceptions;
+using Persistence;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTests.PersistenceTests

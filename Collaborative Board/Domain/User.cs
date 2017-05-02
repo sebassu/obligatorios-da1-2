@@ -91,7 +91,14 @@ namespace Domain
             get { return password.PasswordValue; }
             set
             {
-                password.PasswordValue = value;
+                try
+                {
+                    password.PasswordValue = value;
+                }
+                catch (PasswordException exceptionCaught)
+                {
+                    throw new UserException(exceptionCaught.Message);
+                }
             }
         }
 

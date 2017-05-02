@@ -3,7 +3,7 @@
 namespace Exceptions
 {
     [Serializable]
-    public class PasswordException : BoardException
+    public class PasswordException : ArgumentException
     {
         public PasswordException(string message) : base(message) { }
     }

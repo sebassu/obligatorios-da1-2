@@ -4,7 +4,7 @@ using Exceptions;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace UnitTests
+namespace UnitTests.DomainTests
 {
     [TestClass]
     [ExcludeFromCodeCoverage]
@@ -127,7 +127,7 @@ namespace UnitTests
                 "santos@simuladores.com", DateTime.Today, "DisculpeFuegoTiene");
             testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Los Simuladores",
                 descriptionToSet, 4);
-            Assert.AreEqual("Equipo 1", testingTeam.Name);
+            Assert.AreEqual("Los Simuladores", testingTeam.Name);
             Assert.AreEqual(DateTime.Today, testingTeam.CreationDate.Date);
             Assert.AreEqual(descriptionToSet, testingTeam.Description);
             Assert.AreEqual(4, testingTeam.MaximumMembers);

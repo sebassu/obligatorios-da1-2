@@ -5,7 +5,7 @@ using System.Threading;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace UnitTests
+namespace UnitTests.DomainTests
 {
     [TestClass]
     [ExcludeFromCodeCoverage]
@@ -54,7 +54,7 @@ namespace UnitTests
         public void AdministratorParameterFactoryMethodInvalidLastNameTest()
         {
             testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio", ";#d1 -($!#",
-                "ravenna@simuladores.com.ar", DateTime.Now, "contraseñaValida123");
+                "ravenna@simuladores.com", DateTime.Now, "contraseñaValida123");
         }
 
         [TestMethod]
@@ -71,15 +71,15 @@ namespace UnitTests
         {
             DateTime birthdateToSet = new DateTime(2112, 7, 31);
             testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio", "Ravenna",
-                "ravenna@simuladores.com.ar", birthdateToSet, "contraseñaValida123");
+                "ravenna@simuladores.com", birthdateToSet, "contraseñaValida123");
         }
 
         [TestMethod]
-        [ExpectedException(typeof(PasswordException))]
+        [ExpectedException(typeof(UserException))]
         public void AdministratorParameterFactoryMethodInvalidPasswordTest()
         {
             testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio", "Ravenna",
-                "ravenna@simuladores.com.ar", DateTime.Now, "@%^# 521D(%$");
+                "ravenna@simuladores.com", DateTime.Now, "@%^# 521D(%$");
         }
 
         [TestMethod]
@@ -108,8 +108,8 @@ namespace UnitTests
         {
             testingAdministrator.FirstName = "Mario";
             testingAdministrator.LastName = "Santos";
-            testingAdministrator.Email = "santos@simuladores.com.ar";
-            Assert.AreEqual("Mario Santos <santos@simuladores.com.ar> (Admin.)", testingAdministrator.ToString());
+            testingAdministrator.Email = "santos@simuladores.com";
+            Assert.AreEqual("Mario Santos <santos@simuladores.com> (Admin.)", testingAdministrator.ToString());
         }
 
         [TestMethod]
@@ -117,7 +117,7 @@ namespace UnitTests
         {
             testingAdministrator.FirstName = "Gabriel";
             testingAdministrator.LastName = "Medina";
-            testingAdministrator.Email = "medina@simuladores.com.ar";
+            testingAdministrator.Email = "medina@simuladores.com";
             Assert.AreEqual(testingAdministrator.FirstName + " " + testingAdministrator.LastName + " <"
                 + testingAdministrator.Email + "> (Admin.)", testingAdministrator.ToString());
         }

@@ -73,6 +73,10 @@
       <Project>{82815c65-5a9e-44b6-bdec-9327a5cb94f9}</Project>
       <Name>Exceptions</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Persistence\Persistence.csproj">
+      <Project>{0be13edd-361a-4e67-baae-f96977a9088d}</Project>
+      <Name>Persistence</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
