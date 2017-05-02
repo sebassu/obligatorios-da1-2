@@ -122,14 +122,15 @@ namespace UnitTests
         [TestMethod]
         public void TeamParameterFactoryMethodValidTest()
         {
-            User creator = User.NamesEmailBirthdatePassword("Creator", "Team",
-                "creador@usuario.com", DateTime.Today, "password125");
-            testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo 1",
-                "No hace tareas.", 10);
+            string descriptionToSet = "Un grupo de personas que resuelve todo tipo de problemas.";
+            User creator = User.NamesEmailBirthdatePassword("Mario", "Santos",
+                "santos@simuladores.com", DateTime.Today, "DisculpeFuegoTiene");
+            testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Los Simuladores",
+                descriptionToSet, 4);
             Assert.AreEqual("Equipo 1", testingTeam.Name);
             Assert.AreEqual(DateTime.Today, testingTeam.CreationDate.Date);
-            Assert.AreEqual("No hace tareas.", testingTeam.Description);
-            Assert.AreEqual(10, testingTeam.MaximumMembers);
+            Assert.AreEqual(descriptionToSet, testingTeam.Description);
+            Assert.AreEqual(4, testingTeam.MaximumMembers);
             CollectionAssert.Contains(testingTeam.Members, creator);
         }
 
@@ -397,8 +398,8 @@ namespace UnitTests
             DateTime aBirthdate = new DateTime(1990, 05, 05);
             User creator = User.NamesEmailBirthdatePassword("Creator", "Team",
                 "creador@usuario.com", aBirthdate, "password125");
-            testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator, 
-                "Equipo 1","No hace tareas.", 10);
+            testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator,
+                "Equipo 1", "No hace tareas.", 10);
             Whiteboard aWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
                 "PizarronValido", "Descripcion de pizarron", testingTeam, 500, 500);
             testingTeam.RemoveWhiteboard(aWhiteboard);
