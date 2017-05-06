@@ -27,5 +27,14 @@ namespace Persistence
                     "el sistema.");
             }
         }
+
+        public void Remove(User userToRemove)
+        {
+            if (!users.Remove(userToRemove))
+            {
+                throw new DirectoryException("Elemento inválido recibido: no se " +
+                    "encuentra registrado en el sistema.");
+            }
+        }
     }
 }
