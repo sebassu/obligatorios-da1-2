@@ -57,5 +57,10 @@ namespace Persistence
             userToModify.Birthdate = birthdateToSet;
             userToModify.Password = passwordToSet;
         }
+
+        public bool HasElements()
+        {
+            return users.Count != 0;
+        }
     }
 }

@@ -227,7 +227,7 @@ namespace UnitTests.PersistenceTests
         }
 
         [TestMethod]
-        public void UDirectoryHasElementsOneElementTest()
+        public void UDirectoryHasElementsTwoElementsTest()
         {
             testingUserDirectory.AddNewUser("Emilio", "Ravenna",
                 "mail@simuladores.com", DateTime.Today, "contraseñaValida123");
