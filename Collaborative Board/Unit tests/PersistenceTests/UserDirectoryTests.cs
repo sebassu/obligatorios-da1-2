@@ -211,5 +211,29 @@ namespace UnitTests.PersistenceTests
             testingUserDirectory.ModifyUser(addedUser, "Mario", "Santos",
                 "santos@simuladores.com", DateTime.MaxValue, "a &#^ 12&$!!/*- ");
         }
+
+        [TestMethod]
+        public void UDirectoryHasElementsEmptyTest()
+        {
+            Assert.IsFalse(testingUserDirectory.HasElements());
+        }
+
+        [TestMethod]
+        public void UDirectoryHasElementsOneElementTest()
+        {
+            testingUserDirectory.AddNewUser("Emilio", "Ravenna",
+                "mail@simuladores.com", DateTime.Today, "contraseñaValida123");
+            Assert.IsTrue(testingUserDirectory.HasElements());
+        }
+
+        [TestMethod]
+        public void UDirectoryHasElementsOneElementTest()
+        {
+            testingUserDirectory.AddNewUser("Emilio", "Ravenna",
+                "mail@simuladores.com", DateTime.Today, "contraseñaValida123");
+            testingUserDirectory.AddNewUser("Pablo", "Lamponne",
+                "lamponne@simuladores.com", DateTime.Today, "contraseñaValida123");
+            Assert.IsTrue(testingUserDirectory.HasElements());
+        }
     }
 }
