@@ -120,5 +120,96 @@ namespace UnitTests.PersistenceTests
                 "santos@simuladores.com", DateTime.Today, "contraseñaValida123");
             testingUserDirectory.Remove(userToVerify);
         }
+
+        [TestMethod]
+        public void UDirectoryModifyUserValidTest()
+        {
+            User userToVerify = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
+                "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");
+            testingUserDirectory.AddNewUser("Emilio", "Ravenna",
+                "mail@simuladores.com", DateTime.Today, "contraseñaValida123");
+            User addedUser = testingUserDirectory.Elements.Single();
+            Assert.AreEqual(userToVerify, addedUser);
+            testingUserDirectory.ModifyUser(addedUser, " Mario ", " Santos ",
+                "santos@simuladores.com", DateTime.MinValue, "DisculpeFuegoTiene");
+            Assert.AreEqual("Mario", addedUser.FirstName);
+            Assert.AreEqual("Santos", addedUser.LastName);
+            Assert.AreEqual("santos@simuladores.com", addedUser.Email);
+            Assert.AreEqual(DateTime.MinValue, addedUser.Birthdate);
+            Assert.AreEqual("DisculpeFuegoTiene", addedUser.Password);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DirectoryException))]
+        public void UDirectoryModifyNullUserInvalidTest()
+        {
+            testingUserDirectory.ModifyUser(null, "Mario", "Santos",
+                "santos@simuladores.com", DateTime.MinValue, "DisculpeFuegoTiene");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DirectoryException))]
+        public void UDirectoryModifyUnaddedUserInvalidTest()
+        {
+            User unaddedUser = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
+                "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");
+            testingUserDirectory.ModifyUser(unaddedUser, "Mario", "Santos",
+                "santos@simuladores.com", DateTime.MinValue, "DisculpeFuegoTiene");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
+        public void UDirectoryModifyUserInvalidFirstNameTest()
+        {
+            testingUserDirectory.AddNewUser("Emilio", "Ravenna",
+                "mail@simuladores.com", DateTime.Today, "contraseñaValida123");
+            User addedUser = testingUserDirectory.Elements.Single();
+            testingUserDirectory.ModifyUser(addedUser, "4%# !sf*!@#9", "Santos",
+                "santos@simuladores.com", DateTime.MinValue, "DisculpeFuegoTiene");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
+        public void UDirectoryModifyUserInvalidLastNameTest()
+        {
+            testingUserDirectory.AddNewUser("Emilio", "Ravenna",
+                "mail@simuladores.com", DateTime.Today, "contraseñaValida123");
+            User addedUser = testingUserDirectory.Elements.Single();
+            testingUserDirectory.ModifyUser(addedUser, "Mario", "a#$%s 9 $^!!12",
+                "santos@simuladores.com", DateTime.MinValue, "DisculpeFuegoTiene");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
+        public void UDirectoryModifyUserInvalidEmailTest()
+        {
+            testingUserDirectory.AddNewUser("Emilio", "Ravenna",
+                "mail@simuladores.com", DateTime.Today, "contraseñaValida123");
+            User addedUser = testingUserDirectory.Elements.Single();
+            testingUserDirectory.ModifyUser(addedUser, "Mario", "Santos",
+                "!!12345 6789!!", DateTime.MinValue, "DisculpeFuegoTiene");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
+        public void UDirectoryModifyUserInvalidBirthdateTest()
+        {
+            testingUserDirectory.AddNewUser("Emilio", "Ravenna",
+                "mail@simuladores.com", DateTime.Today, "contraseñaValida123");
+            User addedUser = testingUserDirectory.Elements.Single();
+            testingUserDirectory.ModifyUser(addedUser, "Mario", "Santos",
+                "santos@simuladores.com", DateTime.MaxValue, "DisculpeFuegoTiene");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
+        public void UDirectoryModifyUserInvalidPasswordTest()
+        {
+            testingUserDirectory.AddNewUser("Emilio", "Ravenna",
+                "mail@simuladores.com", DateTime.Today, "contraseñaValida123");
+            User addedUser = testingUserDirectory.Elements.Single();
+            testingUserDirectory.ModifyUser(addedUser, "Mario", "Santos",
+                "santos@simuladores.com", DateTime.MaxValue, "a &#^ 12&$!!/*- ");
+        }
     }
 }
