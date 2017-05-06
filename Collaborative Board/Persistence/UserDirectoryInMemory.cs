@@ -33,5 +33,29 @@ namespace Persistence
                 throw new DirectoryException(ErrorMessages.ElementDoesNotExist);
             }
         }
+
+        public void ModifyUser(User userToModify, string firstNameToSet, string lastNameToSet, string emailToSet,
+            DateTime birthdateToSet, string passwordToSet)
+        {
+            if (users.Contains(userToModify))
+            {
+                SetUserAttributes(userToModify, firstNameToSet, lastNameToSet,
+                    emailToSet, birthdateToSet, passwordToSet);
+            }
+            else
+            {
+                throw new DirectoryException("El elemento recibido no se encuentra registrado en el sistema.");
+            }
+        }
+
+        private static void SetUserAttributes(User userToModify, string firstNameToSet, string lastNameToSet,
+            string emailToSet, DateTime birthdateToSet, string passwordToSet)
+        {
+            userToModify.FirstName = firstNameToSet;
+            userToModify.LastName = lastNameToSet;
+            userToModify.Email = emailToSet;
+            userToModify.Birthdate = birthdateToSet;
+            userToModify.Password = passwordToSet;
+        }
     }
 }

@@ -127,7 +127,7 @@ namespace UnitTests.PersistenceTests
             User userToVerify = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
                 "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");
             testingUserDirectory.AddNewUser("Emilio", "Ravenna",
-                "mail@simuladores.com", DateTime.Today, "contraseñaValida123");
+                "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");
             User addedUser = testingUserDirectory.Elements.Single();
             Assert.AreEqual(userToVerify, addedUser);
             testingUserDirectory.ModifyUser(addedUser, " Mario ", " Santos ",

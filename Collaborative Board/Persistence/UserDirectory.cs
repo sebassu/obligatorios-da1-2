@@ -11,5 +11,7 @@ namespace Persistence
         void AddNewUser(string firstName, string lastName, string email,
             DateTime birthdate, string password);
         void Remove(User userToRemove);
+        void ModifyUser(User userToModify, string firstName, string lastName,
+            string email, DateTime birthdate, string password);
     }
 }
