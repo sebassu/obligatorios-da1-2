@@ -1,6 +1,7 @@
 ﻿using Domain;
 using System;
 using Exceptions;
+using System.Linq;
 using Persistence;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -24,7 +25,7 @@ namespace UnitTests.PersistenceTests
                 "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");
             testingUserDirectory.AddNewUser(" Emilio ", "Ravenna ",
                 "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");
-            CollectionAssert.Contains(testingUserDirectory.Elements, userToVerify);
+            CollectionAssert.Contains(testingUserDirectory.Elements.ToList(), userToVerify);
         }
 
         [TestMethod]
@@ -34,11 +35,12 @@ namespace UnitTests.PersistenceTests
             userToVerify.Email = "ravenna@simuladores.com";
             testingUserDirectory.AddNewUser("Emilio", "Ravenna",
                 "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");
-            CollectionAssert.Contains(testingUserDirectory.Elements, userToVerify);
+            CollectionAssert.Contains(testingUserDirectory.Elements.ToList(), userToVerify);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DirectoryException))]
+        [ExpectedException(typeof(DirectoryException),
+        "El elemento recibido ya existe en el sistema.")]
         public void UDirectoryAddRepeatedUserInvalidTest()
         {
             testingUserDirectory.AddNewUser("Pablo", "Lamponne",
@@ -48,7 +50,8 @@ namespace UnitTests.PersistenceTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DirectoryException))]
+        [ExpectedException(typeof(DirectoryException),
+        "El elemento recibido ya existe en el sistema.")]
         public void UDirectoryAddNewUserRepeatedMailInvalidTest()
         {
             testingUserDirectory.AddNewUser("Emilio", "Ravenna",
@@ -105,11 +108,12 @@ namespace UnitTests.PersistenceTests
             testingUserDirectory.AddNewUser("Mario", "Santos",
                 "santos@simuladores.com", DateTime.Today, "contraseñaValida123");
             testingUserDirectory.Remove(userToVerify);
-            CollectionAssert.DoesNotContain(testingUserDirectory.Elements, userToVerify);
+            CollectionAssert.DoesNotContain(testingUserDirectory.Elements.ToList(), userToVerify);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(UserException))]
+        [ExpectedException(typeof(DirectoryException),
+        "Elemento inválido recibido: no se encuentra registrado en el sistema.")]
         public void UDirectoryRemoveUserNotInDirectoryInvalidTest()
         {
             User userToVerify = User.NamesEmailBirthdatePassword("Mario", "Santos",

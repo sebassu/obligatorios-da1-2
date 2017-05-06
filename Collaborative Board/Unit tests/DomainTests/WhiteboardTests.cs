@@ -1,6 +1,7 @@
 ﻿using System;
 using Domain;
 using Exceptions;
+using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -21,7 +22,7 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void WhiteboardForTestingPurposesTest()
         {
-            Assert.AreEqual("Nombre inválido", testingWhiteboard.Name);
+            Assert.AreEqual("Pizarrón inválido", testingWhiteboard.Name);
             Assert.AreEqual("Descripción inválida.", testingWhiteboard.Description);
             Assert.AreEqual(int.MaxValue, testingWhiteboard.Width);
             Assert.AreEqual(int.MaxValue, testingWhiteboard.Height);
@@ -222,7 +223,7 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void WhiteboardToStringTest1()
         {
-            Assert.AreEqual("Nombre inválido", testingWhiteboard.ToString());
+            Assert.AreEqual("Pizarrón inválido", testingWhiteboard.ToString());
         }
 
         [TestMethod]
@@ -311,7 +312,7 @@ namespace UnitTests.DomainTests
         {
             ElementWhiteboard image = ImageWhiteboard.InstanceForTestingPurposes();
             testingWhiteboard.AddWhiteboardElement(image);
-            CollectionAssert.Contains(testingWhiteboard.Contents, image);
+            CollectionAssert.Contains(testingWhiteboard.Contents.ToList(), image);
         }
 
         [TestMethod]
@@ -319,7 +320,7 @@ namespace UnitTests.DomainTests
         {
             ElementWhiteboard textBox = TextBoxWhiteboard.InstanceForTestingPurposes();
             testingWhiteboard.AddWhiteboardElement(textBox);
-            CollectionAssert.Contains(testingWhiteboard.Contents, textBox);
+            CollectionAssert.Contains(testingWhiteboard.Contents.ToList(), textBox);
         }
 
         [TestMethod]
@@ -335,7 +336,7 @@ namespace UnitTests.DomainTests
             ElementWhiteboard image = ImageWhiteboard.InstanceForTestingPurposes();
             testingWhiteboard.AddWhiteboardElement(image);
             testingWhiteboard.RemoveWhiteboardElement(image);
-            CollectionAssert.DoesNotContain(testingWhiteboard.Contents, image);
+            CollectionAssert.DoesNotContain(testingWhiteboard.Contents.ToList(), image);
         }
 
         [TestMethod]
@@ -344,7 +345,7 @@ namespace UnitTests.DomainTests
             ElementWhiteboard textBox = TextBoxWhiteboard.InstanceForTestingPurposes();
             testingWhiteboard.AddWhiteboardElement(textBox);
             testingWhiteboard.RemoveWhiteboardElement(textBox);
-            CollectionAssert.DoesNotContain(testingWhiteboard.Contents, textBox);
+            CollectionAssert.DoesNotContain(testingWhiteboard.Contents.ToList(), textBox);
         }
 
         [TestMethod]

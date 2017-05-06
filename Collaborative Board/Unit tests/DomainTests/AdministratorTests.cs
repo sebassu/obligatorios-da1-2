@@ -22,8 +22,8 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void AdministratorForTestingPurposesTest()
         {
-            Assert.AreEqual("Nombre inválido.", testingAdministrator.FirstName);
-            Assert.AreEqual("Apellido inválido.", testingAdministrator.LastName);
+            Assert.AreEqual("Usuario", testingAdministrator.FirstName);
+            Assert.AreEqual("inválido.", testingAdministrator.LastName);
             Assert.AreEqual("mailInvalido@usuarioInvalido", testingAdministrator.Email);
             Assert.AreEqual("Contraseña inválida.", testingAdministrator.Password);
         }
@@ -99,7 +99,7 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void AdministratorToStringTest1()
         {
-            Assert.AreEqual("Nombre inválido. Apellido inválido. <mailInvalido@usuarioInvalido> (Admin.)",
+            Assert.AreEqual("Usuario inválido. <mailInvalido@usuarioInvalido> (Admin.)",
                 testingAdministrator.ToString());
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using Domain;
 using Exceptions;
+using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -133,7 +134,7 @@ namespace UnitTests.DomainTests
             Assert.IsTrue(testingComment.IsResolved);
             Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate().Date);
             Assert.AreEqual(testingComment.Resolver, aUser);
-            CollectionAssert.Contains(aUser.CommentsResolved, testingComment);
+            CollectionAssert.Contains(aUser.CommentsResolved.ToList(), testingComment);
         }
 
         [TestMethod]
@@ -145,7 +146,7 @@ namespace UnitTests.DomainTests
             Assert.IsTrue(testingComment.IsResolved);
             Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate().Date);
             Assert.AreEqual(testingComment.Resolver, aUser);
-            CollectionAssert.Contains(aUser.CommentsResolved, testingComment);
+            CollectionAssert.Contains(aUser.CommentsResolved.ToList(), testingComment);
         }
 
         [TestMethod]
@@ -171,7 +172,7 @@ namespace UnitTests.DomainTests
             Assert.IsTrue(testingComment.IsResolved);
             Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate().Date);
             Assert.AreEqual(testingComment.Resolver, aUser);
-            CollectionAssert.Contains(aUser.CommentsResolved, testingComment);
+            CollectionAssert.Contains(aUser.CommentsResolved.ToList(), testingComment);
             testingComment.Resolve(aUser);
         }
 
@@ -184,7 +185,7 @@ namespace UnitTests.DomainTests
             Assert.IsTrue(testingComment.IsResolved);
             Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate().Date);
             Assert.AreEqual(testingComment.Resolver, aUser);
-            CollectionAssert.Contains(aUser.CommentsResolved, testingComment);
+            CollectionAssert.Contains(aUser.CommentsResolved.ToList(), testingComment);
             User differentUser = User.NamesEmailBirthdatePassword("Mario", "Santos",
                 "santos@simuladores.com", DateTime.Today, "contraseñaValida123");
             testingComment.Resolve(differentUser);

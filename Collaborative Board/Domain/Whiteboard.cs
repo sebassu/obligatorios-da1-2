@@ -1,6 +1,6 @@
 ﻿using System;
 using Exceptions;
-using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace Domain
@@ -31,7 +31,8 @@ namespace Domain
                 }
                 else
                 {
-                    throw new WhiteboardException("Nombre inválido: " + value + ".");
+                    string errorMessage = string.Format(ErrorMessages.NameIsInvalid, value);
+                    throw new WhiteboardException(errorMessage);
                 }
             }
         }
@@ -55,8 +56,7 @@ namespace Domain
                 }
                 else
                 {
-                    throw new WhiteboardException("Descripción inválida: "
-                        + value + ".");
+                    throw new WhiteboardException(ErrorMessages.EmptyDescription);
                 }
             }
         }
@@ -74,8 +74,8 @@ namespace Domain
                 }
                 else
                 {
-                    throw new WhiteboardException("Altura de pizarrón inválida: "
-                        + value + ".");
+                    string errorMessage = string.Format(ErrorMessages.WidthIsInvalid, value);
+                    throw new WhiteboardException(errorMessage);
                 }
             }
         }
@@ -93,8 +93,8 @@ namespace Domain
                 }
                 else
                 {
-                    throw new WhiteboardException("Altura de pizarrón inválida: "
-                        + value + ".");
+                    string errorMessage = string.Format(ErrorMessages.HeightIsInvalid, value);
+                    throw new WhiteboardException(errorMessage);
                 }
             }
         }
@@ -104,7 +104,7 @@ namespace Domain
         public Team OwnerTeam { get; }
 
         private List<ElementWhiteboard> contents = new List<ElementWhiteboard>();
-        public IList Contents => contents.AsReadOnly();
+        public IReadOnlyCollection<ElementWhiteboard> Contents => contents.AsReadOnly();
 
         internal void AddWhiteboardElement(ElementWhiteboard elementToAdd)
         {
@@ -114,7 +114,7 @@ namespace Domain
             }
             else
             {
-                throw new WhiteboardException("El elemento recibido es inválido (nulo).");
+                throw new WhiteboardException(ErrorMessages.NullElement);
             }
         }
 
@@ -123,8 +123,7 @@ namespace Domain
             bool elementWasRemoved = contents.Remove(elementToRemove);
             if (!elementWasRemoved)
             {
-                throw new WhiteboardException("Elemento inválido (no contenido) para el " +
-                    "pizarrón actual recibido");
+                throw new WhiteboardException(ErrorMessages.NonMemberElement);
             }
         }
 
@@ -135,7 +134,7 @@ namespace Domain
 
         private Whiteboard()
         {
-            name = "Nombre inválido";
+            name = "Pizarrón inválido";
             description = "Descripción inválida.";
             width = int.MaxValue;
             height = int.MaxValue;
@@ -160,8 +159,9 @@ namespace Domain
             }
             else
             {
-                throw new WhiteboardException("Se ha recibido un usuario creador inválido " +
-                    "para el equipo ingresado.");
+                string errorMessage = string.Format(ErrorMessages.CreatorIsInvalid,
+                    aCreator, anOwnerTeam);
+                throw new WhiteboardException(errorMessage);
             }
         }
 

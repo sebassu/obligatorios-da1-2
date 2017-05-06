@@ -1,7 +1,6 @@
 ﻿using System;
 using Exceptions;
 using System.Net.Mail;
-using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
@@ -22,7 +21,8 @@ namespace Domain
                 }
                 else
                 {
-                    throw new UserException("Nombre inválido recibido: " + value + ".");
+                    string errorMessage = string.Format(ErrorMessages.UserNameIsInvalid, value);
+                    throw new UserException(errorMessage);
                 }
             }
         }
@@ -39,14 +39,16 @@ namespace Domain
                 }
                 else
                 {
-                    throw new UserException("Apellido inválido recibido: " + value + ".");
+                    string errorMessage = string.Format(ErrorMessages.LastNameIsInvalid, value);
+                    throw new UserException(errorMessage);
                 }
             }
         }
 
         public static bool IsValidName(string value)
         {
-            return !string.IsNullOrWhiteSpace(value) && Utilities.ContainsOnlyLettersOrSpaces(value);
+            return !string.IsNullOrWhiteSpace(value) &&
+                Utilities.ContainsOnlyLettersOrSpaces(value);
         }
 
         private MailAddress email;
@@ -61,7 +63,8 @@ namespace Domain
                 }
                 catch (SystemException)
                 {
-                    throw new UserException("Email inválido recibido: " + value + ".");
+                    string errorMessage = string.Format(ErrorMessages.EmailIsInvalid, value);
+                    throw new UserException(errorMessage);
                 }
             }
         }
@@ -79,8 +82,9 @@ namespace Domain
                 }
                 else
                 {
-                    throw new UserException("Fecha de nacimiento inválida recibida: "
-                        + value.ToString("d") + ".");
+                    string errorMessage = string.Format(ErrorMessages.BirthdateIsInvalid,
+                        value.ToString("d"));
+                    throw new UserException(errorMessage);
                 }
             }
         }
@@ -110,7 +114,7 @@ namespace Domain
         }
 
         private readonly List<Comment> commentsResolved = new List<Comment>();
-        public IList CommentsResolved => commentsResolved.AsReadOnly();
+        public IReadOnlyCollection<Comment> CommentsResolved => commentsResolved.AsReadOnly();
 
         internal void AddResolvedComment(Comment aComment)
         {
@@ -124,8 +128,8 @@ namespace Domain
 
         protected User()
         {
-            firstName = "Nombre inválido.";
-            lastName = "Apellido inválido.";
+            firstName = "Usuario";
+            lastName = "inválido.";
             email = new MailAddress("mailInvalido@usuarioInvalido");
         }
 

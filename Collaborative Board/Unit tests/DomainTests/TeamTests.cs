@@ -1,6 +1,7 @@
 ﻿using Domain;
 using System;
 using Exceptions;
+using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -21,10 +22,10 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void TeamForTestingPurposesTest()
         {
-            Assert.AreEqual("Nombre inválido.", testingTeam.Name);
+            Assert.AreEqual("Equipo inválido.", testingTeam.Name);
             Assert.AreEqual("Descripción inválida.", testingTeam.Description);
             Assert.AreEqual(int.MaxValue, testingTeam.MaximumMembers);
-            CollectionAssert.Contains(testingTeam.Members,
+            CollectionAssert.Contains(testingTeam.Members.ToList(),
                 User.InstanceForTestingPurposes());
         }
 
@@ -131,7 +132,7 @@ namespace UnitTests.DomainTests
             Assert.AreEqual(DateTime.Today, testingTeam.CreationDate.Date);
             Assert.AreEqual(descriptionToSet, testingTeam.Description);
             Assert.AreEqual(4, testingTeam.MaximumMembers);
-            CollectionAssert.Contains(testingTeam.Members, creator);
+            CollectionAssert.Contains(testingTeam.Members.ToList(), creator);
         }
 
         [TestMethod]
@@ -166,7 +167,7 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void TeamToStringTest1()
         {
-            Assert.AreEqual("Nombre inválido.", testingTeam.ToString());
+            Assert.AreEqual("Equipo inválido.", testingTeam.ToString());
         }
 
         [TestMethod]
@@ -190,7 +191,7 @@ namespace UnitTests.DomainTests
             User aUser = User.NamesEmailBirthdatePassword("Pablo", "Lamponne",
                 "lamponne@simuladores.com", DateTime.Now, "contraseñaValida123");
             testingTeam.AddMember(aUser);
-            CollectionAssert.Contains(testingTeam.Members, aUser);
+            CollectionAssert.Contains(testingTeam.Members.ToList(), aUser);
         }
 
         [TestMethod]
@@ -202,8 +203,8 @@ namespace UnitTests.DomainTests
                 "mail2@usuario.com", DateTime.Today, "password122");
             testingTeam.AddMember(aUser);
             testingTeam.AddMember(bUser);
-            CollectionAssert.Contains(testingTeam.Members, aUser);
-            CollectionAssert.Contains(testingTeam.Members, bUser);
+            CollectionAssert.Contains(testingTeam.Members.ToList(), aUser);
+            CollectionAssert.Contains(testingTeam.Members.ToList(), bUser);
         }
 
         [TestMethod]
@@ -247,7 +248,7 @@ namespace UnitTests.DomainTests
             User aUser = User.InstanceForTestingPurposes();
             testingTeam.AddMember(aUser);
             testingTeam.RemoveMember(aUser);
-            CollectionAssert.DoesNotContain(testingTeam.Members, aUser);
+            CollectionAssert.DoesNotContain(testingTeam.Members.ToList(), aUser);
         }
 
         [TestMethod]
@@ -340,7 +341,7 @@ namespace UnitTests.DomainTests
             Whiteboard aWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
                 "PizarronValido", "Descripcion de pizarron", testingTeam, 500, 500);
             testingTeam.AddWhiteboard(aWhiteboard);
-            CollectionAssert.Contains(testingTeam.CreatedWhiteboards, aWhiteboard);
+            CollectionAssert.Contains(testingTeam.CreatedWhiteboards.ToList(), aWhiteboard);
         }
 
         [TestMethod]
@@ -356,8 +357,8 @@ namespace UnitTests.DomainTests
                 "PizarronNuevo", "Descripcion de pizarron", testingTeam, 1500, 1500);
             testingTeam.AddWhiteboard(aWhiteboard);
             testingTeam.AddWhiteboard(bWhiteboard);
-            CollectionAssert.Contains(testingTeam.CreatedWhiteboards, aWhiteboard);
-            CollectionAssert.Contains(testingTeam.CreatedWhiteboards, bWhiteboard);
+            CollectionAssert.Contains(testingTeam.CreatedWhiteboards.ToList(), aWhiteboard);
+            CollectionAssert.Contains(testingTeam.CreatedWhiteboards.ToList(), bWhiteboard);
         }
 
         [TestMethod]
@@ -388,7 +389,7 @@ namespace UnitTests.DomainTests
                 "PizarronValido", "Descripcion de pizarron", testingTeam, 500, 500);
             testingTeam.AddWhiteboard(aWhiteboard);
             testingTeam.RemoveWhiteboard(aWhiteboard);
-            CollectionAssert.DoesNotContain(testingTeam.CreatedWhiteboards, aWhiteboard);
+            CollectionAssert.DoesNotContain(testingTeam.CreatedWhiteboards.ToList(), aWhiteboard);
         }
 
         [TestMethod]

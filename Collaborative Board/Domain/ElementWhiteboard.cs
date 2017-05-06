@@ -26,8 +26,8 @@ namespace Domain
                 }
                 else
                 {
-                    throw new ElementException("Altura de pizarrón inválida: "
-                        + value + ".");
+                    string errorMessage = string.Format(ErrorMessages.WidthIsInvalid, value);
+                    throw new ElementException(errorMessage);
                 }
             }
         }
@@ -50,8 +50,8 @@ namespace Domain
                 }
                 else
                 {
-                    throw new ElementException("Altura de pizarrón inválida: "
-                        + value + ".");
+                    string errorMessage = string.Format(ErrorMessages.HeightIsInvalid, value);
+                    throw new ElementException(errorMessage);
                 }
             }
         }
@@ -70,7 +70,7 @@ namespace Domain
             }
             else
             {
-                throw new ElementException("Punto de origen inválido recibido.");
+                throw new ElementException(ErrorMessages.OriginPointIsInvalid);
             }
         }
 
@@ -118,7 +118,7 @@ namespace Domain
             }
             else
             {
-                throw new ElementException("El pizarrón recibido es inválido (nulo).");
+                throw new ElementException(ErrorMessages.NullWhiteboard);
             }
         }
 

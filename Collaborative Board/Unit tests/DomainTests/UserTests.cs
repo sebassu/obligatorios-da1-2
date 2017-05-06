@@ -22,8 +22,8 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void UserForTestingPurposesTest()
         {
-            Assert.AreEqual("Nombre inválido.", testingUser.FirstName);
-            Assert.AreEqual("Apellido inválido.", testingUser.LastName);
+            Assert.AreEqual("Usuario", testingUser.FirstName);
+            Assert.AreEqual("inválido.", testingUser.LastName);
             Assert.AreEqual("mailInvalido@usuarioInvalido", testingUser.Email);
             Assert.AreEqual("Contraseña inválida.", testingUser.Password);
         }
@@ -298,7 +298,7 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void UserToStringTest1()
         {
-            Assert.AreEqual("Nombre inválido. Apellido inválido. <mailInvalido@usuarioInvalido>",
+            Assert.AreEqual("Usuario inválido. <mailInvalido@usuarioInvalido>",
                 testingUser.ToString());
         }
 

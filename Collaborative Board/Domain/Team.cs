@@ -1,6 +1,5 @@
 ﻿using System;
 using Exceptions;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Domain
@@ -21,7 +20,8 @@ namespace Domain
                 }
                 else
                 {
-                    throw new TeamException("Nombre inválido: " + value + ".");
+                    string errorMessage = string.Format(ErrorMessages.NameIsInvalid, value);
+                    throw new TeamException(errorMessage);
                 }
             }
         }
@@ -41,7 +41,7 @@ namespace Domain
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new TeamException("Descripción inválida: " + value + ".");
+                    throw new TeamException(ErrorMessages.EmptyDescription);
                 }
                 else
                 {
@@ -62,17 +62,18 @@ namespace Domain
                 }
                 else
                 {
-                    throw new TeamException("Máxima cantidad de miembros inválida: "
-                        + value + ".");
+                    string errorMessage = string.Format(ErrorMessages.InvalidMaximumMembers,
+                        value, minimumMembers);
+                    throw new TeamException(errorMessage);
                 }
             }
         }
 
         private readonly List<User> members = new List<User>();
-        public IList Members => members.AsReadOnly();
+        public IReadOnlyCollection<User> Members => members.AsReadOnly();
 
         private readonly List<Whiteboard> createdWhiteboards = new List<Whiteboard>();
-        public IList CreatedWhiteboards
+        public IReadOnlyCollection<Whiteboard> CreatedWhiteboards
         {
             get
             {
@@ -89,7 +90,7 @@ namespace Domain
             }
             else
             {
-                throw new TeamException("Miembro no válido o equipo completo.");
+                throw new TeamException(ErrorMessages.CannotAddUser);
             }
         }
 
@@ -102,7 +103,7 @@ namespace Domain
         {
             if (!WasRemoved(userToRemove))
             {
-                throw new TeamException("Miembro no válido o equipo con mínimo de miembros.");
+                throw new TeamException(ErrorMessages.CannotRemoveUser);
             }
         }
 
@@ -113,14 +114,15 @@ namespace Domain
 
         public void AddWhiteboard(Whiteboard whiteboardToAdd)
         {
-            bool isPossibleToAddWhiteboard = !createdWhiteboards.Contains(whiteboardToAdd);
+            bool isPossibleToAddWhiteboard = Utilities.IsNotNull(whiteboardToAdd) &&
+                !createdWhiteboards.Contains(whiteboardToAdd);
             if (isPossibleToAddWhiteboard)
             {
                 createdWhiteboards.Add(whiteboardToAdd);
             }
             else
             {
-                throw new TeamException("Pizarrón no válido recibido.");
+                throw new TeamException(ErrorMessages.WhiteboardIsInvalid);
             }
         }
 
@@ -129,7 +131,7 @@ namespace Domain
             bool whiteboardWasRemoved = createdWhiteboards.Remove(someWhiteboard);
             if (!whiteboardWasRemoved)
             {
-                throw new TeamException("Pizarrón no válido.");
+                throw new TeamException(ErrorMessages.WhiteboardIsInvalid);
             }
         }
 
@@ -141,7 +143,7 @@ namespace Domain
         private Team()
         {
             User defaultCreator = User.InstanceForTestingPurposes();
-            name = "Nombre inválido.";
+            name = "Equipo inválido.";
             description = "Descripción inválida.";
             maximumMembers = int.MaxValue;
             members.Add(defaultCreator);
