@@ -3,11 +3,13 @@ using System;
 using Exceptions;
 using System.Linq;
 using Persistence;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTests.PersistenceTests
 {
     [TestClass]
+    [ExcludeFromCodeCoverage]
     public class UserDirectoryInMemoryTests
     {
         private static UserDirectory testingUserDirectory;
