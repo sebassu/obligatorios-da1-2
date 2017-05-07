@@ -34,11 +34,11 @@
             this.lblBirthdate = new System.Windows.Forms.Label();
             this.lblEmail = new System.Windows.Forms.Label();
             this.lblPassword = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.txtFirstName = new System.Windows.Forms.TextBox();
+            this.txtLastName = new System.Windows.Forms.TextBox();
+            this.txtEmail = new System.Windows.Forms.TextBox();
+            this.txtPassword = new System.Windows.Forms.TextBox();
+            this.dtpBirthDate = new System.Windows.Forms.DateTimePicker();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnAccept = new System.Windows.Forms.Button();
             this.lblUserData = new System.Windows.Forms.Label();
@@ -103,42 +103,42 @@
             this.lblPassword.TabIndex = 4;
             this.lblPassword.Text = "Contraseña:";
             // 
-            // textBox1
+            // txtFirstName
             // 
-            this.textBox1.Location = new System.Drawing.Point(293, 113);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(172, 20);
-            this.textBox1.TabIndex = 5;
+            this.txtFirstName.Location = new System.Drawing.Point(293, 113);
+            this.txtFirstName.Name = "txtFirstName";
+            this.txtFirstName.Size = new System.Drawing.Size(172, 20);
+            this.txtFirstName.TabIndex = 5;
             // 
-            // textBox2
+            // txtLastName
             // 
-            this.textBox2.Location = new System.Drawing.Point(293, 167);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(172, 20);
-            this.textBox2.TabIndex = 6;
+            this.txtLastName.Location = new System.Drawing.Point(293, 167);
+            this.txtLastName.Name = "txtLastName";
+            this.txtLastName.Size = new System.Drawing.Size(172, 20);
+            this.txtLastName.TabIndex = 6;
             // 
-            // textBox3
+            // txtEmail
             // 
-            this.textBox3.Location = new System.Drawing.Point(293, 275);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(172, 20);
-            this.textBox3.TabIndex = 7;
+            this.txtEmail.Location = new System.Drawing.Point(293, 275);
+            this.txtEmail.Name = "txtEmail";
+            this.txtEmail.Size = new System.Drawing.Size(172, 20);
+            this.txtEmail.TabIndex = 7;
             // 
-            // textBox4
+            // txtPassword
             // 
-            this.textBox4.Location = new System.Drawing.Point(293, 329);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.PasswordChar = '*';
-            this.textBox4.Size = new System.Drawing.Size(172, 20);
-            this.textBox4.TabIndex = 8;
+            this.txtPassword.Location = new System.Drawing.Point(293, 329);
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.PasswordChar = '*';
+            this.txtPassword.Size = new System.Drawing.Size(172, 20);
+            this.txtPassword.TabIndex = 8;
             // 
-            // dateTimePicker1
+            // dtpBirthDate
             // 
-            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker1.Location = new System.Drawing.Point(293, 221);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(172, 20);
-            this.dateTimePicker1.TabIndex = 9;
+            this.dtpBirthDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpBirthDate.Location = new System.Drawing.Point(293, 221);
+            this.dtpBirthDate.Name = "dtpBirthDate";
+            this.dtpBirthDate.Size = new System.Drawing.Size(172, 20);
+            this.dtpBirthDate.TabIndex = 9;
             // 
             // btnCancel
             // 
@@ -215,11 +215,11 @@
             this.Controls.Add(this.lblUserData);
             this.Controls.Add(this.btnAccept);
             this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.dateTimePicker1);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.dtpBirthDate);
+            this.Controls.Add(this.txtPassword);
+            this.Controls.Add(this.txtEmail);
+            this.Controls.Add(this.txtLastName);
+            this.Controls.Add(this.txtFirstName);
             this.Controls.Add(this.lblPassword);
             this.Controls.Add(this.lblEmail);
             this.Controls.Add(this.lblBirthdate);
@@ -240,11 +240,11 @@
         private System.Windows.Forms.Label lblBirthdate;
         private System.Windows.Forms.Label lblEmail;
         private System.Windows.Forms.Label lblPassword;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.TextBox txtFirstName;
+        private System.Windows.Forms.TextBox txtLastName;
+        private System.Windows.Forms.TextBox txtEmail;
+        private System.Windows.Forms.TextBox txtPassword;
+        private System.Windows.Forms.DateTimePicker dtpBirthDate;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnAccept;
         private System.Windows.Forms.Label lblUserData;
