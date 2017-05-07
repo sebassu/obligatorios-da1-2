@@ -101,6 +101,88 @@ namespace UnitTests.PersistenceTests
         }
 
         [TestMethod]
+        public void UDirectoryAddNewAdministratorValidTest()
+        {
+            Administrator administratorToVerify = Administrator.NamesEmailBirthdatePassword(" Emilio ",
+                " Ravenna ", "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");
+            testingUserDirectory.AddNewAdministrator(" Emilio ", "Ravenna ",
+                "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");
+            CollectionAssert.Contains(testingUserDirectory.Elements.ToList(), administratorToVerify);
+        }
+
+        [TestMethod]
+        public void UDirectoryAddNewAdministratorOnlyEmailsMatchValidTest()
+        {
+            Administrator administratorToVerify = Administrator.InstanceForTestingPurposes();
+            administratorToVerify.Email = "ravenna@simuladores.com";
+            testingUserDirectory.AddNewAdministrator("Emilio", "Ravenna",
+                "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");
+            CollectionAssert.Contains(testingUserDirectory.Elements.ToList(), administratorToVerify);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DirectoryException),
+        "El elemento recibido ya existe en el sistema.")]
+        public void UDirectoryAddRepeatedAdministratorInvalidTest()
+        {
+            testingUserDirectory.AddNewAdministrator("Pablo", "Lamponne",
+                "lamponne@simuladores.com", DateTime.Today, "contraseñaValida123");
+            testingUserDirectory.AddNewAdministrator("Pablo", "Lamponne",
+                "lamponne@simuladores.com", DateTime.Today, "contraseñaValida123");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DirectoryException),
+        "El elemento recibido ya existe en el sistema.")]
+        public void UDirectoryAddNewAdministratorRepeatedMailInvalidTest()
+        {
+            testingUserDirectory.AddNewAdministrator("Emilio", "Ravenna",
+                "mail@simuladores.com", DateTime.Today, "contraseñaValida123");
+            testingUserDirectory.AddNewAdministrator("Pablo", "Lamponne",
+                "mail@simuladores.com", DateTime.Now, "otraContraseñaValida");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
+        public void UDirectoryAddNewAdministratorInvalidFirstNameTest()
+        {
+            testingUserDirectory.AddNewAdministrator("1d2@#!9 #(", "Medina",
+                "medina@simuladores.com", DateTime.Today, "contraseñaValida123");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
+        public void UDirectoryAddNewAdministratorInvalidLastNameTest()
+        {
+            testingUserDirectory.AddNewAdministrator("Gabriel David", "*$ 563a%7*/0&d!@",
+                "medina@simuladores.com", DateTime.Today, "contraseñaValida123");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
+        public void UDirectoryAddNewAdministratorInvalidEmailTest()
+        {
+            testingUserDirectory.AddNewAdministrator("Gabriel David", "Medina",
+                "Ceci n'est pas un email.", DateTime.Today, "contraseñaValida123");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
+        public void UDirectoryAddNewAdministratorInvalidBirthdateTest()
+        {
+            testingUserDirectory.AddNewAdministrator("Gabriel David", "Medina",
+                "medina@simuladores.com", DateTime.MaxValue, "contraseñaValida123");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
+        public void UDirectoryAddNewAdministratorInvalidPasswordTest()
+        {
+            testingUserDirectory.AddNewAdministrator("Gabriel David", "Medina",
+                "medina@simuladores.com", DateTime.Today, "*#1/-asd$ !@^9");
+        }
+
+        [TestMethod]
         public void UDirectoryRemoveUserValidTest()
         {
             User userToVerify = User.NamesEmailBirthdatePassword("Mario", "Santos",
@@ -109,6 +191,17 @@ namespace UnitTests.PersistenceTests
                 "santos@simuladores.com", DateTime.Today, "contraseñaValida123");
             testingUserDirectory.Remove(userToVerify);
             CollectionAssert.DoesNotContain(testingUserDirectory.Elements.ToList(), userToVerify);
+        }
+
+        [TestMethod]
+        public void UDirectoryRemoveUserAdministratorValidTest()
+        {
+            Administrator administratorToVerify = Administrator.NamesEmailBirthdatePassword("Mario",
+                "Santos", "santos@simuladores.com", DateTime.Today, "contraseñaValida123");
+            testingUserDirectory.AddNewUser("Mario", "Santos",
+                "santos@simuladores.com", DateTime.Today, "contraseñaValida123");
+            testingUserDirectory.Remove(administratorToVerify);
+            CollectionAssert.DoesNotContain(testingUserDirectory.Elements.ToList(), administratorToVerify);
         }
 
         [TestMethod]
@@ -137,6 +230,24 @@ namespace UnitTests.PersistenceTests
             Assert.AreEqual("santos@simuladores.com", addedUser.Email);
             Assert.AreEqual(DateTime.MinValue, addedUser.Birthdate);
             Assert.AreEqual("DisculpeFuegoTiene", addedUser.Password);
+        }
+
+        [TestMethod]
+        public void UDirectoryModifyUserAdministratorValidTest()
+        {
+            Administrator administratorToVerify = Administrator.NamesEmailBirthdatePassword("Emilio",
+                "Ravenna", "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");
+            testingUserDirectory.AddNewUser("Emilio", "Ravenna",
+                "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");
+            User addedAdminstrator = testingUserDirectory.Elements.Single();
+            Assert.AreEqual(administratorToVerify, addedAdminstrator);
+            testingUserDirectory.ModifyUser(addedAdminstrator, " Mario ", " Santos ",
+                "santos@simuladores.com", DateTime.MinValue, "DisculpeFuegoTiene");
+            Assert.AreEqual("Mario", addedAdminstrator.FirstName);
+            Assert.AreEqual("Santos", addedAdminstrator.LastName);
+            Assert.AreEqual("santos@simuladores.com", addedAdminstrator.Email);
+            Assert.AreEqual(DateTime.MinValue, addedAdminstrator.Birthdate);
+            Assert.AreEqual("DisculpeFuegoTiene", addedAdminstrator.Password);
         }
 
         [TestMethod]

@@ -26,6 +26,21 @@ namespace Persistence
             }
         }
 
+        public void AddNewAdministrator(string firstName, string lastName,
+            string email, DateTime birthdate, string password)
+        {
+            Administrator administratorToAdd = Administrator.NamesEmailBirthdatePassword(firstName,
+                lastName, email, birthdate, password);
+            if (!users.Contains(administratorToAdd))
+            {
+                users.Add(administratorToAdd);
+            }
+            else
+            {
+                throw new DirectoryException(ErrorMessages.ElementAlreadyExists);
+            }
+        }
+
         public void Remove(User userToRemove)
         {
             if (!users.Remove(userToRemove))
@@ -34,8 +49,8 @@ namespace Persistence
             }
         }
 
-        public void ModifyUser(User userToModify, string firstNameToSet, string lastNameToSet, string emailToSet,
-            DateTime birthdateToSet, string passwordToSet)
+        public void ModifyUser(User userToModify, string firstNameToSet, string lastNameToSet,
+            string emailToSet, DateTime birthdateToSet, string passwordToSet)
         {
             if (users.Contains(userToModify))
             {
@@ -44,7 +59,8 @@ namespace Persistence
             }
             else
             {
-                throw new DirectoryException("El elemento recibido no se encuentra registrado en el sistema.");
+                throw new DirectoryException("El elemento recibido no se encuentra " +
+                    "registrado en el sistema.");
             }
         }
 
