@@ -378,6 +378,13 @@ namespace UnitTests.DomainTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(TeamException))]
+        public void TeamAddNullWhiteboardTest()
+        {
+            testingTeam.AddWhiteboard(null);
+        }
+
+        [TestMethod]
         public void TeamRemoveValidWhiteboardTest()
         {
             DateTime aBirthdate = new DateTime(1990, 05, 05);

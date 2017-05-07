@@ -126,4 +126,10 @@
   <data name="EmailPasswordMismatch" xml:space="preserve">
     <value>Los datos de inicio de sesión ingresados no están asociados a ningún usuario, reintente.</value>
   </data>
+  <data name="SessionAlreadyStarted" xml:space="preserve">
+    <value>Ya existe una sesión activa en el sistema.</value>
+  </data>
+  <data name="SessionNotStarted" xml:space="preserve">
+    <value>Operación inválida: no se ha iniciado sesión en el sistema aún.</value>
+  </data>
 </root>
