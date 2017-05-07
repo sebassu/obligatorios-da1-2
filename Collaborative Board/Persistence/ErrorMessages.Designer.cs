@@ -77,5 +77,14 @@ namespace Persistence {
                 return ResourceManager.GetString("ElementDoesNotExist", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Los datos de inicio de sesión ingresados no están asociados a ningún usuario, reintente..
+        /// </summary>
+        internal static string EmailPasswordMismatch {
+            get {
+                return ResourceManager.GetString("EmailPasswordMismatch", resourceCulture);
+            }
+        }
     }
 }

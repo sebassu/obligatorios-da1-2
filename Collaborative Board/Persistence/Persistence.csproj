@@ -40,11 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DirectoryInMemory.cs" />
     <Compile Include="ErrorMessages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ErrorMessages.resx</DependentUpon>
     </Compile>
+    <Compile Include="Session.cs" />
     <Compile Include="UserDirectory.cs" />
     <Compile Include="UserDirectoryInMemory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

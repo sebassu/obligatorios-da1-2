@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace UnitTests.PersistenceTests
 {
     [TestClass]
-    public class UserDirectoryTests
+    public class UserDirectoryInMemoryTests
     {
         private static UserDirectory testingUserDirectory;
 

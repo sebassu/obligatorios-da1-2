@@ -123,4 +123,7 @@
   <data name="ElementDoesNotExist" xml:space="preserve">
     <value>Elemento inválido recibido: no se encuentra registrado en el sistema.</value>
   </data>
+  <data name="EmailPasswordMismatch" xml:space="preserve">
+    <value>Los datos de inicio de sesión ingresados no están asociados a ningún usuario, reintente.</value>
+  </data>
 </root>

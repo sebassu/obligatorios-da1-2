@@ -1,7 +1,9 @@
 ﻿using System;
 using Exceptions;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("Persistence")]
 namespace Domain
 {
     public class Team

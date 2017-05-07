@@ -13,7 +13,7 @@ namespace Domain
         public string FirstName
         {
             get { return firstName; }
-            set
+            internal set
             {
                 if (IsValidName(value))
                 {
@@ -31,7 +31,7 @@ namespace Domain
         public string LastName
         {
             get { return lastName; }
-            set
+            internal set
             {
                 if (IsValidName(value))
                 {
@@ -55,7 +55,7 @@ namespace Domain
         public string Email
         {
             get { return email.ToString(); }
-            set
+            internal set
             {
                 try
                 {
@@ -73,7 +73,7 @@ namespace Domain
         public DateTime Birthdate
         {
             get { return birthdate; }
-            set
+            internal set
             {
                 var dateToSet = value.Date;
                 if (Utilities.IsTodayOrBefore(dateToSet))
@@ -93,7 +93,7 @@ namespace Domain
         public string Password
         {
             get { return password.PasswordValue; }
-            set
+            internal set
             {
                 try
                 {

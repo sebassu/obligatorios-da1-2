@@ -1,19 +1,34 @@
 ﻿using Domain;
 using System;
-using System.Collections.Generic;
 
 namespace Persistence
 {
-    public interface UserDirectory
+    public abstract class UserDirectory : DirectoryInMemory<User>
     {
-        IReadOnlyCollection<User> Elements { get; }
-        void AddNewUser(string firstName, string lastName, string email,
+        public abstract void AddNewUser(string firstName, string lastName, string email,
             DateTime birthdate, string password);
-        void AddNewAdministrator(string firstName, string lastName, string email,
+        public abstract void AddNewAdministrator(string firstName, string lastName, string email,
             DateTime birthdate, string password);
-        void Remove(User userToRemove);
-        void ModifyUser(User userToModify, string firstName, string lastName,
+        public abstract void ModifyUser(User userToModify, string firstName, string lastName,
             string email, DateTime birthdate, string password);
-        bool HasElements();
+
+        private static volatile UserDirectoryInMemory instance;
+        private static object syncRoot = new Object();
+
+        public static UserDirectoryInMemory GetInstance()
+        {
+            if (instance == null)
+            {
+                lock (syncRoot)
+                {
+                    if (instance == null)
+                    {
+                        instance = new UserDirectoryInMemory();
+                    }
+                }
+            }
+
+            return instance;
+        }
     }
 }
