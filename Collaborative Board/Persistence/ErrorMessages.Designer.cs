@@ -86,5 +86,23 @@ namespace Persistence {
                 return ResourceManager.GetString("EmailPasswordMismatch", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ya existe una sesión activa en el sistema..
+        /// </summary>
+        internal static string SessionAlreadyStarted {
+            get {
+                return ResourceManager.GetString("SessionAlreadyStarted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operación inválida: no se ha iniciado sesión en el sistema aún..
+        /// </summary>
+        internal static string SessionNotStarted {
+            get {
+                return ResourceManager.GetString("SessionNotStarted", resourceCulture);
+            }
+        }
     }
 }

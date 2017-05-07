@@ -8,13 +8,38 @@ namespace Persistence
 {
     public static class Session
     {
-        private static User loggedUser;
-        public static User LoggedUser
+        private static User activeUser;
+        public static User ActiveUser()
         {
-            get { return loggedUser; }
+            if (IsActive())
+            {
+                return activeUser;
+            }
+            else
+            {
+                throw new SessionException(ErrorMessages.SessionNotStarted);
+            }
+        }
+
+        public static bool IsActive()
+        {
+            return Utilities.IsNotNull(activeUser);
         }
 
         public static void Start(string emailEntered, string passwordEntered)
+        {
+            if (IsActive())
+            {
+                throw new SessionException(ErrorMessages.SessionAlreadyStarted);
+            }
+            else
+            {
+                LoginUserWithData(emailEntered, passwordEntered);
+            }
+
+        }
+
+        private static void LoginUserWithData(string emailEntered, string passwordEntered)
         {
             var users = UserDirectory.GetInstance().Elements;
             try
@@ -30,7 +55,7 @@ namespace Persistence
         private static void UpdateLoggedUser(string emailEntered, string passwordEntered,
             IReadOnlyCollection<User> users)
         {
-            loggedUser = users.First(u => VerifyLoginDataMatches(u, emailEntered, passwordEntered));
+            activeUser = users.First(u => VerifyLoginDataMatches(u, emailEntered, passwordEntered));
         }
 
         private static bool VerifyLoginDataMatches(User userToVerify, string emailEntered, string passwordEntered)
@@ -40,7 +65,12 @@ namespace Persistence
 
         public static bool HasAdministrationPrivileges()
         {
-            return Utilities.IsNotNull(loggedUser) && loggedUser.HasAdministrationPrivileges;
+            return Utilities.IsNotNull(activeUser) && activeUser.HasAdministrationPrivileges;
+        }
+
+        public static void End()
+        {
+            activeUser = null;
         }
     }
 }
