@@ -12,12 +12,12 @@ namespace UnitTests.PersistenceTests
     [ExcludeFromCodeCoverage]
     public class UserDirectoryInMemoryTests
     {
-        private static UserDirectory testingUserDirectory;
+        private static UserRepository testingUserRepository;
 
         [TestInitialize]
         public void TestSetUp()
         {
-            testingUserDirectory = new UserDirectoryInMemory();
+            testingUserRepository = new UserRepositoryInMemory();
         }
 
         [TestMethod]
@@ -25,9 +25,9 @@ namespace UnitTests.PersistenceTests
         {
             User userToVerify = User.NamesEmailBirthdatePassword(" Emilio ", " Ravenna ",
                 "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");
-            testingUserDirectory.AddNewUser(" Emilio ", "Ravenna ",
+            testingUserRepository.AddNewUser(" Emilio ", "Ravenna ",
                 "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");
-            CollectionAssert.Contains(testingUserDirectory.Elements.ToList(), userToVerify);
+            CollectionAssert.Contains(testingUserRepository.Elements.ToList(), userToVerify);
         }
 
         [TestMethod]
@@ -35,30 +35,28 @@ namespace UnitTests.PersistenceTests
         {
             User userToVerify = User.InstanceForTestingPurposes();
             userToVerify.Email = "ravenna@simuladores.com";
-            testingUserDirectory.AddNewUser("Emilio", "Ravenna",
+            testingUserRepository.AddNewUser("Emilio", "Ravenna",
                 "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");
-            CollectionAssert.Contains(testingUserDirectory.Elements.ToList(), userToVerify);
+            CollectionAssert.Contains(testingUserRepository.Elements.ToList(), userToVerify);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DirectoryException),
-        "El elemento recibido ya existe en el sistema.")]
+        [ExpectedException(typeof(RepositoryException))]
         public void UDirectoryAddRepeatedUserInvalidTest()
         {
-            testingUserDirectory.AddNewUser("Pablo", "Lamponne",
+            testingUserRepository.AddNewUser("Pablo", "Lamponne",
                 "lamponne@simuladores.com", DateTime.Today, "contraseñaValida123");
-            testingUserDirectory.AddNewUser("Pablo", "Lamponne",
+            testingUserRepository.AddNewUser("Pablo", "Lamponne",
                 "lamponne@simuladores.com", DateTime.Today, "contraseñaValida123");
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DirectoryException),
-        "El elemento recibido ya existe en el sistema.")]
+        [ExpectedException(typeof(RepositoryException))]
         public void UDirectoryAddNewUserRepeatedMailInvalidTest()
         {
-            testingUserDirectory.AddNewUser("Emilio", "Ravenna",
+            testingUserRepository.AddNewUser("Emilio", "Ravenna",
                 "mail@simuladores.com", DateTime.Today, "contraseñaValida123");
-            testingUserDirectory.AddNewUser("Pablo", "Lamponne",
+            testingUserRepository.AddNewUser("Pablo", "Lamponne",
                 "mail@simuladores.com", DateTime.Now, "otraContraseñaValida");
         }
 
@@ -66,7 +64,7 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(UserException))]
         public void UDirectoryAddNewUserInvalidFirstNameTest()
         {
-            testingUserDirectory.AddNewUser("1d2@#!9 #(", "Medina",
+            testingUserRepository.AddNewUser("1d2@#!9 #(", "Medina",
                 "medina@simuladores.com", DateTime.Today, "contraseñaValida123");
         }
 
@@ -74,7 +72,7 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(UserException))]
         public void UDirectoryAddNewUserInvalidLastNameTest()
         {
-            testingUserDirectory.AddNewUser("Gabriel David", "*$ 563a%7*/0&d!@",
+            testingUserRepository.AddNewUser("Gabriel David", "*$ 563a%7*/0&d!@",
                 "medina@simuladores.com", DateTime.Today, "contraseñaValida123");
         }
 
@@ -82,7 +80,7 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(UserException))]
         public void UDirectoryAddNewUserInvalidEmailTest()
         {
-            testingUserDirectory.AddNewUser("Gabriel David", "Medina",
+            testingUserRepository.AddNewUser("Gabriel David", "Medina",
                 "Ceci n'est pas un email.", DateTime.Today, "contraseñaValida123");
         }
 
@@ -90,7 +88,7 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(UserException))]
         public void UDirectoryAddNewUserInvalidBirthdateTest()
         {
-            testingUserDirectory.AddNewUser("Gabriel David", "Medina",
+            testingUserRepository.AddNewUser("Gabriel David", "Medina",
                 "medina@simuladores.com", DateTime.MaxValue, "contraseñaValida123");
         }
 
@@ -98,7 +96,7 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(UserException))]
         public void UDirectoryAddNewUserInvalidPasswordTest()
         {
-            testingUserDirectory.AddNewUser("Gabriel David", "Medina",
+            testingUserRepository.AddNewUser("Gabriel David", "Medina",
                 "medina@simuladores.com", DateTime.Today, "*#1/-asd$ !@^9");
         }
 
@@ -107,9 +105,9 @@ namespace UnitTests.PersistenceTests
         {
             Administrator administratorToVerify = Administrator.NamesEmailBirthdatePassword(" Emilio ",
                 " Ravenna ", "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");
-            testingUserDirectory.AddNewAdministrator(" Emilio ", "Ravenna ",
+            testingUserRepository.AddNewAdministrator(" Emilio ", "Ravenna ",
                 "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");
-            CollectionAssert.Contains(testingUserDirectory.Elements.ToList(), administratorToVerify);
+            CollectionAssert.Contains(testingUserRepository.Elements.ToList(), administratorToVerify);
         }
 
         [TestMethod]
@@ -117,30 +115,28 @@ namespace UnitTests.PersistenceTests
         {
             Administrator administratorToVerify = Administrator.InstanceForTestingPurposes();
             administratorToVerify.Email = "ravenna@simuladores.com";
-            testingUserDirectory.AddNewAdministrator("Emilio", "Ravenna",
+            testingUserRepository.AddNewAdministrator("Emilio", "Ravenna",
                 "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");
-            CollectionAssert.Contains(testingUserDirectory.Elements.ToList(), administratorToVerify);
+            CollectionAssert.Contains(testingUserRepository.Elements.ToList(), administratorToVerify);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DirectoryException),
-        "El elemento recibido ya existe en el sistema.")]
+        [ExpectedException(typeof(RepositoryException))]
         public void UDirectoryAddRepeatedAdministratorInvalidTest()
         {
-            testingUserDirectory.AddNewAdministrator("Pablo", "Lamponne",
+            testingUserRepository.AddNewAdministrator("Pablo", "Lamponne",
                 "lamponne@simuladores.com", DateTime.Today, "contraseñaValida123");
-            testingUserDirectory.AddNewAdministrator("Pablo", "Lamponne",
+            testingUserRepository.AddNewAdministrator("Pablo", "Lamponne",
                 "lamponne@simuladores.com", DateTime.Today, "contraseñaValida123");
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DirectoryException),
-        "El elemento recibido ya existe en el sistema.")]
+        [ExpectedException(typeof(RepositoryException))]
         public void UDirectoryAddNewAdministratorRepeatedMailInvalidTest()
         {
-            testingUserDirectory.AddNewAdministrator("Emilio", "Ravenna",
+            testingUserRepository.AddNewAdministrator("Emilio", "Ravenna",
                 "mail@simuladores.com", DateTime.Today, "contraseñaValida123");
-            testingUserDirectory.AddNewAdministrator("Pablo", "Lamponne",
+            testingUserRepository.AddNewAdministrator("Pablo", "Lamponne",
                 "mail@simuladores.com", DateTime.Now, "otraContraseñaValida");
         }
 
@@ -148,7 +144,7 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(UserException))]
         public void UDirectoryAddNewAdministratorInvalidFirstNameTest()
         {
-            testingUserDirectory.AddNewAdministrator("1d2@#!9 #(", "Medina",
+            testingUserRepository.AddNewAdministrator("1d2@#!9 #(", "Medina",
                 "medina@simuladores.com", DateTime.Today, "contraseñaValida123");
         }
 
@@ -156,7 +152,7 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(UserException))]
         public void UDirectoryAddNewAdministratorInvalidLastNameTest()
         {
-            testingUserDirectory.AddNewAdministrator("Gabriel David", "*$ 563a%7*/0&d!@",
+            testingUserRepository.AddNewAdministrator("Gabriel David", "*$ 563a%7*/0&d!@",
                 "medina@simuladores.com", DateTime.Today, "contraseñaValida123");
         }
 
@@ -164,7 +160,7 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(UserException))]
         public void UDirectoryAddNewAdministratorInvalidEmailTest()
         {
-            testingUserDirectory.AddNewAdministrator("Gabriel David", "Medina",
+            testingUserRepository.AddNewAdministrator("Gabriel David", "Medina",
                 "Ceci n'est pas un email.", DateTime.Today, "contraseñaValida123");
         }
 
@@ -172,7 +168,7 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(UserException))]
         public void UDirectoryAddNewAdministratorInvalidBirthdateTest()
         {
-            testingUserDirectory.AddNewAdministrator("Gabriel David", "Medina",
+            testingUserRepository.AddNewAdministrator("Gabriel David", "Medina",
                 "medina@simuladores.com", DateTime.MaxValue, "contraseñaValida123");
         }
 
@@ -180,7 +176,7 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(UserException))]
         public void UDirectoryAddNewAdministratorInvalidPasswordTest()
         {
-            testingUserDirectory.AddNewAdministrator("Gabriel David", "Medina",
+            testingUserRepository.AddNewAdministrator("Gabriel David", "Medina",
                 "medina@simuladores.com", DateTime.Today, "*#1/-asd$ !@^9");
         }
 
@@ -189,10 +185,10 @@ namespace UnitTests.PersistenceTests
         {
             User userToVerify = User.NamesEmailBirthdatePassword("Mario", "Santos",
                 "santos@simuladores.com", DateTime.Today, "contraseñaValida123");
-            testingUserDirectory.AddNewUser("Mario", "Santos",
+            testingUserRepository.AddNewUser("Mario", "Santos",
                 "santos@simuladores.com", DateTime.Today, "contraseñaValida123");
-            testingUserDirectory.Remove(userToVerify);
-            CollectionAssert.DoesNotContain(testingUserDirectory.Elements.ToList(), userToVerify);
+            testingUserRepository.Remove(userToVerify);
+            CollectionAssert.DoesNotContain(testingUserRepository.Elements.ToList(), userToVerify);
         }
 
         [TestMethod]
@@ -200,20 +196,19 @@ namespace UnitTests.PersistenceTests
         {
             Administrator administratorToVerify = Administrator.NamesEmailBirthdatePassword("Mario",
                 "Santos", "santos@simuladores.com", DateTime.Today, "contraseñaValida123");
-            testingUserDirectory.AddNewUser("Mario", "Santos",
+            testingUserRepository.AddNewUser("Mario", "Santos",
                 "santos@simuladores.com", DateTime.Today, "contraseñaValida123");
-            testingUserDirectory.Remove(administratorToVerify);
-            CollectionAssert.DoesNotContain(testingUserDirectory.Elements.ToList(), administratorToVerify);
+            testingUserRepository.Remove(administratorToVerify);
+            CollectionAssert.DoesNotContain(testingUserRepository.Elements.ToList(), administratorToVerify);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DirectoryException),
-        "Elemento inválido recibido: no se encuentra registrado en el sistema.")]
+        [ExpectedException(typeof(RepositoryException))]
         public void UDirectoryRemoveUserNotInDirectoryInvalidTest()
         {
             User userToVerify = User.NamesEmailBirthdatePassword("Mario", "Santos",
                 "santos@simuladores.com", DateTime.Today, "contraseñaValida123");
-            testingUserDirectory.Remove(userToVerify);
+            testingUserRepository.Remove(userToVerify);
         }
 
         [TestMethod]
@@ -221,11 +216,11 @@ namespace UnitTests.PersistenceTests
         {
             User userToVerify = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
                 "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");
-            testingUserDirectory.AddNewUser("Emilio", "Ravenna",
+            testingUserRepository.AddNewUser("Emilio", "Ravenna",
                 "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");
-            User addedUser = testingUserDirectory.Elements.Single();
+            User addedUser = testingUserRepository.Elements.Single();
             Assert.AreEqual(userToVerify, addedUser);
-            testingUserDirectory.ModifyUser(addedUser, " Mario ", " Santos ",
+            testingUserRepository.ModifyUser(addedUser, " Mario ", " Santos ",
                 "santos@simuladores.com", DateTime.MinValue, "DisculpeFuegoTiene");
             Assert.AreEqual("Mario", addedUser.FirstName);
             Assert.AreEqual("Santos", addedUser.LastName);
@@ -239,11 +234,11 @@ namespace UnitTests.PersistenceTests
         {
             Administrator administratorToVerify = Administrator.NamesEmailBirthdatePassword("Emilio",
                 "Ravenna", "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");
-            testingUserDirectory.AddNewUser("Emilio", "Ravenna",
+            testingUserRepository.AddNewUser("Emilio", "Ravenna",
                 "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");
-            User addedAdminstrator = testingUserDirectory.Elements.Single();
+            User addedAdminstrator = testingUserRepository.Elements.Single();
             Assert.AreEqual(administratorToVerify, addedAdminstrator);
-            testingUserDirectory.ModifyUser(addedAdminstrator, " Mario ", " Santos ",
+            testingUserRepository.ModifyUser(addedAdminstrator, " Mario ", " Santos ",
                 "santos@simuladores.com", DateTime.MinValue, "DisculpeFuegoTiene");
             Assert.AreEqual("Mario", addedAdminstrator.FirstName);
             Assert.AreEqual("Santos", addedAdminstrator.LastName);
@@ -253,20 +248,20 @@ namespace UnitTests.PersistenceTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DirectoryException))]
+        [ExpectedException(typeof(RepositoryException))]
         public void UDirectoryModifyNullUserInvalidTest()
         {
-            testingUserDirectory.ModifyUser(null, "Mario", "Santos",
+            testingUserRepository.ModifyUser(null, "Mario", "Santos",
                 "santos@simuladores.com", DateTime.MinValue, "DisculpeFuegoTiene");
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DirectoryException))]
+        [ExpectedException(typeof(RepositoryException))]
         public void UDirectoryModifyUnaddedUserInvalidTest()
         {
             User unaddedUser = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
                 "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");
-            testingUserDirectory.ModifyUser(unaddedUser, "Mario", "Santos",
+            testingUserRepository.ModifyUser(unaddedUser, "Mario", "Santos",
                 "santos@simuladores.com", DateTime.MinValue, "DisculpeFuegoTiene");
         }
 
@@ -274,10 +269,10 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(UserException))]
         public void UDirectoryModifyUserInvalidFirstNameTest()
         {
-            testingUserDirectory.AddNewUser("Emilio", "Ravenna",
+            testingUserRepository.AddNewUser("Emilio", "Ravenna",
                 "mail@simuladores.com", DateTime.Today, "contraseñaValida123");
-            User addedUser = testingUserDirectory.Elements.Single();
-            testingUserDirectory.ModifyUser(addedUser, "4%# !sf*!@#9", "Santos",
+            User addedUser = testingUserRepository.Elements.Single();
+            testingUserRepository.ModifyUser(addedUser, "4%# !sf*!@#9", "Santos",
                 "santos@simuladores.com", DateTime.MinValue, "DisculpeFuegoTiene");
         }
 
@@ -285,10 +280,10 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(UserException))]
         public void UDirectoryModifyUserInvalidLastNameTest()
         {
-            testingUserDirectory.AddNewUser("Emilio", "Ravenna",
+            testingUserRepository.AddNewUser("Emilio", "Ravenna",
                 "mail@simuladores.com", DateTime.Today, "contraseñaValida123");
-            User addedUser = testingUserDirectory.Elements.Single();
-            testingUserDirectory.ModifyUser(addedUser, "Mario", "a#$%s 9 $^!!12",
+            User addedUser = testingUserRepository.Elements.Single();
+            testingUserRepository.ModifyUser(addedUser, "Mario", "a#$%s 9 $^!!12",
                 "santos@simuladores.com", DateTime.MinValue, "DisculpeFuegoTiene");
         }
 
@@ -296,10 +291,10 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(UserException))]
         public void UDirectoryModifyUserInvalidEmailTest()
         {
-            testingUserDirectory.AddNewUser("Emilio", "Ravenna",
+            testingUserRepository.AddNewUser("Emilio", "Ravenna",
                 "mail@simuladores.com", DateTime.Today, "contraseñaValida123");
-            User addedUser = testingUserDirectory.Elements.Single();
-            testingUserDirectory.ModifyUser(addedUser, "Mario", "Santos",
+            User addedUser = testingUserRepository.Elements.Single();
+            testingUserRepository.ModifyUser(addedUser, "Mario", "Santos",
                 "!!12345 6789!!", DateTime.MinValue, "DisculpeFuegoTiene");
         }
 
@@ -307,10 +302,10 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(UserException))]
         public void UDirectoryModifyUserInvalidBirthdateTest()
         {
-            testingUserDirectory.AddNewUser("Emilio", "Ravenna",
+            testingUserRepository.AddNewUser("Emilio", "Ravenna",
                 "mail@simuladores.com", DateTime.Today, "contraseñaValida123");
-            User addedUser = testingUserDirectory.Elements.Single();
-            testingUserDirectory.ModifyUser(addedUser, "Mario", "Santos",
+            User addedUser = testingUserRepository.Elements.Single();
+            testingUserRepository.ModifyUser(addedUser, "Mario", "Santos",
                 "santos@simuladores.com", DateTime.MaxValue, "DisculpeFuegoTiene");
         }
 
@@ -318,35 +313,43 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(UserException))]
         public void UDirectoryModifyUserInvalidPasswordTest()
         {
-            testingUserDirectory.AddNewUser("Emilio", "Ravenna",
+            testingUserRepository.AddNewUser("Emilio", "Ravenna",
                 "mail@simuladores.com", DateTime.Today, "contraseñaValida123");
-            User addedUser = testingUserDirectory.Elements.Single();
-            testingUserDirectory.ModifyUser(addedUser, "Mario", "Santos",
+            User addedUser = testingUserRepository.Elements.Single();
+            testingUserRepository.ModifyUser(addedUser, "Mario", "Santos",
                 "santos@simuladores.com", DateTime.MaxValue, "a &#^ 12&$!!/*- ");
         }
 
         [TestMethod]
         public void UDirectoryHasElementsEmptyTest()
         {
-            Assert.IsFalse(testingUserDirectory.HasElements());
+            Assert.IsFalse(testingUserRepository.HasElements());
         }
 
         [TestMethod]
         public void UDirectoryHasElementsOneElementTest()
         {
-            testingUserDirectory.AddNewUser("Emilio", "Ravenna",
+            testingUserRepository.AddNewUser("Emilio", "Ravenna",
                 "mail@simuladores.com", DateTime.Today, "contraseñaValida123");
-            Assert.IsTrue(testingUserDirectory.HasElements());
+            Assert.IsTrue(testingUserRepository.HasElements());
         }
 
         [TestMethod]
         public void UDirectoryHasElementsTwoElementsTest()
         {
-            testingUserDirectory.AddNewUser("Emilio", "Ravenna",
+            testingUserRepository.AddNewUser("Emilio", "Ravenna",
                 "mail@simuladores.com", DateTime.Today, "contraseñaValida123");
-            testingUserDirectory.AddNewUser("Pablo", "Lamponne",
+            testingUserRepository.AddNewUser("Pablo", "Lamponne",
                 "lamponne@simuladores.com", DateTime.Today, "contraseñaValida123");
-            Assert.IsTrue(testingUserDirectory.HasElements());
+            Assert.IsTrue(testingUserRepository.HasElements());
+        }
+
+        [TestMethod]
+        public void UDirectoryGetInstanceTest()
+        {
+            testingUserRepository = UserRepository.GetInstance();
+            UserRepository anotherUserRepository = UserRepository.GetInstance();
+            Assert.AreSame(testingUserRepository, anotherUserRepository);
         }
     }
 }

@@ -7,13 +7,8 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("UnitTests")]
 namespace Persistence
 {
-    public class UserDirectoryInMemory : UserDirectory
+    public class UserRepositoryInMemory : UserRepository
     {
-        internal UserDirectoryInMemory()
-        {
-            elements = new List<User>();
-        }
-
         public override void AddNewUser(string firstName, string lastName,
             string email, DateTime birthdate, string password)
         {
@@ -40,7 +35,7 @@ namespace Persistence
             }
             else
             {
-                throw new DirectoryException(ErrorMessages.ElementDoesNotExist);
+                throw new RepositoryException(ErrorMessages.ElementDoesNotExist);
             }
         }
 
@@ -52,6 +47,11 @@ namespace Persistence
             userToModify.Email = emailToSet;
             userToModify.Birthdate = birthdateToSet;
             userToModify.Password = passwordToSet;
+        }
+
+        internal UserRepositoryInMemory()
+        {
+            elements = new List<User>();
         }
     }
 }

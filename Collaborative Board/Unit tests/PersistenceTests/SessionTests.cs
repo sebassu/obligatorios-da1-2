@@ -14,7 +14,15 @@ namespace UnitTests.PersistenceTests
         [ClassInitialize]
         public static void ClassSetUp(TestContext context)
         {
-            UserDirectory testingUserDirectory = UserDirectory.GetInstance();
+            UserRepository testingUserDirectory = UserRepository.GetInstance();
+            if (!testingUserDirectory.HasElements())
+            {
+                AddTestingUsers(testingUserDirectory);
+            }
+        }
+
+        private static void AddTestingUsers(UserRepository testingUserDirectory)
+        {
             testingUserDirectory.AddNewAdministrator("Mario", "Santos",
                 "santos@simuladores.com", DateTime.Today, "contraseñaValida123");
             testingUserDirectory.AddNewUser("Emilio", "Ravenna",
@@ -48,56 +56,49 @@ namespace UnitTests.PersistenceTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SessionException),
-        "Los datos de inicio de sesión ingresados no están asociados a ningún usuario, reintente.")]
+        [ExpectedException(typeof(SessionException))]
         public void SessionStartInvalidEmailTest()
         {
             Session.Start("lamponne@simuladores.com", "contraseñaValida123");
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SessionException),
-        "Los datos de inicio de sesión ingresados no están asociados a ningún usuario, reintente.")]
+        [ExpectedException(typeof(SessionException))]
         public void SessionStartInvalidPasswordTest()
         {
             Session.Start("ravenna@simuladores.com", "passwordIncorrecta");
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SessionException),
-        "Los datos de inicio de sesión ingresados no están asociados a ningún usuario, reintente.")]
+        [ExpectedException(typeof(SessionException))]
         public void SessionStartInvalidEmailAndPasswordTest()
         {
             Session.Start("lamponne@simuladores.com", "passwordIncorrecta");
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SessionException),
-        "Los datos de inicio de sesión ingresados no están asociados a ningún usuario, reintente.")]
+        [ExpectedException(typeof(SessionException))]
         public void SessionStartNullEmailTest()
         {
             Session.Start(null, "contraseñaValida123");
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SessionException),
-        "Los datos de inicio de sesión ingresados no están asociados a ningún usuario, reintente.")]
+        [ExpectedException(typeof(SessionException))]
         public void SessionStartNullPasswordTest()
         {
             Session.Start("santos@simuladores.com", null);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SessionException),
-        "Los datos de inicio de sesión ingresados no están asociados a ningún usuario, reintente.")]
+        [ExpectedException(typeof(SessionException))]
         public void SessionStartNullEmailAndPasswordTest()
         {
             Session.Start(null, null);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SessionException),
-        "Los datos de inicio de sesión ingresados no están asociados a ningún usuario, reintente.")]
+        [ExpectedException(typeof(SessionException))]
         public void SessionStartAlreadyStartedTest()
         {
             Session.Start("santos@simuladores.com", "contraseñaValida123");
@@ -137,8 +138,7 @@ namespace UnitTests.PersistenceTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SessionException),
-        "Operación inválida: no se ha iniciado sesión en el sistema aún.")]
+        [ExpectedException(typeof(SessionException))]
         public void SessionActiveUserNotInitializedInvalidTest()
         {
             Session.ActiveUser();

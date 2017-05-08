@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Persistence
 {
-    public abstract class DirectoryInMemory<T>
+    public abstract class Repository<T>
     {
         protected List<T> elements;
         public IReadOnlyCollection<T> Elements => elements.AsReadOnly();
@@ -16,7 +16,7 @@ namespace Persistence
             }
             else
             {
-                throw new DirectoryException(ErrorMessages.ElementAlreadyExists);
+                throw new RepositoryException(ErrorMessages.ElementAlreadyExists);
             }
         }
 
@@ -29,7 +29,7 @@ namespace Persistence
         {
             if (!elements.Remove(elementToRemove))
             {
-                throw new DirectoryException(ErrorMessages.ElementDoesNotExist);
+                throw new RepositoryException(ErrorMessages.ElementDoesNotExist);
             }
         }
     }

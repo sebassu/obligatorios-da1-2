@@ -61,6 +61,15 @@ namespace Persistence {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No es posible instanciar un repositorio genérico..
+        /// </summary>
+        internal static string CannotInstantiateRepository {
+            get {
+                return ResourceManager.GetString("CannotInstantiateRepository", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to El elemento recibido ya existe en el sistema..
         /// </summary>
         internal static string ElementAlreadyExists {
@@ -84,6 +93,15 @@ namespace Persistence {
         internal static string EmailPasswordMismatch {
             get {
                 return ResourceManager.GetString("EmailPasswordMismatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El usuario actual no tiene los permisos de administración requeridos para completar esta acción..
+        /// </summary>
+        internal static string NoAdministrationPrivileges {
+            get {
+                return ResourceManager.GetString("NoAdministrationPrivileges", resourceCulture);
             }
         }
         

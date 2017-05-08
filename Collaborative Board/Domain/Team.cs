@@ -41,7 +41,7 @@ namespace Domain
             get { return description; }
             set
             {
-                if (string.IsNullOrEmpty(value))
+                if (string.IsNullOrWhiteSpace(value))
                 {
                     throw new TeamException(ErrorMessages.EmptyDescription);
                 }

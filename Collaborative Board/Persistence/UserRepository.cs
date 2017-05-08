@@ -3,19 +3,18 @@ using System;
 
 namespace Persistence
 {
-    public abstract class UserDirectory : DirectoryInMemory<User>
+    public abstract class UserRepository : Repository<User>
     {
         public abstract void AddNewUser(string firstName, string lastName, string email,
             DateTime birthdate, string password);
         public abstract void AddNewAdministrator(string firstName, string lastName, string email,
             DateTime birthdate, string password);
-        public abstract void ModifyUser(User userToModify, string firstName, string lastName,
-            string email, DateTime birthdate, string password);
+        public abstract void ModifyUser(User userToModify, string firstNameToSet, string lastNameToSet,
+            string emailToSet, DateTime birthdateToSet, string passwordToSet);
 
-        private static volatile UserDirectoryInMemory instance;
+        private static volatile UserRepositoryInMemory instance;
         private static object syncRoot = new Object();
-
-        public static UserDirectoryInMemory GetInstance()
+        public static UserRepositoryInMemory GetInstance()
         {
             if (instance == null)
             {
@@ -23,7 +22,7 @@ namespace Persistence
                 {
                     if (instance == null)
                     {
-                        instance = new UserDirectoryInMemory();
+                        instance = new UserRepositoryInMemory();
                     }
                 }
             }
