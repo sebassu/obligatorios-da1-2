@@ -1,9 +1,9 @@
 ﻿using Domain;
 using System;
 using Exceptions;
+using System.Linq;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.Linq;
 
 [assembly: InternalsVisibleTo("UnitTests")]
 namespace Persistence
@@ -32,15 +32,9 @@ namespace Persistence
             string emailToSet, DateTime birthdateToSet, string passwordToSet)
         {
             ValidateActiveUserHasAdministrationPrivileges();
-            if (elements.Contains(userToModify))
-            {
-                SetUserAttributes(userToModify, firstNameToSet, lastNameToSet,
-                    emailToSet, birthdateToSet, passwordToSet);
-            }
-            else
-            {
-                throw new RepositoryException(ErrorMessages.ElementDoesNotExist);
-            }
+            userToModify = GetActualObjectInCollection(userToModify);
+            SetUserAttributes(userToModify, firstNameToSet, lastNameToSet,
+                emailToSet, birthdateToSet, passwordToSet);
         }
 
         private void SetUserAttributes(User userToModify, string firstNameToSet,

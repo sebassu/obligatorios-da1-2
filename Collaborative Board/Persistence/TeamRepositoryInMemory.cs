@@ -1,5 +1,4 @@
 ﻿using Domain;
-using Exceptions;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -20,15 +19,9 @@ namespace Persistence
             string descriptionToSet, int maximumMembersToSet)
         {
             ValidateActiveUserHasAdministrationPrivileges();
-            if (elements.Contains(teamToModify))
-            {
-                SetTeamAttributes(teamToModify, nameToSet, descriptionToSet,
-                    maximumMembersToSet);
-            }
-            else
-            {
-                throw new RepositoryException(ErrorMessages.ElementDoesNotExist);
-            }
+            teamToModify = GetActualObjectInCollection(teamToModify);
+            SetTeamAttributes(teamToModify, nameToSet, descriptionToSet,
+                maximumMembersToSet);
         }
 
         private void SetTeamAttributes(Team teamToModify, string nameToSet, string descriptionToSet,
@@ -51,6 +44,20 @@ namespace Persistence
         private bool ThereIsNoTeamWithName(string nameToSet)
         {
             return elements.Count(t => t.Name == nameToSet) == 0;
+        }
+
+        public override void AddMemberToTeam(Team teamToAddTo, User userToAdd)
+        {
+            ValidateActiveUserHasAdministrationPrivileges();
+            teamToAddTo = GetActualObjectInCollection(teamToAddTo);
+            teamToAddTo.AddMember(userToAdd);
+        }
+
+        public override void RemoveMemberFromTeam(Team teamToRemoveFrom, User userToRemove)
+        {
+            ValidateActiveUserHasAdministrationPrivileges();
+            teamToRemoveFrom = GetActualObjectInCollection(teamToRemoveFrom);
+            teamToRemoveFrom.RemoveMember(userToRemove);
         }
 
         internal TeamRepositoryInMemory()
