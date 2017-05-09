@@ -70,6 +70,15 @@ namespace Persistence {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No es posible eliminar a todos los administradores del sistema; quedaría inutilizable..
+        /// </summary>
+        internal static string CannotRemoveAllAdministrators {
+            get {
+                return ResourceManager.GetString("CannotRemoveAllAdministrators", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to El elemento recibido ya existe en el sistema..
         /// </summary>
         internal static string ElementAlreadyExists {

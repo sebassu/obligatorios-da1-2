@@ -1,5 +1,4 @@
 ﻿using Domain;
-using Exceptions;
 using System.Collections.Generic;
 
 namespace Persistence
@@ -8,18 +7,11 @@ namespace Persistence
     {
         public override void AddNewTeam(string name, string description, int maximumMembers)
         {
-
-            if (Session.HasAdministrationPrivileges())
-            {
-                User creator = Session.ActiveUser();
-                Team teamToAdd = Team.CreatorNameDescriptionMaximumMembers(creator,
-                    name, description, maximumMembers);
-                Add(teamToAdd);
-            }
-            else
-            {
-                throw new RepositoryException(ErrorMessages.NoAdministrationPrivileges);
-            }
+            ValidateActiveUserHasAdministrationPrivileges();
+            User creator = Session.ActiveUser();
+            Team teamToAdd = Team.CreatorNameDescriptionMaximumMembers(creator,
+                name, description, maximumMembers);
+            Add(teamToAdd);
         }
 
         internal TeamRepositoryInMemory()

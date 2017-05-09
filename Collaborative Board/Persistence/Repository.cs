@@ -25,11 +25,19 @@ namespace Persistence
             return elements.Count > 0;
         }
 
-        public void Remove(T elementToRemove)
+        public virtual void Remove(T elementToRemove)
         {
             if (!elements.Remove(elementToRemove))
             {
                 throw new RepositoryException(ErrorMessages.ElementDoesNotExist);
+            }
+        }
+
+        protected void ValidateActiveUserHasAdministrationPrivileges()
+        {
+            if (!Session.HasAdministrationPrivileges())
+            {
+                throw new RepositoryException(ErrorMessages.NoAdministrationPrivileges);
             }
         }
     }

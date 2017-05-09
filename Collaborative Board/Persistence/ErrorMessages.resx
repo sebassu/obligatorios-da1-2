@@ -120,6 +120,9 @@
   <data name="CannotInstantiateRepository" xml:space="preserve">
     <value>No es posible instanciar un repositorio genérico.</value>
   </data>
+  <data name="CannotRemoveAllAdministrators" xml:space="preserve">
+    <value>No es posible eliminar a todos los administradores del sistema; quedaría inutilizable.</value>
+  </data>
   <data name="ElementAlreadyExists" xml:space="preserve">
     <value>El elemento recibido ya existe en el sistema.</value>
   </data>

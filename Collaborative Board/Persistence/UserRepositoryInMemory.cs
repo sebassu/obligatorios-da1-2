@@ -3,6 +3,7 @@ using System;
 using Exceptions;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Linq;
 
 [assembly: InternalsVisibleTo("UnitTests")]
 namespace Persistence
@@ -12,6 +13,7 @@ namespace Persistence
         public override void AddNewUser(string firstName, string lastName,
             string email, DateTime birthdate, string password)
         {
+            ValidateActiveUserHasAdministrationPrivileges();
             User userToAdd = User.NamesEmailBirthdatePassword(firstName, lastName,
                 email, birthdate, password);
             Add(userToAdd);
@@ -20,6 +22,7 @@ namespace Persistence
         public override void AddNewAdministrator(string firstName, string lastName,
             string email, DateTime birthdate, string password)
         {
+            ValidateActiveUserHasAdministrationPrivileges();
             Administrator administratorToAdd = Administrator.NamesEmailBirthdatePassword(firstName,
                 lastName, email, birthdate, password);
             Add(administratorToAdd);
@@ -28,6 +31,7 @@ namespace Persistence
         public override void ModifyUser(User userToModify, string firstNameToSet, string lastNameToSet,
             string emailToSet, DateTime birthdateToSet, string passwordToSet)
         {
+            ValidateActiveUserHasAdministrationPrivileges();
             if (elements.Contains(userToModify))
             {
                 SetUserAttributes(userToModify, firstNameToSet, lastNameToSet,
@@ -37,6 +41,24 @@ namespace Persistence
             {
                 throw new RepositoryException(ErrorMessages.ElementDoesNotExist);
             }
+        }
+
+        public override void Remove(User elementToRemove)
+        {
+            if (IsTheOnlyAdministratorLeft(elementToRemove))
+            {
+                throw new RepositoryException(ErrorMessages.CannotRemoveAllAdministrators);
+            }
+            else
+            {
+                base.Remove(elementToRemove);
+            }
+        }
+
+        private bool IsTheOnlyAdministratorLeft(User elementToRemove)
+        {
+            var administrators = elements.Where(u => u.HasAdministrationPrivileges).ToList();
+            return administrators.Count == 1 && administrators.Single().Equals(elementToRemove);
         }
 
         private static void SetUserAttributes(User userToModify, string firstNameToSet,
@@ -52,6 +74,14 @@ namespace Persistence
         internal UserRepositoryInMemory()
         {
             elements = new List<User>();
+            InsertOriginalSystemAdministrator();
+        }
+
+        private void InsertOriginalSystemAdministrator()
+        {
+            Administrator baseAdministrator = Administrator.NamesEmailBirthdatePassword("The",
+                "Administrator", "administrator@tf2.com", DateTime.Today, "Victory");
+            elements.Add(baseAdministrator);
         }
     }
 }
