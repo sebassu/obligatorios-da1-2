@@ -14,7 +14,7 @@ namespace Domain
         public string Name
         {
             get { return name; }
-            set
+            internal set
             {
                 if (IsValidTeamName(value))
                 {
@@ -39,7 +39,7 @@ namespace Domain
         public string Description
         {
             get { return description; }
-            set
+            internal set
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
@@ -56,7 +56,7 @@ namespace Domain
         public int MaximumMembers
         {
             get { return maximumMembers; }
-            set
+            internal set
             {
                 if (value >= minimumMembers)
                 {

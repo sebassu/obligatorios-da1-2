@@ -43,6 +43,30 @@ namespace Persistence
             }
         }
 
+        private void SetUserAttributes(User userToModify, string firstNameToSet,
+            string lastNameToSet, string emailToSet, DateTime birthdateToSet, string passwordToSet)
+        {
+            if (ChangeDoesNotCauseRepeatedUserEmails(userToModify, emailToSet))
+            {
+                userToModify.FirstName = firstNameToSet;
+                userToModify.LastName = lastNameToSet;
+                userToModify.Email = emailToSet;
+                userToModify.Birthdate = birthdateToSet;
+                userToModify.Password = passwordToSet;
+            }
+        }
+
+        private bool ChangeDoesNotCauseRepeatedUserEmails(User userToModify, string emailToSet)
+        {
+            bool emailDoesNotChange = userToModify.Email == emailToSet;
+            return emailDoesNotChange || ThereIsNoTeamWithName(emailToSet);
+        }
+
+        private bool ThereIsNoTeamWithName(string emailToSet)
+        {
+            return elements.Count(u => u.Email == emailToSet) == 0;
+        }
+
         public override void Remove(User elementToRemove)
         {
             if (IsTheOnlyAdministratorLeft(elementToRemove))
@@ -59,16 +83,6 @@ namespace Persistence
         {
             var administrators = elements.Where(u => u.HasAdministrationPrivileges).ToList();
             return administrators.Count == 1 && administrators.Single().Equals(elementToRemove);
-        }
-
-        private static void SetUserAttributes(User userToModify, string firstNameToSet,
-            string lastNameToSet, string emailToSet, DateTime birthdateToSet, string passwordToSet)
-        {
-            userToModify.FirstName = firstNameToSet;
-            userToModify.LastName = lastNameToSet;
-            userToModify.Email = emailToSet;
-            userToModify.Birthdate = birthdateToSet;
-            userToModify.Password = passwordToSet;
         }
 
         internal UserRepositoryInMemory()
