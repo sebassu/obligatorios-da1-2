@@ -281,38 +281,32 @@ namespace UnitTests.PersistenceTests
         [TestMethod]
         public void UDirectoryModifyUserValidTest()
         {
-            User userToVerify = User.NamesEmailBirthdatePassword("Pablo", "Lamponne",
-                "lamponne@simuladores.com", DateTime.Today, "contraseñaValida123");
-            testingUserRepository.AddNewUser("Pablo", "Lamponne",
-                "lamponne@simuladores.com", DateTime.Today, "contraseñaValida123");
-            var users = testingUserRepository.Elements;
-            User addedUser = users.First(u => u.Equals(userToVerify));
-            Assert.AreEqual(userToVerify, addedUser);
-            testingUserRepository.ModifyUser(addedUser, " Gabriel David ", " Medina ",
+            User userToVerify = testingUserRepository.Elements.First();
+            testingUserRepository.ModifyUser(userToVerify, " Gabriel David ", " Medina ",
                 "medina@simuladores.com", DateTime.MinValue, "DisculpeFuegoTiene");
-            Assert.AreEqual("Gabriel David", addedUser.FirstName);
-            Assert.AreEqual("Medina", addedUser.LastName);
-            Assert.AreEqual("medina@simuladores.com", addedUser.Email);
-            Assert.AreEqual(DateTime.MinValue, addedUser.Birthdate);
-            Assert.AreEqual("DisculpeFuegoTiene", addedUser.Password);
+            Assert.AreEqual("Gabriel David", userToVerify.FirstName);
+            Assert.AreEqual("Medina", userToVerify.LastName);
+            Assert.AreEqual("medina@simuladores.com", userToVerify.Email);
+            Assert.AreEqual(DateTime.MinValue, userToVerify.Birthdate);
+            Assert.AreEqual("DisculpeFuegoTiene", userToVerify.Password);
         }
 
         [TestMethod]
-        public void UDirectoryModifyUserAdministratorValidTest()
+        public void UDirectoryModifyUserSetSameDataValidTest()
         {
-            Administrator administratorToVerify = Administrator.NamesEmailBirthdatePassword("Pablo",
-                "Lamponne", "lamponne@simuladores.com", DateTime.Today, "contraseñaValida123");
-            testingUserRepository.AddNewAdministrator("Pablo", "Lamponne",
-                "lamponne@simuladores.com", DateTime.Today, "contraseñaValida123");
-            var users = testingUserRepository.Elements;
-            User addedAdminstrator = users.First(u => u.Equals(administratorToVerify));
-            testingUserRepository.ModifyUser(addedAdminstrator, " Gabriel David ", " Medina ",
-                "medina@simuladores.com", DateTime.MinValue, "DisculpeFuegoTiene");
-            Assert.AreEqual("Gabriel David", addedAdminstrator.FirstName);
-            Assert.AreEqual("Medina", addedAdminstrator.LastName);
-            Assert.AreEqual("medina@simuladores.com", addedAdminstrator.Email);
-            Assert.AreEqual(DateTime.MinValue, addedAdminstrator.Birthdate);
-            Assert.AreEqual("DisculpeFuegoTiene", addedAdminstrator.Password);
+            User userToVerify = testingUserRepository.Elements.First();
+            var previousFirstName = userToVerify.FirstName;
+            var previousLastName = userToVerify.LastName;
+            var previousEmail = userToVerify.Email;
+            var previousBirthdate = userToVerify.Birthdate;
+            var previousPassword = userToVerify.Password;
+            testingUserRepository.ModifyUser(userToVerify, previousFirstName,
+                previousLastName, previousEmail, previousBirthdate, previousPassword);
+            Assert.AreEqual(previousFirstName, userToVerify.FirstName);
+            Assert.AreEqual(previousLastName, userToVerify.LastName);
+            Assert.AreEqual(previousEmail, userToVerify.Email);
+            Assert.AreEqual(previousBirthdate, userToVerify.Birthdate);
+            Assert.AreEqual(previousPassword, userToVerify.Password);
         }
 
         [TestMethod]

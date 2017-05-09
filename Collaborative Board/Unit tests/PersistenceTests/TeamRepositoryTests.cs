@@ -19,6 +19,8 @@ namespace UnitTests.PersistenceTests
             testingTeamRepository = new TeamRepositoryInMemory();
             Session.End();
             Session.Start("santos@simuladores.com", "contraseñaValida123");
+            string descriptionToSet = "Un grupo de personas que resuelve todo tipo de problemas.";
+            testingTeamRepository.AddNewTeam("Los Simuladores", descriptionToSet, 4);
         }
 
         [ClassCleanup]
@@ -28,7 +30,7 @@ namespace UnitTests.PersistenceTests
         }
 
         [TestMethod]
-        public void TDirectoryAddNewTeamValidTest()
+        public void TRepositoryAddNewTeamValidTest()
         {
             User aUser = Session.ActiveUser();
             Team teamToVerify = Team.CreatorNameDescriptionMaximumMembers(aUser, "Equipo 1",
@@ -39,7 +41,7 @@ namespace UnitTests.PersistenceTests
 
         [TestMethod]
         [ExpectedException(typeof(RepositoryException))]
-        public void TDirectoryAddNewTeamNotEnoughPrivilegesInvalidTest()
+        public void TRepositoryAddNewTeamNotEnoughPrivilegesInvalidTest()
         {
             Session.End();
             Session.Start("ravenna@simuladores.com", "password123");
@@ -51,7 +53,7 @@ namespace UnitTests.PersistenceTests
 
         [TestMethod]
         [ExpectedException(typeof(RepositoryException))]
-        public void TDirectoryAddExistingTeamTest()
+        public void TRepositoryAddExistingTeamTest()
         {
             User aUser = Session.ActiveUser();
             testingTeamRepository.AddNewTeam("Equipo 1", "Descripción de equipo.", 25);
@@ -60,49 +62,49 @@ namespace UnitTests.PersistenceTests
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
-        public void TDirectoryInvalidNameTest()
+        public void TRepositoryInvalidNameTest()
         {
             testingTeamRepository.AddNewTeam("1#4s!sd?", "Descripción de equipo.", 20);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
-        public void TDirectoryNullNameTest()
+        public void TRepositoryNullNameTest()
         {
             testingTeamRepository.AddNewTeam(null, "Descripción de equipo.", 20);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
-        public void TDirectoryEmptyNameTest()
+        public void TRepositoryEmptyNameTest()
         {
             testingTeamRepository.AddNewTeam("", "Descripción de equipo.", 20);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
-        public void TDirectoryEmptyDescriptionTest()
+        public void TRepositoryEmptyDescriptionTest()
         {
             testingTeamRepository.AddNewTeam("Equipo 2", "", 10);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
-        public void TDirectoryNullDescriptionTest()
+        public void TRepositoryNullDescriptionTest()
         {
             testingTeamRepository.AddNewTeam("Equipo 2", null, 10);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
-        public void TDirectoryOnlySpacesDescriptionTest()
+        public void TRepositoryOnlySpacesDescriptionTest()
         {
             testingTeamRepository.AddNewTeam("Equipo 2", "            ", 10);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
-        public void TDirectoryInvalidMembersTest()
+        public void TRepositoryInvalidMembersTest()
         {
 
             testingTeamRepository.AddNewTeam("Equipo 1", "Descripción de equipo.", 0);
@@ -110,13 +112,13 @@ namespace UnitTests.PersistenceTests
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
-        public void TDirectoryNegativeMembersTest()
+        public void TRepositoryNegativeMembersTest()
         {
             testingTeamRepository.AddNewTeam("Equipo 1", "Descripción de equipo.", -1);
         }
 
         [TestMethod]
-        public void TDirectoryRemoveTeamValidTest()
+        public void TRepositoryRemoveTeamValidTest()
         {
             User aUser = Session.ActiveUser();
             Team teamToVerify = Team.CreatorNameDescriptionMaximumMembers(aUser,
@@ -132,6 +134,71 @@ namespace UnitTests.PersistenceTests
             testingTeamRepository = TeamRepository.GetInstance();
             TeamRepository anotherTeamRepository = TeamRepository.GetInstance();
             Assert.AreSame(testingTeamRepository, anotherTeamRepository);
+        }
+
+        [TestMethod]
+        public void TRepositoryModifyTeamValidTest()
+        {
+            Team teamToVerify = testingTeamRepository.Elements.Single();
+            var membersBeforeModification = teamToVerify.Members.ToList();
+            testingTeamRepository.ModifyTeam(teamToVerify, "The A Team", "Crack Commando Unit.", 4);
+            CollectionAssert.AreEqual(membersBeforeModification, teamToVerify.Members.ToList());
+            Assert.AreEqual("The A Team", teamToVerify.Name);
+            Assert.AreEqual("Crack Commando Unit.", teamToVerify.Description);
+            Assert.AreEqual(4, teamToVerify.MaximumMembers);
+        }
+
+        [TestMethod]
+        public void TRepositoryModifyTeamSetSameDataValidTest()
+        {
+            Team teamToVerify = testingTeamRepository.Elements.Single();
+            var previousName = teamToVerify.Name;
+            var previousDescription = teamToVerify.Description;
+            var previousMaximumMembers = teamToVerify.MaximumMembers;
+            testingTeamRepository.ModifyTeam(teamToVerify, previousName,
+                previousDescription, previousMaximumMembers);
+            Assert.AreEqual(previousName, teamToVerify.Name);
+            Assert.AreEqual(previousDescription, teamToVerify.Description);
+            Assert.AreEqual(previousMaximumMembers, teamToVerify.MaximumMembers);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(RepositoryException))]
+        public void TRepositoryModifyNullTeamInvalidTest()
+        {
+            testingTeamRepository.ModifyTeam(null, "The A Team", "Crack Commando Unit.", 4);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(RepositoryException))]
+        public void TRepositoryModifyUnaddedTeamInvalidTest()
+        {
+            Team unaddedTeam = Team.InstanceForTestingPurposes();
+            testingTeamRepository.ModifyTeam(unaddedTeam, "The A Team", "Crack Commando Unit.", 4);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(TeamException))]
+        public void TRepositoryModifyTeamInvalidNameTest()
+        {
+            Team addedTeam = testingTeamRepository.Elements.Single();
+            testingTeamRepository.ModifyTeam(addedTeam, "#1&*$ 565*a -^$^&", "Crack Commando Unit.", 4);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(TeamException))]
+        public void TRepositoryModifyTeamInvalidDescriptionTest()
+        {
+            Team addedTeam = testingTeamRepository.Elements.Single();
+            testingTeamRepository.ModifyTeam(addedTeam, "The A Team", "         \n \t ", 4);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(TeamException))]
+        public void TRepositoryModifyTeamInvalidMaximumMembersTest()
+        {
+            Team addedTeam = testingTeamRepository.Elements.Single();
+            testingTeamRepository.ModifyTeam(addedTeam, "The A Team", "Crack Commando Unit.", -2112);
         }
     }
 }
