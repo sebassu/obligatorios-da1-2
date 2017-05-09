@@ -14,7 +14,7 @@ namespace UnitTests.DomainTests
         private static Whiteboard testingWhiteboard;
 
         [TestInitialize]
-        public void TestSetUp()
+        public void TestSetup()
         {
             testingWhiteboard = Whiteboard.InstanceForTestingPurposes();
         }

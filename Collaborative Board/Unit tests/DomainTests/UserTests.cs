@@ -14,7 +14,7 @@ namespace UnitTests.DomainTests
         private static User testingUser;
 
         [TestInitialize]
-        public void TestSetUp()
+        public void TestSetup()
         {
             testingUser = User.InstanceForTestingPurposes();
         }

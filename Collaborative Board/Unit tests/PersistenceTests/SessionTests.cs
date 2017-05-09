@@ -12,13 +12,13 @@ namespace UnitTests.PersistenceTests
     public class SessionTests
     {
         [TestInitialize]
-        public void TestSetUp()
+        public void TestSetup()
         {
             Session.End();
         }
 
         [ClassCleanup]
-        public static void ClassTearDown()
+        public static void ClassTeardown()
         {
             Session.End();
         }

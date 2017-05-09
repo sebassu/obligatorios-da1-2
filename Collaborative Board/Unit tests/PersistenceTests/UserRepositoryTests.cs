@@ -15,7 +15,7 @@ namespace UnitTests.PersistenceTests
         private static UserRepository testingUserRepository;
 
         [AssemblyInitialize]
-        public static void AssemblySetUp(TestContext context)
+        public static void AssemblySetup(TestContext context)
         {
             testingUserRepository = UserRepository.GetInstance();
             Session.Start("administrator@tf2.com", "Victory");
@@ -27,7 +27,7 @@ namespace UnitTests.PersistenceTests
         }
 
         [TestInitialize]
-        public void TestSetUp()
+        public void TestSetup()
         {
             testingUserRepository = new UserRepositoryInMemory();
             Session.End();
@@ -35,7 +35,7 @@ namespace UnitTests.PersistenceTests
         }
 
         [ClassCleanup]
-        public static void ClassTearDown()
+        public static void ClassTeardown()
         {
             Session.End();
         }

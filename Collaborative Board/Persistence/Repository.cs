@@ -1,4 +1,6 @@
-﻿using Exceptions;
+﻿using System;
+using Exceptions;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace Persistence
@@ -38,6 +40,18 @@ namespace Persistence
             if (!Session.HasAdministrationPrivileges())
             {
                 throw new RepositoryException(ErrorMessages.NoAdministrationPrivileges);
+            }
+        }
+
+        protected T GetActualObjectInCollection(T elementToFind)
+        {
+            try
+            {
+                return elements.Single(e => e.Equals(elementToFind));
+            }
+            catch (InvalidOperationException)
+            {
+                throw new RepositoryException(ErrorMessages.ElementDoesNotExist);
             }
         }
     }

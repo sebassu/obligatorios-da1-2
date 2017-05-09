@@ -14,7 +14,7 @@ namespace UnitTests.DomainTests
         private static TextBoxWhiteboard testingTextBox;
 
         [TestInitialize]
-        public void TestSetUp()
+        public void TestSetup()
         {
             testingTextBox = TextBoxWhiteboard.InstanceForTestingPurposes();
         }
