@@ -11,26 +11,14 @@ namespace UnitTests.PersistenceTests
     [ExcludeFromCodeCoverage]
     public class SessionTests
     {
-        [ClassInitialize]
-        public static void ClassSetUp(TestContext context)
-        {
-            UserRepository testingUserDirectory = UserRepository.GetInstance();
-            if (!testingUserDirectory.HasElements())
-            {
-                AddTestingUsers(testingUserDirectory);
-            }
-        }
-
-        private static void AddTestingUsers(UserRepository testingUserDirectory)
-        {
-            testingUserDirectory.AddNewAdministrator("Mario", "Santos",
-                "santos@simuladores.com", DateTime.Today, "contraseñaValida123");
-            testingUserDirectory.AddNewUser("Emilio", "Ravenna",
-                "ravenna@simuladores.com", DateTime.Today, "password123");
-        }
-
         [TestInitialize]
         public void TestSetUp()
+        {
+            Session.End();
+        }
+
+        [ClassCleanup]
+        public static void ClassTearDown()
         {
             Session.End();
         }

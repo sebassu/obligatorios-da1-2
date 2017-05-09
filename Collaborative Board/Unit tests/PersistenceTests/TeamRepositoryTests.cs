@@ -1,5 +1,4 @@
 ﻿using Domain;
-using System;
 using Exceptions;
 using System.Linq;
 using Persistence;
@@ -14,35 +13,23 @@ namespace UnitTests.PersistenceTests
     {
         private static TeamRepository testingTeamRepository;
 
-        [ClassInitialize]
-        public static void ClassSetUp(TestContext context)
-        {
-            UserRepository testingUserRepository = UserRepository.GetInstance();
-            if (!testingUserRepository.HasElements())
-            {
-                AddTestingUsers(testingUserRepository);
-            }
-        }
-
-        private static void AddTestingUsers(UserRepository testingUserRepository)
-        {
-            testingUserRepository.AddNewAdministrator("Mario", "Santos",
-                "santos@simuladores.com", DateTime.Today, "contraseñaValida123");
-            testingUserRepository.AddNewUser("Emilio", "Ravenna",
-                "ravenna@simuladores.com", DateTime.Today, "password123");
-        }
-
         [TestInitialize]
         public void TestSetUp()
         {
             testingTeamRepository = new TeamRepositoryInMemory();
+            Session.End();
+            Session.Start("santos@simuladores.com", "contraseñaValida123");
+        }
+
+        [ClassCleanup]
+        public static void ClassTearDown()
+        {
             Session.End();
         }
 
         [TestMethod]
         public void TDirectoryAddNewTeamValidTest()
         {
-            Session.Start("santos@simuladores.com", "contraseñaValida123");
             User aUser = Session.ActiveUser();
             Team teamToVerify = Team.CreatorNameDescriptionMaximumMembers(aUser, "Equipo 1",
                 "Descripción de equipo.", 20);
@@ -52,8 +39,9 @@ namespace UnitTests.PersistenceTests
 
         [TestMethod]
         [ExpectedException(typeof(RepositoryException))]
-        public void TDirectoryAddNewTeamWithUserTest()
+        public void TDirectoryAddNewTeamNotEnoughPrivilegesInvalidTest()
         {
+            Session.End();
             Session.Start("ravenna@simuladores.com", "password123");
             User aUser = Session.ActiveUser();
             Team teamToVerify = Team.CreatorNameDescriptionMaximumMembers(aUser, "Equipo 1",
@@ -65,7 +53,6 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(RepositoryException))]
         public void TDirectoryAddExistingTeamTest()
         {
-            Session.Start("santos@simuladores.com", "contraseñaValida123");
             User aUser = Session.ActiveUser();
             testingTeamRepository.AddNewTeam("Equipo 1", "Descripción de equipo.", 25);
             testingTeamRepository.AddNewTeam("Equipo 1", "Descripción de equipo 2.", 30);
@@ -75,7 +62,6 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(TeamException))]
         public void TDirectoryInvalidNameTest()
         {
-            Session.Start("santos@simuladores.com", "contraseñaValida123");
             testingTeamRepository.AddNewTeam("1#4s!sd?", "Descripción de equipo.", 20);
         }
 
@@ -83,7 +69,6 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(TeamException))]
         public void TDirectoryNullNameTest()
         {
-            Session.Start("santos@simuladores.com", "contraseñaValida123");
             testingTeamRepository.AddNewTeam(null, "Descripción de equipo.", 20);
         }
 
@@ -91,7 +76,6 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(TeamException))]
         public void TDirectoryEmptyNameTest()
         {
-            Session.Start("santos@simuladores.com", "contraseñaValida123");
             testingTeamRepository.AddNewTeam("", "Descripción de equipo.", 20);
         }
 
@@ -99,7 +83,6 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(TeamException))]
         public void TDirectoryEmptyDescriptionTest()
         {
-            Session.Start("santos@simuladores.com", "contraseñaValida123");
             testingTeamRepository.AddNewTeam("Equipo 2", "", 10);
         }
 
@@ -107,7 +90,6 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(TeamException))]
         public void TDirectoryNullDescriptionTest()
         {
-            Session.Start("santos@simuladores.com", "contraseñaValida123");
             testingTeamRepository.AddNewTeam("Equipo 2", null, 10);
         }
 
@@ -115,7 +97,6 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(TeamException))]
         public void TDirectoryOnlySpacesDescriptionTest()
         {
-            Session.Start("santos@simuladores.com", "contraseñaValida123");
             testingTeamRepository.AddNewTeam("Equipo 2", "            ", 10);
         }
 
@@ -123,7 +104,7 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(TeamException))]
         public void TDirectoryInvalidMembersTest()
         {
-            Session.Start("santos@simuladores.com", "contraseñaValida123");
+
             testingTeamRepository.AddNewTeam("Equipo 1", "Descripción de equipo.", 0);
         }
 
@@ -131,14 +112,12 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(TeamException))]
         public void TDirectoryNegativeMembersTest()
         {
-            Session.Start("santos@simuladores.com", "contraseñaValida123");
             testingTeamRepository.AddNewTeam("Equipo 1", "Descripción de equipo.", -1);
         }
 
         [TestMethod]
         public void TDirectoryRemoveTeamValidTest()
         {
-            Session.Start("santos@simuladores.com", "contraseñaValida123");
             User aUser = Session.ActiveUser();
             Team teamToVerify = Team.CreatorNameDescriptionMaximumMembers(aUser,
                 "Equipo 1", "Desc.", 10);
