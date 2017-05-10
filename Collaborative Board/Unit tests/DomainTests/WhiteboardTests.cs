@@ -26,8 +26,10 @@ namespace UnitTests.DomainTests
             Assert.AreEqual("Descripción inválida.", testingWhiteboard.Description);
             Assert.AreEqual(int.MaxValue, testingWhiteboard.Width);
             Assert.AreEqual(int.MaxValue, testingWhiteboard.Height);
-            Assert.IsNull(testingWhiteboard.Creator);
-            Assert.IsNull(testingWhiteboard.OwnerTeam);
+            Assert.AreEqual(User.InstanceForTestingPurposes(),
+                testingWhiteboard.Creator);
+            Assert.AreEqual(Team.InstanceForTestingPurposes(),
+                testingWhiteboard.OwnerTeam);
         }
 
         [TestMethod]

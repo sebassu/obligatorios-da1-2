@@ -13,6 +13,16 @@ namespace UnitTests.PersistenceTests
     public class TeamRepositoryTests
     {
         private static TeamRepository testingTeamRepository;
+        private static UserRepository globalUsers;
+
+        [ClassInitialize]
+        public static void ClassSetup(TestContext context)
+        {
+            globalUsers = UserRepository.GetInstance();
+            globalUsers.AddNewUser(" Pablo ", " Lamponne ",
+                "lamponne@simuladores.com", DateTime.Today, "contraseñaValida123");
+
+        }
 
         [TestInitialize]
         public void TestSetup()
@@ -195,6 +205,8 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(TeamException))]
         public void TRepositoryModifyTeamInvalidDescriptionTest()
         {
+            User userToAdd = User.NamesEmailBirthdatePassword(" Pablo ", " Lamponne ",
+                "lamponne@simuladores.com", DateTime.Today, "contraseñaValida123");
             Team addedTeam = testingTeamRepository.Elements.Single();
             testingTeamRepository.ModifyTeam(addedTeam, "The A Team", "         \n \t ", 4);
         }
@@ -238,7 +250,7 @@ namespace UnitTests.PersistenceTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(TeamException))]
+        [ExpectedException(typeof(RepositoryException))]
         public void TRepositoryAddNullMemberTest()
         {
             Team teamToAddTo = testingTeamRepository.Elements.Single();
