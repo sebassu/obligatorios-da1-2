@@ -6,13 +6,14 @@ namespace Persistence
 {
     public class TeamRepositoryInMemory : TeamRepository
     {
-        public override void AddNewTeam(string name, string description, int maximumMembers)
+        public override Team AddNewTeam(string name, string description, int maximumMembers)
         {
             ValidateActiveUserHasAdministrationPrivileges();
             User creator = Session.ActiveUser();
             Team teamToAdd = Team.CreatorNameDescriptionMaximumMembers(creator,
                 name, description, maximumMembers);
             Add(teamToAdd);
+            return teamToAdd;
         }
 
         public override void ModifyTeam(Team teamToModify, string nameToSet,
@@ -50,6 +51,8 @@ namespace Persistence
         {
             ValidateActiveUserHasAdministrationPrivileges();
             teamToAddTo = GetActualObjectInCollection(teamToAddTo);
+            UserRepository users = UserRepository.GetInstance();
+            userToAdd = users.GetActualObjectInCollection(userToAdd);
             teamToAddTo.AddMember(userToAdd);
         }
 

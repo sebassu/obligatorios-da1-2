@@ -21,7 +21,6 @@ namespace UnitTests.PersistenceTests
             globalUsers = UserRepository.GetInstance();
             globalUsers.AddNewUser(" Pablo ", " Lamponne ",
                 "lamponne@simuladores.com", DateTime.Today, "contraseñaValida123");
-
         }
 
         [TestInitialize]

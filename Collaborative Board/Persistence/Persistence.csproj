@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Repository.cs" />
+    <Compile Include="RepositoryInMemory.cs" />
     <Compile Include="ErrorMessages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -53,6 +53,8 @@
     <Compile Include="UserRepository.cs" />
     <Compile Include="UserRepositoryInMemory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WhiteboardRepository.cs" />
+    <Compile Include="WhiteboardRepositoryInMemory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj">

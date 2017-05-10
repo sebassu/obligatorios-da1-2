@@ -17,11 +17,8 @@ namespace UnitTests.PersistenceTests
         [ClassInitialize]
         public static void ClassSetup(TestContext context)
         {
-            Session.End();
-            Session.Start("santos@simuladores.com", "contraseñaValida123");
             TeamRepository globalTeams = TeamRepository.GetInstance();
-            string descriptionToSet = "Un grupo de personas que resuelve todo tipo de problemas.";
-            testingOwnerTeam = globalTeams.AddNewTeam("Los Simuladores", descriptionToSet, 4);
+            testingOwnerTeam = globalTeams.Elements.Single();
         }
 
         [TestInitialize]
@@ -54,7 +51,8 @@ namespace UnitTests.PersistenceTests
                 "Pizarrón", "Una descripción válida.", testingOwnerTeam, 240, 240);
             testingWhiteboardRepository.AddNewWhiteboard("Pizarrón", "Una descripción válida.",
                 testingOwnerTeam, 240, 240);
-            CollectionAssert.Contains(testingWhiteboardRepository.Elements.ToList(), whiteboardToVerify);
+            CollectionAssert.Contains(testingWhiteboardRepository.Elements.ToList(),
+                whiteboardToVerify);
         }
 
         [TestMethod]
@@ -62,25 +60,27 @@ namespace UnitTests.PersistenceTests
         {
             Whiteboard addedWhiteboard = testingWhiteboardRepository.AddNewWhiteboard("Pizarrón",
                 "Una descripción válida.", testingOwnerTeam, 240, 240);
-            CollectionAssert.Contains(testingWhiteboardRepository.Elements.ToList(), addedWhiteboard);
+            CollectionAssert.Contains(testingWhiteboardRepository.Elements.ToList(),
+                addedWhiteboard);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(RepositoryException))]
-        public void WRepositoryAddNewWhiteboardNotEnoughPrivilegesInvalidTest()
+        public void WRepositoryAddNewWhiteboardNonAdministratorValidTest()
         {
             Session.End();
             Session.Start("ravenna@simuladores.com", "password123");
-            testingWhiteboardRepository.AddNewWhiteboard("Pizarrón",
+            Whiteboard addedWhiteboard = testingWhiteboardRepository.AddNewWhiteboard("Pizarrón",
                 "Una descripción válida.", testingOwnerTeam, 240, 240);
+            CollectionAssert.Contains(testingWhiteboardRepository.Elements.ToList(),
+                addedWhiteboard);
         }
 
         [TestMethod]
         [ExpectedException(typeof(WhiteboardException))]
         public void WRepositoryAddNewWhiteboardInvalidNameTest()
         {
-            testingWhiteboardRepository.AddNewWhiteboard("84%!^#^ ! /*/*^#", "Una descripción válida.",
-                testingOwnerTeam, 240, 240);
+            testingWhiteboardRepository.AddNewWhiteboard("84%!^#^ ! /*/*^#",
+                "Una descripción válida.", testingOwnerTeam, 240, 240);
         }
 
         [TestMethod]

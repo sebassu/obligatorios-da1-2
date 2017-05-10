@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Persistence
 {
-    public abstract class Repository<T>
+    public abstract class RepositoryInMemory<T>
     {
         protected List<T> elements;
         public IReadOnlyCollection<T> Elements => elements.AsReadOnly();
@@ -43,7 +43,7 @@ namespace Persistence
             }
         }
 
-        protected T GetActualObjectInCollection(T elementToFind)
+        internal T GetActualObjectInCollection(T elementToFind)
         {
             try
             {

@@ -10,22 +10,24 @@ namespace Persistence
 {
     public class UserRepositoryInMemory : UserRepository
     {
-        public override void AddNewUser(string firstName, string lastName,
+        public override User AddNewUser(string firstName, string lastName,
             string email, DateTime birthdate, string password)
         {
             ValidateActiveUserHasAdministrationPrivileges();
             User userToAdd = User.NamesEmailBirthdatePassword(firstName, lastName,
                 email, birthdate, password);
             Add(userToAdd);
+            return userToAdd;
         }
 
-        public override void AddNewAdministrator(string firstName, string lastName,
+        public override Administrator AddNewAdministrator(string firstName, string lastName,
             string email, DateTime birthdate, string password)
         {
             ValidateActiveUserHasAdministrationPrivileges();
             Administrator administratorToAdd = Administrator.NamesEmailBirthdatePassword(firstName,
                 lastName, email, birthdate, password);
             Add(administratorToAdd);
+            return administratorToAdd;
         }
 
         public override void ModifyUser(User userToModify, string firstNameToSet, string lastNameToSet,

@@ -70,7 +70,7 @@ namespace Domain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fecha de nacimiento inválida recibida: {0}..
+        ///   Looks up a localized string similar to Fecha de nacimiento inválida recibida: &quot;{0}&quot;..
         /// </summary>
         internal static string BirthdateIsInvalid {
             get {
@@ -106,7 +106,7 @@ namespace Domain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Se ha recibido un usuario creador inválido para el equipo ingresado: {0} no es miembro de {1}..
+        ///   Looks up a localized string similar to Se ha recibido un usuario creador inválido para el equipo ingresado: &quot;{0}&quot; no es miembro de &quot;{1}&quot;..
         /// </summary>
         internal static string CreatorIsInvalid {
             get {
@@ -115,7 +115,7 @@ namespace Domain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Email inválido recibido: {0}..
+        ///   Looks up a localized string similar to Email inválido recibido: &quot;{0}&quot;..
         /// </summary>
         internal static string EmailIsInvalid {
             get {
@@ -160,7 +160,7 @@ namespace Domain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Apellido inválido: {0}..
+        ///   Looks up a localized string similar to Apellido inválido: &quot;{0}&quot;..
         /// </summary>
         internal static string LastNameIsInvalid {
             get {
@@ -169,7 +169,7 @@ namespace Domain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nombre inválido: {0}. Éste debe contener únicamente caracteres alfanuméricos, o espacios..
+        ///   Looks up a localized string similar to Nombre inválido: &quot;{0}&quot;. Éste debe contener únicamente caracteres alfanuméricos, o espacios..
         /// </summary>
         internal static string NameIsInvalid {
             get {
@@ -223,11 +223,20 @@ namespace Domain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Contraseña inválida: {0}. Ésta debe tener un largo de entre {1} y {2} caracteres, y contener exclusivamente letras o números..
+        ///   Looks up a localized string similar to Contraseña inválida: &quot;{0}&quot;. Ésta debe tener un largo de entre {1} y {2} caracteres, y contener exclusivamente letras o números..
         /// </summary>
         internal static string PasswordIsInvalid {
             get {
                 return ResourceManager.GetString("PasswordIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Equipo inválido (nulo) recibido..
+        /// </summary>
+        internal static string TeamIsInvalid {
+            get {
+                return ResourceManager.GetString("TeamIsInvalid", resourceCulture);
             }
         }
         
@@ -241,7 +250,7 @@ namespace Domain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nombre inválido: {0}..
+        ///   Looks up a localized string similar to Nombre inválido: &quot;{0}&quot;..
         /// </summary>
         internal static string UserNameIsInvalid {
             get {

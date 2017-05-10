@@ -121,7 +121,7 @@
     <value>El comentario seleccionado ya había sido resuelto.</value>
   </data>
   <data name="BirthdateIsInvalid" xml:space="preserve">
-    <value>Fecha de nacimiento inválida recibida: {0}.</value>
+    <value>Fecha de nacimiento inválida recibida: "{0}".</value>
   </data>
   <data name="CannotAddUser" xml:space="preserve">
     <value>Error al agregar usuario: miembro no válido o equipo completo.</value>
@@ -133,10 +133,10 @@
     <value>El texto introducido para el comentario no es válido, reintente.</value>
   </data>
   <data name="CreatorIsInvalid" xml:space="preserve">
-    <value>Se ha recibido un usuario creador inválido para el equipo ingresado: {0} no es miembro de {1}.</value>
+    <value>Se ha recibido un usuario creador inválido para el equipo ingresado: "{0}" no es miembro de "{1}".</value>
   </data>
   <data name="EmailIsInvalid" xml:space="preserve">
-    <value>Email inválido recibido: {0}.</value>
+    <value>Email inválido recibido: "{0}".</value>
   </data>
   <data name="EmptyDescription" xml:space="preserve">
     <value>No es posible ingresar una descripción vacía.</value>
@@ -151,10 +151,10 @@
     <value>Máxima cantidad de miembros inválida: {0} (tiene un mínimo de {1}).</value>
   </data>
   <data name="LastNameIsInvalid" xml:space="preserve">
-    <value>Apellido inválido: {0}.</value>
+    <value>Apellido inválido: "{0}".</value>
   </data>
   <data name="NameIsInvalid" xml:space="preserve">
-    <value>Nombre inválido: {0}. Éste debe contener únicamente caracteres alfanuméricos, o espacios.</value>
+    <value>Nombre inválido: "{0}". Éste debe contener únicamente caracteres alfanuméricos, o espacios.</value>
   </data>
   <data name="NonMemberElement" xml:space="preserve">
     <value>Elemento inválido (no contenido) para el pizarrón actual recibido.</value>
@@ -172,13 +172,16 @@
     <value>Punto de origen inválido recibido.</value>
   </data>
   <data name="PasswordIsInvalid" xml:space="preserve">
-    <value>Contraseña inválida: {0}. Ésta debe tener un largo de entre {1} y {2} caracteres, y contener exclusivamente letras o números.</value>
+    <value>Contraseña inválida: "{0}". Ésta debe tener un largo de entre {1} y {2} caracteres, y contener exclusivamente letras o números.</value>
+  </data>
+  <data name="TeamIsInvalid" xml:space="preserve">
+    <value>Equipo inválido (nulo) recibido.</value>
   </data>
   <data name="UnresolvedComment" xml:space="preserve">
     <value>El comentario actual no se ha resuelto aún.</value>
   </data>
   <data name="UserNameIsInvalid" xml:space="preserve">
-    <value>Nombre inválido: {0}.</value>
+    <value>Nombre inválido: "{0}".</value>
   </data>
   <data name="WhiteboardIsInvalid" xml:space="preserve">
     <value>Pizarrón no válido recibido.</value>

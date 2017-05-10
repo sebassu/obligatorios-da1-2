@@ -49,7 +49,7 @@ namespace Domain
             get { return description; }
             set
             {
-                if (!string.IsNullOrEmpty(value))
+                if (!string.IsNullOrWhiteSpace(value))
                 {
                     description = value;
                     UpdateModificationDate();
@@ -138,6 +138,8 @@ namespace Domain
             description = "Descripción inválida.";
             width = int.MaxValue;
             height = int.MaxValue;
+            Creator = User.InstanceForTestingPurposes();
+            OwnerTeam = Team.InstanceForTestingPurposes();
             UpdateModificationDate();
         }
 
@@ -176,7 +178,14 @@ namespace Domain
 
         private static bool CreatorIsValidMemberOfTeam(User creator, Team ownerTeam)
         {
-            return Utilities.IsNotNull(ownerTeam) && ownerTeam.Members.Contains(creator);
+            if (Utilities.IsNotNull(ownerTeam))
+            {
+                return ownerTeam.Members.Contains(creator);
+            }
+            else
+            {
+                throw new WhiteboardException(ErrorMessages.TeamIsInvalid);
+            }
         }
 
         public override string ToString()
@@ -204,7 +213,7 @@ namespace Domain
 
         private bool HasSameOwnerTeam(Whiteboard aWhiteboard)
         {
-            return OwnerTeam == aWhiteboard.OwnerTeam;
+            return OwnerTeam.Equals(aWhiteboard.OwnerTeam);
         }
 
         public override int GetHashCode()

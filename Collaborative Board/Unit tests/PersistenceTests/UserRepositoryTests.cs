@@ -19,17 +19,32 @@ namespace UnitTests.PersistenceTests
         {
             UserRepository globalUsers = UserRepository.GetInstance();
             Session.Start("administrator@tf2.com", "Victory");
+            AddTestData(globalUsers);
+            Session.End();
+        }
+
+        private static void AddTestData(UserRepository globalUsers)
+        {
             globalUsers.AddNewAdministrator("Mario", "Santos",
                 "santos@simuladores.com", DateTime.Today, "contraseñaValida123");
-            globalUsers.AddNewUser("Emilio", "Ravenna",
+            SwitchToTestingAdministrator();
+            User anotherRegularUser = globalUsers.AddNewUser("Emilio", "Ravenna",
                 "ravenna@simuladores.com", DateTime.Today, "password123");
-            Session.End();
+            TeamRepository globalTeams = TeamRepository.GetInstance();
+            string descriptionToSet = "Un grupo de personas que resuelve todo tipo de problemas.";
+            Team testingTeam = globalTeams.AddNewTeam("Los Simuladores", descriptionToSet, 4);
+            globalTeams.AddMemberToTeam(testingTeam, anotherRegularUser);
         }
 
         [TestInitialize]
         public void TestSetup()
         {
             testingUserRepository = new UserRepositoryInMemory();
+            SwitchToTestingAdministrator();
+        }
+
+        private static void SwitchToTestingAdministrator()
+        {
             Session.End();
             Session.Start("santos@simuladores.com", "contraseñaValida123");
         }

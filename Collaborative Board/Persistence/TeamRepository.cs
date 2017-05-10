@@ -3,9 +3,9 @@ using Domain;
 
 namespace Persistence
 {
-    public abstract class TeamRepository : Repository<Team>
+    public abstract class TeamRepository : RepositoryInMemory<Team>
     {
-        public abstract void AddNewTeam(string name, string description, int maximumMembers);
+        public abstract Team AddNewTeam(string name, string description, int maximumMembers);
         public abstract void ModifyTeam(Team teamToModify, string nameToSet,
             string descriptionToSet, int maximumMembersToSet);
         public abstract void AddMemberToTeam(Team teamToAddTo, User userToAdd);
