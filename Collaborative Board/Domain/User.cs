@@ -1,11 +1,10 @@
 ﻿using System;
 using Exceptions;
 using System.Net.Mail;
-using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("Unit tests")]
+[assembly: InternalsVisibleTo("UnitTests")]
 namespace Domain
 {
     public class User
@@ -14,7 +13,7 @@ namespace Domain
         public string FirstName
         {
             get { return firstName; }
-            set
+            internal set
             {
                 if (IsValidName(value))
                 {
@@ -22,21 +21,17 @@ namespace Domain
                 }
                 else
                 {
-                    throw new UserException("Nombre inválido recibido: " + value + ".");
+                    string errorMessage = string.Format(ErrorMessages.UserNameIsInvalid, value);
+                    throw new UserException(errorMessage);
                 }
             }
-        }
-
-        public bool IsValidName(string aString)
-        {
-            return !string.IsNullOrWhiteSpace(aString) && Utilities.ContainsOnlyLettersOrSpaces(aString);
         }
 
         private string lastName;
         public string LastName
         {
             get { return lastName; }
-            set
+            internal set
             {
                 if (IsValidName(value))
                 {
@@ -44,16 +39,23 @@ namespace Domain
                 }
                 else
                 {
-                    throw new UserException("Apellido inválido recibido: " + value + ".");
+                    string errorMessage = string.Format(ErrorMessages.LastNameIsInvalid, value);
+                    throw new UserException(errorMessage);
                 }
             }
+        }
+
+        public static bool IsValidName(string value)
+        {
+            return !string.IsNullOrWhiteSpace(value) &&
+                Utilities.ContainsOnlyLettersOrSpaces(value);
         }
 
         private MailAddress email;
         public string Email
         {
             get { return email.ToString(); }
-            set
+            internal set
             {
                 try
                 {
@@ -61,7 +63,8 @@ namespace Domain
                 }
                 catch (SystemException)
                 {
-                    throw new UserException("Email inválido recibido: " + value + ".");
+                    string errorMessage = string.Format(ErrorMessages.EmailIsInvalid, value);
+                    throw new UserException(errorMessage);
                 }
             }
         }
@@ -70,7 +73,7 @@ namespace Domain
         public DateTime Birthdate
         {
             get { return birthdate; }
-            set
+            internal set
             {
                 var dateToSet = value.Date;
                 if (Utilities.IsTodayOrBefore(dateToSet))
@@ -79,8 +82,9 @@ namespace Domain
                 }
                 else
                 {
-                    throw new UserException("Fecha de nacimiento inválida recibida: "
-                        + value.ToString("d") + ".");
+                    string errorMessage = string.Format(ErrorMessages.BirthdateIsInvalid,
+                        value.ToString("d"));
+                    throw new UserException(errorMessage);
                 }
             }
         }
@@ -89,9 +93,16 @@ namespace Domain
         public string Password
         {
             get { return password.PasswordValue; }
-            set
+            internal set
             {
-                password.PasswordValue = value;
+                try
+                {
+                    password.PasswordValue = value;
+                }
+                catch (PasswordException exceptionCaught)
+                {
+                    throw new UserException(exceptionCaught.Message);
+                }
             }
         }
 
@@ -103,13 +114,7 @@ namespace Domain
         }
 
         private readonly List<Comment> commentsResolved = new List<Comment>();
-        public IList CommentsResolved
-        {
-            get
-            {
-                return commentsResolved.AsReadOnly();
-            }
-        }
+        public IReadOnlyCollection<Comment> CommentsResolved => commentsResolved.AsReadOnly();
 
         internal void AddResolvedComment(Comment aComment)
         {
@@ -123,30 +128,30 @@ namespace Domain
 
         protected User()
         {
-            firstName = "Nombre inválido.";
-            lastName = "Apellido inválido.";
+            firstName = "Usuario";
+            lastName = "inválido.";
             email = new MailAddress("mailInvalido@usuarioInvalido");
         }
 
-        public static User NamesEmailBirthdatePassword(string aFirstName, string aLastName,
-            string anEmail, DateTime aBirthdate, string aPassword)
+        public static User NamesEmailBirthdatePassword(string firstName, string lastName,
+            string email, DateTime birthdate, string password)
         {
-            return new User(aFirstName, aLastName, anEmail, aBirthdate, aPassword);
+            return new User(firstName, lastName, email, birthdate, password);
         }
 
-        protected User(string aFirstName, string aLastName, string anEmail,
-            DateTime aBirthdate, string aPassword)
+        protected User(string firstNameToSet, string lastNameToSet, string emailToSet,
+            DateTime birthdateToSet, string passwordToSet)
         {
-            FirstName = aFirstName;
-            LastName = aLastName;
-            Email = anEmail;
-            Birthdate = aBirthdate;
-            Password = aPassword;
+            FirstName = firstNameToSet;
+            LastName = lastNameToSet;
+            Email = emailToSet;
+            Birthdate = birthdateToSet;
+            Password = passwordToSet;
         }
 
-        public override bool Equals(object parameterObject)
+        public override bool Equals(object obj)
         {
-            if (parameterObject is User userToCompareAgainst)
+            if (obj is User userToCompareAgainst)
             {
                 return HasSameEmail(userToCompareAgainst);
             }
@@ -156,9 +161,9 @@ namespace Domain
             }
         }
 
-        private bool HasSameEmail(User aUser)
+        private bool HasSameEmail(User other)
         {
-            return email.Equals(aUser.email);
+            return email.Equals(other.email);
         }
 
         public override int GetHashCode()

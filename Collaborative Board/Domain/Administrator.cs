@@ -6,14 +6,14 @@ namespace Domain
     {
         public override bool HasAdministrationPrivileges => true;
 
-        new public static Administrator NamesEmailBirthdatePassword(string aFirstName, string aLastName,
-            string anEmail, DateTime aBirthdate, string aPassword)
+        new public static Administrator NamesEmailBirthdatePassword(string firstName, string lastName,
+            string email, DateTime birthdate, string password)
         {
-            return new Administrator(aFirstName, aLastName, anEmail, aBirthdate, aPassword);
+            return new Administrator(firstName, lastName, email, birthdate, password);
         }
 
-        protected Administrator(string aFirstName, string aLastName, string anEmail, DateTime aBirthdate, string aPassword)
-            : base(aFirstName, aLastName, anEmail, aBirthdate, aPassword) { }
+        protected Administrator(string firstName, string lastName, string email, DateTime birthdate, string password)
+            : base(firstName, lastName, email, birthdate, password) { }
 
         new internal static Administrator InstanceForTestingPurposes()
         {

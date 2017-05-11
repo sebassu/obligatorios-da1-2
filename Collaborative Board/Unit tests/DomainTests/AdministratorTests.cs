@@ -5,7 +5,7 @@ using System.Threading;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Unit_tests
+namespace UnitTests.DomainTests
 {
     [TestClass]
     [ExcludeFromCodeCoverage]
@@ -22,8 +22,8 @@ namespace Unit_tests
         [TestMethod]
         public void AdministratorForTestingPurposesTest()
         {
-            Assert.AreEqual("Nombre inválido.", testingAdministrator.FirstName);
-            Assert.AreEqual("Apellido inválido.", testingAdministrator.LastName);
+            Assert.AreEqual("Usuario", testingAdministrator.FirstName);
+            Assert.AreEqual("inválido.", testingAdministrator.LastName);
             Assert.AreEqual("mailInvalido@usuarioInvalido", testingAdministrator.Email);
             Assert.AreEqual("Contraseña inválida.", testingAdministrator.Password);
         }
@@ -32,8 +32,8 @@ namespace Unit_tests
         public void AdministratorParameterFactoryMethodValidTest()
         {
             DateTime birthdateToSet = DateTime.Today;
-            testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio", "Ravenna", "ravenna@simuladores.com",
-                birthdateToSet, "contraseñaValida123");
+            testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio", "Ravenna",
+                "ravenna@simuladores.com", birthdateToSet, "contraseñaValida123");
             Assert.AreEqual("Emilio", testingAdministrator.FirstName);
             Assert.AreEqual("Ravenna", testingAdministrator.LastName);
             Assert.AreEqual("ravenna@simuladores.com", testingAdministrator.Email);
@@ -45,24 +45,24 @@ namespace Unit_tests
         [ExpectedException(typeof(UserException))]
         public void AdministratorParameterFactoryMethodInvalidFirstNameTest()
         {
-            testingAdministrator = Administrator.NamesEmailBirthdatePassword("1&6 1a2-*!3", "Ravenna", "ravenna@simuladores.com",
-                DateTime.Now, "contraseñaValida123");
+            testingAdministrator = Administrator.NamesEmailBirthdatePassword("1&6 1a2-*!3", "Ravenna",
+                "ravenna@simuladores.com", DateTime.Now, "contraseñaValida123");
         }
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
         public void AdministratorParameterFactoryMethodInvalidLastNameTest()
         {
-            testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio", ";#d1 -($!#", "ravenna@simuladores.com.ar",
-                DateTime.Now, "contraseñaValida123");
+            testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio", ";#d1 -($!#",
+                "ravenna@simuladores.com", DateTime.Now, "contraseñaValida123");
         }
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
         public void AdministratorParameterFactoryMethodInvalidEmailTest()
         {
-            testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio", "Ravenna", "12! $^#&",
-                DateTime.Now, "contraseñaValida123");
+            testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio",
+                "Ravenna", "12! $^#&", DateTime.Now, "contraseñaValida123");
         }
 
         [TestMethod]
@@ -70,16 +70,16 @@ namespace Unit_tests
         public void AdministratorParameterFactoryMethodInvalidBirthdateTest()
         {
             DateTime birthdateToSet = new DateTime(2112, 7, 31);
-            testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio", "Ravenna", "ravenna@simuladores.com.ar",
-                birthdateToSet, "contraseñaValida123");
+            testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio", "Ravenna",
+                "ravenna@simuladores.com", birthdateToSet, "contraseñaValida123");
         }
 
         [TestMethod]
-        [ExpectedException(typeof(PasswordException))]
+        [ExpectedException(typeof(UserException))]
         public void AdministratorParameterFactoryMethodInvalidPasswordTest()
         {
-            testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio", "Ravenna", "ravenna@simuladores.com.ar",
-                DateTime.Now, "@%^# 521D(%$");
+            testingAdministrator = Administrator.NamesEmailBirthdatePassword("Emilio", "Ravenna",
+                "ravenna@simuladores.com", DateTime.Now, "@%^# 521D(%$");
         }
 
         [TestMethod]
@@ -91,15 +91,15 @@ namespace Unit_tests
         [TestMethod]
         public void AdministratorHasAdministratorPrivilegesParametersTest()
         {
-            testingAdministrator = Administrator.NamesEmailBirthdatePassword("Mario", "Santos", "santos@simuladores.com",
-                DateTime.Now, "contraseñaValida123");
+            testingAdministrator = Administrator.NamesEmailBirthdatePassword("Mario", "Santos",
+                "santos@simuladores.com", DateTime.Now, "contraseñaValida123");
             Assert.IsTrue(testingAdministrator.HasAdministrationPrivileges);
         }
 
         [TestMethod]
         public void AdministratorToStringTest1()
         {
-            Assert.AreEqual("Nombre inválido. Apellido inválido. <mailInvalido@usuarioInvalido> (Admin.)",
+            Assert.AreEqual("Usuario inválido. <mailInvalido@usuarioInvalido> (Admin.)",
                 testingAdministrator.ToString());
         }
 
@@ -108,8 +108,8 @@ namespace Unit_tests
         {
             testingAdministrator.FirstName = "Mario";
             testingAdministrator.LastName = "Santos";
-            testingAdministrator.Email = "santos@simuladores.com.ar";
-            Assert.AreEqual("Mario Santos <santos@simuladores.com.ar> (Admin.)", testingAdministrator.ToString());
+            testingAdministrator.Email = "santos@simuladores.com";
+            Assert.AreEqual("Mario Santos <santos@simuladores.com> (Admin.)", testingAdministrator.ToString());
         }
 
         [TestMethod]
@@ -117,7 +117,7 @@ namespace Unit_tests
         {
             testingAdministrator.FirstName = "Gabriel";
             testingAdministrator.LastName = "Medina";
-            testingAdministrator.Email = "medina@simuladores.com.ar";
+            testingAdministrator.Email = "medina@simuladores.com";
             Assert.AreEqual(testingAdministrator.FirstName + " " + testingAdministrator.LastName + " <"
                 + testingAdministrator.Email + "> (Admin.)", testingAdministrator.ToString());
         }

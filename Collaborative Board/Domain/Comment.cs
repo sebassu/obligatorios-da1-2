@@ -13,8 +13,7 @@ namespace Domain
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new CommentException("El texto introducido para el comentario " +
-                        "no es válido, reintente.");
+                    throw new CommentException(ErrorMessages.CommentTextIsInvalid);
                 }
                 else
                 {
@@ -23,18 +22,14 @@ namespace Domain
             }
         }
 
-        private readonly DateTime creationDate = DateTime.Now;
-        public DateTime CreationDate
-        {
-            get { return creationDate; }
-        }
+        public DateTime CreationDate { get; } = DateTime.Now;
 
         public User Creator { get; private set; }
 
         private DateTime resolutionDate;
 
         // Created as a method since generating a Property raises a warning in Visual Studio
-        // due to an exception being thrown, result of DateTime being a non-nullable type.
+        // due to an exception being thrown.
         public DateTime ResolutionDate()
         {
             if (resolutionDate != DateTime.MinValue)
@@ -43,8 +38,7 @@ namespace Domain
             }
             else
             {
-                throw new CommentException("El comentario actual no se ha " +
-                      "resuelto aún.");
+                throw new CommentException(ErrorMessages.UnresolvedComment);
             }
         }
 
@@ -54,8 +48,7 @@ namespace Domain
         {
             if (IsResolved)
             {
-                throw new CommentException("El comentario seleccionado ya había " +
-                    "sido resuelto.");
+                throw new CommentException(ErrorMessages.AlreadyResolvedComment);
             }
             else
             {
@@ -71,7 +64,7 @@ namespace Domain
             }
             else
             {
-                throw new CommentException("Usuario inválido (nulo) recibido.");
+                throw new CommentException(ErrorMessages.NullUser);
             }
         }
 
@@ -91,7 +84,8 @@ namespace Domain
         }
 
         // Valid since resolutionDate will never be set to DateTime.MinValue, which represents 
-        // a date that already long ago passed.
+        // a date that already passed. Usage of DateTime? (System.Nullable<DateTime>) was considered
+        // but decided against due to the boxing/unboxing overhead as well as the previous alternative.
         private bool ResolutionDateWasSet()
         {
             return (resolutionDate != DateTime.MinValue);
@@ -120,7 +114,7 @@ namespace Domain
             }
             else
             {
-                throw new CommentException("Usuario inválido (nulo) recibido.");
+                throw new CommentException(ErrorMessages.NullUser);
             }
         }
 
