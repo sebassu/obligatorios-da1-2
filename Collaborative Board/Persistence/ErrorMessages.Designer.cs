@@ -79,7 +79,7 @@ namespace Persistence {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to El elemento recibido ya existe en el sistema..
+        ///   Looks up a localized string similar to El elemento que se intenta registrar ya existe en el sistema..
         /// </summary>
         internal static string ElementAlreadyExists {
             get {
@@ -129,6 +129,42 @@ namespace Persistence {
         internal static string SessionNotStarted {
             get {
                 return ResourceManager.GetString("SessionNotStarted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No es posible que existan en el sistema dos equipos distintos con el mismo nombre..
+        /// </summary>
+        internal static string TeamNameMustBeUnique {
+            get {
+                return ResourceManager.GetString("TeamNameMustBeUnique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Es necesario ser el creador del pizarrón o un administrador del sistema para modificar al mismo..
+        /// </summary>
+        internal static string UserCannotModifyWhiteboard {
+            get {
+                return ResourceManager.GetString("UserCannotModifyWhiteboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No es posible tener dos usuarios registrados con la misma dirección de correo electrónico..
+        /// </summary>
+        internal static string UserEmailMustBeUnique {
+            get {
+                return ResourceManager.GetString("UserEmailMustBeUnique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El equipo &quot;{0}&quot; ya posee un pizarrón con el nombre &quot;{1}&quot;..
+        /// </summary>
+        internal static string WhiteboardNameTeamMustBeUnique {
+            get {
+                return ResourceManager.GetString("WhiteboardNameTeamMustBeUnique", resourceCulture);
             }
         }
     }
