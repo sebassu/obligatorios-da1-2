@@ -22,8 +22,7 @@ namespace Interface
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            systemPanel.Controls.Clear();
-            systemPanel.Controls.Add(new UCAdministratorUsers(systemPanel));
+            UCAdministatorUsersToPanel();
         }
 
         private void LoadUserData()
@@ -42,7 +41,7 @@ namespace Interface
             UserRepository globalUsers = UserRepository.GetInstance();
             if (Utilities.IsNotNull(userToModify))
             {
-                globalUsers.ModifyUser(userToModify, txtFirstName.Text, txtLastName.Text, 
+                globalUsers.ModifyUser(userToModify, txtFirstName.Text, txtLastName.Text,
                     txtEmail.Text, dtpBirthDate.Value, txtPassword.Text);
             }
             else
@@ -50,6 +49,11 @@ namespace Interface
                 globalUsers.AddNewUser(txtFirstName.Text, txtLastName.Text,
                     txtEmail.Text, dtpBirthDate.Value, txtPassword.Text);
             }
+            UCAdministatorUsersToPanel();
+        }
+
+        private void UCAdministatorUsersToPanel()
+        {
             systemPanel.Controls.Clear();
             systemPanel.Controls.Add(new UCAdministratorUsers(systemPanel));
         }

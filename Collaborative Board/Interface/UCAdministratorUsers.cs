@@ -79,6 +79,11 @@ namespace Interface
 
         private void UCAdministratorUsers_Load(object sender, EventArgs e)
         {
+            LoadRegisteredUsers();
+        }
+
+        private void LoadRegisteredUsers()
+        {
             lstUsers.Clear();
             var globalUsers = UserRepository.GetInstance().Elements.ToList();
             if (globalUsers.Count() > 0)
@@ -112,5 +117,33 @@ namespace Interface
             systemPanel.Controls.Clear();
             systemPanel.Controls.Add(new UCAddOrModifyUser(systemPanel, userToModify));
         }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            User userToDelete = lstUsers.SelectedItems[0].Tag as User;
+            if (Utilities.IsNotNull(userToDelete))
+            {
+                AskDeleteUser(userToDelete);
+            }
+        }
+
+        private void AskDeleteUser(User oneUser)
+        {
+            DialogResult result = MessageBox.Show("Está seguro que desea eliminar el elemento seleccionado?", "Salir",
+                               MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                DeleteUser(oneUser);
+                LoadRegisteredUsers();
+            }
+
+        }
+
+        private void DeleteUser(User oneUser)
+        {
+            UserRepository globalUsers = UserRepository.GetInstance();
+            globalUsers.Remove(oneUser);
+        }
+        
     }
 }

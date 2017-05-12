@@ -113,6 +113,7 @@
             // 
             this.lstRegisteredWhiteboards.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstRegisteredWhiteboards.Location = new System.Drawing.Point(30, 155);
+            this.lstRegisteredWhiteboards.MultiSelect = false;
             this.lstRegisteredWhiteboards.Name = "lstRegisteredWhiteboards";
             this.lstRegisteredWhiteboards.Size = new System.Drawing.Size(299, 343);
             this.lstRegisteredWhiteboards.TabIndex = 5;

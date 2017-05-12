@@ -35,6 +35,8 @@ namespace Interface
             systemPanel.Controls.Add(new UCAdministratorHome(systemPanel));
         }
 
+        
+
 
     }
 }

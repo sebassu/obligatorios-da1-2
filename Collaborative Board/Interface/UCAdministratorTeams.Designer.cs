@@ -69,7 +69,7 @@
             this.btnAdd.ForeColor = System.Drawing.Color.White;
             this.btnAdd.Location = new System.Drawing.Point(480, 59);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(177, 91);
+            this.btnAdd.Size = new System.Drawing.Size(186, 91);
             this.btnAdd.TabIndex = 2;
             this.btnAdd.Text = "AGREGAR";
             this.btnAdd.UseVisualStyleBackColor = false;
@@ -84,10 +84,11 @@
             this.btnModify.ForeColor = System.Drawing.Color.White;
             this.btnModify.Location = new System.Drawing.Point(480, 187);
             this.btnModify.Name = "btnModify";
-            this.btnModify.Size = new System.Drawing.Size(177, 91);
+            this.btnModify.Size = new System.Drawing.Size(186, 91);
             this.btnModify.TabIndex = 3;
             this.btnModify.Text = "MODIFICAR";
             this.btnModify.UseVisualStyleBackColor = false;
+            this.btnModify.Click += new System.EventHandler(this.btnModify_Click);
             this.btnModify.MouseEnter += new System.EventHandler(this.btnModify_MouseEnter);
             this.btnModify.MouseLeave += new System.EventHandler(this.btnModify_MouseLeave);
             // 
@@ -98,10 +99,11 @@
             this.btnDelete.ForeColor = System.Drawing.Color.White;
             this.btnDelete.Location = new System.Drawing.Point(480, 314);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(177, 91);
+            this.btnDelete.Size = new System.Drawing.Size(186, 91);
             this.btnDelete.TabIndex = 4;
             this.btnDelete.Text = "ELIMINAR";
             this.btnDelete.UseVisualStyleBackColor = false;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             this.btnDelete.MouseEnter += new System.EventHandler(this.btnDelete_MouseEnter);
             this.btnDelete.MouseLeave += new System.EventHandler(this.btnDelete_MouseLeave);
             // 
@@ -109,6 +111,7 @@
             // 
             this.lstTeams.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstTeams.Location = new System.Drawing.Point(42, 160);
+            this.lstTeams.MultiSelect = false;
             this.lstTeams.Name = "lstTeams";
             this.lstTeams.Size = new System.Drawing.Size(392, 319);
             this.lstTeams.TabIndex = 5;

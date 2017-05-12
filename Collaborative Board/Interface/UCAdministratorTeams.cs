@@ -79,6 +79,11 @@ namespace Interface
 
         private void UCAdministratorTeams_Load(object sender, EventArgs e)
         {
+            LoadRegisteredTeams();
+        }
+
+        private void LoadRegisteredTeams()
+        {
             lstTeams.Clear();
             var globalTeams = TeamRepository.GetInstance().Elements.ToList();
             if (globalTeams.Count() > 0)
@@ -100,6 +105,40 @@ namespace Interface
         {
             systemPanel.Controls.Clear();
             systemPanel.Controls.Add(new UCAddOrModifyTeam(systemPanel));
+        }
+
+        private void btnModify_Click(object sender, EventArgs e)
+        {
+            Team teamToModify = lstTeams.SelectedItems[0].Tag as Team;
+            systemPanel.Controls.Clear();
+            systemPanel.Controls.Add(new UCAddOrModifyTeam(systemPanel, teamToModify));
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            Team teamToDelete = lstTeams.SelectedItems[0].Tag as Team;
+            if (Utilities.IsNotNull(teamToDelete))
+            {
+                AskDeleteTeam(teamToDelete);
+            }
+        }
+
+        private void AskDeleteTeam(Team oneTeam)
+        {
+            DialogResult result = MessageBox.Show("Está seguro que desea eliminar el elemento seleccionado?", "Salir",
+                               MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                DeleteTeam(oneTeam);
+                LoadRegisteredTeams();
+            }
+
+        }
+
+        private void DeleteTeam(Team oneTeam)
+        {
+            TeamRepository globalTeams = TeamRepository.GetInstance();
+            globalTeams.Remove(oneTeam);
         }
     }
 }

@@ -93,6 +93,7 @@
             this.btnDelete.TabIndex = 3;
             this.btnDelete.Text = "ELIMINAR";
             this.btnDelete.UseVisualStyleBackColor = false;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             this.btnDelete.MouseEnter += new System.EventHandler(this.btnDelete_MouseEnter);
             this.btnDelete.MouseLeave += new System.EventHandler(this.btnDelete_MouseLeave);
             // 
@@ -115,6 +116,7 @@
             // 
             this.lstUsers.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstUsers.Location = new System.Drawing.Point(29, 160);
+            this.lstUsers.MultiSelect = false;
             this.lstUsers.Name = "lstUsers";
             this.lstUsers.Size = new System.Drawing.Size(410, 319);
             this.lstUsers.TabIndex = 6;
