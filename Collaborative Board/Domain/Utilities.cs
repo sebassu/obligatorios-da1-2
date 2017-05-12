@@ -10,14 +10,16 @@ namespace Domain
             return value != null;
         }
 
-        public static bool ContainsOnlyLettersDigitsOrSpaces(string value)
+        public static bool ContainsLettersDigitsOrSpacesOnly(string value)
         {
-            return value.ToCharArray().All(c => IsLetterDigitOrSpace(c));
+            return !string.IsNullOrWhiteSpace(value) &&
+                value.ToCharArray().All(c => IsLetterDigitOrSpace(c));
         }
 
-        public static bool ContainsOnlyLettersOrSpaces(string value)
+        public static bool ContainsLettersOrSpacesOnly(string value)
         {
-            return value.ToCharArray().All(c => IsLetterOrSpace(c));
+            return !string.IsNullOrWhiteSpace(value) &&
+                value.ToCharArray().All(c => IsLetterOrSpace(c));
         }
 
         private static bool IsLetterDigitOrSpace(char value)

@@ -15,17 +15,17 @@ namespace UnitTests.DomainTests
         private static ImageWhiteboard testingImage;
 
         [TestInitialize]
-        public void TestSetUp()
+        public void TestSetup()
         {
             testingImage = ImageWhiteboard.InstanceForTestingPurposes();
         }
 
-        private Whiteboard GenerateNonGenericTestSituation()
+        private static Whiteboard GenerateNonGenericTestSituation()
         {
             string testImageLocation = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName
                 + "\\..\\Resources\\TestImage.jpg";
             User creator = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
-                "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");
+                "ravenna@simuladores.com", DateTime.Today, "contraseñaVálida123");
             Team ownerTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo 3", "Descripción.", 5);
             Whiteboard imageContainer = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
                 "Pizarrón de prueba", "Descripción.", ownerTeam, 900, 300);

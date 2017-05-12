@@ -174,17 +174,20 @@
   <data name="PasswordIsInvalid" xml:space="preserve">
     <value>Contraseña inválida: "{0}". Ésta debe tener un largo de entre {1} y {2} caracteres, y contener exclusivamente letras o números.</value>
   </data>
+  <data name="RepeatedWhiteboardName" xml:space="preserve">
+    <value>Pizarrón no válido recibido: no es posible crear dos pizarrones con el mismo nombre asociados a un único equipo.</value>
+  </data>
   <data name="TeamIsInvalid" xml:space="preserve">
     <value>Equipo inválido (nulo) recibido.</value>
+  </data>
+  <data name="notAddedWhiteboardRecieved" xml:space="preserve">
+    <value>Pizarrón no válido recibido: no se encuentra asociado al equipo en cuestión.</value>
   </data>
   <data name="UnresolvedComment" xml:space="preserve">
     <value>El comentario actual no se ha resuelto aún.</value>
   </data>
   <data name="UserNameIsInvalid" xml:space="preserve">
     <value>Nombre inválido: "{0}".</value>
-  </data>
-  <data name="WhiteboardIsInvalid" xml:space="preserve">
-    <value>Pizarrón no válido recibido.</value>
   </data>
   <data name="WidthIsInvalid" xml:space="preserve">
     <value>Ancho inválido recibido: {0} píxeles.</value>

@@ -160,6 +160,7 @@ namespace UnitTests.DomainTests
             Assert.AreEqual(ownerTeam, testingWhiteboard.OwnerTeam);
             Assert.AreEqual(500, testingWhiteboard.Width);
             Assert.AreEqual(500, testingWhiteboard.Height);
+            CollectionAssert.Contains(ownerTeam.CreatedWhiteboards.ToList(), testingWhiteboard);
         }
 
         [TestMethod]
@@ -207,7 +208,7 @@ namespace UnitTests.DomainTests
         public void WhiteboardParameterFactoryMethodUserNotInTeamTest()
         {
             User creator = User.NamesEmailBirthdatePassword("Pablo", "Lamponne",
-                "lamponne@simuladores.com", DateTime.Today, "contraseñaValida123");
+                "lamponne@simuladores.com", DateTime.Today, "contraseñaVálida123");
             Team ownerTeam = Team.InstanceForTestingPurposes();
             testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
                 "Equipo3", "Descripción de pizarrón", ownerTeam, 100, 50);
@@ -259,15 +260,8 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void WhiteboardEqualsTransitiveTest()
         {
-            User creator = User.InstanceForTestingPurposes();
-            Team aTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Same name",
-                "Description 1", 10);
-            testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
-                "Pizarron1", "Descripción 1.", aTeam, 100, 100);
-            Whiteboard secondTestingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
-                "Pizarron1", "Descripción 2.", aTeam, 50, 50);
-            Whiteboard thirdTestingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
-                "Pizarron1", "Descripción 3.", aTeam, 25, 25);
+            Whiteboard secondTestingWhiteboard = Whiteboard.InstanceForTestingPurposes();
+            Whiteboard thirdTestingWhiteboard = Whiteboard.InstanceForTestingPurposes();
             Assert.AreEqual(testingWhiteboard, secondTestingWhiteboard);
             Assert.AreEqual(secondTestingWhiteboard, thirdTestingWhiteboard);
             Assert.AreEqual(testingWhiteboard, thirdTestingWhiteboard);

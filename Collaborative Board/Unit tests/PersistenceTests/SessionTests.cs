@@ -17,18 +17,12 @@ namespace UnitTests.PersistenceTests
             Session.End();
         }
 
-        [ClassCleanup]
-        public static void ClassTeardown()
-        {
-            Session.End();
-        }
-
         [TestMethod]
         public void SessionStartUserValidTest()
         {
             User userToVerify = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
-                "ravenna@simuladores.com", DateTime.Today, "password123");
-            Session.Start("ravenna@simuladores.com", "password123");
+                "ravenna@simuladores.com", DateTime.Today, "HablarUnasPalabritas");
+            Session.Start("ravenna@simuladores.com", "HablarUnasPalabritas");
             Assert.AreEqual(userToVerify, Session.ActiveUser());
             Assert.IsFalse(Session.HasAdministrationPrivileges());
         }
@@ -37,8 +31,8 @@ namespace UnitTests.PersistenceTests
         public void SessionStartAdministratorValidTest()
         {
             Administrator administratorToVerify = Administrator.NamesEmailBirthdatePassword("Mario",
-                "Santos", "santos@simuladores.com", DateTime.Today, "contraseñaValida123");
-            Session.Start("santos@simuladores.com", "contraseñaValida123");
+                "Santos", "santos@simuladores.com", DateTime.Today, "DisculpeFuegoTiene");
+            Session.Start("santos@simuladores.com", "DisculpeFuegoTiene");
             Assert.AreEqual(administratorToVerify, Session.ActiveUser());
             Assert.IsTrue(Session.HasAdministrationPrivileges());
         }
@@ -47,7 +41,7 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(SessionException))]
         public void SessionStartInvalidEmailTest()
         {
-            Session.Start("lamponne@simuladores.com", "contraseñaValida123");
+            Session.Start("lamponne@simuladores.com", "HablarUnasPalabritas");
         }
 
         [TestMethod]
@@ -68,7 +62,7 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(SessionException))]
         public void SessionStartNullEmailTest()
         {
-            Session.Start(null, "contraseñaValida123");
+            Session.Start(null, "contraseñaVálida123");
         }
 
         [TestMethod]
@@ -89,8 +83,8 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(SessionException))]
         public void SessionStartAlreadyStartedTest()
         {
-            Session.Start("santos@simuladores.com", "contraseñaValida123");
-            Session.Start("ravenna@simuladores.com", "password123");
+            Session.Start("santos@simuladores.com", "DisculpeFuegoTiene");
+            Session.Start("ravenna@simuladores.com", "HablarUnasPalabritas");
         }
 
         [TestMethod]
@@ -104,7 +98,7 @@ namespace UnitTests.PersistenceTests
         [TestMethod]
         public void SessionFinalizeUserValidTest()
         {
-            Session.Start("ravenna@simuladores.com", "password123");
+            Session.Start("ravenna@simuladores.com", "HablarUnasPalabritas");
             Session.End();
             Assert.IsFalse(Session.IsActive());
         }
@@ -112,13 +106,13 @@ namespace UnitTests.PersistenceTests
         [TestMethod]
         public void SessionFinalizeAdministratorValidTest()
         {
-            Session.Start("ravenna@simuladores.com", "password123");
+            Session.Start("santos@simuladores.com", "DisculpeFuegoTiene");
             Session.End();
             Assert.IsFalse(Session.IsActive());
         }
 
         [TestMethod]
-        public void SessionFinalizeUnstartedValidTest()
+        public void SessionFinalizeNotStartedValidTest()
         {
             Session.End();
             Session.End();

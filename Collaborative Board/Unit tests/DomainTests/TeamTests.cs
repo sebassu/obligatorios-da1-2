@@ -14,7 +14,7 @@ namespace UnitTests.DomainTests
         private static Team testingTeam;
 
         [TestInitialize]
-        public void TestSetUp()
+        public void TestSetup()
         {
             testingTeam = Team.InstanceForTestingPurposes();
         }
@@ -189,7 +189,7 @@ namespace UnitTests.DomainTests
         public void TeamAddValidMemberTest()
         {
             User aUser = User.NamesEmailBirthdatePassword("Pablo", "Lamponne",
-                "lamponne@simuladores.com", DateTime.Now, "contraseñaValida123");
+                "lamponne@simuladores.com", DateTime.Now, "contraseñaVálida123");
             testingTeam.AddMember(aUser);
             CollectionAssert.Contains(testingTeam.Members.ToList(), aUser);
         }
@@ -288,7 +288,7 @@ namespace UnitTests.DomainTests
         {
             User oneCreator = User.InstanceForTestingPurposes();
             User anotherCreator = User.NamesEmailBirthdatePassword("Gabriel", "Medina",
-                "medina@simuladores.com", DateTime.Now, "contraseñaValida123");
+                "medina@simuladores.com", DateTime.Now, "contraseñaVálida123");
             testingTeam = Team.CreatorNameDescriptionMaximumMembers(oneCreator, "Same name",
                 "Description 1", 10);
             Team secondTestingTeam = Team.CreatorNameDescriptionMaximumMembers(oneCreator,
@@ -340,7 +340,6 @@ namespace UnitTests.DomainTests
                 "No hace tareas.", 10);
             Whiteboard aWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
                 "PizarronValido", "Descripcion de pizarron", testingTeam, 500, 500);
-            testingTeam.AddWhiteboard(aWhiteboard);
             CollectionAssert.Contains(testingTeam.CreatedWhiteboards.ToList(), aWhiteboard);
         }
 
@@ -355,8 +354,6 @@ namespace UnitTests.DomainTests
                 "PizarronValido", "Descripcion de pizarron", testingTeam, 500, 500);
             Whiteboard bWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
                 "PizarronNuevo", "Descripcion de pizarron", testingTeam, 1500, 1500);
-            testingTeam.AddWhiteboard(aWhiteboard);
-            testingTeam.AddWhiteboard(bWhiteboard);
             CollectionAssert.Contains(testingTeam.CreatedWhiteboards.ToList(), aWhiteboard);
             CollectionAssert.Contains(testingTeam.CreatedWhiteboards.ToList(), bWhiteboard);
         }
@@ -371,10 +368,7 @@ namespace UnitTests.DomainTests
                 "No hace tareas.", 10);
             Whiteboard aWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
                 "PizarronValido", "Descripcion de pizarron", testingTeam, 500, 500);
-            Whiteboard bWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
-               "PizarronValido", "Descripcion de pizarron2", testingTeam, 1500, 1500);
             testingTeam.AddWhiteboard(aWhiteboard);
-            testingTeam.AddWhiteboard(bWhiteboard);
         }
 
         [TestMethod]
@@ -394,23 +388,21 @@ namespace UnitTests.DomainTests
                 "No hace tareas.", 10);
             Whiteboard aWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
                 "PizarronValido", "Descripcion de pizarron", testingTeam, 500, 500);
-            testingTeam.AddWhiteboard(aWhiteboard);
             testingTeam.RemoveWhiteboard(aWhiteboard);
             CollectionAssert.DoesNotContain(testingTeam.CreatedWhiteboards.ToList(), aWhiteboard);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
-        public void TeamRemoveNotAWhiteboardTest()
+        public void TeamRemoveAnUncreatedWhiteboardTest()
         {
             DateTime aBirthdate = new DateTime(1990, 05, 05);
             User creator = User.NamesEmailBirthdatePassword("Creator", "Team",
                 "creador@usuario.com", aBirthdate, "password125");
             testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator,
                 "Equipo 1", "No hace tareas.", 10);
-            Whiteboard aWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
-                "PizarronValido", "Descripcion de pizarron", testingTeam, 500, 500);
-            testingTeam.RemoveWhiteboard(aWhiteboard);
+            Whiteboard someRandomWhiteboard = Whiteboard.InstanceForTestingPurposes();
+            testingTeam.RemoveWhiteboard(someRandomWhiteboard);
         }
     }
 }
