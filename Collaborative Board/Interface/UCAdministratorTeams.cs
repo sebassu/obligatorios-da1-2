@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Persistence;
 using Domain;
@@ -55,6 +50,18 @@ namespace Interface
         {
             btnDelete.BackColor = Color.DarkRed;
             btnDelete.Font = new Font(btnDelete.Font.Name, 18, FontStyle.Bold);
+        }
+
+        private void btnVisualize_MouseEnter(object sender, EventArgs e)
+        {
+            btnVisualize.BackColor = Color.Maroon;
+            btnVisualize.Font = new Font(btnVisualize.Font.Name, 19, FontStyle.Bold);
+        }
+
+        private void btnVisualize_MouseLeave(object sender, EventArgs e)
+        {
+            btnVisualize.BackColor = Color.DarkRed;
+            btnVisualize.Font = new Font(btnVisualize.Font.Name, 18, FontStyle.Bold);
         }
 
         private void btnHome_MouseEnter(object sender, EventArgs e)
@@ -139,6 +146,21 @@ namespace Interface
         {
             TeamRepository globalTeams = TeamRepository.GetInstance();
             globalTeams.Remove(oneTeam);
+        }
+
+        private void btnVisualize_Click(object sender, EventArgs e)
+        {
+            Team teamToVisualize = lstTeams.SelectedItems[0].Tag as Team;
+            if (Utilities.IsNotNull(teamToVisualize))
+            {
+                systemPanel.Controls.Clear();
+                systemPanel.Controls.Add(new UCVisualizeTeam(systemPanel, teamToVisualize));
+            }
+            else
+            {
+                InterfaceUtilities.NotElementSelectedMessageBox();
+            }
+                
         }
     }
 }

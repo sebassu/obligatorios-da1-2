@@ -83,6 +83,12 @@
     <Compile Include="UCAdministratorUsers.Designer.cs">
       <DependentUpon>UCAdministratorUsers.cs</DependentUpon>
     </Compile>
+    <Compile Include="UCRemoveMemberFromTeam.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCRemoveMemberFromTeam.Designer.cs">
+      <DependentUpon>UCRemoveMemberFromTeam.cs</DependentUpon>
+    </Compile>
     <Compile Include="UCWhiteboards.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -94,6 +100,12 @@
     </Compile>
     <Compile Include="UCWhiteboardsCreatedByTeam.Designer.cs">
       <DependentUpon>UCWhiteboardsCreatedByTeam.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCAddMemberToTeam.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCAddMemberToTeam.Designer.cs">
+      <DependentUpon>UCAddMemberToTeam.cs</DependentUpon>
     </Compile>
     <Compile Include="UserWindow.cs">
       <SubType>Form</SubType>
@@ -109,6 +121,15 @@
     <Compile Include="UCAdministratorHome.Designer.cs">
       <DependentUpon>UCAdministratorHome.cs</DependentUpon>
     </Compile>
+    <Compile Include="UCVisualizeTeam.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCVisualizeTeam.Designer.cs">
+      <DependentUpon>UCVisualizeTeam.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="UCAddMemberToTeam.resx">
+      <DependentUpon>UCAddMemberToTeam.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UCAddOrModifyTeam.resx">
       <DependentUpon>UCAddOrModifyTeam.cs</DependentUpon>
     </EmbeddedResource>
@@ -127,6 +148,9 @@
     <EmbeddedResource Include="UCAdministratorUsers.resx">
       <DependentUpon>UCAdministratorUsers.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UCRemoveMemberFromTeam.resx">
+      <DependentUpon>UCRemoveMemberFromTeam.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UCWhiteboards.resx">
       <DependentUpon>UCWhiteboards.cs</DependentUpon>
     </EmbeddedResource>
@@ -135,7 +159,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserWindow.resx">
       <DependentUpon>UserWindow.cs</DependentUpon>
-	</EmbeddedResource>
+    </EmbeddedResource>
     <Compile Include="InterfaceUtilities.cs" />
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
@@ -157,6 +181,9 @@
     </Compile>
     <EmbeddedResource Include="UCAdministratorHome.resx">
       <DependentUpon>UCAdministratorHome.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCVisualizeTeam.resx">
+      <DependentUpon>UCVisualizeTeam.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

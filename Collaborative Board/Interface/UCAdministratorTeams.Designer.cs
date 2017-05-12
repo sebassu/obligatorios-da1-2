@@ -36,6 +36,7 @@
             this.btnDelete = new System.Windows.Forms.Button();
             this.lstTeams = new System.Windows.Forms.ListView();
             this.lblRegisteredTeams = new System.Windows.Forms.Label();
+            this.btnVisualize = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnExit
@@ -67,9 +68,9 @@
             this.btnAdd.BackColor = System.Drawing.Color.DarkRed;
             this.btnAdd.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAdd.ForeColor = System.Drawing.Color.White;
-            this.btnAdd.Location = new System.Drawing.Point(480, 59);
+            this.btnAdd.Location = new System.Drawing.Point(321, 160);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(186, 91);
+            this.btnAdd.Size = new System.Drawing.Size(195, 91);
             this.btnAdd.TabIndex = 2;
             this.btnAdd.Text = "AGREGAR";
             this.btnAdd.UseVisualStyleBackColor = false;
@@ -82,9 +83,9 @@
             this.btnModify.BackColor = System.Drawing.Color.DarkRed;
             this.btnModify.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnModify.ForeColor = System.Drawing.Color.White;
-            this.btnModify.Location = new System.Drawing.Point(480, 187);
+            this.btnModify.Location = new System.Drawing.Point(528, 160);
             this.btnModify.Name = "btnModify";
-            this.btnModify.Size = new System.Drawing.Size(186, 91);
+            this.btnModify.Size = new System.Drawing.Size(195, 91);
             this.btnModify.TabIndex = 3;
             this.btnModify.Text = "MODIFICAR";
             this.btnModify.UseVisualStyleBackColor = false;
@@ -97,9 +98,9 @@
             this.btnDelete.BackColor = System.Drawing.Color.DarkRed;
             this.btnDelete.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDelete.ForeColor = System.Drawing.Color.White;
-            this.btnDelete.Location = new System.Drawing.Point(480, 314);
+            this.btnDelete.Location = new System.Drawing.Point(321, 279);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(186, 91);
+            this.btnDelete.Size = new System.Drawing.Size(195, 91);
             this.btnDelete.TabIndex = 4;
             this.btnDelete.Text = "ELIMINAR";
             this.btnDelete.UseVisualStyleBackColor = false;
@@ -113,7 +114,7 @@
             this.lstTeams.Location = new System.Drawing.Point(42, 160);
             this.lstTeams.MultiSelect = false;
             this.lstTeams.Name = "lstTeams";
-            this.lstTeams.Size = new System.Drawing.Size(392, 319);
+            this.lstTeams.Size = new System.Drawing.Size(267, 319);
             this.lstTeams.TabIndex = 5;
             this.lstTeams.UseCompatibleStateImageBehavior = false;
             this.lstTeams.View = System.Windows.Forms.View.SmallIcon;
@@ -123,11 +124,26 @@
             this.lblRegisteredTeams.AutoSize = true;
             this.lblRegisteredTeams.BackColor = System.Drawing.Color.Transparent;
             this.lblRegisteredTeams.Font = new System.Drawing.Font("Segoe Script", 15.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRegisteredTeams.Location = new System.Drawing.Point(122, 105);
+            this.lblRegisteredTeams.Location = new System.Drawing.Point(53, 109);
             this.lblRegisteredTeams.Name = "lblRegisteredTeams";
             this.lblRegisteredTeams.Size = new System.Drawing.Size(231, 34);
             this.lblRegisteredTeams.TabIndex = 6;
             this.lblRegisteredTeams.Text = "Equipos registrados";
+            // 
+            // btnVisualize
+            // 
+            this.btnVisualize.BackColor = System.Drawing.Color.DarkRed;
+            this.btnVisualize.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnVisualize.ForeColor = System.Drawing.Color.White;
+            this.btnVisualize.Location = new System.Drawing.Point(528, 279);
+            this.btnVisualize.Name = "btnVisualize";
+            this.btnVisualize.Size = new System.Drawing.Size(195, 91);
+            this.btnVisualize.TabIndex = 7;
+            this.btnVisualize.Text = "VISUALIZAR";
+            this.btnVisualize.UseVisualStyleBackColor = false;
+            this.btnVisualize.Click += new System.EventHandler(this.btnVisualize_Click);
+            this.btnVisualize.MouseEnter += new System.EventHandler(this.btnVisualize_MouseEnter);
+            this.btnVisualize.MouseLeave += new System.EventHandler(this.btnVisualize_MouseLeave);
             // 
             // UCAdministratorTeams
             // 
@@ -135,6 +151,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Controls.Add(this.btnVisualize);
             this.Controls.Add(this.lblRegisteredTeams);
             this.Controls.Add(this.lstTeams);
             this.Controls.Add(this.btnDelete);
@@ -159,5 +176,6 @@
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.ListView lstTeams;
         private System.Windows.Forms.Label lblRegisteredTeams;
+        private System.Windows.Forms.Button btnVisualize;
     }
 }

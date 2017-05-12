@@ -29,6 +29,12 @@ namespace Interface
             }
         }
 
+        public static void NotElementSelectedMessageBox()
+        {
+            DialogResult result = MessageBox.Show("Debe seleccioar un elemento de la lista!",
+                "Error" , MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
         public static void GoToHome(Panel systemPanel)
         {
             systemPanel.Controls.Clear();
