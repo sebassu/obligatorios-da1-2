@@ -58,7 +58,7 @@ namespace UnitTests.DomainTests
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
-        public void UserSetInvalidFirstNameSpacesTest()
+        public void UserSetInvalidFirstNameOnlySpacesTest()
         {
             testingUser.FirstName = " \n\n  \t\t \n\t  ";
         }
@@ -148,7 +148,7 @@ namespace UnitTests.DomainTests
         }
 
         [TestMethod]
-        public void UserSetValidEmailNoDotComTest()
+        public void UserSetValidEmailNoDotcomTest()
         {
             testingUser.Email = "zaphod@slartibartfast";
             Assert.AreEqual("zaphod@slartibartfast", testingUser.Email);
@@ -246,12 +246,12 @@ namespace UnitTests.DomainTests
         {
             DateTime birthdateToSet = DateTime.Today;
             testingUser = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
-                "ravenna@simuladores.com", birthdateToSet, "contraseñaValida123");
+                "ravenna@simuladores.com", birthdateToSet, "contraseñaVálida123");
             Assert.AreEqual("Emilio", testingUser.FirstName);
             Assert.AreEqual("Ravenna", testingUser.LastName);
             Assert.AreEqual("ravenna@simuladores.com", testingUser.Email);
             Assert.AreEqual(birthdateToSet, testingUser.Birthdate);
-            Assert.AreEqual("contraseñaValida123", testingUser.Password);
+            Assert.AreEqual("contraseñaVálida123", testingUser.Password);
         }
 
         [TestMethod]
@@ -259,7 +259,7 @@ namespace UnitTests.DomainTests
         public void UserParameterFactoryMethodInvalidFirstNameTest()
         {
             testingUser = User.NamesEmailBirthdatePassword("1&6 1a2-*!3", "Ravenna",
-                "ravenna@simuladores.com", DateTime.Now, "contraseñaValida123");
+                "ravenna@simuladores.com", DateTime.Now, "contraseñaVálida123");
         }
 
         [TestMethod]
@@ -267,7 +267,7 @@ namespace UnitTests.DomainTests
         public void UserParameterFactoryMethodInvalidLastNameTest()
         {
             testingUser = User.NamesEmailBirthdatePassword("Emilio", ";#d1 -($!#",
-                "ravenna@simuladores.com", DateTime.Now, "contraseñaValida123");
+                "ravenna@simuladores.com", DateTime.Now, "contraseñaVálida123");
         }
 
         [TestMethod]
@@ -275,7 +275,7 @@ namespace UnitTests.DomainTests
         public void UserParameterFactoryMethodInvalidEmailTest()
         {
             testingUser = User.NamesEmailBirthdatePassword("Emilio", "Ravenna", "12! $^#&",
-                DateTime.Now, "contraseñaValida123");
+                DateTime.Now, "contraseñaVálida123");
         }
 
         [TestMethod]
@@ -284,7 +284,7 @@ namespace UnitTests.DomainTests
         {
             DateTime birthdateToSet = new DateTime(2112, 7, 31);
             testingUser = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
-                "ravenna@simuladores.com", birthdateToSet, "contraseñaValida123");
+                "ravenna@simuladores.com", birthdateToSet, "contraseñaVálida123");
         }
 
         [TestMethod]
@@ -391,7 +391,7 @@ namespace UnitTests.DomainTests
         public void UserHasAdministratorPrivilegesParametersTest()
         {
             testingUser = User.NamesEmailBirthdatePassword("Pablo", "Lamponne",
-                "lamponne@simuladores.com", DateTime.Now, "contraseñaValida123");
+                "lamponne@simuladores.com", DateTime.Now, "contraseñaVálida123");
             Assert.IsFalse(testingUser.HasAdministrationPrivileges);
         }
 

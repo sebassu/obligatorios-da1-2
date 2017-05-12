@@ -1,5 +1,6 @@
 ﻿using Exceptions;
 using System.Drawing;
+using System.Globalization;
 
 namespace Domain
 {
@@ -26,7 +27,8 @@ namespace Domain
                 }
                 else
                 {
-                    string errorMessage = string.Format(ErrorMessages.WidthIsInvalid, value);
+                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                        ErrorMessages.WidthIsInvalid, value);
                     throw new ElementException(errorMessage);
                 }
             }
@@ -50,7 +52,8 @@ namespace Domain
                 }
                 else
                 {
-                    string errorMessage = string.Format(ErrorMessages.HeightIsInvalid, value);
+                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                        ErrorMessages.HeightIsInvalid, value);
                     throw new ElementException(errorMessage);
                 }
             }
@@ -110,7 +113,7 @@ namespace Domain
 
         protected ElementWhiteboard(Whiteboard container)
         {
-            if (Utilities.IsNotNull(container))
+            if (container != null)
             {
                 Container = container;
                 CenterDefaultSizedElementInWhiteboard(container.Width, container.Height);

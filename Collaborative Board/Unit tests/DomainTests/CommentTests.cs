@@ -14,7 +14,7 @@ namespace UnitTests.DomainTests
         private static Comment testingComment;
 
         [TestInitialize]
-        public void TestSetUp()
+        public void TestSetup()
         {
             testingComment = Comment.InstanceForTestingPurposes();
         }
@@ -44,7 +44,7 @@ namespace UnitTests.DomainTests
         {
             string someText = "Falta resolver el issue 12-3.";
             User creator = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
-                "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");
+                "ravenna@simuladores.com", DateTime.Today, "contraseñaVálida123");
             testingComment = Comment.CreatorText(creator, someText);
             Assert.AreEqual(creator, testingComment.Creator);
             Assert.AreEqual(someText, testingComment.Text);
@@ -141,7 +141,7 @@ namespace UnitTests.DomainTests
         public void CommentResolutionValidTest2()
         {
             User aUser = User.NamesEmailBirthdatePassword("Mario", "Santos",
-                "santos@simuladores.com", DateTime.Today, "contraseñaValida123");
+                "santos@simuladores.com", DateTime.Today, "contraseñaVálida123");
             testingComment.Resolve(aUser);
             Assert.IsTrue(testingComment.IsResolved);
             Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate().Date);
@@ -187,7 +187,7 @@ namespace UnitTests.DomainTests
             Assert.AreEqual(testingComment.Resolver, aUser);
             CollectionAssert.Contains(aUser.CommentsResolved.ToList(), testingComment);
             User differentUser = User.NamesEmailBirthdatePassword("Mario", "Santos",
-                "santos@simuladores.com", DateTime.Today, "contraseñaValida123");
+                "santos@simuladores.com", DateTime.Today, "contraseñaVálida123");
             testingComment.Resolve(differentUser);
         }
     }

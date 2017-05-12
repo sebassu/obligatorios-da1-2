@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Exceptions;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -21,19 +22,30 @@ namespace Persistence
         {
             ValidateActiveUserHasAdministrationPrivileges();
             teamToModify = GetActualObjectInCollection(teamToModify);
-            SetTeamAttributes(teamToModify, nameToSet, descriptionToSet,
+            AttemptToSetTeamAttributes(teamToModify, nameToSet, descriptionToSet,
                 maximumMembersToSet);
         }
 
-        private void SetTeamAttributes(Team teamToModify, string nameToSet, string descriptionToSet,
-            int maximumMembersToSet)
+        private void AttemptToSetTeamAttributes(Team teamToModify, string nameToSet,
+            string descriptionToSet, int maximumMembersToSet)
         {
             if (ChangeDoesNotCauseRepeatedTeamNames(teamToModify, nameToSet))
             {
-                teamToModify.Name = nameToSet;
-                teamToModify.Description = descriptionToSet;
-                teamToModify.MaximumMembers = maximumMembersToSet;
+                SetTeamAttributes(teamToModify, nameToSet, descriptionToSet,
+                    maximumMembersToSet);
             }
+            else
+            {
+                throw new RepositoryException(ErrorMessages.TeamNameMustBeUnique);
+            }
+        }
+
+        private static void SetTeamAttributes(Team teamToModify, string nameToSet,
+            string descriptionToSet, int maximumMembersToSet)
+        {
+            teamToModify.Name = nameToSet;
+            teamToModify.Description = descriptionToSet;
+            teamToModify.MaximumMembers = maximumMembersToSet;
         }
 
         private bool ChangeDoesNotCauseRepeatedTeamNames(Team teamToModify, string nameToSet)
@@ -44,7 +56,30 @@ namespace Persistence
 
         private bool ThereIsNoTeamWithName(string nameToSet)
         {
-            return elements.Count(t => t.Name == nameToSet) == 0;
+            return !elements.Any(t => t.Name == nameToSet);
+        }
+
+        public override void Remove(Team elementToRemove)
+        {
+            if (Utilities.IsNotNull(elementToRemove))
+            {
+                RemoveAllTeamWhiteboardsFromRepository(elementToRemove);
+                base.Remove(elementToRemove);
+            }
+            else
+            {
+                throw new RepositoryException(ErrorMessages.ElementDoesNotExist);
+            }
+        }
+
+        private static void RemoveAllTeamWhiteboardsFromRepository(Team elementToRemove)
+        {
+            WhiteboardRepository globalWhiteboards = WhiteboardRepository.GetInstance();
+            var teamWhiteboards = elementToRemove.CreatedWhiteboards.ToList();
+            foreach (var whiteboard in teamWhiteboards)
+            {
+                globalWhiteboards.Remove(whiteboard);
+            }
         }
 
         public override void AddMemberToTeam(Team teamToAddTo, User userToAdd)

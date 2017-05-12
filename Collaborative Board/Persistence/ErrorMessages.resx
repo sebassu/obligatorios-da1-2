@@ -124,7 +124,7 @@
     <value>No es posible eliminar a todos los administradores del sistema; quedaría inutilizable.</value>
   </data>
   <data name="ElementAlreadyExists" xml:space="preserve">
-    <value>El elemento recibido ya existe en el sistema.</value>
+    <value>El elemento que se intenta registrar ya existe en el sistema.</value>
   </data>
   <data name="ElementDoesNotExist" xml:space="preserve">
     <value>Elemento inválido recibido: no se encuentra registrado en el sistema.</value>
@@ -140,5 +140,17 @@
   </data>
   <data name="SessionNotStarted" xml:space="preserve">
     <value>Operación inválida: no se ha iniciado sesión en el sistema aún.</value>
+  </data>
+  <data name="TeamNameMustBeUnique" xml:space="preserve">
+    <value>No es posible que existan en el sistema dos equipos distintos con el mismo nombre.</value>
+  </data>
+  <data name="UserCannotModifyWhiteboard" xml:space="preserve">
+    <value>Es necesario ser el creador del pizarrón o un administrador del sistema para modificar al mismo.</value>
+  </data>
+  <data name="UserEmailMustBeUnique" xml:space="preserve">
+    <value>No es posible tener dos usuarios registrados con la misma dirección de correo electrónico.</value>
+  </data>
+  <data name="WhiteboardNameTeamMustBeUnique" xml:space="preserve">
+    <value>El equipo "{0}" ya posee un pizarrón con el nombre "{1}".</value>
   </data>
 </root>

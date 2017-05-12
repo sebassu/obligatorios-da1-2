@@ -7,6 +7,8 @@ namespace Persistence
     {
         public abstract Whiteboard AddNewWhiteboard(string name, string description,
             Team ownerTeam, int width, int height);
+        public abstract void ModifyWhiteboard(Whiteboard whiteboardToModify,
+            string nameToSet, string descriptionToSet, int widthToSet, int heightToSet);
 
         private static volatile WhiteboardRepositoryInMemory instance;
         private static object syncRoot = new Object();
@@ -22,7 +24,6 @@ namespace Persistence
                     }
                 }
             }
-
             return instance;
         }
     }

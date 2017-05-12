@@ -1,9 +1,12 @@
 ﻿using System;
 using Exceptions;
 using System.Net.Mail;
+using System.Resources;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
+[assembly: NeutralResourcesLanguage("es")]
 [assembly: InternalsVisibleTo("UnitTests")]
 namespace Domain
 {
@@ -21,7 +24,8 @@ namespace Domain
                 }
                 else
                 {
-                    string errorMessage = string.Format(ErrorMessages.UserNameIsInvalid, value);
+                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                        ErrorMessages.UserNameIsInvalid, value);
                     throw new UserException(errorMessage);
                 }
             }
@@ -39,7 +43,8 @@ namespace Domain
                 }
                 else
                 {
-                    string errorMessage = string.Format(ErrorMessages.LastNameIsInvalid, value);
+                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                        ErrorMessages.LastNameIsInvalid, value);
                     throw new UserException(errorMessage);
                 }
             }
@@ -47,8 +52,7 @@ namespace Domain
 
         public static bool IsValidName(string value)
         {
-            return !string.IsNullOrWhiteSpace(value) &&
-                Utilities.ContainsOnlyLettersOrSpaces(value);
+            return Utilities.ContainsLettersOrSpacesOnly(value);
         }
 
         private MailAddress email;
@@ -63,7 +67,8 @@ namespace Domain
                 }
                 catch (SystemException)
                 {
-                    string errorMessage = string.Format(ErrorMessages.EmailIsInvalid, value);
+                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                        ErrorMessages.EmailIsInvalid, value);
                     throw new UserException(errorMessage);
                 }
             }
@@ -82,14 +87,15 @@ namespace Domain
                 }
                 else
                 {
-                    string errorMessage = string.Format(ErrorMessages.BirthdateIsInvalid,
-                        value.ToString("d"));
+                    IFormatProvider format = CultureInfo.CurrentCulture;
+                    string errorMessage = string.Format(format,
+                        ErrorMessages.BirthdateIsInvalid, value.ToString("d", format));
                     throw new UserException(errorMessage);
                 }
             }
         }
 
-        private readonly Password password = new Password();
+        private readonly IPassword password = new Password();
         public string Password
         {
             get { return password.PasswordValue; }
@@ -108,7 +114,7 @@ namespace Domain
 
         public virtual bool HasAdministrationPrivileges => false;
 
-        public string ResetPassword()
+        internal string ResetPassword()
         {
             return password.Reset();
         }
@@ -133,7 +139,7 @@ namespace Domain
             email = new MailAddress("mailInvalido@usuarioInvalido");
         }
 
-        public static User NamesEmailBirthdatePassword(string firstName, string lastName,
+        internal static User NamesEmailBirthdatePassword(string firstName, string lastName,
             string email, DateTime birthdate, string password)
         {
             return new User(firstName, lastName, email, birthdate, password);

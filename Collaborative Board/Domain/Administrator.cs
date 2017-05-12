@@ -6,7 +6,7 @@ namespace Domain
     {
         public override bool HasAdministrationPrivileges => true;
 
-        new public static Administrator NamesEmailBirthdatePassword(string firstName, string lastName,
+        new internal static Administrator NamesEmailBirthdatePassword(string firstName, string lastName,
             string email, DateTime birthdate, string password)
         {
             return new Administrator(firstName, lastName, email, birthdate, password);
