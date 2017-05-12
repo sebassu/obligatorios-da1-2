@@ -1,169 +1,204 @@
-﻿using System.Linq;
+﻿using System;
 using Exceptions;
-using System;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Domain
 {
     public class Whiteboard
     {
-        private static int minimumHeightWidth = 1;
+        private const byte minimumWidth = 1;
+        private const byte minimumHeight = 1;
+
+        public DateTime LastModification { get; private set; }
+
+        internal void UpdateModificationDate()
+        {
+            LastModification = DateTime.Now;
+
+        }
 
         private string name;
-
         public string Name
         {
-            get
-            {
-                return name;
-            }
+            get { return name; }
             set
             {
                 if (IsValidName(value))
                 {
                     name = value;
+                    UpdateModificationDate();
                 }
                 else
                 {
-                    throw new WhiteboardException("Nombre inválido: " + value + ".");
+                    string errorMessage = string.Format(ErrorMessages.NameIsInvalid, value);
+                    throw new WhiteboardException(errorMessage);
                 }
             }
         }
 
-        public bool IsValidName(string aString)
+        public static bool IsValidName(string value)
         {
-            return !string.IsNullOrEmpty(aString) && Utilities.ContainsOnlyLettersOrNumbersOrSpaces(aString);
+            return !string.IsNullOrEmpty(value) &&
+                Utilities.ContainsOnlyLettersDigitsOrSpaces(value);
         }
-
 
         private string description;
-
         public string Description
         {
-            get
-            {
-                return description;
-            }
+            get { return description; }
             set
             {
-                if (!string.IsNullOrEmpty(value))
+                if (!string.IsNullOrWhiteSpace(value))
                 {
                     description = value;
+                    UpdateModificationDate();
                 }
                 else
                 {
-                    throw new WhiteboardException("Descripción inválida: " + value + ".");
-                }
-            }
-        }
-
-        private Team ownerTeam;
-
-        public Team OwnerTeam
-        {
-            get
-            {
-                return ownerTeam;
-            }
-            set
-            {
-                if (Utilities.IsNotNull(value))
-                {
-                    ownerTeam = value;
-                }
-                else
-                {
-                    throw new WhiteboardException("El nombre del equipo no es válido: " + value + ".");
+                    throw new WhiteboardException(ErrorMessages.EmptyDescription);
                 }
             }
         }
 
         private int width;
-
         public int Width
         {
-            get
-            {
-                return width;
-            }
+            get { return width; }
             set
             {
-                if (value >= minimumHeightWidth)
+                if (value >= minimumWidth)
                 {
                     width = value;
+                    UpdateModificationDate();
                 }
                 else
                 {
-                    throw new WhiteboardException("Altura de pizarrón inválida: " + value + ".");
+                    string errorMessage = string.Format(ErrorMessages.WidthIsInvalid, value);
+                    throw new WhiteboardException(errorMessage);
                 }
             }
         }
 
         private int height;
-
         public int Height
         {
-            get
-            {
-                return height;
-            }
+            get { return height; }
             set
             {
-                if (value >= minimumHeightWidth)
+                if (value >= minimumHeight)
                 {
                     height = value;
+                    UpdateModificationDate();
                 }
                 else
                 {
-                    throw new WhiteboardException("Altura de pizarrón inválida: " + value + ".");
+                    string errorMessage = string.Format(ErrorMessages.HeightIsInvalid, value);
+                    throw new WhiteboardException(errorMessage);
                 }
             }
         }
 
-        public User Creator {get; private set;} 
+        public User Creator { get; }
 
-        internal static Whiteboard WhiteboardForTestingPurposes()
+        public Team OwnerTeam { get; }
+
+        private List<ElementWhiteboard> contents = new List<ElementWhiteboard>();
+        public IReadOnlyCollection<ElementWhiteboard> Contents => contents.AsReadOnly();
+
+        internal void AddWhiteboardElement(ElementWhiteboard elementToAdd)
         {
-            Whiteboard result = new Whiteboard()
+            if (Utilities.IsNotNull(elementToAdd))
             {
-                name = "Nombre inválido",
-                description = "Descripción inválida.",
-                width = 1,
-                height = 1
-            };
-            return result;
+                contents.Add(elementToAdd);
+            }
+            else
+            {
+                throw new WhiteboardException(ErrorMessages.NullElement);
+            }
+        }
+
+        public void RemoveWhiteboardElement(ElementWhiteboard elementToRemove)
+        {
+            bool elementWasRemoved = contents.Remove(elementToRemove);
+            if (!elementWasRemoved)
+            {
+                throw new WhiteboardException(ErrorMessages.NonMemberElement);
+            }
+        }
+
+        internal static Whiteboard InstanceForTestingPurposes()
+        {
+            return new Whiteboard();
         }
 
         private Whiteboard()
         {
+            name = "Pizarrón inválido";
+            description = "Descripción inválida.";
+            width = int.MaxValue;
+            height = int.MaxValue;
             Creator = User.InstanceForTestingPurposes();
-            ownerTeam = Team.InstanceForTestingPurposes();
+            OwnerTeam = Team.InstanceForTestingPurposes();
+            UpdateModificationDate();
         }
 
-        public static Whiteboard CreatorNameDescriptionOwnerTeamWidthHeight(User creator, string aName, string aDescription, Team anOwnerTeam, int width, int height)
+        public static Whiteboard CreatorNameDescriptionOwnerTeamWidthHeight(User creator,
+            string name, string description, Team ownerTeam, int width, int height)
         {
-            return new Whiteboard(creator, aName, aDescription, anOwnerTeam, width, height);
+            return new Whiteboard(creator, name, description, ownerTeam, width, height);
         }
 
-        private Whiteboard(User aCreator, string aName, string aDescription, Team anOwnerTeam, int aWidth, int aHeight)
-            : this()
+        private Whiteboard(User aCreator, string aName, string aDescription,
+            Team anOwnerTeam, int aWidth, int aHeight)
         {
-            Creator = aCreator;
+            if (CreatorIsValidMemberOfTeam(aCreator, anOwnerTeam))
+            {
+                Creator = aCreator;
+                OwnerTeam = anOwnerTeam;
+                SetModifiableAttributes(aName, aDescription, aWidth, aHeight);
+                UpdateModificationDate();
+            }
+            else
+            {
+                string errorMessage = string.Format(ErrorMessages.CreatorIsInvalid,
+                    aCreator, anOwnerTeam);
+                throw new WhiteboardException(errorMessage);
+            }
+        }
+
+        private void SetModifiableAttributes(string aName, string aDescription, int aWidth,
+            int aHeight)
+        {
             Name = aName;
             Description = aDescription;
-            OwnerTeam = anOwnerTeam;
             Width = aWidth;
             Height = aHeight;
         }
+
+        private static bool CreatorIsValidMemberOfTeam(User creator, Team ownerTeam)
+        {
+            if (Utilities.IsNotNull(ownerTeam))
+            {
+                return ownerTeam.Members.Contains(creator);
+            }
+            else
+            {
+                throw new WhiteboardException(ErrorMessages.TeamIsInvalid);
+            }
+        }
+
         public override string ToString()
         {
             return name;
         }
 
-        public override bool Equals(object parameterObject)
+        public override bool Equals(object obj)
         {
-            if (parameterObject is Whiteboard whiteboardToCompateAgainst)
+            if (obj is Whiteboard whiteboardToCompareAgainst)
             {
-                return (HasSameOwnerTeam(whiteboardToCompateAgainst) && HasSameName(whiteboardToCompateAgainst));
+                return HasSameOwnerTeam(whiteboardToCompareAgainst)
+                    && HasSameName(whiteboardToCompareAgainst);
             }
             else
             {
@@ -171,14 +206,19 @@ namespace Domain
             }
         }
 
-        private bool HasSameName(Whiteboard whiteboardToCompateAgainst)
+        private bool HasSameName(Whiteboard aWhiteboard)
         {
-            return name.Equals(whiteboardToCompateAgainst.name);
+            return name.Equals(aWhiteboard.name);
         }
 
-        private bool HasSameOwnerTeam(Whiteboard whiteboardToCompateAgainst)
+        private bool HasSameOwnerTeam(Whiteboard aWhiteboard)
         {
-            return ownerTeam.Equals(whiteboardToCompateAgainst.OwnerTeam);
+            return OwnerTeam.Equals(aWhiteboard.OwnerTeam);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

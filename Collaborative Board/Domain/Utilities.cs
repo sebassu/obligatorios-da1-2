@@ -5,39 +5,29 @@ namespace Domain
 {
     public static class Utilities
     {
-        public static bool IsNotNull(object anObject)
+        public static bool IsNotNull(object value)
         {
-            return anObject != null;
+            return value != null;
         }
 
-        public static bool ContainsOnlyLettersDigitsOrSpaces(string aString)
+        public static bool ContainsOnlyLettersDigitsOrSpaces(string value)
         {
-            return aString.ToCharArray().All(c => ContainsOnlyLettersOrNumbersOrSpaces(aString));
+            return value.ToCharArray().All(c => IsLetterDigitOrSpace(c));
         }
 
-        private static bool CharacterIsNumberOrDigit(char aChar)
+        public static bool ContainsOnlyLettersOrSpaces(string value)
         {
-            return char.IsLetterOrDigit(aChar);
+            return value.ToCharArray().All(c => IsLetterOrSpace(c));
         }
 
-        public static bool ContainsOnlyLettersOrSpaces(string aString)
+        private static bool IsLetterDigitOrSpace(char value)
         {
-            return aString.ToCharArray().All(c => IsLetterOrSpace(c));
+            return IsLetterOrSpace(value) || char.IsNumber(value);
         }
 
-        public static bool ContainsOnlyLettersOrNumbersOrSpaces(string aString)
+        private static bool IsLetterOrSpace(char value)
         {
-            return aString.ToCharArray().All(c => IsLetterOrDigitOrSpace(c));
-        }
-
-        private static bool IsLetterOrDigitOrSpace(char aChar)
-        {
-            return char.IsLetter(aChar) || char.IsWhiteSpace(aChar) || char.IsNumber(aChar);
-        }
-
-        private static bool IsLetterOrSpace(char aChar)
-        {
-            return char.IsLetter(aChar) || char.IsWhiteSpace(aChar);
+            return char.IsLetter(value) || char.IsWhiteSpace(value);
         }
 
         public static bool IsTodayOrBefore(DateTime value)

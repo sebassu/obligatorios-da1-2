@@ -1,19 +1,20 @@
 ﻿using System;
 using Exceptions;
 using System.Collections.Generic;
-using System.Collections;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("Persistence")]
 namespace Domain
 {
     public class Team
     {
-        private const int minimumMembers = 1;
+        private const byte minimumMembers = 1;
 
         private string name;
         public string Name
         {
             get { return name; }
-            set
+            internal set
             {
                 if (IsValidTeamName(value))
                 {
@@ -21,31 +22,28 @@ namespace Domain
                 }
                 else
                 {
-                    throw new TeamException("Nombre inválido:" + value + ".");
+                    string errorMessage = string.Format(ErrorMessages.NameIsInvalid, value);
+                    throw new TeamException(errorMessage);
                 }
             }
         }
 
-        public bool IsValidTeamName(string value)
+        public static bool IsValidTeamName(string value)
         {
             return !string.IsNullOrEmpty(value) && Utilities.ContainsOnlyLettersDigitsOrSpaces(value);
         }
 
-        private readonly DateTime creationDate = DateTime.Now;
-        public DateTime CreationDate
-        {
-            get { return creationDate; }
-        }
+        public DateTime CreationDate { get; } = DateTime.Now;
 
         private string description;
         public string Description
         {
             get { return description; }
-            set
+            internal set
             {
-                if (string.IsNullOrEmpty(value))
+                if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new TeamException("Descripción inválida: " + value + ".");
+                    throw new TeamException(ErrorMessages.EmptyDescription);
                 }
                 else
                 {
@@ -58,7 +56,7 @@ namespace Domain
         public int MaximumMembers
         {
             get { return maximumMembers; }
-            set
+            internal set
             {
                 if (value >= minimumMembers)
                 {
@@ -66,24 +64,18 @@ namespace Domain
                 }
                 else
                 {
-                    throw new TeamException("Máxima cantidad de miembros inválida: "
-                        + value + ".");
+                    string errorMessage = string.Format(ErrorMessages.InvalidMaximumMembers,
+                        value, minimumMembers);
+                    throw new TeamException(errorMessage);
                 }
             }
         }
 
         private readonly List<User> members = new List<User>();
-        public IList Members
-        {
-            get
-            {
-                return members.AsReadOnly();
-            }
-        }
+        public IReadOnlyCollection<User> Members => members.AsReadOnly();
 
         private readonly List<Whiteboard> createdWhiteboards = new List<Whiteboard>();
-
-        public IList CreatedWhiteboards
+        public IReadOnlyCollection<Whiteboard> CreatedWhiteboards
         {
             get
             {
@@ -91,15 +83,16 @@ namespace Domain
             }
         }
 
-        public void AddMember(User aUser)
+        public void AddMember(User userToAdd)
         {
-            if (IsPossibleToAdd(aUser))
+            bool canBeMember = Utilities.IsNotNull(userToAdd) && IsPossibleToAdd(userToAdd);
+            if (canBeMember)
             {
-                members.Add(aUser);
+                members.Add(userToAdd);
             }
             else
             {
-                throw new TeamException("Miembro no válido o equipo completo.");
+                throw new TeamException(ErrorMessages.CannotAddUser);
             }
         }
 
@@ -108,47 +101,40 @@ namespace Domain
             return members.Count < maximumMembers && !members.Contains(aMember);
         }
 
-        public void RemoveMember(User aUser)
+        public void RemoveMember(User userToRemove)
         {
-            if (!UserWasRemoved(aUser))
+            if (!WasRemoved(userToRemove))
             {
-                throw new TeamException("Miembro no válido o equipo con mínimo de miembros.");
+                throw new TeamException(ErrorMessages.CannotRemoveUser);
             }
         }
 
-        private bool UserWasRemoved(User aUser)
+        private bool WasRemoved(User aUser)
         {
             return members.Count > minimumMembers && members.Remove(aUser);
         }
 
-        public void AddWhiteboard(Whiteboard aWhiteboard)
+        public void AddWhiteboard(Whiteboard whiteboardToAdd)
         {
-            if (IsPossibleToAddWhiteboard(aWhiteboard))
+            bool isPossibleToAddWhiteboard = Utilities.IsNotNull(whiteboardToAdd) &&
+                !createdWhiteboards.Contains(whiteboardToAdd);
+            if (isPossibleToAddWhiteboard)
             {
-                createdWhiteboards.Add(aWhiteboard);
+                createdWhiteboards.Add(whiteboardToAdd);
             }
             else
             {
-                throw new TeamException("Pizarrón no válido");
+                throw new TeamException(ErrorMessages.WhiteboardIsInvalid);
             }
         }
 
-        private bool IsPossibleToAddWhiteboard(Whiteboard aWhiteboard)
+        public void RemoveWhiteboard(Whiteboard someWhiteboard)
         {
-            return !createdWhiteboards.Contains(aWhiteboard);
-        }
-
-        public void RemoveWhiteboard(Whiteboard aWhiteboard)
-        {
-            if (WhiteboardWasRemoved(aWhiteboard))
+            bool whiteboardWasRemoved = createdWhiteboards.Remove(someWhiteboard);
+            if (!whiteboardWasRemoved)
             {
-                throw new TeamException("Pizarrón no válido.");
+                throw new TeamException(ErrorMessages.WhiteboardIsInvalid);
             }
-        }
-		
-        private bool WhiteboardWasRemoved(Whiteboard aWhiteboard)
-        {
-            return !createdWhiteboards.Remove(aWhiteboard);
         }
 
         internal static Team InstanceForTestingPurposes()
@@ -158,28 +144,30 @@ namespace Domain
 
         private Team()
         {
-            name = "Nombre inválido.";
+            User defaultCreator = User.InstanceForTestingPurposes();
+            name = "Equipo inválido.";
             description = "Descripción inválida.";
-            maximumMembers = 0;
+            maximumMembers = int.MaxValue;
+            members.Add(defaultCreator);
         }
 
-        public static Team CreatorNameDescriptionMaximumMembers(User creator, string aName,
-            string aDescription, int aMaximimMembers)
+        public static Team CreatorNameDescriptionMaximumMembers(User creator, string name,
+            string description, int maximumMembers)
         {
-            return new Team(creator, aName, aDescription, aMaximimMembers);
+            return new Team(creator, name, description, maximumMembers);
         }
 
-        private Team(User creator, string aName, string aDescription, int aMaximumMembers)
+        private Team(User creator, string nameToSet, string descriptionToSet, int maximumMembersToSet)
         {
-            Name = aName;
-            Description = aDescription;
-            MaximumMembers = aMaximumMembers;
+            Name = nameToSet;
+            Description = descriptionToSet;
+            MaximumMembers = maximumMembersToSet;
             members.Add(creator);
         }
 
-        public override bool Equals(object parameterObject)
+        public override bool Equals(object obj)
         {
-            if (parameterObject is Team teamToCompareAgainst)
+            if (obj is Team teamToCompareAgainst)
             {
                 return HasSameName(teamToCompareAgainst);
             }

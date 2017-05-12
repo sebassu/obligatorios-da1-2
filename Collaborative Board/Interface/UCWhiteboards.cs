@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Persistence;
+using Domain;
 
 namespace Interface
 {
@@ -75,6 +77,41 @@ namespace Interface
         private void btnHome_MouseLeave(object sender, EventArgs e)
         {
             btnHome.Size = new Size(80, 62);
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            InterfaceUtilities.AskExitApplication();
+        }
+
+        private void btnHome_Click(object sender, EventArgs e)
+        {
+            InterfaceUtilities.GoToHome(systemPanel);
+        }
+
+        private void UCWhiteboards_Load(object sender, EventArgs e)
+        {
+            lstRegisteredWhiteboards.Clear();
+            var globalWhiteboards = WhiteboardRepository.GetInstance().Elements.ToList();
+            if (globalWhiteboards.Count() > 0)
+            {
+                foreach (Whiteboard oneWhiteboard in globalWhiteboards)
+                {
+                    ListViewItem itemToAdd = new ListViewItem(oneWhiteboard.ToString());
+                    itemToAdd.Tag = oneWhiteboard;
+                    lstRegisteredWhiteboards.Items.Add(itemToAdd);
+                }
+            }
+            else
+            {
+                lstRegisteredWhiteboards.Items.Add(new ListViewItem("No existen usuarios registrados."));
+            }
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            systemPanel.Controls.Clear();
+            systemPanel.Controls.Add(new UCAddOrModifyWhiteboard(systemPanel));
         }
     }
 }

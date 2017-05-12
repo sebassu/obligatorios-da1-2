@@ -12,9 +12,18 @@ namespace Interface
 {
     public partial class UCAddOrModifyTeam : UserControl
     {
-        public UCAddOrModifyTeam()
+        private Panel systemPanel;
+
+        public UCAddOrModifyTeam(Panel systemPanel)
         {
             InitializeComponent();
+            this.systemPanel = systemPanel;
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            systemPanel.Controls.Clear();
+            systemPanel.Controls.Add(new UCAdministratorTeams(systemPanel));
         }
     }
 }

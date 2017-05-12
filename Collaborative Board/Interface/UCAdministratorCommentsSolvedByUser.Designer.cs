@@ -70,6 +70,7 @@
             this.btnExit.Size = new System.Drawing.Size(80, 62);
             this.btnExit.TabIndex = 1;
             this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // lblCommentsSolvedByUser
             // 

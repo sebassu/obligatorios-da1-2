@@ -47,6 +47,7 @@
             this.btnExit.Size = new System.Drawing.Size(80, 62);
             this.btnExit.TabIndex = 0;
             this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // btnAdd
             // 
@@ -56,10 +57,11 @@
             this.btnAdd.ForeColor = System.Drawing.Color.White;
             this.btnAdd.Location = new System.Drawing.Point(480, 59);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(177, 91);
+            this.btnAdd.Size = new System.Drawing.Size(188, 91);
             this.btnAdd.TabIndex = 1;
             this.btnAdd.Text = "AGREGAR";
             this.btnAdd.UseVisualStyleBackColor = false;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             this.btnAdd.MouseEnter += new System.EventHandler(this.btnAdd_MouseEnter);
             this.btnAdd.MouseLeave += new System.EventHandler(this.btnAdd_MouseLeave);
             // 
@@ -71,10 +73,11 @@
             this.btnModify.ForeColor = System.Drawing.Color.White;
             this.btnModify.Location = new System.Drawing.Point(480, 187);
             this.btnModify.Name = "btnModify";
-            this.btnModify.Size = new System.Drawing.Size(177, 91);
+            this.btnModify.Size = new System.Drawing.Size(188, 91);
             this.btnModify.TabIndex = 2;
             this.btnModify.Text = "MODIFICAR";
             this.btnModify.UseVisualStyleBackColor = false;
+            this.btnModify.Click += new System.EventHandler(this.btnModify_Click);
             this.btnModify.MouseEnter += new System.EventHandler(this.btnModify_MouseEnter);
             this.btnModify.MouseLeave += new System.EventHandler(this.btnModify_MouseLeave);
             // 
@@ -86,7 +89,7 @@
             this.btnDelete.ForeColor = System.Drawing.Color.White;
             this.btnDelete.Location = new System.Drawing.Point(480, 314);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(177, 91);
+            this.btnDelete.Size = new System.Drawing.Size(188, 91);
             this.btnDelete.TabIndex = 3;
             this.btnDelete.Text = "ELIMINAR";
             this.btnDelete.UseVisualStyleBackColor = false;
@@ -104,16 +107,19 @@
             this.btnHome.Size = new System.Drawing.Size(80, 62);
             this.btnHome.TabIndex = 4;
             this.btnHome.UseVisualStyleBackColor = false;
+            this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
             this.btnHome.MouseEnter += new System.EventHandler(this.btnHome_MouseEnter);
             this.btnHome.MouseLeave += new System.EventHandler(this.btnHome_MouseLeave);
             // 
             // lstUsers
             // 
-            this.lstUsers.Location = new System.Drawing.Point(86, 160);
+            this.lstUsers.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lstUsers.Location = new System.Drawing.Point(29, 160);
             this.lstUsers.Name = "lstUsers";
-            this.lstUsers.Size = new System.Drawing.Size(307, 319);
+            this.lstUsers.Size = new System.Drawing.Size(410, 319);
             this.lstUsers.TabIndex = 6;
             this.lstUsers.UseCompatibleStateImageBehavior = false;
+            this.lstUsers.View = System.Windows.Forms.View.SmallIcon;
             // 
             // lblRegisteredUsers
             // 
@@ -141,6 +147,7 @@
             this.Controls.Add(this.btnExit);
             this.Name = "UCAdministratorUsers";
             this.Size = new System.Drawing.Size(747, 538);
+            this.Load += new System.EventHandler(this.UCAdministratorUsers_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

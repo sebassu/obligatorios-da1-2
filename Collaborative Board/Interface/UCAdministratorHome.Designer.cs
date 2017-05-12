@@ -60,6 +60,7 @@
             this.btnTeams.TabIndex = 3;
             this.btnTeams.Text = "EQUIPOS";
             this.btnTeams.UseVisualStyleBackColor = false;
+            this.btnTeams.Click += new System.EventHandler(this.btnTeams_Click);
             this.btnTeams.MouseEnter += new System.EventHandler(this.btnTeams_MouseEnter);
             this.btnTeams.MouseLeave += new System.EventHandler(this.btnTeams_MouseLeave);
             // 
@@ -75,6 +76,7 @@
             this.btnWhiteboards.TabIndex = 4;
             this.btnWhiteboards.Text = "PIZARRONES";
             this.btnWhiteboards.UseVisualStyleBackColor = false;
+            this.btnWhiteboards.Click += new System.EventHandler(this.btnWhiteboards_Click);
             this.btnWhiteboards.MouseEnter += new System.EventHandler(this.btnWhiteboards_MouseEnter);
             this.btnWhiteboards.MouseLeave += new System.EventHandler(this.btnWhiteboards_MouseLeave);
             // 
@@ -105,6 +107,7 @@
             this.btnUsers.TabIndex = 6;
             this.btnUsers.Text = "USUARIOS";
             this.btnUsers.UseVisualStyleBackColor = false;
+            this.btnUsers.Click += new System.EventHandler(this.btnUsers_Click);
             this.btnUsers.MouseEnter += new System.EventHandler(this.btnUsers_MouseEnter);
             this.btnUsers.MouseLeave += new System.EventHandler(this.btnUsers_MouseLeave);
             // 
@@ -117,6 +120,7 @@
             this.btnExit.Size = new System.Drawing.Size(80, 62);
             this.btnExit.TabIndex = 8;
             this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // UCAdministratorHome
             // 
@@ -132,6 +136,7 @@
             this.Controls.Add(this.btnUsers);
             this.Name = "UCAdministratorHome";
             this.Size = new System.Drawing.Size(747, 538);
+            this.Load += new System.EventHandler(this.UCAdministratorHome_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

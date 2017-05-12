@@ -52,6 +52,7 @@
             this.btnHome.Size = new System.Drawing.Size(80, 62);
             this.btnHome.TabIndex = 0;
             this.btnHome.UseVisualStyleBackColor = true;
+            this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
             this.btnHome.MouseEnter += new System.EventHandler(this.btnHome_MouseEnter);
             this.btnHome.MouseLeave += new System.EventHandler(this.btnHome_MouseLeave);
             // 
@@ -64,6 +65,7 @@
             this.btnExit.Size = new System.Drawing.Size(80, 62);
             this.btnExit.TabIndex = 1;
             this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // dgvWhiteboardsCreatedByTeam
             // 

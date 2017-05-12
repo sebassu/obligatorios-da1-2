@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Domain;
+using Persistence;
 
 namespace Interface
 {
@@ -63,6 +65,52 @@ namespace Interface
         private void btnHome_MouseLeave(object sender, EventArgs e)
         {
             btnHome.Size = new Size(80, 62);
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            InterfaceUtilities.AskExitApplication();
+        }
+
+        private void btnHome_Click(object sender, EventArgs e)
+        {
+            InterfaceUtilities.GoToHome(systemPanel);
+        }
+
+        private void UCAdministratorUsers_Load(object sender, EventArgs e)
+        {
+            lstUsers.Clear();
+            var globalUsers = UserRepository.GetInstance().Elements.ToList();
+            if (globalUsers.Count() > 0)
+            {
+                foreach (User oneUser in globalUsers)
+                {
+                    ListViewItem itemToAdd = new ListViewItem(oneUser.ToString());
+                    itemToAdd.Tag = oneUser;
+                    lstUsers.Items.Add(itemToAdd);
+                    if (oneUser.HasAdministrationPrivileges)
+                    {
+                        itemToAdd.ForeColor = Color.Blue;
+                    }
+                }
+            }
+            else
+            {
+                lstUsers.Items.Add(new ListViewItem("No existen usuarios registrados."));
+            }
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            systemPanel.Controls.Clear();
+            systemPanel.Controls.Add(new UCAddOrModifyUser(systemPanel));
+        }
+
+        private void btnModify_Click(object sender, EventArgs e)
+        {
+            User userToModify = lstUsers.SelectedItems[0].Tag as User;
+            systemPanel.Controls.Clear();
+            systemPanel.Controls.Add(new UCAddOrModifyUser(systemPanel, userToModify));
         }
     }
 }

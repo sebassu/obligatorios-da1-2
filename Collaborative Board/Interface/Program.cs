@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace Interface
 {
-    static class Program
+    static class Program 
     {
         /// <summary>
         /// The main entry point for the application.
@@ -13,7 +13,9 @@ namespace Interface
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new UserWindow());
+            
+            Application.Run(new Login());
+            
         }
     }
 }

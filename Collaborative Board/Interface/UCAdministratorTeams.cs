@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Persistence;
+using Domain;
 
 namespace Interface
 {
@@ -65,6 +67,39 @@ namespace Interface
             btnHome.Size = new Size(80, 62);
         }
 
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            InterfaceUtilities.AskExitApplication();
+        }
 
+        private void btnHome_Click(object sender, EventArgs e)
+        {
+            InterfaceUtilities.GoToHome(systemPanel);
+        }
+
+        private void UCAdministratorTeams_Load(object sender, EventArgs e)
+        {
+            lstTeams.Clear();
+            var globalTeams = TeamRepository.GetInstance().Elements.ToList();
+            if (globalTeams.Count() > 0)
+            {
+                foreach (Team oneTeam in globalTeams)
+                {
+                    ListViewItem itemToAdd = new ListViewItem(oneTeam.ToString());
+                    itemToAdd.Tag = oneTeam;
+                    lstTeams.Items.Add(itemToAdd);
+                }
+            }
+            else
+            {
+                lstTeams.Items.Add(new ListViewItem("No existen equipos registrados."));
+            }
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            systemPanel.Controls.Clear();
+            systemPanel.Controls.Add(new UCAddOrModifyTeam(systemPanel));
+        }
     }
 }

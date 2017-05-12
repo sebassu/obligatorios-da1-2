@@ -41,5 +41,15 @@ namespace Interface
         {
             btnHome.Size = new Size(80, 62);
         }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            InterfaceUtilities.AskExitApplication();
+        }
+
+        private void btnHome_Click(object sender, EventArgs e)
+        {
+            InterfaceUtilities.GoToHome(systemPanel);
+        }
     }
 }

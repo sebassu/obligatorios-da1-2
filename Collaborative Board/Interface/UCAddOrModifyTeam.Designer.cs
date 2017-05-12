@@ -130,6 +130,7 @@
             this.btnCancel.TabIndex = 16;
             this.btnCancel.Text = "Cancelar";
             this.btnCancel.UseVisualStyleBackColor = false;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // picMarker
             // 

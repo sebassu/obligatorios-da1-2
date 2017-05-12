@@ -50,6 +50,7 @@
             this.btnAdd.TabIndex = 0;
             this.btnAdd.Text = "AGREGAR";
             this.btnAdd.UseVisualStyleBackColor = false;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             this.btnAdd.MouseEnter += new System.EventHandler(this.btnAdd_MouseEnter);
             this.btnAdd.MouseLeave += new System.EventHandler(this.btnAdd_MouseLeave);
             // 
@@ -104,16 +105,19 @@
             this.btnHome.Size = new System.Drawing.Size(80, 62);
             this.btnHome.TabIndex = 4;
             this.btnHome.UseVisualStyleBackColor = true;
+            this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
             this.btnHome.MouseEnter += new System.EventHandler(this.btnHome_MouseEnter);
             this.btnHome.MouseLeave += new System.EventHandler(this.btnHome_MouseLeave);
             // 
             // lstRegisteredWhiteboards
             // 
-            this.lstRegisteredWhiteboards.Location = new System.Drawing.Point(42, 155);
+            this.lstRegisteredWhiteboards.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lstRegisteredWhiteboards.Location = new System.Drawing.Point(30, 155);
             this.lstRegisteredWhiteboards.Name = "lstRegisteredWhiteboards";
-            this.lstRegisteredWhiteboards.Size = new System.Drawing.Size(287, 343);
+            this.lstRegisteredWhiteboards.Size = new System.Drawing.Size(299, 343);
             this.lstRegisteredWhiteboards.TabIndex = 5;
             this.lstRegisteredWhiteboards.UseCompatibleStateImageBehavior = false;
+            this.lstRegisteredWhiteboards.View = System.Windows.Forms.View.Details;
             // 
             // lblRegisteredWhiteboards
             // 
@@ -135,8 +139,9 @@
             this.btnExit.Size = new System.Drawing.Size(80, 62);
             this.btnExit.TabIndex = 7;
             this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
-            // UCAdministratorWhiteboards
+            // UCWhiteboards
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -150,8 +155,9 @@
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnModify);
             this.Controls.Add(this.btnAdd);
-            this.Name = "UCAdministratorWhiteboards";
+            this.Name = "UCWhiteboards";
             this.Size = new System.Drawing.Size(747, 538);
+            this.Load += new System.EventHandler(this.UCWhiteboards_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -9,15 +9,11 @@ namespace Domain
     {
         private static readonly ReadOnlyCollection<char> allowedCharacters =
             Array.AsReadOnly("ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz0123456789".ToCharArray());
-
-        private const int minimumLength = 6;
-
-        private const int maximumLength = 20;
-
-        private const int lengthOfGeneratedPassword = 10;
+        private const byte minimumLength = 6;
+        private const byte maximumLength = 20;
+        private const byte lengthOfGeneratedPassword = 10;
 
         private string passwordValue;
-
         internal string PasswordValue
         {
             get { return passwordValue; }
@@ -29,14 +25,17 @@ namespace Domain
                 }
                 else
                 {
-                    throw new PasswordException("Invalid password recieved: " + value + ".");
+                    string errorMessage = String.Format(ErrorMessages.PasswordIsInvalid, value,
+                        minimumLength, maximumLength);
+                    throw new PasswordException(errorMessage);
                 }
             }
         }
 
         public static bool IsValidPassword(string value)
         {
-            return !string.IsNullOrWhiteSpace(value) && HasValidLength(value) && HasOnlyValidCharacters(value);
+            return !string.IsNullOrWhiteSpace(value) && HasValidLength(value)
+                && HasOnlyValidCharacters(value);
         }
 
         private static bool HasOnlyValidCharacters(string value)

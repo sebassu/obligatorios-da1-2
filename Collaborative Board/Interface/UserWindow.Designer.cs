@@ -50,6 +50,7 @@
             this.MinimizeBox = false;
             this.Name = "UserWindow";
             this.Text = "Collaborative Whiteboard";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.UserWindow_FormClosed);
             this.ResumeLayout(false);
 
         }

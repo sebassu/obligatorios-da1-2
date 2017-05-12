@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using Persistence;
+using System.Windows.Forms;
 
 namespace Interface
 {
@@ -8,7 +9,13 @@ namespace Interface
         {
             InitializeComponent();
             pnlSystem.Controls.Clear();
-            pnlSystem.Controls.Add(new UCAddOrModifyUser(pnlSystem));   
+            pnlSystem.Controls.Add(new UCAdministratorHome(pnlSystem));
+
+        }
+
+        private void UserWindow_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

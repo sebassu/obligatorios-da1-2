@@ -47,6 +47,7 @@
             this.btnExit.Size = new System.Drawing.Size(80, 62);
             this.btnExit.TabIndex = 0;
             this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // btnHome
             // 
@@ -57,6 +58,7 @@
             this.btnHome.Size = new System.Drawing.Size(80, 62);
             this.btnHome.TabIndex = 1;
             this.btnHome.UseVisualStyleBackColor = true;
+            this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
             this.btnHome.MouseEnter += new System.EventHandler(this.btnHome_MouseEnter);
             this.btnHome.MouseLeave += new System.EventHandler(this.btnHome_MouseLeave);
             // 
@@ -71,6 +73,7 @@
             this.btnAdd.TabIndex = 2;
             this.btnAdd.Text = "AGREGAR";
             this.btnAdd.UseVisualStyleBackColor = false;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             this.btnAdd.MouseEnter += new System.EventHandler(this.btnAdd_MouseEnter);
             this.btnAdd.MouseLeave += new System.EventHandler(this.btnAdd_MouseLeave);
             // 
@@ -104,11 +107,13 @@
             // 
             // lstTeams
             // 
-            this.lstTeams.Location = new System.Drawing.Point(86, 160);
+            this.lstTeams.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lstTeams.Location = new System.Drawing.Point(42, 160);
             this.lstTeams.Name = "lstTeams";
-            this.lstTeams.Size = new System.Drawing.Size(307, 319);
+            this.lstTeams.Size = new System.Drawing.Size(392, 319);
             this.lstTeams.TabIndex = 5;
             this.lstTeams.UseCompatibleStateImageBehavior = false;
+            this.lstTeams.View = System.Windows.Forms.View.SmallIcon;
             // 
             // lblRegisteredTeams
             // 
@@ -136,6 +141,7 @@
             this.Controls.Add(this.btnExit);
             this.Name = "UCAdministratorTeams";
             this.Size = new System.Drawing.Size(747, 538);
+            this.Load += new System.EventHandler(this.UCAdministratorTeams_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
 using System.Windows.Forms;
 
 namespace Interface
@@ -63,6 +60,34 @@ namespace Interface
         {
             btnUsers.BackColor = Color.Green;
             btnUsers.Font = new Font(btnUsers.Font.Name, 18, FontStyle.Bold);
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            InterfaceUtilities.AskExitApplication();
+        }
+
+        private void btnUsers_Click(object sender, EventArgs e)
+        {
+            systemPanel.Controls.Clear();
+            systemPanel.Controls.Add(new UCAdministratorUsers(systemPanel));
+        }
+
+        private void btnTeams_Click(object sender, EventArgs e)
+        {
+            systemPanel.Controls.Clear();
+            systemPanel.Controls.Add(new UCAdministratorTeams(systemPanel));
+        }
+
+        private void btnWhiteboards_Click(object sender, EventArgs e)
+        {
+            systemPanel.Controls.Clear();
+            systemPanel.Controls.Add(new UCWhiteboards(systemPanel));
+        }
+
+        private void UCAdministratorHome_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
