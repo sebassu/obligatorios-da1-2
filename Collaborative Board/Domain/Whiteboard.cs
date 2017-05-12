@@ -1,6 +1,7 @@
 ﻿using System;
 using Exceptions;
-using System.Collections;
+using System.Linq;
+using System.Globalization;
 using System.Collections.Generic;
 
 namespace Domain
@@ -22,7 +23,7 @@ namespace Domain
         public string Name
         {
             get { return name; }
-            set
+            internal set
             {
                 if (IsValidName(value))
                 {
@@ -31,32 +32,32 @@ namespace Domain
                 }
                 else
                 {
-                    throw new WhiteboardException("Nombre inválido: " + value + ".");
+                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                        ErrorMessages.NameIsInvalid, value);
+                    throw new WhiteboardException(errorMessage);
                 }
             }
         }
 
         public static bool IsValidName(string value)
         {
-            return !string.IsNullOrEmpty(value) &&
-                Utilities.ContainsOnlyLettersDigitsOrSpaces(value);
+            return Utilities.ContainsLettersDigitsOrSpacesOnly(value);
         }
 
         private string description;
         public string Description
         {
             get { return description; }
-            set
+            internal set
             {
-                if (!string.IsNullOrEmpty(value))
+                if (!string.IsNullOrWhiteSpace(value))
                 {
                     description = value;
                     UpdateModificationDate();
                 }
                 else
                 {
-                    throw new WhiteboardException("Descripción inválida: "
-                        + value + ".");
+                    throw new WhiteboardException(ErrorMessages.EmptyDescription);
                 }
             }
         }
@@ -65,7 +66,7 @@ namespace Domain
         public int Width
         {
             get { return width; }
-            set
+            internal set
             {
                 if (value >= minimumWidth)
                 {
@@ -74,8 +75,9 @@ namespace Domain
                 }
                 else
                 {
-                    throw new WhiteboardException("Altura de pizarrón inválida: "
-                        + value + ".");
+                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                        ErrorMessages.WidthIsInvalid, value);
+                    throw new WhiteboardException(errorMessage);
                 }
             }
         }
@@ -84,7 +86,7 @@ namespace Domain
         public int Height
         {
             get { return height; }
-            set
+            internal set
             {
                 if (value >= minimumHeight)
                 {
@@ -93,8 +95,9 @@ namespace Domain
                 }
                 else
                 {
-                    throw new WhiteboardException("Altura de pizarrón inválida: "
-                        + value + ".");
+                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                        ErrorMessages.HeightIsInvalid, value);
+                    throw new WhiteboardException(errorMessage);
                 }
             }
         }
@@ -104,7 +107,7 @@ namespace Domain
         public Team OwnerTeam { get; }
 
         private List<ElementWhiteboard> contents = new List<ElementWhiteboard>();
-        public IList Contents => contents.AsReadOnly();
+        public IReadOnlyCollection<ElementWhiteboard> Contents => contents.AsReadOnly();
 
         internal void AddWhiteboardElement(ElementWhiteboard elementToAdd)
         {
@@ -114,7 +117,7 @@ namespace Domain
             }
             else
             {
-                throw new WhiteboardException("El elemento recibido es inválido (nulo).");
+                throw new WhiteboardException(ErrorMessages.NullElement);
             }
         }
 
@@ -123,8 +126,7 @@ namespace Domain
             bool elementWasRemoved = contents.Remove(elementToRemove);
             if (!elementWasRemoved)
             {
-                throw new WhiteboardException("Elemento inválido (no contenido) para el " +
-                    "pizarrón actual recibido");
+                throw new WhiteboardException(ErrorMessages.NonMemberElement);
             }
         }
 
@@ -135,14 +137,22 @@ namespace Domain
 
         private Whiteboard()
         {
-            name = "Nombre inválido";
+            Creator = User.InstanceForTestingPurposes();
+            OwnerTeam = Team.InstanceForTestingPurposes();
+            SetAttributesForTesting();
+            UpdateModificationDate();
+            UpdateOwnerTeamsWhiteboardCollection();
+        }
+
+        private void SetAttributesForTesting()
+        {
+            name = "Pizarrón inválido";
             description = "Descripción inválida.";
             width = int.MaxValue;
             height = int.MaxValue;
-            UpdateModificationDate();
         }
 
-        public static Whiteboard CreatorNameDescriptionOwnerTeamWidthHeight(User creator,
+        internal static Whiteboard CreatorNameDescriptionOwnerTeamWidthHeight(User creator,
             string name, string description, Team ownerTeam, int width, int height)
         {
             return new Whiteboard(creator, name, description, ownerTeam, width, height);
@@ -157,12 +167,19 @@ namespace Domain
                 OwnerTeam = anOwnerTeam;
                 SetModifiableAttributes(aName, aDescription, aWidth, aHeight);
                 UpdateModificationDate();
+                UpdateOwnerTeamsWhiteboardCollection();
             }
             else
             {
-                throw new WhiteboardException("Se ha recibido un usuario creador inválido " +
-                    "para el equipo ingresado.");
+                string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                    ErrorMessages.CreatorIsInvalid, aCreator, anOwnerTeam);
+                throw new WhiteboardException(errorMessage);
             }
+        }
+
+        private void UpdateOwnerTeamsWhiteboardCollection()
+        {
+            OwnerTeam.AddWhiteboard(this);
         }
 
         private void SetModifiableAttributes(string aName, string aDescription, int aWidth,
@@ -176,7 +193,14 @@ namespace Domain
 
         private static bool CreatorIsValidMemberOfTeam(User creator, Team ownerTeam)
         {
-            return Utilities.IsNotNull(ownerTeam) && ownerTeam.Members.Contains(creator);
+            if (Utilities.IsNotNull(ownerTeam))
+            {
+                return ownerTeam.Members.Contains(creator);
+            }
+            else
+            {
+                throw new WhiteboardException(ErrorMessages.TeamIsInvalid);
+            }
         }
 
         public override string ToString()
@@ -204,7 +228,7 @@ namespace Domain
 
         private bool HasSameOwnerTeam(Whiteboard aWhiteboard)
         {
-            return OwnerTeam == aWhiteboard.OwnerTeam;
+            return OwnerTeam.Equals(aWhiteboard.OwnerTeam);
         }
 
         public override int GetHashCode()

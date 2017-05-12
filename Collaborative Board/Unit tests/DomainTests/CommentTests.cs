@@ -1,10 +1,11 @@
 ﻿using System;
 using Domain;
 using Exceptions;
+using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace UnitTests
+namespace UnitTests.DomainTests
 {
     [TestClass]
     [ExcludeFromCodeCoverage]
@@ -13,7 +14,7 @@ namespace UnitTests
         private static Comment testingComment;
 
         [TestInitialize]
-        public void TestSetUp()
+        public void TestSetup()
         {
             testingComment = Comment.InstanceForTestingPurposes();
         }
@@ -43,7 +44,7 @@ namespace UnitTests
         {
             string someText = "Falta resolver el issue 12-3.";
             User creator = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
-                "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");
+                "ravenna@simuladores.com", DateTime.Today, "contraseñaVálida123");
             testingComment = Comment.CreatorText(creator, someText);
             Assert.AreEqual(creator, testingComment.Creator);
             Assert.AreEqual(someText, testingComment.Text);
@@ -133,19 +134,19 @@ namespace UnitTests
             Assert.IsTrue(testingComment.IsResolved);
             Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate().Date);
             Assert.AreEqual(testingComment.Resolver, aUser);
-            CollectionAssert.Contains(aUser.CommentsResolved, testingComment);
+            CollectionAssert.Contains(aUser.CommentsResolved.ToList(), testingComment);
         }
 
         [TestMethod]
         public void CommentResolutionValidTest2()
         {
             User aUser = User.NamesEmailBirthdatePassword("Mario", "Santos",
-                "santos@simuladores.com", DateTime.Today, "contraseñaValida123");
+                "santos@simuladores.com", DateTime.Today, "contraseñaVálida123");
             testingComment.Resolve(aUser);
             Assert.IsTrue(testingComment.IsResolved);
             Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate().Date);
             Assert.AreEqual(testingComment.Resolver, aUser);
-            CollectionAssert.Contains(aUser.CommentsResolved, testingComment);
+            CollectionAssert.Contains(aUser.CommentsResolved.ToList(), testingComment);
         }
 
         [TestMethod]
@@ -171,7 +172,7 @@ namespace UnitTests
             Assert.IsTrue(testingComment.IsResolved);
             Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate().Date);
             Assert.AreEqual(testingComment.Resolver, aUser);
-            CollectionAssert.Contains(aUser.CommentsResolved, testingComment);
+            CollectionAssert.Contains(aUser.CommentsResolved.ToList(), testingComment);
             testingComment.Resolve(aUser);
         }
 
@@ -184,9 +185,9 @@ namespace UnitTests
             Assert.IsTrue(testingComment.IsResolved);
             Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate().Date);
             Assert.AreEqual(testingComment.Resolver, aUser);
-            CollectionAssert.Contains(aUser.CommentsResolved, testingComment);
+            CollectionAssert.Contains(aUser.CommentsResolved.ToList(), testingComment);
             User differentUser = User.NamesEmailBirthdatePassword("Mario", "Santos",
-                "santos@simuladores.com", DateTime.Today, "contraseñaValida123");
+                "santos@simuladores.com", DateTime.Today, "contraseñaVálida123");
             testingComment.Resolve(differentUser);
         }
     }

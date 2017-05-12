@@ -13,8 +13,7 @@ namespace Domain
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new CommentException("El texto introducido para el comentario " +
-                        "no es válido, reintente.");
+                    throw new CommentException(ErrorMessages.CommentTextIsInvalid);
                 }
                 else
                 {
@@ -39,8 +38,7 @@ namespace Domain
             }
             else
             {
-                throw new CommentException("El comentario actual no se ha " +
-                      "resuelto aún.");
+                throw new CommentException(ErrorMessages.UnresolvedComment);
             }
         }
 
@@ -50,8 +48,7 @@ namespace Domain
         {
             if (IsResolved)
             {
-                throw new CommentException("El comentario seleccionado ya había " +
-                    "sido resuelto.");
+                throw new CommentException(ErrorMessages.AlreadyResolvedComment);
             }
             else
             {
@@ -67,7 +64,7 @@ namespace Domain
             }
             else
             {
-                throw new CommentException("Usuario inválido (nulo) recibido.");
+                throw new CommentException(ErrorMessages.NullUser);
             }
         }
 
@@ -117,7 +114,7 @@ namespace Domain
             }
             else
             {
-                throw new CommentException("Usuario inválido (nulo) recibido.");
+                throw new CommentException(ErrorMessages.NullUser);
             }
         }
 
