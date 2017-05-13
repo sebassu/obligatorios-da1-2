@@ -132,6 +132,17 @@ namespace Domain
             }
         }
 
+        internal bool UserCanModify(User someUser)
+        {
+            var teamMembers = OwnerTeam.Members.ToList();
+            return teamMembers.Contains(someUser);
+        }
+
+        internal bool UserCanRemove(User someUser)
+        {
+            return Creator.Equals(someUser);
+        }
+
         internal static Whiteboard InstanceForTestingPurposes()
         {
             return new Whiteboard();

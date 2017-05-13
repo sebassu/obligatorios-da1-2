@@ -180,7 +180,7 @@
   <data name="TeamIsInvalid" xml:space="preserve">
     <value>Equipo inválido (nulo) recibido.</value>
   </data>
-  <data name="notAddedWhiteboardRecieved" xml:space="preserve">
+  <data name="NotAddedWhiteboardRecieved" xml:space="preserve">
     <value>Pizarrón no válido recibido: no se encuentra asociado al equipo en cuestión.</value>
   </data>
   <data name="UnresolvedComment" xml:space="preserve">

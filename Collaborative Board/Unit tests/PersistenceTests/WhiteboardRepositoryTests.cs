@@ -338,13 +338,16 @@ namespace UnitTests.PersistenceTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(RepositoryException))]
         public void WRepositoryModifyWhiteboardAsUserNotInTeamInvalidTest()
         {
             ChangeActiveUser("vanegas@brigadab.com", "tipoONegativo");
             Whiteboard whiteboardToVerify = globalWhiteboards.Elements.First();
             globalWhiteboards.ModifyWhiteboard(whiteboardToVerify, "Pizarrón",
                 "Una descripción válida.", 500, 700);
+            Assert.AreEqual("Pizarrón", whiteboardToVerify.Name);
+            Assert.AreEqual("Una descripción válida.", whiteboardToVerify.Description);
+            Assert.AreEqual(500, whiteboardToVerify.Width);
+            Assert.AreEqual(700, whiteboardToVerify.Height);
         }
     }
 }

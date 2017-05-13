@@ -51,7 +51,7 @@
             this.pnlOptions.Location = new System.Drawing.Point(26, 13);
             this.pnlOptions.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.pnlOptions.Name = "pnlOptions";
-            this.pnlOptions.Size = new System.Drawing.Size(552, 1437);
+            this.pnlOptions.Size = new System.Drawing.Size(552, 1445);
             this.pnlOptions.TabIndex = 0;
             // 
             // btnPrintPng
@@ -118,6 +118,7 @@
             this.btnAddImage.TabIndex = 1;
             this.btnAddImage.Text = "Agregar imagen";
             this.btnAddImage.UseVisualStyleBackColor = false;
+            this.btnAddImage.Click += new System.EventHandler(this.BtnAddImage_Click);
             // 
             // btnAddText
             // 
@@ -134,11 +135,12 @@
             // 
             // pnlWhiteboard
             // 
+            this.pnlWhiteboard.AutoScroll = true;
             this.pnlWhiteboard.BackColor = System.Drawing.Color.White;
-            this.pnlWhiteboard.Location = new System.Drawing.Point(608, 13);
+            this.pnlWhiteboard.Location = new System.Drawing.Point(594, 13);
             this.pnlWhiteboard.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.pnlWhiteboard.Name = "pnlWhiteboard";
-            this.pnlWhiteboard.Size = new System.Drawing.Size(1844, 1434);
+            this.pnlWhiteboard.Size = new System.Drawing.Size(1909, 1445);
             this.pnlWhiteboard.TabIndex = 1;
             // 
             // WhiteboardVisualization
@@ -147,6 +149,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(2520, 1474);
             this.Controls.Add(this.pnlWhiteboard);
             this.Controls.Add(this.pnlOptions);
@@ -157,7 +160,9 @@
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(2552, 1562);
             this.Name = "WhiteboardVisualization";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Whiteboard";
+            this.TopMost = true;
             this.pnlOptions.ResumeLayout(false);
             this.ResumeLayout(false);
 
