@@ -11,11 +11,11 @@ using Domain;
 
 namespace Interface
 {
-    public partial class UCVisualizeTeam : UserControl
+    public partial class UCAdministrateTeam : UserControl
     {
         private Panel systemPanel;
         private Team teamToWorkWith;
-        public UCVisualizeTeam(Panel systemPanel, Team oneTeam)
+        public UCAdministrateTeam(Panel systemPanel, Team oneTeam)
         {
             InitializeComponent();
             this.systemPanel = systemPanel;

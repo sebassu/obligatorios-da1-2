@@ -54,14 +54,14 @@ namespace Interface
 
         private void btnVisualize_MouseEnter(object sender, EventArgs e)
         {
-            btnVisualize.BackColor = Color.Maroon;
-            btnVisualize.Font = new Font(btnVisualize.Font.Name, 19, FontStyle.Bold);
+            btnAdministrate.BackColor = Color.Maroon;
+            btnAdministrate.Font = new Font(btnAdministrate.Font.Name, 19, FontStyle.Bold);
         }
 
         private void btnVisualize_MouseLeave(object sender, EventArgs e)
         {
-            btnVisualize.BackColor = Color.DarkRed;
-            btnVisualize.Font = new Font(btnVisualize.Font.Name, 18, FontStyle.Bold);
+            btnAdministrate.BackColor = Color.DarkRed;
+            btnAdministrate.Font = new Font(btnAdministrate.Font.Name, 18, FontStyle.Bold);
         }
 
         private void btnHome_MouseEnter(object sender, EventArgs e)
@@ -148,13 +148,13 @@ namespace Interface
             globalTeams.Remove(oneTeam);
         }
 
-        private void btnVisualize_Click(object sender, EventArgs e)
+        private void btnAdministrate_Click(object sender, EventArgs e)
         {
             Team teamToVisualize = lstTeams.SelectedItems[0].Tag as Team;
             if (Utilities.IsNotNull(teamToVisualize))
             {
                 systemPanel.Controls.Clear();
-                systemPanel.Controls.Add(new UCVisualizeTeam(systemPanel, teamToVisualize));
+                systemPanel.Controls.Add(new UCAdministrateTeam(systemPanel, teamToVisualize));
             }
             else
             {

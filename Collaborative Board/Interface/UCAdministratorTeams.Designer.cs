@@ -36,16 +36,17 @@
             this.btnDelete = new System.Windows.Forms.Button();
             this.lstTeams = new System.Windows.Forms.ListView();
             this.lblRegisteredTeams = new System.Windows.Forms.Label();
-            this.btnVisualize = new System.Windows.Forms.Button();
+            this.btnAdministrate = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnExit
             // 
             this.btnExit.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnExit.BackgroundImage")));
             this.btnExit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnExit.Location = new System.Drawing.Point(643, 436);
+            this.btnExit.Location = new System.Drawing.Point(1715, 1040);
+            this.btnExit.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(80, 62);
+            this.btnExit.Size = new System.Drawing.Size(213, 148);
             this.btnExit.TabIndex = 0;
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -54,9 +55,10 @@
             // 
             this.btnHome.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnHome.BackgroundImage")));
             this.btnHome.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnHome.Location = new System.Drawing.Point(42, 29);
+            this.btnHome.Location = new System.Drawing.Point(112, 69);
+            this.btnHome.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.btnHome.Name = "btnHome";
-            this.btnHome.Size = new System.Drawing.Size(80, 62);
+            this.btnHome.Size = new System.Drawing.Size(213, 148);
             this.btnHome.TabIndex = 1;
             this.btnHome.UseVisualStyleBackColor = true;
             this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
@@ -68,9 +70,10 @@
             this.btnAdd.BackColor = System.Drawing.Color.DarkRed;
             this.btnAdd.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAdd.ForeColor = System.Drawing.Color.White;
-            this.btnAdd.Location = new System.Drawing.Point(321, 160);
+            this.btnAdd.Location = new System.Drawing.Point(856, 382);
+            this.btnAdd.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(195, 91);
+            this.btnAdd.Size = new System.Drawing.Size(520, 217);
             this.btnAdd.TabIndex = 2;
             this.btnAdd.Text = "AGREGAR";
             this.btnAdd.UseVisualStyleBackColor = false;
@@ -83,9 +86,10 @@
             this.btnModify.BackColor = System.Drawing.Color.DarkRed;
             this.btnModify.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnModify.ForeColor = System.Drawing.Color.White;
-            this.btnModify.Location = new System.Drawing.Point(528, 160);
+            this.btnModify.Location = new System.Drawing.Point(1408, 382);
+            this.btnModify.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.btnModify.Name = "btnModify";
-            this.btnModify.Size = new System.Drawing.Size(195, 91);
+            this.btnModify.Size = new System.Drawing.Size(520, 217);
             this.btnModify.TabIndex = 3;
             this.btnModify.Text = "MODIFICAR";
             this.btnModify.UseVisualStyleBackColor = false;
@@ -98,9 +102,10 @@
             this.btnDelete.BackColor = System.Drawing.Color.DarkRed;
             this.btnDelete.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDelete.ForeColor = System.Drawing.Color.White;
-            this.btnDelete.Location = new System.Drawing.Point(321, 279);
+            this.btnDelete.Location = new System.Drawing.Point(856, 665);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(195, 91);
+            this.btnDelete.Size = new System.Drawing.Size(520, 217);
             this.btnDelete.TabIndex = 4;
             this.btnDelete.Text = "ELIMINAR";
             this.btnDelete.UseVisualStyleBackColor = false;
@@ -111,10 +116,11 @@
             // lstTeams
             // 
             this.lstTeams.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lstTeams.Location = new System.Drawing.Point(42, 160);
+            this.lstTeams.Location = new System.Drawing.Point(112, 382);
+            this.lstTeams.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.lstTeams.MultiSelect = false;
             this.lstTeams.Name = "lstTeams";
-            this.lstTeams.Size = new System.Drawing.Size(267, 319);
+            this.lstTeams.Size = new System.Drawing.Size(705, 755);
             this.lstTeams.TabIndex = 5;
             this.lstTeams.UseCompatibleStateImageBehavior = false;
             this.lstTeams.View = System.Windows.Forms.View.SmallIcon;
@@ -124,34 +130,36 @@
             this.lblRegisteredTeams.AutoSize = true;
             this.lblRegisteredTeams.BackColor = System.Drawing.Color.Transparent;
             this.lblRegisteredTeams.Font = new System.Drawing.Font("Segoe Script", 15.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRegisteredTeams.Location = new System.Drawing.Point(53, 109);
+            this.lblRegisteredTeams.Location = new System.Drawing.Point(141, 260);
+            this.lblRegisteredTeams.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.lblRegisteredTeams.Name = "lblRegisteredTeams";
-            this.lblRegisteredTeams.Size = new System.Drawing.Size(231, 34);
+            this.lblRegisteredTeams.Size = new System.Drawing.Size(584, 87);
             this.lblRegisteredTeams.TabIndex = 6;
             this.lblRegisteredTeams.Text = "Equipos registrados";
             // 
-            // btnVisualize
+            // btnAdministrate
             // 
-            this.btnVisualize.BackColor = System.Drawing.Color.DarkRed;
-            this.btnVisualize.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnVisualize.ForeColor = System.Drawing.Color.White;
-            this.btnVisualize.Location = new System.Drawing.Point(528, 279);
-            this.btnVisualize.Name = "btnVisualize";
-            this.btnVisualize.Size = new System.Drawing.Size(195, 91);
-            this.btnVisualize.TabIndex = 7;
-            this.btnVisualize.Text = "VISUALIZAR";
-            this.btnVisualize.UseVisualStyleBackColor = false;
-            this.btnVisualize.Click += new System.EventHandler(this.btnVisualize_Click);
-            this.btnVisualize.MouseEnter += new System.EventHandler(this.btnVisualize_MouseEnter);
-            this.btnVisualize.MouseLeave += new System.EventHandler(this.btnVisualize_MouseLeave);
+            this.btnAdministrate.BackColor = System.Drawing.Color.DarkRed;
+            this.btnAdministrate.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAdministrate.ForeColor = System.Drawing.Color.White;
+            this.btnAdministrate.Location = new System.Drawing.Point(1408, 665);
+            this.btnAdministrate.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.btnAdministrate.Name = "btnAdministrate";
+            this.btnAdministrate.Size = new System.Drawing.Size(520, 217);
+            this.btnAdministrate.TabIndex = 7;
+            this.btnAdministrate.Text = "VISUALIZAR";
+            this.btnAdministrate.UseVisualStyleBackColor = false;
+            this.btnAdministrate.Click += new System.EventHandler(this.btnAdministrate_Click);
+            this.btnAdministrate.MouseEnter += new System.EventHandler(this.btnVisualize_MouseEnter);
+            this.btnAdministrate.MouseLeave += new System.EventHandler(this.btnVisualize_MouseLeave);
             // 
             // UCAdministratorTeams
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.Controls.Add(this.btnVisualize);
+            this.Controls.Add(this.btnAdministrate);
             this.Controls.Add(this.lblRegisteredTeams);
             this.Controls.Add(this.lstTeams);
             this.Controls.Add(this.btnDelete);
@@ -159,8 +167,9 @@
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnHome);
             this.Controls.Add(this.btnExit);
+            this.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.Name = "UCAdministratorTeams";
-            this.Size = new System.Drawing.Size(747, 538);
+            this.Size = new System.Drawing.Size(1992, 1283);
             this.Load += new System.EventHandler(this.UCAdministratorTeams_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -176,6 +185,6 @@
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.ListView lstTeams;
         private System.Windows.Forms.Label lblRegisteredTeams;
-        private System.Windows.Forms.Button btnVisualize;
+        private System.Windows.Forms.Button btnAdministrate;
     }
 }
