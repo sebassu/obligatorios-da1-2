@@ -10,13 +10,13 @@ namespace Interface
         private Panel systemPanel;
         private User userToModify;
 
-        public UCAddOrModifyUser(Panel systemPanel, User oneUser = null)
+        public UCAddOrModifyUser(Panel systemPanel, User someUser = null)
         {
             InitializeComponent();
             this.systemPanel = systemPanel;
-            userToModify = oneUser;
-            if (Utilities.IsNotNull(oneUser))
+            if (Utilities.IsNotNull(someUser))
             {
+                userToModify = someUser;
                 LoadUserData();
             }
         }

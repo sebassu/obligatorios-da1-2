@@ -11,6 +11,8 @@ namespace Domain
         private const byte minimumWidth = 1;
         private const byte minimumHeight = 1;
 
+        public DateTime CreationDate { get; } = DateTime.Today;
+
         public DateTime LastModification { get; private set; }
 
         internal void UpdateModificationDate()

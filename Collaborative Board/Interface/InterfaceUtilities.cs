@@ -17,9 +17,13 @@ namespace Interface
             }
             catch (BoardException exception)
             {
-                MessageBox.Show(exception.Message, "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowError(exception.Message, "Error");
             }
+        }
+
+        public static void ShowError(string message, string title)
+        {
+            MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         public static void AskLogOut()
