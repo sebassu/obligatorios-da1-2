@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Domain;
 using Persistence;
@@ -69,7 +64,7 @@ namespace Interface
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            InterfaceUtilities.AskExitApplication();
+            InterfaceUtilities.AskLogOut();
         }
 
         private void btnHome_Click(object sender, EventArgs e)
@@ -86,44 +81,51 @@ namespace Interface
         {
             lstUsers.Clear();
             var globalUsers = UserRepository.GetInstance().Elements.ToList();
-            if (globalUsers.Count() > 0)
+            foreach (User oneUser in globalUsers)
             {
-                foreach (User oneUser in globalUsers)
+                ListViewItem itemToAdd = new ListViewItem(oneUser.ToString());
+                itemToAdd.Tag = oneUser;
+                lstUsers.Items.Add(itemToAdd);
+                if (oneUser.HasAdministrationPrivileges)
                 {
-                    ListViewItem itemToAdd = new ListViewItem(oneUser.ToString());
-                    itemToAdd.Tag = oneUser;
-                    lstUsers.Items.Add(itemToAdd);
-                    if (oneUser.HasAdministrationPrivileges)
-                    {
-                        itemToAdd.ForeColor = Color.Blue;
-                    }
+                    itemToAdd.ForeColor = Color.Blue;
                 }
             }
-            else
+            if (globalUsers.Count == 1)
             {
-                lstUsers.Items.Add(new ListViewItem("No existen usuarios registrados."));
+                btnDelete.Enabled = false;
             }
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            systemPanel.Controls.Clear();
-            systemPanel.Controls.Add(new UCAddOrModifyUser(systemPanel));
+            InterfaceUtilities.UCAddOrModifyUserToPanel(systemPanel);
         }
 
         private void btnModify_Click(object sender, EventArgs e)
         {
-            User userToModify = lstUsers.SelectedItems[0].Tag as User;
-            systemPanel.Controls.Clear();
-            systemPanel.Controls.Add(new UCAddOrModifyUser(systemPanel, userToModify));
+            if (lstUsers.SelectedItems.Count > 0)
+            {
+                User userToModify = lstUsers.SelectedItems[0].Tag as User;
+                InterfaceUtilities.UCAddOrModifyUserToPanel(systemPanel, userToModify);
+            }
+            else
+            {
+                InterfaceUtilities.NotElementSelectedMessageBox();
+            }
+
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            User userToDelete = lstUsers.SelectedItems[0].Tag as User;
-            if (Utilities.IsNotNull(userToDelete))
+            if (lstUsers.SelectedItems.Count > 0)
             {
+                User userToDelete = lstUsers.SelectedItems[0].Tag as User;
                 AskDeleteUser(userToDelete);
+            }
+            else
+            {
+                InterfaceUtilities.NotElementSelectedMessageBox();
             }
         }
 
@@ -144,6 +146,6 @@ namespace Interface
             UserRepository globalUsers = UserRepository.GetInstance();
             globalUsers.Remove(oneUser);
         }
-        
+
     }
 }

@@ -76,7 +76,7 @@ namespace Interface
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            InterfaceUtilities.AskExitApplication();
+            InterfaceUtilities.AskLogOut();
         }
 
         private void btnHome_Click(object sender, EventArgs e)
@@ -118,7 +118,7 @@ namespace Interface
 
         private void btnModify_Click(object sender, EventArgs e)
         {
-            Whiteboard whiteboardToModify
+           // Whiteboard whiteboardToModify
             systemPanel.Controls.Clear();
             systemPanel.Controls.Add(new UCAddOrModifyWhiteboard(systemPanel));
         }

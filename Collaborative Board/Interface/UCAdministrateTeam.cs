@@ -20,7 +20,11 @@ namespace Interface
             InitializeComponent();
             this.systemPanel = systemPanel;
             this.teamToWorkWith = oneTeam;
-            txtTeam.Text = oneTeam.Name;
+            lblTeamSelected.Text = oneTeam.Name;
+            if (oneTeam.Members.Count == 1)
+            {
+                btnRemoveUser.Enabled = false;
+            }
         }
 
         private void btnAddUser_Click(object sender, EventArgs e)
@@ -37,13 +41,12 @@ namespace Interface
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            InterfaceUtilities.AskExitApplication();
+            InterfaceUtilities.AskLogOut();
         }
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            systemPanel.Controls.Clear();
-            systemPanel.Controls.Add(new UCAdministratorTeams(systemPanel));
+            InterfaceUtilities.UCAdministratorTeamsToPanel(systemPanel);
         }
     }
 }

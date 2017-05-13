@@ -52,13 +52,13 @@ namespace Interface
             btnDelete.Font = new Font(btnDelete.Font.Name, 18, FontStyle.Bold);
         }
 
-        private void btnVisualize_MouseEnter(object sender, EventArgs e)
+        private void btnAdministrate_MouseEnter(object sender, EventArgs e)
         {
             btnAdministrate.BackColor = Color.Maroon;
             btnAdministrate.Font = new Font(btnAdministrate.Font.Name, 19, FontStyle.Bold);
         }
 
-        private void btnVisualize_MouseLeave(object sender, EventArgs e)
+        private void btnAdministrate_MouseLeave(object sender, EventArgs e)
         {
             btnAdministrate.BackColor = Color.DarkRed;
             btnAdministrate.Font = new Font(btnAdministrate.Font.Name, 18, FontStyle.Bold);
@@ -76,7 +76,7 @@ namespace Interface
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            InterfaceUtilities.AskExitApplication();
+            InterfaceUtilities.AskLogOut();
         }
 
         private void btnHome_Click(object sender, EventArgs e)
@@ -105,28 +105,41 @@ namespace Interface
             else
             {
                 lstTeams.Items.Add(new ListViewItem("No existen equipos registrados."));
+                btnDelete.Enabled = false;
+                btnModify.Enabled = false;
+                btnAdministrate.Enabled = false;
             }
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            systemPanel.Controls.Clear();
-            systemPanel.Controls.Add(new UCAddOrModifyTeam(systemPanel));
+            InterfaceUtilities.UCAddOrModifyTeamToPanel(systemPanel);
         }
 
         private void btnModify_Click(object sender, EventArgs e)
         {
-            Team teamToModify = lstTeams.SelectedItems[0].Tag as Team;
-            systemPanel.Controls.Clear();
-            systemPanel.Controls.Add(new UCAddOrModifyTeam(systemPanel, teamToModify));
+            if (lstTeams.SelectedItems.Count > 0)
+            {
+                Team teamToModify = lstTeams.SelectedItems[0].Tag as Team;
+                InterfaceUtilities.UCAddOrModifyTeamToPanel(systemPanel, teamToModify);
+            }
+            else
+            {
+                InterfaceUtilities.NotElementSelectedMessageBox();
+            }
+
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            Team teamToDelete = lstTeams.SelectedItems[0].Tag as Team;
-            if (Utilities.IsNotNull(teamToDelete))
+            if (lstTeams.SelectedItems.Count > 0)
             {
+                Team teamToDelete = lstTeams.SelectedItems[0].Tag as Team;
                 AskDeleteTeam(teamToDelete);
+            }
+            else
+            {
+                InterfaceUtilities.NotElementSelectedMessageBox();
             }
         }
 
@@ -148,19 +161,19 @@ namespace Interface
             globalTeams.Remove(oneTeam);
         }
 
+
         private void btnAdministrate_Click(object sender, EventArgs e)
         {
-            Team teamToVisualize = lstTeams.SelectedItems[0].Tag as Team;
-            if (Utilities.IsNotNull(teamToVisualize))
+            if (lstTeams.SelectedItems.Count > 0)
             {
-                systemPanel.Controls.Clear();
-                systemPanel.Controls.Add(new UCAdministrateTeam(systemPanel, teamToVisualize));
+                Team teamToVisualize = lstTeams.SelectedItems[0].Tag as Team;
+                InterfaceUtilities.UCAdministrateTeamToPanel(systemPanel, teamToVisualize);
             }
             else
             {
                 InterfaceUtilities.NotElementSelectedMessageBox();
             }
-                
+
         }
     }
 }

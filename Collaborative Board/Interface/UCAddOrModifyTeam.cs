@@ -30,7 +30,7 @@ namespace Interface
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            UCAdministratorTeamsToPanel();
+            InterfaceUtilities.UCAdministratorTeamsToPanel(systemPanel);
         }
 
         private void btnAccept_Click(object sender, EventArgs e)
@@ -50,13 +50,9 @@ namespace Interface
             {
                 globalTeams.AddNewTeam(txtName.Text, rtbDescription.Text, maxUsers);
             }
-            UCAdministratorTeamsToPanel();
+            InterfaceUtilities.UCAdministratorTeamsToPanel(systemPanel);
         }
-
-        private void UCAdministratorTeamsToPanel()
-        {
-            systemPanel.Controls.Clear();
-            systemPanel.Controls.Add(new UCAdministratorTeams(systemPanel));
-        }
+        
+        
     }
 }

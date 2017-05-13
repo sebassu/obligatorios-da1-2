@@ -42,10 +42,9 @@
             // 
             this.btnExit.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnExit.BackgroundImage")));
             this.btnExit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnExit.Location = new System.Drawing.Point(1699, 992);
-            this.btnExit.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.btnExit.Location = new System.Drawing.Point(637, 416);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(213, 208);
+            this.btnExit.Size = new System.Drawing.Size(80, 87);
             this.btnExit.TabIndex = 0;
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -56,10 +55,9 @@
             this.btnAdd.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAdd.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAdd.ForeColor = System.Drawing.Color.White;
-            this.btnAdd.Location = new System.Drawing.Point(1280, 141);
-            this.btnAdd.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.btnAdd.Location = new System.Drawing.Point(480, 59);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(501, 217);
+            this.btnAdd.Size = new System.Drawing.Size(188, 91);
             this.btnAdd.TabIndex = 1;
             this.btnAdd.Text = "AGREGAR";
             this.btnAdd.UseVisualStyleBackColor = false;
@@ -73,10 +71,9 @@
             this.btnModify.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnModify.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnModify.ForeColor = System.Drawing.Color.White;
-            this.btnModify.Location = new System.Drawing.Point(1280, 446);
-            this.btnModify.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.btnModify.Location = new System.Drawing.Point(480, 187);
             this.btnModify.Name = "btnModify";
-            this.btnModify.Size = new System.Drawing.Size(501, 217);
+            this.btnModify.Size = new System.Drawing.Size(188, 91);
             this.btnModify.TabIndex = 2;
             this.btnModify.Text = "MODIFICAR";
             this.btnModify.UseVisualStyleBackColor = false;
@@ -90,10 +87,9 @@
             this.btnDelete.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnDelete.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDelete.ForeColor = System.Drawing.Color.White;
-            this.btnDelete.Location = new System.Drawing.Point(1280, 749);
-            this.btnDelete.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.btnDelete.Location = new System.Drawing.Point(480, 314);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(501, 217);
+            this.btnDelete.Size = new System.Drawing.Size(188, 91);
             this.btnDelete.TabIndex = 3;
             this.btnDelete.Text = "ELIMINAR";
             this.btnDelete.UseVisualStyleBackColor = false;
@@ -107,10 +103,9 @@
             this.btnHome.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnHome.BackgroundImage")));
             this.btnHome.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnHome.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnHome.Location = new System.Drawing.Point(112, 69);
-            this.btnHome.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.btnHome.Location = new System.Drawing.Point(42, 29);
             this.btnHome.Name = "btnHome";
-            this.btnHome.Size = new System.Drawing.Size(213, 195);
+            this.btnHome.Size = new System.Drawing.Size(80, 62);
             this.btnHome.TabIndex = 4;
             this.btnHome.UseVisualStyleBackColor = false;
             this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
@@ -121,11 +116,10 @@
             // 
             this.lstUsers.Alignment = System.Windows.Forms.ListViewAlignment.Left;
             this.lstUsers.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lstUsers.Location = new System.Drawing.Point(77, 382);
-            this.lstUsers.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.lstUsers.Location = new System.Drawing.Point(29, 160);
             this.lstUsers.MultiSelect = false;
             this.lstUsers.Name = "lstUsers";
-            this.lstUsers.Size = new System.Drawing.Size(1087, 755);
+            this.lstUsers.Size = new System.Drawing.Size(410, 319);
             this.lstUsers.TabIndex = 6;
             this.lstUsers.UseCompatibleStateImageBehavior = false;
             this.lstUsers.View = System.Windows.Forms.View.SmallIcon;
@@ -135,16 +129,15 @@
             this.lblRegisteredUsers.AutoSize = true;
             this.lblRegisteredUsers.BackColor = System.Drawing.Color.Transparent;
             this.lblRegisteredUsers.Font = new System.Drawing.Font("Segoe Script", 15.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRegisteredUsers.Location = new System.Drawing.Point(325, 250);
-            this.lblRegisteredUsers.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
+            this.lblRegisteredUsers.Location = new System.Drawing.Point(122, 105);
             this.lblRegisteredUsers.Name = "lblRegisteredUsers";
-            this.lblRegisteredUsers.Size = new System.Drawing.Size(601, 87);
+            this.lblRegisteredUsers.Size = new System.Drawing.Size(237, 34);
             this.lblRegisteredUsers.TabIndex = 7;
             this.lblRegisteredUsers.Text = "Usuarios registrados";
             // 
             // UCAdministratorUsers
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -155,9 +148,8 @@
             this.Controls.Add(this.btnModify);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnExit);
-            this.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.Name = "UCAdministratorUsers";
-            this.Size = new System.Drawing.Size(1992, 1283);
+            this.Size = new System.Drawing.Size(747, 538);
             this.Load += new System.EventHandler(this.UCAdministratorUsers_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

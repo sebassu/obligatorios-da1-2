@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Domain;
 using Persistence;
@@ -26,58 +20,47 @@ namespace Interface
 
         private void LoadData()
         {
-            txtTeam.Text = teamToWorkWith.Name;
+            lblTeamSelected.Text = teamToWorkWith.Name;
             LoadNotMembersOfTeam();
         }
 
         private void LoadNotMembersOfTeam()
         {
             var globalUsers = UserRepository.GetInstance().Elements.ToList();
-            if (globalUsers.Count() > 0)
+            foreach (User oneUser in globalUsers)
             {
-                foreach (User oneUser in globalUsers)
+                if (!teamToWorkWith.Members.Contains(oneUser))
                 {
-                    if (!teamToWorkWith.Members.Contains(oneUser))
-                    {
-                        ListViewItem itemToAdd = new ListViewItem(oneUser.ToString());
-                        itemToAdd.Tag = oneUser;
-                        lstUsers.Items.Add(itemToAdd);
-                    }  
+                    ListViewItem itemToAdd = new ListViewItem(oneUser.ToString());
+                    itemToAdd.Tag = oneUser;
+                    lstUsers.Items.Add(itemToAdd);
                 }
-            }
-            else
-            {
-                lstUsers.Items.Add(new ListViewItem("No existen equipos registrados."));
+                if (lstUsers.Items.Count == 0)
+                {
+                    lstUsers.Items.Add(new ListViewItem("No existen usuarios no miembros del equipo."));
+                    btnAccept.Enabled = false;
+                }
             }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            UCAdministratorTeamsToPanel();
-        }
-
-        private void UCAdministratorTeamsToPanel()
-        {
-            systemPanel.Controls.Clear();
-            systemPanel.Controls.Add(new UCAdministratorTeams(systemPanel));
+            InterfaceUtilities.UCAdministrateTeamToPanel(systemPanel, teamToWorkWith);
         }
 
         private void btnAccept_Click(object sender, EventArgs e)
         {
-            User userToAdd = lstUsers.SelectedItems[0].Tag as User;
-            if (Utilities.IsNotNull(userToAdd))
+            if (lstUsers.SelectedItems.Count > 0)
             {
+                User userToAdd = lstUsers.SelectedItems[0].Tag as User;
                 TeamRepository globalTeams = TeamRepository.GetInstance();
                 globalTeams.AddMemberToTeam(this.teamToWorkWith, userToAdd);
-                UCAdministratorTeamsToPanel();
+                InterfaceUtilities.UCAdministrateTeamToPanel(systemPanel, teamToWorkWith);
             }
             else
             {
                 InterfaceUtilities.NotElementSelectedMessageBox();
             }
-            
         }
-
-
     }
 }

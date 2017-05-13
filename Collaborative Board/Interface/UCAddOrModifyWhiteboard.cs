@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 using Persistence;
-using System.Linq;
 using Domain;
 
 namespace Interface
@@ -34,13 +34,7 @@ namespace Interface
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            UCWhiteboardsToPanel();
-        }
-
-        private void UCWhiteboardsToPanel()
-        {
-            systemPanel.Controls.Clear();
-            systemPanel.Controls.Add(new UCWhiteboards(systemPanel));
+            InterfaceUtilities.UCWhiteboardsToPanel(systemPanel);
         }
 
         private void UCAddOrModifyWhiteboard_Load(object sender, EventArgs e)
@@ -70,7 +64,7 @@ namespace Interface
                 globalWhiteboards.AddNewWhiteboard(txtName.Text,
                     rtbDescription.Text, teamToSet, widthToSet, heightToSet);
             }
-            UCWhiteboardsToPanel();
+            InterfaceUtilities.UCWhiteboardsToPanel(systemPanel);
         }
     }
 }

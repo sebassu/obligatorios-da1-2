@@ -33,9 +33,9 @@
             this.btnAccept = new System.Windows.Forms.Button();
             this.lblRemoveMemberFromTeam = new System.Windows.Forms.Label();
             this.lblTeam = new System.Windows.Forms.Label();
-            this.txtTeam = new System.Windows.Forms.TextBox();
             this.lstUsers = new System.Windows.Forms.ListView();
             this.lblUser = new System.Windows.Forms.Label();
+            this.lblTeamSelected = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnCancel
@@ -84,22 +84,16 @@
             this.lblTeam.TabIndex = 21;
             this.lblTeam.Text = "Equipo:";
             // 
-            // txtTeam
-            // 
-            this.txtTeam.Location = new System.Drawing.Point(280, 166);
-            this.txtTeam.Name = "txtTeam";
-            this.txtTeam.ReadOnly = true;
-            this.txtTeam.Size = new System.Drawing.Size(191, 20);
-            this.txtTeam.TabIndex = 22;
-            // 
             // lstUsers
             // 
+            this.lstUsers.Alignment = System.Windows.Forms.ListViewAlignment.Left;
             this.lstUsers.Location = new System.Drawing.Point(280, 214);
             this.lstUsers.MultiSelect = false;
             this.lstUsers.Name = "lstUsers";
             this.lstUsers.Size = new System.Drawing.Size(411, 220);
             this.lstUsers.TabIndex = 23;
             this.lstUsers.UseCompatibleStateImageBehavior = false;
+            this.lstUsers.View = System.Windows.Forms.View.SmallIcon;
             // 
             // lblUser
             // 
@@ -111,15 +105,24 @@
             this.lblUser.TabIndex = 24;
             this.lblUser.Text = "Usuarios miembros del equipo:";
             // 
+            // lblTeamSelected
+            // 
+            this.lblTeamSelected.AutoSize = true;
+            this.lblTeamSelected.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTeamSelected.Location = new System.Drawing.Point(277, 165);
+            this.lblTeamSelected.Name = "lblTeamSelected";
+            this.lblTeamSelected.Size = new System.Drawing.Size(0, 18);
+            this.lblTeamSelected.TabIndex = 25;
+            // 
             // UCRemoveMemberFromTeam
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Controls.Add(this.lblTeamSelected);
             this.Controls.Add(this.lblUser);
             this.Controls.Add(this.lstUsers);
-            this.Controls.Add(this.txtTeam);
             this.Controls.Add(this.lblTeam);
             this.Controls.Add(this.lblRemoveMemberFromTeam);
             this.Controls.Add(this.btnAccept);
@@ -137,8 +140,8 @@
         private System.Windows.Forms.Button btnAccept;
         private System.Windows.Forms.Label lblRemoveMemberFromTeam;
         private System.Windows.Forms.Label lblTeam;
-        private System.Windows.Forms.TextBox txtTeam;
         private System.Windows.Forms.ListView lstUsers;
         private System.Windows.Forms.Label lblUser;
+        private System.Windows.Forms.Label lblTeamSelected;
     }
 }
