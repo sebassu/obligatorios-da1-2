@@ -53,6 +53,7 @@ namespace Interface
                 User userToRemove = lstUsers.SelectedItems[0].Tag as User;
                 TeamRepository globalTeams = TeamRepository.GetInstance();
                 globalTeams.RemoveMemberFromTeam(this.teamToWorkWith, userToRemove);
+                InterfaceUtilities.SuccesfulOperation();
                 InterfaceUtilities.UCAdministrateTeamToPanel(systemPanel, teamToWorkWith);
             }
             else

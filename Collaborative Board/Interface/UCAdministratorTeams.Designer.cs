@@ -110,7 +110,6 @@
             // 
             // lstTeams
             // 
-            this.lstTeams.Alignment = System.Windows.Forms.ListViewAlignment.Left;
             this.lstTeams.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstTeams.Location = new System.Drawing.Point(42, 160);
             this.lstTeams.MultiSelect = false;
@@ -118,7 +117,7 @@
             this.lstTeams.Size = new System.Drawing.Size(242, 319);
             this.lstTeams.TabIndex = 5;
             this.lstTeams.UseCompatibleStateImageBehavior = false;
-            this.lstTeams.View = System.Windows.Forms.View.SmallIcon;
+            this.lstTeams.View = System.Windows.Forms.View.Tile;
             // 
             // lblRegisteredTeams
             // 

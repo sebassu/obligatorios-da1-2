@@ -145,7 +145,7 @@ namespace Interface
 
         private void AskDeleteTeam(Team oneTeam)
         {
-            DialogResult result = MessageBox.Show("Está seguro que desea eliminar el elemento seleccionado?", "Salir",
+            DialogResult result = MessageBox.Show("Está seguro que desea eliminar el elemento seleccionado?", "Eliminar",
                                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {

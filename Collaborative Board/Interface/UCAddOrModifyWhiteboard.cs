@@ -30,6 +30,7 @@ namespace Interface
             numHeight.Value = whiteboardToModify.Height;
             cmbOwnerTeam.SelectedItem = whiteboardToModify.OwnerTeam;
             cmbOwnerTeam.Enabled = false;
+            rtbDescription.Text = whiteboardToModify.Description;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

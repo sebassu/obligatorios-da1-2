@@ -86,6 +86,11 @@ namespace Interface
 
         private void UCWhiteboards_Load(object sender, EventArgs e)
         {
+            LoadRegisteredWhiteboards();
+        }
+
+        private void LoadRegisteredWhiteboards()
+        {
             lstRegisteredWhiteboards.Clear();
             var globalWhiteboards = WhiteboardRepository.GetInstance().Elements
                 .Where(w => ValidateWhiteboardIsToBeShown(w)).ToList();
@@ -112,15 +117,51 @@ namespace Interface
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            systemPanel.Controls.Clear();
-            systemPanel.Controls.Add(new UCAddOrModifyWhiteboard(systemPanel));
+            InterfaceUtilities.UCAddOrModifyWhiteboardToPanel(systemPanel);
         }
 
         private void btnModify_Click(object sender, EventArgs e)
         {
-           // Whiteboard whiteboardToModify
-            systemPanel.Controls.Clear();
-            systemPanel.Controls.Add(new UCAddOrModifyWhiteboard(systemPanel));
+            if (lstRegisteredWhiteboards.SelectedItems.Count > 0)
+            {
+                Whiteboard oneWhiteboard = lstRegisteredWhiteboards.SelectedItems[0].Tag as Whiteboard;
+                InterfaceUtilities.UCAddOrModifyWhiteboardToPanel(systemPanel, oneWhiteboard);
+            }
+            else
+            {
+                InterfaceUtilities.NotElementSelectedMessageBox();
+            }
+
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (lstRegisteredWhiteboards.SelectedItems.Count > 0)
+            {
+                Whiteboard whiteboardToDelete = lstRegisteredWhiteboards.SelectedItems[0].Tag as Whiteboard;
+                AskDeleteWhiteboard(whiteboardToDelete);
+            }
+            else
+            {
+                InterfaceUtilities.NotElementSelectedMessageBox();
+            }
+        }
+
+        private void AskDeleteWhiteboard(Whiteboard whiteboardToDelete)
+        {
+            DialogResult result = MessageBox.Show("Está seguro que desea eliminar el elemento seleccionado?", "Eliminar",
+                               MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                DeleteWhiteboard(whiteboardToDelete);
+                LoadRegisteredWhiteboards();
+            }
+        }
+
+        private void DeleteWhiteboard(Whiteboard whiteboardToDelete)
+        {
+            WhiteboardRepository globalWhiteboards = WhiteboardRepository.GetInstance();
+            globalWhiteboards.Remove(whiteboardToDelete);
         }
     }
 }

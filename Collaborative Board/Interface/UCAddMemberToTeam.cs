@@ -60,6 +60,7 @@ namespace Interface
                 User userToAdd = lstUsers.SelectedItems[0].Tag as User;
                 TeamRepository globalTeams = TeamRepository.GetInstance();
                 globalTeams.AddMemberToTeam(this.teamToWorkWith, userToAdd);
+                InterfaceUtilities.SuccesfulOperation();
                 InterfaceUtilities.UCAdministrateTeamToPanel(systemPanel, teamToWorkWith);
             }
             else

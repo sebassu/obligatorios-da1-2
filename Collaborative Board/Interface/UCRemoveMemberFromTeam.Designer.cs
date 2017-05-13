@@ -86,14 +86,13 @@
             // 
             // lstUsers
             // 
-            this.lstUsers.Alignment = System.Windows.Forms.ListViewAlignment.Left;
             this.lstUsers.Location = new System.Drawing.Point(280, 214);
             this.lstUsers.MultiSelect = false;
             this.lstUsers.Name = "lstUsers";
             this.lstUsers.Size = new System.Drawing.Size(411, 220);
             this.lstUsers.TabIndex = 23;
             this.lstUsers.UseCompatibleStateImageBehavior = false;
-            this.lstUsers.View = System.Windows.Forms.View.SmallIcon;
+            this.lstUsers.View = System.Windows.Forms.View.Tile;
             // 
             // lblUser
             // 

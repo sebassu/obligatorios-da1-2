@@ -14,6 +14,7 @@ namespace Interface
             try
             {
                 actionToExecute.Invoke();
+                SuccesfulOperation();
             }
             catch (BoardException exception)
             {
@@ -36,6 +37,12 @@ namespace Interface
                 Session.End();
                 (new Login()).Show();
             }
+        }
+
+        public static void SuccesfulOperation()
+        {
+            DialogResult result = MessageBox.Show("La operación se completo exitosamente.", "Operación exitosa",
+                               MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private static void HideAllForms()
@@ -90,14 +97,13 @@ namespace Interface
 
         public static void UCAddOrModifyUserToPanel(Panel systemPanel, User oneUser = null)
         {
+            systemPanel.Controls.Clear();
             if (Utilities.IsNotNull(oneUser))
-            {
-                systemPanel.Controls.Clear();
+            {  
                 systemPanel.Controls.Add(new UCAddOrModifyUser(systemPanel, oneUser));
             }
             else
             {
-                systemPanel.Controls.Clear();
                 systemPanel.Controls.Add(new UCAddOrModifyUser(systemPanel));
             }
             
@@ -105,18 +111,30 @@ namespace Interface
 
         public static void UCAddOrModifyTeamToPanel(Panel systemPanel, Team oneTeam = null)
         {
+            systemPanel.Controls.Clear();
             if (Utilities.IsNotNull(oneTeam))
             {
-                systemPanel.Controls.Clear();
                 systemPanel.Controls.Add(new UCAddOrModifyTeam(systemPanel, oneTeam));
             }
             else
             {
-                systemPanel.Controls.Clear();
                 systemPanel.Controls.Add(new UCAddOrModifyTeam(systemPanel));
             }
         }
-		
+
+        public static void UCAddOrModifyWhiteboardToPanel(Panel systemPanel, Whiteboard oneWhiteboard = null)
+        {
+            systemPanel.Controls.Clear();
+            if (Utilities.IsNotNull(oneWhiteboard))
+            {
+                systemPanel.Controls.Add(new UCAddOrModifyWhiteboard(systemPanel, oneWhiteboard));
+            }
+            else
+            {
+                systemPanel.Controls.Add(new UCAddOrModifyWhiteboard(systemPanel));
+            }  
+        }
+
         public static string GetDateToShow(DateTime someDate)
         {
             if (someDate != DateTime.MinValue)
