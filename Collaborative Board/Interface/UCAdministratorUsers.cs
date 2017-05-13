@@ -81,22 +81,19 @@ namespace Interface
         {
             lstUsers.Clear();
             var globalUsers = UserRepository.GetInstance().Elements.ToList();
-            if (globalUsers.Count() > 0)
+            foreach (User oneUser in globalUsers)
             {
-                foreach (User oneUser in globalUsers)
+                ListViewItem itemToAdd = new ListViewItem(oneUser.ToString());
+                itemToAdd.Tag = oneUser;
+                lstUsers.Items.Add(itemToAdd);
+                if (oneUser.HasAdministrationPrivileges)
                 {
-                    ListViewItem itemToAdd = new ListViewItem(oneUser.ToString());
-                    itemToAdd.Tag = oneUser;
-                    lstUsers.Items.Add(itemToAdd);
-                    if (oneUser.HasAdministrationPrivileges)
-                    {
-                        itemToAdd.ForeColor = Color.Blue;
-                    }
+                    itemToAdd.ForeColor = Color.Blue;
                 }
             }
-            else
+            if (globalUsers.Count == 1)
             {
-                lstUsers.Items.Add(new ListViewItem("No existen usuarios registrados."));
+                btnDelete.Enabled = false;
             }
         }
 
@@ -116,7 +113,7 @@ namespace Interface
             {
                 InterfaceUtilities.NotElementSelectedMessageBox();
             }
-            
+
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -149,6 +146,6 @@ namespace Interface
             UserRepository globalUsers = UserRepository.GetInstance();
             globalUsers.Remove(oneUser);
         }
-        
+
     }
 }

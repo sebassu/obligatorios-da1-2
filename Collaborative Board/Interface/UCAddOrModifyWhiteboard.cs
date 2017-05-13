@@ -6,7 +6,7 @@ using Domain;
 
 namespace Interface
 {
-     public partial class UCAddOrModifyWhiteboard : UserControl
+    public partial class UCAddOrModifyWhiteboard : UserControl
     {
         private Panel systemPanel;
         public UCAddOrModifyWhiteboard(Panel systemPanel)

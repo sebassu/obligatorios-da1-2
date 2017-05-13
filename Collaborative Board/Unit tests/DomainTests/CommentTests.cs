@@ -12,6 +12,8 @@ namespace UnitTests.DomainTests
     public class CommentTests
     {
         private static Comment testingComment;
+        private static readonly ElementWhiteboard testingElement =
+            ImageWhiteboard.InstanceForTestingPurposes();
 
         [TestInitialize]
         public void TestSetup()
@@ -33,7 +35,8 @@ namespace UnitTests.DomainTests
         {
             string someText = "Falta resolver el issue 12-3.";
             User creator = User.InstanceForTestingPurposes();
-            testingComment = Comment.CreatorText(creator, someText);
+            testingComment = Comment.CreatorElementText(creator,
+                testingElement, someText);
             Assert.AreEqual(creator, testingComment.Creator);
             Assert.AreEqual(someText, testingComment.Text);
             Assert.IsFalse(testingComment.IsResolved);
@@ -45,7 +48,8 @@ namespace UnitTests.DomainTests
             string someText = "Falta resolver el issue 12-3.";
             User creator = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
                 "ravenna@simuladores.com", DateTime.Today, "contraseñaVálida123");
-            testingComment = Comment.CreatorText(creator, someText);
+            testingComment = Comment.CreatorElementText(creator,
+                testingElement, someText);
             Assert.AreEqual(creator, testingComment.Creator);
             Assert.AreEqual(someText, testingComment.Text);
             Assert.IsFalse(testingComment.IsResolved);
@@ -56,7 +60,8 @@ namespace UnitTests.DomainTests
         public void CommentParameterFactoryMethodInvalidTextTest()
         {
             User creator = User.InstanceForTestingPurposes();
-            testingComment = Comment.CreatorText(creator, " \n\n  \t\t \n\t  ");
+            testingComment = Comment.CreatorElementText(creator, testingElement,
+                " \n\n  \t\t \n\t  ");
         }
 
         [TestMethod]
@@ -64,7 +69,8 @@ namespace UnitTests.DomainTests
         public void CommentParameterFactoryMethodNullTextTest()
         {
             User creator = User.InstanceForTestingPurposes();
-            testingComment = Comment.CreatorText(creator, null);
+            testingComment = Comment.CreatorElementText(creator,
+                testingElement, null);
         }
 
         [TestMethod]
@@ -72,7 +78,8 @@ namespace UnitTests.DomainTests
         public void CommentParameterFactoryMethodNullCreatorTest()
         {
             string someText = "Falta resolver el issue 12-3.";
-            testingComment = Comment.CreatorText(null, someText);
+            testingComment = Comment.CreatorElementText(null,
+                testingElement, someText);
         }
 
         [TestMethod]
@@ -189,6 +196,13 @@ namespace UnitTests.DomainTests
             User differentUser = User.NamesEmailBirthdatePassword("Mario", "Santos",
                 "santos@simuladores.com", DateTime.Today, "contraseñaVálida123");
             testingComment.Resolve(differentUser);
+        }
+
+        [TestMethod]
+        public void CommentGetHashCodeTest()
+        {
+            object testingCommentAsObject = testingComment;
+            Assert.AreEqual(testingCommentAsObject.GetHashCode(), testingComment.GetHashCode());
         }
     }
 }

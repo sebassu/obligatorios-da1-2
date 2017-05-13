@@ -192,4 +192,13 @@
   <data name="WidthIsInvalid" xml:space="preserve">
     <value>Ancho inválido recibido: {0} píxeles.</value>
   </data>
+  <data name="CannotResolveCommentBeforeCreation" xml:space="preserve">
+    <value>Fecha inválida para la resolución del comentario recibida: es anterior a su creación.</value>
+  </data>
+  <data name="CommentAlreadyAdded" xml:space="preserve">
+    <value>El comentario recibido ya se encuentra registrado.</value>
+  </data>
+  <data name="CommentWasNotAdded" xml:space="preserve">
+    <value>El comentario recibido no se encuentra en este usuario.</value>
+  </data>
 </root>

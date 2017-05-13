@@ -52,13 +52,13 @@ namespace Interface
             btnDelete.Font = new Font(btnDelete.Font.Name, 18, FontStyle.Bold);
         }
 
-        private void btnVisualize_MouseEnter(object sender, EventArgs e)
+        private void btnAdministrate_MouseEnter(object sender, EventArgs e)
         {
             btnAdministrate.BackColor = Color.Maroon;
             btnAdministrate.Font = new Font(btnAdministrate.Font.Name, 19, FontStyle.Bold);
         }
 
-        private void btnVisualize_MouseLeave(object sender, EventArgs e)
+        private void btnAdministrate_MouseLeave(object sender, EventArgs e)
         {
             btnAdministrate.BackColor = Color.DarkRed;
             btnAdministrate.Font = new Font(btnAdministrate.Font.Name, 18, FontStyle.Bold);
@@ -105,6 +105,9 @@ namespace Interface
             else
             {
                 lstTeams.Items.Add(new ListViewItem("No existen equipos registrados."));
+                btnDelete.Enabled = false;
+                btnModify.Enabled = false;
+                btnAdministrate.Enabled = false;
             }
         }
 
@@ -124,7 +127,7 @@ namespace Interface
             {
                 InterfaceUtilities.NotElementSelectedMessageBox();
             }
-            
+
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -133,6 +136,10 @@ namespace Interface
             {
                 Team teamToDelete = lstTeams.SelectedItems[0].Tag as Team;
                 AskDeleteTeam(teamToDelete);
+            }
+            else
+            {
+                InterfaceUtilities.NotElementSelectedMessageBox();
             }
         }
 
@@ -154,7 +161,8 @@ namespace Interface
             globalTeams.Remove(oneTeam);
         }
 
-      /*  private void btnVisualize_Click(object sender, EventArgs e)
+
+        private void btnAdministrate_Click(object sender, EventArgs e)
         {
             if (lstTeams.SelectedItems.Count > 0)
             {
@@ -165,7 +173,7 @@ namespace Interface
             {
                 InterfaceUtilities.NotElementSelectedMessageBox();
             }
-                
-        }*/
+
+        }
     }
 }

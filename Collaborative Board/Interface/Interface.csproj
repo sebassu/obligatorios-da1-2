@@ -121,6 +121,12 @@
     <Compile Include="UCAdministratorHome.Designer.cs">
       <DependentUpon>UCAdministratorHome.cs</DependentUpon>
     </Compile>
+    <Compile Include="UCAdministrateTeam.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCAdministrateTeam.Designer.cs">
+      <DependentUpon>UCAdministrateTeam.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="UCAddMemberToTeam.resx">
       <DependentUpon>UCAddMemberToTeam.cs</DependentUpon>
     </EmbeddedResource>
@@ -175,6 +181,9 @@
     </Compile>
     <EmbeddedResource Include="UCAdministratorHome.resx">
       <DependentUpon>UCAdministratorHome.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCAdministrateTeam.resx">
+      <DependentUpon>UCAdministrateTeam.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

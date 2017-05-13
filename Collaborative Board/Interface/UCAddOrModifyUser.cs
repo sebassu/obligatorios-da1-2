@@ -1,7 +1,7 @@
-﻿using System;
-using System.Windows.Forms;
-using Domain;  
+﻿using Domain;
+using System;
 using Persistence;
+using System.Windows.Forms;
 
 namespace Interface
 {
@@ -9,6 +9,7 @@ namespace Interface
     {
         private Panel systemPanel;
         private User userToModify;
+
         public UCAddOrModifyUser(Panel systemPanel, User oneUser = null)
         {
             InitializeComponent();
@@ -37,6 +38,11 @@ namespace Interface
         }
 
         private void btnAccept_Click(object sender, EventArgs e)
+        {
+            InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(PerformChangeAction);
+        }
+
+        private void PerformChangeAction()
         {
             UserRepository globalUsers = UserRepository.GetInstance();
             if (Utilities.IsNotNull(userToModify))

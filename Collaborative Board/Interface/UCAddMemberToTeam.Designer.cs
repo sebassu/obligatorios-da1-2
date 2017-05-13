@@ -31,11 +31,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UCAddMemberToTeam));
             this.lblAddMemberToTeam = new System.Windows.Forms.Label();
             this.lblUser = new System.Windows.Forms.Label();
-            this.txtTeam = new System.Windows.Forms.TextBox();
             this.btnAccept = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.lblTeam = new System.Windows.Forms.Label();
             this.lstUsers = new System.Windows.Forms.ListView();
+            this.lblTeamSelected = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblAddMemberToTeam
@@ -58,14 +58,6 @@
             this.lblUser.Size = new System.Drawing.Size(143, 18);
             this.lblUser.TabIndex = 1;
             this.lblUser.Text = "Seleccionar usuario:";
-            // 
-            // txtTeam
-            // 
-            this.txtTeam.Location = new System.Drawing.Point(281, 151);
-            this.txtTeam.Name = "txtTeam";
-            this.txtTeam.ReadOnly = true;
-            this.txtTeam.Size = new System.Drawing.Size(191, 20);
-            this.txtTeam.TabIndex = 2;
             // 
             // btnAccept
             // 
@@ -113,17 +105,26 @@
             this.lstUsers.UseCompatibleStateImageBehavior = false;
             this.lstUsers.View = System.Windows.Forms.View.SmallIcon;
             // 
+            // lblTeamSelected
+            // 
+            this.lblTeamSelected.AutoSize = true;
+            this.lblTeamSelected.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTeamSelected.Location = new System.Drawing.Point(278, 155);
+            this.lblTeamSelected.Name = "lblTeamSelected";
+            this.lblTeamSelected.Size = new System.Drawing.Size(0, 18);
+            this.lblTeamSelected.TabIndex = 22;
+            // 
             // UCAddMemberToTeam
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Controls.Add(this.lblTeamSelected);
             this.Controls.Add(this.lstUsers);
             this.Controls.Add(this.lblTeam);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnAccept);
-            this.Controls.Add(this.txtTeam);
             this.Controls.Add(this.lblUser);
             this.Controls.Add(this.lblAddMemberToTeam);
             this.Name = "UCAddMemberToTeam";
@@ -137,10 +138,10 @@
 
         private System.Windows.Forms.Label lblAddMemberToTeam;
         private System.Windows.Forms.Label lblUser;
-        private System.Windows.Forms.TextBox txtTeam;
         private System.Windows.Forms.Button btnAccept;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Label lblTeam;
         private System.Windows.Forms.ListView lstUsers;
+        private System.Windows.Forms.Label lblTeamSelected;
     }
 }

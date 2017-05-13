@@ -35,11 +35,16 @@ namespace Interface
 
         private void btnAccept_Click(object sender, EventArgs e)
         {
+            InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(PerformChangeAction);
+        }
+
+        private void PerformChangeAction()
+        {
             TeamRepository globalTeams = TeamRepository.GetInstance();
             int maxUsers = Convert.ToInt32(Math.Round(numMaximumAmmountUsers.Value, 0));
             if (Utilities.IsNotNull(teamToModify))
             {
-                globalTeams.ModifyTeam(teamToModify, txtName.Text, rtbDescription.Text , maxUsers);
+                globalTeams.ModifyTeam(teamToModify, txtName.Text, rtbDescription.Text, maxUsers);
             }
             else
             {
@@ -47,5 +52,7 @@ namespace Interface
             }
             InterfaceUtilities.UCAdministratorTeamsToPanel(systemPanel);
         }
+        
+        
     }
 }

@@ -68,9 +68,9 @@
             this.btnAdd.BackColor = System.Drawing.Color.DarkRed;
             this.btnAdd.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAdd.ForeColor = System.Drawing.Color.White;
-            this.btnAdd.Location = new System.Drawing.Point(295, 160);
+            this.btnAdd.Location = new System.Drawing.Point(290, 160);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(201, 91);
+            this.btnAdd.Size = new System.Drawing.Size(203, 91);
             this.btnAdd.TabIndex = 2;
             this.btnAdd.Text = "AGREGAR";
             this.btnAdd.UseVisualStyleBackColor = false;
@@ -83,9 +83,9 @@
             this.btnModify.BackColor = System.Drawing.Color.DarkRed;
             this.btnModify.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnModify.ForeColor = System.Drawing.Color.White;
-            this.btnModify.Location = new System.Drawing.Point(502, 160);
+            this.btnModify.Location = new System.Drawing.Point(499, 160);
             this.btnModify.Name = "btnModify";
-            this.btnModify.Size = new System.Drawing.Size(221, 91);
+            this.btnModify.Size = new System.Drawing.Size(224, 91);
             this.btnModify.TabIndex = 3;
             this.btnModify.Text = "MODIFICAR";
             this.btnModify.UseVisualStyleBackColor = false;
@@ -98,9 +98,9 @@
             this.btnDelete.BackColor = System.Drawing.Color.DarkRed;
             this.btnDelete.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDelete.ForeColor = System.Drawing.Color.White;
-            this.btnDelete.Location = new System.Drawing.Point(295, 279);
+            this.btnDelete.Location = new System.Drawing.Point(290, 279);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(201, 91);
+            this.btnDelete.Size = new System.Drawing.Size(203, 91);
             this.btnDelete.TabIndex = 4;
             this.btnDelete.Text = "ELIMINAR";
             this.btnDelete.UseVisualStyleBackColor = false;
@@ -125,7 +125,7 @@
             this.lblRegisteredTeams.AutoSize = true;
             this.lblRegisteredTeams.BackColor = System.Drawing.Color.Transparent;
             this.lblRegisteredTeams.Font = new System.Drawing.Font("Segoe Script", 15.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRegisteredTeams.Location = new System.Drawing.Point(50, 114);
+            this.lblRegisteredTeams.Location = new System.Drawing.Point(43, 111);
             this.lblRegisteredTeams.Name = "lblRegisteredTeams";
             this.lblRegisteredTeams.Size = new System.Drawing.Size(231, 34);
             this.lblRegisteredTeams.TabIndex = 6;
@@ -136,15 +136,15 @@
             this.btnAdministrate.BackColor = System.Drawing.Color.DarkRed;
             this.btnAdministrate.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAdministrate.ForeColor = System.Drawing.Color.White;
-            this.btnAdministrate.Location = new System.Drawing.Point(502, 279);
+            this.btnAdministrate.Location = new System.Drawing.Point(499, 279);
             this.btnAdministrate.Name = "btnAdministrate";
-            this.btnAdministrate.Size = new System.Drawing.Size(221, 91);
+            this.btnAdministrate.Size = new System.Drawing.Size(224, 91);
             this.btnAdministrate.TabIndex = 7;
             this.btnAdministrate.Text = "ADMINISTRAR";
             this.btnAdministrate.UseVisualStyleBackColor = false;
-            //this.btnAdministrate.Click += new System.EventHandler(this.btnVisualize_Click);
-            //this.btnAdministrate.MouseEnter += new System.EventHandler(this.btnVisualize_MouseEnter);
-            //this.btnAdministrate.MouseLeave += new System.EventHandler(this.btnVisualize_MouseLeave);
+            this.btnAdministrate.Click += new System.EventHandler(this.btnAdministrate_Click);
+            this.btnAdministrate.MouseEnter += new System.EventHandler(this.btnAdministrate_MouseEnter);
+            this.btnAdministrate.MouseLeave += new System.EventHandler(this.btnAdministrate_MouseLeave);
             // 
             // UCAdministratorTeams
             // 

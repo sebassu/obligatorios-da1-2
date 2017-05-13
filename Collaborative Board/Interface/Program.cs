@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace Interface
 {
-    static class Program 
+    static class Program
     {
         [STAThread]
         static void Main()

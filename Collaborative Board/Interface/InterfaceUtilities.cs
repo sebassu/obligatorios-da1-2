@@ -1,8 +1,9 @@
-﻿using Domain;
+using Domain;
 using Exceptions;
 using Persistence;
 using System;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace Interface
 {
@@ -43,7 +44,7 @@ namespace Interface
 
         public static void NotElementSelectedMessageBox()
         {
-            DialogResult result = MessageBox.Show("Debe seleccioar un elemento de la lista!",
+            DialogResult result = MessageBox.Show("Debe seleccionar un elemento de la lista!",
                 "Error" , MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
@@ -71,11 +72,11 @@ namespace Interface
             systemPanel.Controls.Add(new UCWhiteboards(systemPanel));
         }
 
-        /*public static void UCAdministrateTeamToPanel(Panel systemPanel, Team oneTeam)
+        public static void UCAdministrateTeamToPanel(Panel systemPanel, Team oneTeam)
         {
             systemPanel.Controls.Clear();
             systemPanel.Controls.Add(new UCAdministrateTeam(systemPanel, oneTeam));
-        }*/
+        }
 
         public static void UCAddOrModifyUserToPanel(Panel systemPanel, User oneUser = null)
         {
@@ -105,6 +106,17 @@ namespace Interface
                 systemPanel.Controls.Add(new UCAddOrModifyTeam(systemPanel));
             }
         }
-
+		
+        public static string GetDateToShow(DateTime someDate)
+        {
+            if (someDate != DateTime.MinValue)
+            {
+                return someDate.ToString("d", CultureInfo.CurrentCulture);
+            }
+            else
+            {
+                return "N/a";
+            }
+        }
     }
 }

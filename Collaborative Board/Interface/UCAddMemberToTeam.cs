@@ -20,34 +20,32 @@ namespace Interface
 
         private void LoadData()
         {
-            txtTeam.Text = teamToWorkWith.Name;
+            lblTeamSelected.Text = teamToWorkWith.Name;
             LoadNotMembersOfTeam();
         }
 
         private void LoadNotMembersOfTeam()
         {
             var globalUsers = UserRepository.GetInstance().Elements.ToList();
-            if (globalUsers.Count() > 0)
+            foreach (User oneUser in globalUsers)
             {
-                foreach (User oneUser in globalUsers)
+                if (!teamToWorkWith.Members.Contains(oneUser))
                 {
-                    if (!teamToWorkWith.Members.Contains(oneUser))
-                    {
-                        ListViewItem itemToAdd = new ListViewItem(oneUser.ToString());
-                        itemToAdd.Tag = oneUser;
-                        lstUsers.Items.Add(itemToAdd);
-                    }
+                    ListViewItem itemToAdd = new ListViewItem(oneUser.ToString());
+                    itemToAdd.Tag = oneUser;
+                    lstUsers.Items.Add(itemToAdd);
                 }
-            }
-            else
-            {
-                lstUsers.Items.Add(new ListViewItem("No existen equipos registrados."));
+                if (lstUsers.Items.Count == 0)
+                {
+                    lstUsers.Items.Add(new ListViewItem("No existen usuarios no miembros del equipo."));
+                    btnAccept.Enabled = false;
+                }
             }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            InterfaceUtilities.UCAdministratorTeamsToPanel(systemPanel);
+            InterfaceUtilities.UCAdministrateTeamToPanel(systemPanel, teamToWorkWith);
         }
 
         private void btnAccept_Click(object sender, EventArgs e)
@@ -57,14 +55,12 @@ namespace Interface
                 User userToAdd = lstUsers.SelectedItems[0].Tag as User;
                 TeamRepository globalTeams = TeamRepository.GetInstance();
                 globalTeams.AddMemberToTeam(this.teamToWorkWith, userToAdd);
-                InterfaceUtilities.UCAdministratorTeamsToPanel(systemPanel);
+                InterfaceUtilities.UCAdministrateTeamToPanel(systemPanel, teamToWorkWith);
             }
             else
             {
                 InterfaceUtilities.NotElementSelectedMessageBox();
             }
         }
-
-
     }
 }

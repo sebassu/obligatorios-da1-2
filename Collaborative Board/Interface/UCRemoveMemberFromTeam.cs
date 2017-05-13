@@ -20,7 +20,7 @@ namespace Interface
 
         private void LoadData()
         {
-            txtTeam.Text = teamToWorkWith.Name;
+            lblTeamSelected.Text = teamToWorkWith.Name;
             LoadMembersOfTeam();
         }
 
@@ -43,7 +43,7 @@ namespace Interface
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            InterfaceUtilities.UCAdministratorTeamsToPanel(systemPanel);
+            InterfaceUtilities.UCAdministrateTeamToPanel(systemPanel, teamToWorkWith);
         }
 
         private void btnAccept_Click(object sender, EventArgs e)
@@ -53,7 +53,7 @@ namespace Interface
                 User userToRemove = lstUsers.SelectedItems[0].Tag as User;
                 TeamRepository globalTeams = TeamRepository.GetInstance();
                 globalTeams.RemoveMemberFromTeam(this.teamToWorkWith, userToRemove);
-                InterfaceUtilities.UCAdministratorTeamsToPanel(systemPanel);
+                InterfaceUtilities.UCAdministrateTeamToPanel(systemPanel, teamToWorkWith);
             }
             else
             {

@@ -24,12 +24,17 @@ namespace Domain
 
         public DateTime CreationDate { get; } = DateTime.Now;
 
-        public User Creator { get; private set; }
+        public User Creator { get; }
+
+        private ElementWhiteboard AssociatedElement { get; }
+
+        public Whiteboard AssociatedWhiteboard
+        {
+            get { return AssociatedElement.Container; }
+        }
 
         private DateTime resolutionDate;
 
-        // Created as a method since generating a Property raises a warning in Visual Studio
-        // due to an exception being thrown.
         public DateTime ResolutionDate()
         {
             if (resolutionDate != DateTime.MinValue)
@@ -101,16 +106,22 @@ namespace Domain
             text = "Comentario inválido.";
         }
 
-        internal static Comment CreatorText(User aUser, string someText)
+        internal static Comment CreatorElementText(User someUser,
+            ElementWhiteboard container, string someText)
         {
-            return new Comment(aUser, someText);
+            return new Comment(someUser, container, someText);
         }
 
-        private Comment(User aUser, string someText)
+        private Comment(User someUser, ElementWhiteboard someElement, string someText)
         {
-            if (Utilities.IsNotNull(aUser))
+            bool creationParametersAreValid = Utilities.IsNotNull(someUser)
+                && Utilities.IsNotNull(someElement);
+            if (creationParametersAreValid)
             {
-                SetCreationAttributes(aUser, someText);
+                Creator = someUser;
+                AssociatedElement = someElement;
+                Text = someText;
+                UpdateElementCommentList(someElement);
             }
             else
             {
@@ -118,10 +129,33 @@ namespace Domain
             }
         }
 
-        private void SetCreationAttributes(User aUser, string someText)
+        private void UpdateElementCommentList(ElementWhiteboard someElement)
         {
-            Text = someText;
-            Creator = aUser;
+            someElement.AddComment(this);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Comment commentToCompareAgainst)
+            {
+                return CreatorDateAndTextAreEqual(commentToCompareAgainst);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool CreatorDateAndTextAreEqual(Comment commentToCompareAgainst)
+        {
+            return Creator.Equals(commentToCompareAgainst.Creator) &&
+                CreationDate.Equals(commentToCompareAgainst.CreationDate) &&
+                text.Equals(commentToCompareAgainst.text);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

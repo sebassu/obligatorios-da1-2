@@ -36,6 +36,7 @@
             this.btnEnter = new System.Windows.Forms.Button();
             this.lblWelcome = new System.Windows.Forms.Label();
             this.picLogin = new System.Windows.Forms.PictureBox();
+            this.btnLoadTestData = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picLogin)).BeginInit();
             this.SuspendLayout();
             // 
@@ -98,12 +99,22 @@
             // picLogin
             // 
             this.picLogin.Image = ((System.Drawing.Image)(resources.GetObject("picLogin.Image")));
-            this.picLogin.Location = new System.Drawing.Point(50, 49);
+            this.picLogin.Location = new System.Drawing.Point(49, 45);
             this.picLogin.Name = "picLogin";
             this.picLogin.Size = new System.Drawing.Size(98, 95);
             this.picLogin.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picLogin.TabIndex = 6;
             this.picLogin.TabStop = false;
+            // 
+            // btnLoadTestData
+            // 
+            this.btnLoadTestData.Location = new System.Drawing.Point(85, 152);
+            this.btnLoadTestData.Name = "btnLoadTestData";
+            this.btnLoadTestData.Size = new System.Drawing.Size(95, 43);
+            this.btnLoadTestData.TabIndex = 7;
+            this.btnLoadTestData.Text = "Cargar datos de prueba";
+            this.btnLoadTestData.UseVisualStyleBackColor = true;
+            this.btnLoadTestData.Click += new System.EventHandler(this.btnLoadTestData_Click);
             // 
             // Login
             // 
@@ -113,6 +124,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(518, 220);
+            this.Controls.Add(this.btnLoadTestData);
             this.Controls.Add(this.picLogin);
             this.Controls.Add(this.lblWelcome);
             this.Controls.Add(this.btnEnter);
@@ -137,6 +149,7 @@
         private System.Windows.Forms.Button btnEnter;
         private System.Windows.Forms.Label lblWelcome;
         private System.Windows.Forms.PictureBox picLogin;
+        private System.Windows.Forms.Button btnLoadTestData;
     }
 }
 
