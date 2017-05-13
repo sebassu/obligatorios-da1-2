@@ -55,10 +55,10 @@ namespace Interface
             {
                 comments.AddRange(user.CommentsCreated.Where(c => c.IsResolved));
             }
-            LoadListViewWithCommentsFilteringBy(_ => true);
+            LoadGridViewWithCommentsFilteringBy(_ => true);
         }
 
-        private void LoadListViewWithCommentsFilteringBy(Func<Comment, bool> filteringFunction)
+        private void LoadGridViewWithCommentsFilteringBy(Func<Comment, bool> filteringFunction)
         {
             var commentsToShow = comments.Where(c => filteringFunction(c)).ToList();
             if (commentsToShow.Count == 0)
@@ -97,7 +97,7 @@ namespace Interface
 
         private void btnApllyFilters_Click(object sender, EventArgs e)
         {
-            LoadListViewWithCommentsFilteringBy(c => FilterByCreatorResolverAndDates(c));
+            LoadGridViewWithCommentsFilteringBy(c => FilterByCreatorResolverAndDates(c));
         }
 
         private bool FilterByCreatorResolverAndDates(Comment c)

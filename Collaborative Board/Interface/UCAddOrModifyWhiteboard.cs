@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using Persistence;
 using Domain;
+using System.Linq;
 
 namespace Interface
 {
