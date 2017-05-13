@@ -1,8 +1,10 @@
 ﻿using System;
 using Exceptions;
-using System.Collections;
+using System.Globalization;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("Persistence")]
 namespace Domain
 {
     public class Team
@@ -13,7 +15,7 @@ namespace Domain
         public string Name
         {
             get { return name; }
-            set
+            internal set
             {
                 if (IsValidTeamName(value))
                 {
@@ -21,14 +23,16 @@ namespace Domain
                 }
                 else
                 {
-                    throw new TeamException("Nombre inválido: " + value + ".");
+                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                        ErrorMessages.NameIsInvalid, value);
+                    throw new TeamException(errorMessage);
                 }
             }
         }
 
         public static bool IsValidTeamName(string value)
         {
-            return !string.IsNullOrEmpty(value) && Utilities.ContainsOnlyLettersDigitsOrSpaces(value);
+            return Utilities.ContainsLettersDigitsOrSpacesOnly(value);
         }
 
         public DateTime CreationDate { get; } = DateTime.Now;
@@ -37,11 +41,11 @@ namespace Domain
         public string Description
         {
             get { return description; }
-            set
+            internal set
             {
-                if (string.IsNullOrEmpty(value))
+                if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new TeamException("Descripción inválida: " + value + ".");
+                    throw new TeamException(ErrorMessages.EmptyDescription);
                 }
                 else
                 {
@@ -54,7 +58,7 @@ namespace Domain
         public int MaximumMembers
         {
             get { return maximumMembers; }
-            set
+            internal set
             {
                 if (value >= minimumMembers)
                 {
@@ -62,17 +66,18 @@ namespace Domain
                 }
                 else
                 {
-                    throw new TeamException("Máxima cantidad de miembros inválida: "
-                        + value + ".");
+                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                        ErrorMessages.InvalidMaximumMembers, value, minimumMembers);
+                    throw new TeamException(errorMessage);
                 }
             }
         }
 
         private readonly List<User> members = new List<User>();
-        public IList Members => members.AsReadOnly();
+        public IReadOnlyCollection<User> Members => members.AsReadOnly();
 
         private readonly List<Whiteboard> createdWhiteboards = new List<Whiteboard>();
-        public IList CreatedWhiteboards
+        public IReadOnlyCollection<Whiteboard> CreatedWhiteboards
         {
             get
             {
@@ -80,7 +85,7 @@ namespace Domain
             }
         }
 
-        public void AddMember(User userToAdd)
+        internal void AddMember(User userToAdd)
         {
             bool canBeMember = Utilities.IsNotNull(userToAdd) && IsPossibleToAdd(userToAdd);
             if (canBeMember)
@@ -89,7 +94,7 @@ namespace Domain
             }
             else
             {
-                throw new TeamException("Miembro no válido o equipo completo.");
+                throw new TeamException(ErrorMessages.CannotAddUser);
             }
         }
 
@@ -98,11 +103,11 @@ namespace Domain
             return members.Count < maximumMembers && !members.Contains(aMember);
         }
 
-        public void RemoveMember(User userToRemove)
+        internal void RemoveMember(User userToRemove)
         {
             if (!WasRemoved(userToRemove))
             {
-                throw new TeamException("Miembro no válido o equipo con mínimo de miembros.");
+                throw new TeamException(ErrorMessages.CannotRemoveUser);
             }
         }
 
@@ -113,6 +118,18 @@ namespace Domain
 
         public void AddWhiteboard(Whiteboard whiteboardToAdd)
         {
+            if (Utilities.IsNotNull(whiteboardToAdd))
+            {
+                AddWhiteboardToCollectionIfPossible(whiteboardToAdd);
+            }
+            else
+            {
+                throw new TeamException(ErrorMessages.NullWhiteboard);
+            }
+        }
+
+        private void AddWhiteboardToCollectionIfPossible(Whiteboard whiteboardToAdd)
+        {
             bool isPossibleToAddWhiteboard = !createdWhiteboards.Contains(whiteboardToAdd);
             if (isPossibleToAddWhiteboard)
             {
@@ -120,7 +137,7 @@ namespace Domain
             }
             else
             {
-                throw new TeamException("Pizarrón no válido recibido.");
+                throw new TeamException(ErrorMessages.RepeatedWhiteboardName);
             }
         }
 
@@ -129,7 +146,7 @@ namespace Domain
             bool whiteboardWasRemoved = createdWhiteboards.Remove(someWhiteboard);
             if (!whiteboardWasRemoved)
             {
-                throw new TeamException("Pizarrón no válido.");
+                throw new TeamException(ErrorMessages.notAddedWhiteboardRecieved);
             }
         }
 
@@ -141,13 +158,13 @@ namespace Domain
         private Team()
         {
             User defaultCreator = User.InstanceForTestingPurposes();
-            name = "Nombre inválido.";
+            name = "Equipo inválido.";
             description = "Descripción inválida.";
             maximumMembers = int.MaxValue;
             members.Add(defaultCreator);
         }
 
-        public static Team CreatorNameDescriptionMaximumMembers(User creator, string name,
+        internal static Team CreatorNameDescriptionMaximumMembers(User creator, string name,
             string description, int maximumMembers)
         {
             return new Team(creator, name, description, maximumMembers);

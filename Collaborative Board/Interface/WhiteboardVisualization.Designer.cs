@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.pnlOptions = new System.Windows.Forms.Panel();
-            this.btnAddImage = new System.Windows.Forms.Button();
-            this.btnAddText = new System.Windows.Forms.Button();
-            this.btnModifyElement = new System.Windows.Forms.Button();
+            this.btnPrintPng = new System.Windows.Forms.Button();
             this.btnDeleteElement = new System.Windows.Forms.Button();
             this.btnPrintPDF = new System.Windows.Forms.Button();
-            this.btnPrintPng = new System.Windows.Forms.Button();
+            this.btnModifyElement = new System.Windows.Forms.Button();
+            this.btnAddImage = new System.Windows.Forms.Button();
+            this.btnAddText = new System.Windows.Forms.Button();
             this.pnlWhiteboard = new System.Windows.Forms.Panel();
             this.pnlOptions.SuspendLayout();
             this.SuspendLayout();
@@ -48,55 +48,34 @@
             this.pnlOptions.Controls.Add(this.btnModifyElement);
             this.pnlOptions.Controls.Add(this.btnAddImage);
             this.pnlOptions.Controls.Add(this.btnAddText);
-            this.pnlOptions.Location = new System.Drawing.Point(13, 13);
+            this.pnlOptions.Location = new System.Drawing.Point(26, 13);
+            this.pnlOptions.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.pnlOptions.Name = "pnlOptions";
-            this.pnlOptions.Size = new System.Drawing.Size(207, 595);
+            this.pnlOptions.Size = new System.Drawing.Size(552, 1437);
             this.pnlOptions.TabIndex = 0;
             // 
-            // btnAddImage
+            // btnPrintPng
             // 
-            this.btnAddImage.BackColor = System.Drawing.Color.Navy;
-            this.btnAddImage.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAddImage.ForeColor = System.Drawing.Color.White;
-            this.btnAddImage.Location = new System.Drawing.Point(3, 15);
-            this.btnAddImage.Name = "btnAddImage";
-            this.btnAddImage.Size = new System.Drawing.Size(198, 65);
-            this.btnAddImage.TabIndex = 1;
-            this.btnAddImage.Text = "Agregar imagen";
-            this.btnAddImage.UseVisualStyleBackColor = false;
-            // 
-            // btnAddText
-            // 
-            this.btnAddText.BackColor = System.Drawing.Color.Navy;
-            this.btnAddText.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAddText.ForeColor = System.Drawing.Color.White;
-            this.btnAddText.Location = new System.Drawing.Point(3, 115);
-            this.btnAddText.Name = "btnAddText";
-            this.btnAddText.Size = new System.Drawing.Size(198, 65);
-            this.btnAddText.TabIndex = 2;
-            this.btnAddText.Text = "Agregar texto";
-            this.btnAddText.UseVisualStyleBackColor = false;
-            // 
-            // btnModifyElement
-            // 
-            this.btnModifyElement.BackColor = System.Drawing.Color.Navy;
-            this.btnModifyElement.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnModifyElement.ForeColor = System.Drawing.Color.White;
-            this.btnModifyElement.Location = new System.Drawing.Point(3, 215);
-            this.btnModifyElement.Name = "btnModifyElement";
-            this.btnModifyElement.Size = new System.Drawing.Size(198, 65);
-            this.btnModifyElement.TabIndex = 3;
-            this.btnModifyElement.Text = "Modificar elemento";
-            this.btnModifyElement.UseVisualStyleBackColor = false;
+            this.btnPrintPng.BackColor = System.Drawing.Color.Navy;
+            this.btnPrintPng.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPrintPng.ForeColor = System.Drawing.Color.White;
+            this.btnPrintPng.Location = new System.Drawing.Point(8, 1228);
+            this.btnPrintPng.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.btnPrintPng.Name = "btnPrintPng";
+            this.btnPrintPng.Size = new System.Drawing.Size(528, 155);
+            this.btnPrintPng.TabIndex = 2;
+            this.btnPrintPng.Text = "Imprimir en png";
+            this.btnPrintPng.UseVisualStyleBackColor = false;
             // 
             // btnDeleteElement
             // 
             this.btnDeleteElement.BackColor = System.Drawing.Color.Navy;
             this.btnDeleteElement.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDeleteElement.ForeColor = System.Drawing.Color.White;
-            this.btnDeleteElement.Location = new System.Drawing.Point(3, 315);
+            this.btnDeleteElement.Location = new System.Drawing.Point(8, 751);
+            this.btnDeleteElement.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.btnDeleteElement.Name = "btnDeleteElement";
-            this.btnDeleteElement.Size = new System.Drawing.Size(198, 65);
+            this.btnDeleteElement.Size = new System.Drawing.Size(528, 155);
             this.btnDeleteElement.TabIndex = 1;
             this.btnDeleteElement.Text = "Eliminar elemento";
             this.btnDeleteElement.UseVisualStyleBackColor = false;
@@ -106,47 +85,77 @@
             this.btnPrintPDF.BackColor = System.Drawing.Color.Navy;
             this.btnPrintPDF.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnPrintPDF.ForeColor = System.Drawing.Color.White;
-            this.btnPrintPDF.Location = new System.Drawing.Point(3, 415);
+            this.btnPrintPDF.Location = new System.Drawing.Point(8, 990);
+            this.btnPrintPDF.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.btnPrintPDF.Name = "btnPrintPDF";
-            this.btnPrintPDF.Size = new System.Drawing.Size(198, 65);
+            this.btnPrintPDF.Size = new System.Drawing.Size(528, 155);
             this.btnPrintPDF.TabIndex = 1;
             this.btnPrintPDF.Text = "Imprimir en PDF";
             this.btnPrintPDF.UseVisualStyleBackColor = false;
             // 
-            // btnPrintPng
+            // btnModifyElement
             // 
-            this.btnPrintPng.BackColor = System.Drawing.Color.Navy;
-            this.btnPrintPng.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPrintPng.ForeColor = System.Drawing.Color.White;
-            this.btnPrintPng.Location = new System.Drawing.Point(3, 515);
-            this.btnPrintPng.Name = "btnPrintPng";
-            this.btnPrintPng.Size = new System.Drawing.Size(198, 65);
-            this.btnPrintPng.TabIndex = 2;
-            this.btnPrintPng.Text = "Imprimir en png";
-            this.btnPrintPng.UseVisualStyleBackColor = false;
+            this.btnModifyElement.BackColor = System.Drawing.Color.Navy;
+            this.btnModifyElement.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnModifyElement.ForeColor = System.Drawing.Color.White;
+            this.btnModifyElement.Location = new System.Drawing.Point(8, 513);
+            this.btnModifyElement.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.btnModifyElement.Name = "btnModifyElement";
+            this.btnModifyElement.Size = new System.Drawing.Size(528, 155);
+            this.btnModifyElement.TabIndex = 3;
+            this.btnModifyElement.Text = "Modificar elemento";
+            this.btnModifyElement.UseVisualStyleBackColor = false;
+            // 
+            // btnAddImage
+            // 
+            this.btnAddImage.BackColor = System.Drawing.Color.Navy;
+            this.btnAddImage.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAddImage.ForeColor = System.Drawing.Color.White;
+            this.btnAddImage.Location = new System.Drawing.Point(8, 36);
+            this.btnAddImage.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.btnAddImage.Name = "btnAddImage";
+            this.btnAddImage.Size = new System.Drawing.Size(528, 155);
+            this.btnAddImage.TabIndex = 1;
+            this.btnAddImage.Text = "Agregar imagen";
+            this.btnAddImage.UseVisualStyleBackColor = false;
+            // 
+            // btnAddText
+            // 
+            this.btnAddText.BackColor = System.Drawing.Color.Navy;
+            this.btnAddText.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAddText.ForeColor = System.Drawing.Color.White;
+            this.btnAddText.Location = new System.Drawing.Point(8, 274);
+            this.btnAddText.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.btnAddText.Name = "btnAddText";
+            this.btnAddText.Size = new System.Drawing.Size(528, 155);
+            this.btnAddText.TabIndex = 2;
+            this.btnAddText.Text = "Agregar texto";
+            this.btnAddText.UseVisualStyleBackColor = false;
             // 
             // pnlWhiteboard
             // 
             this.pnlWhiteboard.BackColor = System.Drawing.Color.White;
-            this.pnlWhiteboard.Location = new System.Drawing.Point(227, 13);
+            this.pnlWhiteboard.Location = new System.Drawing.Point(608, 13);
+            this.pnlWhiteboard.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.pnlWhiteboard.Name = "pnlWhiteboard";
-            this.pnlWhiteboard.Size = new System.Drawing.Size(722, 595);
+            this.pnlWhiteboard.Size = new System.Drawing.Size(1844, 1434);
             this.pnlWhiteboard.TabIndex = 1;
             // 
             // WhiteboardVisualization
             // 
             this.AllowDrop = true;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(961, 612);
+            this.ClientSize = new System.Drawing.Size(2520, 1474);
             this.Controls.Add(this.pnlWhiteboard);
             this.Controls.Add(this.pnlOptions);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(977, 651);
+            this.MaximumSize = new System.Drawing.Size(2552, 1562);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(977, 651);
+            this.MinimumSize = new System.Drawing.Size(2552, 1562);
             this.Name = "WhiteboardVisualization";
             this.Text = "Whiteboard";
             this.pnlOptions.ResumeLayout(false);

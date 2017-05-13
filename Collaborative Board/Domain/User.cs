@@ -1,10 +1,12 @@
 ﻿using System;
 using Exceptions;
 using System.Net.Mail;
-using System.Collections;
+using System.Resources;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
+[assembly: NeutralResourcesLanguage("es")]
 [assembly: InternalsVisibleTo("UnitTests")]
 namespace Domain
 {
@@ -14,7 +16,7 @@ namespace Domain
         public string FirstName
         {
             get { return firstName; }
-            set
+            internal set
             {
                 if (IsValidName(value))
                 {
@@ -22,7 +24,9 @@ namespace Domain
                 }
                 else
                 {
-                    throw new UserException("Nombre inválido recibido: " + value + ".");
+                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                        ErrorMessages.UserNameIsInvalid, value);
+                    throw new UserException(errorMessage);
                 }
             }
         }
@@ -31,7 +35,7 @@ namespace Domain
         public string LastName
         {
             get { return lastName; }
-            set
+            internal set
             {
                 if (IsValidName(value))
                 {
@@ -39,21 +43,23 @@ namespace Domain
                 }
                 else
                 {
-                    throw new UserException("Apellido inválido recibido: " + value + ".");
+                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                        ErrorMessages.LastNameIsInvalid, value);
+                    throw new UserException(errorMessage);
                 }
             }
         }
 
         public static bool IsValidName(string value)
         {
-            return !string.IsNullOrWhiteSpace(value) && Utilities.ContainsOnlyLettersOrSpaces(value);
+            return Utilities.ContainsLettersOrSpacesOnly(value);
         }
 
         private MailAddress email;
         public string Email
         {
             get { return email.ToString(); }
-            set
+            internal set
             {
                 try
                 {
@@ -61,7 +67,9 @@ namespace Domain
                 }
                 catch (SystemException)
                 {
-                    throw new UserException("Email inválido recibido: " + value + ".");
+                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                        ErrorMessages.EmailIsInvalid, value);
+                    throw new UserException(errorMessage);
                 }
             }
         }
@@ -70,7 +78,7 @@ namespace Domain
         public DateTime Birthdate
         {
             get { return birthdate; }
-            set
+            internal set
             {
                 var dateToSet = value.Date;
                 if (Utilities.IsTodayOrBefore(dateToSet))
@@ -79,35 +87,82 @@ namespace Domain
                 }
                 else
                 {
-                    throw new UserException("Fecha de nacimiento inválida recibida: "
-                        + value.ToString("d") + ".");
+                    IFormatProvider format = CultureInfo.CurrentCulture;
+                    string errorMessage = string.Format(format,
+                        ErrorMessages.BirthdateIsInvalid, value.ToString("d", format));
+                    throw new UserException(errorMessage);
                 }
             }
         }
 
-        private readonly Password password = new Password();
+        private readonly IPassword password = new Password();
         public string Password
         {
             get { return password.PasswordValue; }
-            set
+            internal set
             {
-                password.PasswordValue = value;
+                try
+                {
+                    password.PasswordValue = value;
+                }
+                catch (PasswordException exceptionCaught)
+                {
+                    throw new UserException(exceptionCaught.Message);
+                }
             }
         }
 
         public virtual bool HasAdministrationPrivileges => false;
 
-        public string ResetPassword()
+        internal string ResetPassword()
         {
             return password.Reset();
         }
 
-        private readonly List<Comment> commentsResolved = new List<Comment>();
-        public IList CommentsResolved => commentsResolved.AsReadOnly();
+        private readonly List<Comment> commentsCreated = new List<Comment>();
+        public IReadOnlyCollection<Comment> CommentsCreated => commentsCreated.AsReadOnly();
 
-        internal void AddResolvedComment(Comment aComment)
+        private readonly List<Comment> commentsResolved = new List<Comment>();
+        public IReadOnlyCollection<Comment> CommentsResolved => commentsResolved.AsReadOnly();
+
+        internal void AddCreatedComment(Comment someComment)
         {
-            commentsResolved.Add(aComment);
+            if (!commentsCreated.Contains(someComment))
+            {
+                commentsCreated.Add(someComment);
+            }
+            else
+            {
+                throw new CommentException(ErrorMessages.CommentAlreadyAdded);
+            }
+        }
+
+        internal void RemoveCreatedComment(Comment someComment)
+        {
+            if (!commentsCreated.Remove(someComment))
+            {
+                throw new UserException(ErrorMessages.CommentWasNotAdded);
+            }
+        }
+
+        internal void AddResolvedComment(Comment someComment)
+        {
+            if (!commentsResolved.Contains(someComment))
+            {
+                commentsResolved.Add(someComment);
+            }
+            else
+            {
+                throw new CommentException(ErrorMessages.CommentAlreadyAdded);
+            }
+        }
+
+        internal void RemoveResolvedComment(Comment someComment)
+        {
+            if (!commentsResolved.Remove(someComment))
+            {
+                throw new UserException(ErrorMessages.CommentWasNotAdded);
+            }
         }
 
         internal static User InstanceForTestingPurposes()
@@ -117,12 +172,12 @@ namespace Domain
 
         protected User()
         {
-            firstName = "Nombre inválido.";
-            lastName = "Apellido inválido.";
+            firstName = "Usuario";
+            lastName = "inválido.";
             email = new MailAddress("mailInvalido@usuarioInvalido");
         }
 
-        public static User NamesEmailBirthdatePassword(string firstName, string lastName,
+        internal static User NamesEmailBirthdatePassword(string firstName, string lastName,
             string email, DateTime birthdate, string password)
         {
             return new User(firstName, lastName, email, birthdate, password);

@@ -1,10 +1,11 @@
 ﻿using System;
 using Domain;
 using Exceptions;
+using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace UnitTests
+namespace UnitTests.DomainTests
 {
     [TestClass]
     [ExcludeFromCodeCoverage]
@@ -13,7 +14,7 @@ namespace UnitTests
         private static Whiteboard testingWhiteboard;
 
         [TestInitialize]
-        public void TestSetUp()
+        public void TestSetup()
         {
             testingWhiteboard = Whiteboard.InstanceForTestingPurposes();
         }
@@ -21,12 +22,14 @@ namespace UnitTests
         [TestMethod]
         public void WhiteboardForTestingPurposesTest()
         {
-            Assert.AreEqual("Nombre inválido", testingWhiteboard.Name);
+            Assert.AreEqual("Pizarrón inválido", testingWhiteboard.Name);
             Assert.AreEqual("Descripción inválida.", testingWhiteboard.Description);
             Assert.AreEqual(int.MaxValue, testingWhiteboard.Width);
             Assert.AreEqual(int.MaxValue, testingWhiteboard.Height);
-            Assert.IsNull(testingWhiteboard.Creator);
-            Assert.IsNull(testingWhiteboard.OwnerTeam);
+            Assert.AreEqual(User.InstanceForTestingPurposes(),
+                testingWhiteboard.Creator);
+            Assert.AreEqual(Team.InstanceForTestingPurposes(),
+                testingWhiteboard.OwnerTeam);
         }
 
         [TestMethod]
@@ -157,6 +160,7 @@ namespace UnitTests
             Assert.AreEqual(ownerTeam, testingWhiteboard.OwnerTeam);
             Assert.AreEqual(500, testingWhiteboard.Width);
             Assert.AreEqual(500, testingWhiteboard.Height);
+            CollectionAssert.Contains(ownerTeam.CreatedWhiteboards.ToList(), testingWhiteboard);
         }
 
         [TestMethod]
@@ -204,7 +208,7 @@ namespace UnitTests
         public void WhiteboardParameterFactoryMethodUserNotInTeamTest()
         {
             User creator = User.NamesEmailBirthdatePassword("Pablo", "Lamponne",
-                "lamponne@simuladores.com", DateTime.Today, "contraseñaValida123");
+                "lamponne@simuladores.com", DateTime.Today, "contraseñaVálida123");
             Team ownerTeam = Team.InstanceForTestingPurposes();
             testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
                 "Equipo3", "Descripción de pizarrón", ownerTeam, 100, 50);
@@ -222,7 +226,7 @@ namespace UnitTests
         [TestMethod]
         public void WhiteboardToStringTest1()
         {
-            Assert.AreEqual("Nombre inválido", testingWhiteboard.ToString());
+            Assert.AreEqual("Pizarrón inválido", testingWhiteboard.ToString());
         }
 
         [TestMethod]
@@ -256,15 +260,8 @@ namespace UnitTests
         [TestMethod]
         public void WhiteboardEqualsTransitiveTest()
         {
-            User creator = User.InstanceForTestingPurposes();
-            Team aTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Same name",
-                "Description 1", 10);
-            testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
-                "Pizarron1", "Descripción 1.", aTeam, 100, 100);
-            Whiteboard secondTestingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
-                "Pizarron1", "Descripción 2.", aTeam, 50, 50);
-            Whiteboard thirdTestingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
-                "Pizarron1", "Descripción 3.", aTeam, 25, 25);
+            Whiteboard secondTestingWhiteboard = Whiteboard.InstanceForTestingPurposes();
+            Whiteboard thirdTestingWhiteboard = Whiteboard.InstanceForTestingPurposes();
             Assert.AreEqual(testingWhiteboard, secondTestingWhiteboard);
             Assert.AreEqual(secondTestingWhiteboard, thirdTestingWhiteboard);
             Assert.AreEqual(testingWhiteboard, thirdTestingWhiteboard);
@@ -311,7 +308,7 @@ namespace UnitTests
         {
             ElementWhiteboard image = ImageWhiteboard.InstanceForTestingPurposes();
             testingWhiteboard.AddWhiteboardElement(image);
-            CollectionAssert.Contains(testingWhiteboard.Contents, image);
+            CollectionAssert.Contains(testingWhiteboard.Contents.ToList(), image);
         }
 
         [TestMethod]
@@ -319,7 +316,7 @@ namespace UnitTests
         {
             ElementWhiteboard textBox = TextBoxWhiteboard.InstanceForTestingPurposes();
             testingWhiteboard.AddWhiteboardElement(textBox);
-            CollectionAssert.Contains(testingWhiteboard.Contents, textBox);
+            CollectionAssert.Contains(testingWhiteboard.Contents.ToList(), textBox);
         }
 
         [TestMethod]
@@ -335,7 +332,7 @@ namespace UnitTests
             ElementWhiteboard image = ImageWhiteboard.InstanceForTestingPurposes();
             testingWhiteboard.AddWhiteboardElement(image);
             testingWhiteboard.RemoveWhiteboardElement(image);
-            CollectionAssert.DoesNotContain(testingWhiteboard.Contents, image);
+            CollectionAssert.DoesNotContain(testingWhiteboard.Contents.ToList(), image);
         }
 
         [TestMethod]
@@ -344,7 +341,7 @@ namespace UnitTests
             ElementWhiteboard textBox = TextBoxWhiteboard.InstanceForTestingPurposes();
             testingWhiteboard.AddWhiteboardElement(textBox);
             testingWhiteboard.RemoveWhiteboardElement(textBox);
-            CollectionAssert.DoesNotContain(testingWhiteboard.Contents, textBox);
+            CollectionAssert.DoesNotContain(testingWhiteboard.Contents.ToList(), textBox);
         }
 
         [TestMethod]

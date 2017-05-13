@@ -13,8 +13,7 @@ namespace Domain
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new CommentException("El texto introducido para el comentario " +
-                        "no es válido, reintente.");
+                    throw new CommentException(ErrorMessages.CommentTextIsInvalid);
                 }
                 else
                 {
@@ -25,12 +24,17 @@ namespace Domain
 
         public DateTime CreationDate { get; } = DateTime.Now;
 
-        public User Creator { get; private set; }
+        public User Creator { get; }
+
+        private ElementWhiteboard AssociatedElement { get; }
+
+        public Whiteboard AssociatedWhiteboard
+        {
+            get { return AssociatedElement.Container; }
+        }
 
         private DateTime resolutionDate;
 
-        // Created as a method since generating a Property raises a warning in Visual Studio
-        // due to an exception being thrown.
         public DateTime ResolutionDate()
         {
             if (resolutionDate != DateTime.MinValue)
@@ -39,8 +43,7 @@ namespace Domain
             }
             else
             {
-                throw new CommentException("El comentario actual no se ha " +
-                      "resuelto aún.");
+                throw new CommentException(ErrorMessages.UnresolvedComment);
             }
         }
 
@@ -50,8 +53,7 @@ namespace Domain
         {
             if (IsResolved)
             {
-                throw new CommentException("El comentario seleccionado ya había " +
-                    "sido resuelto.");
+                throw new CommentException(ErrorMessages.AlreadyResolvedComment);
             }
             else
             {
@@ -67,7 +69,7 @@ namespace Domain
             }
             else
             {
-                throw new CommentException("Usuario inválido (nulo) recibido.");
+                throw new CommentException(ErrorMessages.NullUser);
             }
         }
 
@@ -104,27 +106,56 @@ namespace Domain
             text = "Comentario inválido.";
         }
 
-        internal static Comment CreatorText(User aUser, string someText)
+        internal static Comment CreatorElementText(User someUser,
+            ElementWhiteboard container, string someText)
         {
-            return new Comment(aUser, someText);
+            return new Comment(someUser, container, someText);
         }
 
-        private Comment(User aUser, string someText)
+        private Comment(User someUser, ElementWhiteboard someElement, string someText)
         {
-            if (Utilities.IsNotNull(aUser))
+            bool creationParametersAreValid = Utilities.IsNotNull(someUser)
+                && Utilities.IsNotNull(someElement);
+            if (creationParametersAreValid)
             {
-                SetCreationAttributes(aUser, someText);
+                Creator = someUser;
+                AssociatedElement = someElement;
+                Text = someText;
+                UpdateElementCommentList(someElement);
             }
             else
             {
-                throw new CommentException("Usuario inválido (nulo) recibido.");
+                throw new CommentException(ErrorMessages.NullUser);
             }
         }
 
-        private void SetCreationAttributes(User aUser, string someText)
+        private void UpdateElementCommentList(ElementWhiteboard someElement)
         {
-            Text = someText;
-            Creator = aUser;
+            someElement.AddComment(this);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Comment commentToCompareAgainst)
+            {
+                return CreatorDateAndTextAreEqual(commentToCompareAgainst);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool CreatorDateAndTextAreEqual(Comment commentToCompareAgainst)
+        {
+            return Creator.Equals(commentToCompareAgainst.Creator) &&
+                CreationDate.Equals(commentToCompareAgainst.CreationDate) &&
+                text.Equals(commentToCompareAgainst.text);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

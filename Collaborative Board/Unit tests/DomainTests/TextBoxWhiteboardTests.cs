@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace UnitTests
+namespace UnitTests.DomainTests
 {
     [TestClass]
     [ExcludeFromCodeCoverage]
@@ -14,7 +14,7 @@ namespace UnitTests
         private static TextBoxWhiteboard testingTextBox;
 
         [TestInitialize]
-        public void TestSetUp()
+        public void TestSetup()
         {
             testingTextBox = TextBoxWhiteboard.InstanceForTestingPurposes();
         }
@@ -22,7 +22,7 @@ namespace UnitTests
         private static Whiteboard GenerateNonGenericTestSituation()
         {
             User creator = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
-                "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");
+                "ravenna@simuladores.com", DateTime.Today, "contraseñaVálida123");
             Team ownerTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo 3",
                 "Descripción.", 5);
             Whiteboard container = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,

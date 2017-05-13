@@ -30,9 +30,7 @@ namespace Domain
             }
             catch (Exception)
             {
-                throw new ElementException("Ha ocurrido un error al intentar cargar la" +
-                    " imagen, verifique que la ruta que ha introducido es válida y no se " +
-                    " movido o renombrado a la misma.");
+                throw new ElementException(ErrorMessages.ImageLoadingError);
             }
         }
     }

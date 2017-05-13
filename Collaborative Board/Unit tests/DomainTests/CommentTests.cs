@@ -1,19 +1,22 @@
 ﻿using System;
 using Domain;
 using Exceptions;
+using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace UnitTests
+namespace UnitTests.DomainTests
 {
     [TestClass]
     [ExcludeFromCodeCoverage]
     public class CommentTests
     {
         private static Comment testingComment;
+        private static readonly ElementWhiteboard testingElement =
+            ImageWhiteboard.InstanceForTestingPurposes();
 
         [TestInitialize]
-        public void TestSetUp()
+        public void TestSetup()
         {
             testingComment = Comment.InstanceForTestingPurposes();
         }
@@ -32,7 +35,8 @@ namespace UnitTests
         {
             string someText = "Falta resolver el issue 12-3.";
             User creator = User.InstanceForTestingPurposes();
-            testingComment = Comment.CreatorText(creator, someText);
+            testingComment = Comment.CreatorElementText(creator,
+                testingElement, someText);
             Assert.AreEqual(creator, testingComment.Creator);
             Assert.AreEqual(someText, testingComment.Text);
             Assert.IsFalse(testingComment.IsResolved);
@@ -43,8 +47,9 @@ namespace UnitTests
         {
             string someText = "Falta resolver el issue 12-3.";
             User creator = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
-                "ravenna@simuladores.com", DateTime.Today, "contraseñaValida123");
-            testingComment = Comment.CreatorText(creator, someText);
+                "ravenna@simuladores.com", DateTime.Today, "contraseñaVálida123");
+            testingComment = Comment.CreatorElementText(creator,
+                testingElement, someText);
             Assert.AreEqual(creator, testingComment.Creator);
             Assert.AreEqual(someText, testingComment.Text);
             Assert.IsFalse(testingComment.IsResolved);
@@ -55,7 +60,8 @@ namespace UnitTests
         public void CommentParameterFactoryMethodInvalidTextTest()
         {
             User creator = User.InstanceForTestingPurposes();
-            testingComment = Comment.CreatorText(creator, " \n\n  \t\t \n\t  ");
+            testingComment = Comment.CreatorElementText(creator, testingElement,
+                " \n\n  \t\t \n\t  ");
         }
 
         [TestMethod]
@@ -63,7 +69,8 @@ namespace UnitTests
         public void CommentParameterFactoryMethodNullTextTest()
         {
             User creator = User.InstanceForTestingPurposes();
-            testingComment = Comment.CreatorText(creator, null);
+            testingComment = Comment.CreatorElementText(creator,
+                testingElement, null);
         }
 
         [TestMethod]
@@ -71,7 +78,8 @@ namespace UnitTests
         public void CommentParameterFactoryMethodNullCreatorTest()
         {
             string someText = "Falta resolver el issue 12-3.";
-            testingComment = Comment.CreatorText(null, someText);
+            testingComment = Comment.CreatorElementText(null,
+                testingElement, someText);
         }
 
         [TestMethod]
@@ -133,19 +141,19 @@ namespace UnitTests
             Assert.IsTrue(testingComment.IsResolved);
             Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate().Date);
             Assert.AreEqual(testingComment.Resolver, aUser);
-            CollectionAssert.Contains(aUser.CommentsResolved, testingComment);
+            CollectionAssert.Contains(aUser.CommentsResolved.ToList(), testingComment);
         }
 
         [TestMethod]
         public void CommentResolutionValidTest2()
         {
             User aUser = User.NamesEmailBirthdatePassword("Mario", "Santos",
-                "santos@simuladores.com", DateTime.Today, "contraseñaValida123");
+                "santos@simuladores.com", DateTime.Today, "contraseñaVálida123");
             testingComment.Resolve(aUser);
             Assert.IsTrue(testingComment.IsResolved);
             Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate().Date);
             Assert.AreEqual(testingComment.Resolver, aUser);
-            CollectionAssert.Contains(aUser.CommentsResolved, testingComment);
+            CollectionAssert.Contains(aUser.CommentsResolved.ToList(), testingComment);
         }
 
         [TestMethod]
@@ -171,7 +179,7 @@ namespace UnitTests
             Assert.IsTrue(testingComment.IsResolved);
             Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate().Date);
             Assert.AreEqual(testingComment.Resolver, aUser);
-            CollectionAssert.Contains(aUser.CommentsResolved, testingComment);
+            CollectionAssert.Contains(aUser.CommentsResolved.ToList(), testingComment);
             testingComment.Resolve(aUser);
         }
 
@@ -184,10 +192,17 @@ namespace UnitTests
             Assert.IsTrue(testingComment.IsResolved);
             Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate().Date);
             Assert.AreEqual(testingComment.Resolver, aUser);
-            CollectionAssert.Contains(aUser.CommentsResolved, testingComment);
+            CollectionAssert.Contains(aUser.CommentsResolved.ToList(), testingComment);
             User differentUser = User.NamesEmailBirthdatePassword("Mario", "Santos",
-                "santos@simuladores.com", DateTime.Today, "contraseñaValida123");
+                "santos@simuladores.com", DateTime.Today, "contraseñaVálida123");
             testingComment.Resolve(differentUser);
+        }
+
+        [TestMethod]
+        public void CommentGetHashCodeTest()
+        {
+            object testingCommentAsObject = testingComment;
+            Assert.AreEqual(testingCommentAsObject.GetHashCode(), testingComment.GetHashCode());
         }
     }
 }
