@@ -232,11 +232,29 @@ namespace Domain {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pizarrón no válido recibido: no es posible crear dos pizarrones con el mismo nombre asociados a un único equipo..
+        /// </summary>
+        internal static string RepeatedWhiteboardName {
+            get {
+                return ResourceManager.GetString("RepeatedWhiteboardName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Equipo inválido (nulo) recibido..
         /// </summary>
         internal static string TeamIsInvalid {
             get {
                 return ResourceManager.GetString("TeamIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pizarrón no válido recibido: no se encuentra asociado al equipo en cuestión..
+        /// </summary>
+        internal static string notAddedWhiteboardRecieved {
+            get {
+                return ResourceManager.GetString("notAddedWhiteboardRecieved", resourceCulture);
             }
         }
         
@@ -255,15 +273,6 @@ namespace Domain {
         internal static string UserNameIsInvalid {
             get {
                 return ResourceManager.GetString("UserNameIsInvalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Pizarrón no válido recibido..
-        /// </summary>
-        internal static string WhiteboardIsInvalid {
-            get {
-                return ResourceManager.GetString("WhiteboardIsInvalid", resourceCulture);
             }
         }
         

@@ -11,6 +11,7 @@ namespace Persistence
             DateTime birthdate, string password);
         public abstract void ModifyUser(User userToModify, string firstNameToSet, string lastNameToSet,
             string emailToSet, DateTime birthdateToSet, string passwordToSet);
+        public abstract string ResetUsersPassword(User userToModify);
 
         private static volatile UserRepositoryInMemory instance;
         private static object syncRoot = new Object();

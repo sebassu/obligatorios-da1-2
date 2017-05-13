@@ -1,5 +1,6 @@
 ﻿using System;
 using Exceptions;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
@@ -22,7 +23,8 @@ namespace Domain
                 }
                 else
                 {
-                    string errorMessage = string.Format(ErrorMessages.NameIsInvalid, value);
+                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                        ErrorMessages.NameIsInvalid, value);
                     throw new TeamException(errorMessage);
                 }
             }
@@ -30,7 +32,7 @@ namespace Domain
 
         public static bool IsValidTeamName(string value)
         {
-            return !string.IsNullOrEmpty(value) && Utilities.ContainsOnlyLettersDigitsOrSpaces(value);
+            return Utilities.ContainsLettersDigitsOrSpacesOnly(value);
         }
 
         public DateTime CreationDate { get; } = DateTime.Now;
@@ -64,8 +66,8 @@ namespace Domain
                 }
                 else
                 {
-                    string errorMessage = string.Format(ErrorMessages.InvalidMaximumMembers,
-                        value, minimumMembers);
+                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                        ErrorMessages.InvalidMaximumMembers, value, minimumMembers);
                     throw new TeamException(errorMessage);
                 }
             }
@@ -83,7 +85,7 @@ namespace Domain
             }
         }
 
-        public void AddMember(User userToAdd)
+        internal void AddMember(User userToAdd)
         {
             bool canBeMember = Utilities.IsNotNull(userToAdd) && IsPossibleToAdd(userToAdd);
             if (canBeMember)
@@ -101,7 +103,7 @@ namespace Domain
             return members.Count < maximumMembers && !members.Contains(aMember);
         }
 
-        public void RemoveMember(User userToRemove)
+        internal void RemoveMember(User userToRemove)
         {
             if (!WasRemoved(userToRemove))
             {
@@ -116,15 +118,26 @@ namespace Domain
 
         public void AddWhiteboard(Whiteboard whiteboardToAdd)
         {
-            bool isPossibleToAddWhiteboard = Utilities.IsNotNull(whiteboardToAdd) &&
-                !createdWhiteboards.Contains(whiteboardToAdd);
+            if (Utilities.IsNotNull(whiteboardToAdd))
+            {
+                AddWhiteboardToCollectionIfPossible(whiteboardToAdd);
+            }
+            else
+            {
+                throw new TeamException(ErrorMessages.NullWhiteboard);
+            }
+        }
+
+        private void AddWhiteboardToCollectionIfPossible(Whiteboard whiteboardToAdd)
+        {
+            bool isPossibleToAddWhiteboard = !createdWhiteboards.Contains(whiteboardToAdd);
             if (isPossibleToAddWhiteboard)
             {
                 createdWhiteboards.Add(whiteboardToAdd);
             }
             else
             {
-                throw new TeamException(ErrorMessages.WhiteboardIsInvalid);
+                throw new TeamException(ErrorMessages.RepeatedWhiteboardName);
             }
         }
 
@@ -133,7 +146,7 @@ namespace Domain
             bool whiteboardWasRemoved = createdWhiteboards.Remove(someWhiteboard);
             if (!whiteboardWasRemoved)
             {
-                throw new TeamException(ErrorMessages.WhiteboardIsInvalid);
+                throw new TeamException(ErrorMessages.notAddedWhiteboardRecieved);
             }
         }
 
@@ -151,7 +164,7 @@ namespace Domain
             members.Add(defaultCreator);
         }
 
-        public static Team CreatorNameDescriptionMaximumMembers(User creator, string name,
+        internal static Team CreatorNameDescriptionMaximumMembers(User creator, string name,
             string description, int maximumMembers)
         {
             return new Team(creator, name, description, maximumMembers);

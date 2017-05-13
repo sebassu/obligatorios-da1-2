@@ -1,20 +1,22 @@
 ﻿using System;
 using Exceptions;
 using System.Linq;
+using System.Globalization;
 using System.Collections.ObjectModel;
 
 namespace Domain
 {
-    public class Password
+    internal class Password : IPassword
     {
-        private static readonly ReadOnlyCollection<char> allowedCharacters =
-            Array.AsReadOnly("ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz0123456789".ToCharArray());
+        private static readonly ReadOnlyCollection<char> allowedCharacters = Array.AsReadOnly(
+            "ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz0123456789áéíóúÁÉÍÓÚüÜëË"
+            .ToCharArray());
         private const byte minimumLength = 6;
         private const byte maximumLength = 20;
         private const byte lengthOfGeneratedPassword = 10;
 
         private string passwordValue;
-        internal string PasswordValue
+        public string PasswordValue
         {
             get { return passwordValue; }
             set
@@ -25,8 +27,8 @@ namespace Domain
                 }
                 else
                 {
-                    string errorMessage = String.Format(ErrorMessages.PasswordIsInvalid, value,
-                        minimumLength, maximumLength);
+                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                        ErrorMessages.PasswordIsInvalid, value, minimumLength, maximumLength);
                     throw new PasswordException(errorMessage);
                 }
             }
@@ -48,12 +50,12 @@ namespace Domain
             return value.Length <= maximumLength && value.Length >= minimumLength;
         }
 
-        internal Password()
+        public Password()
         {
             passwordValue = "Contraseña inválida.";
         }
 
-        internal string Reset()
+        public string Reset()
         {
             string newPassword = GenerateNewPassword();
             passwordValue = newPassword;

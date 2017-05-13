@@ -35,21 +35,32 @@ namespace Persistence
         {
             ValidateActiveUserHasAdministrationPrivileges();
             userToModify = GetActualObjectInCollection(userToModify);
-            SetUserAttributes(userToModify, firstNameToSet, lastNameToSet,
+            AttemptToSetUserAttributes(userToModify, firstNameToSet, lastNameToSet,
                 emailToSet, birthdateToSet, passwordToSet);
         }
 
-        private void SetUserAttributes(User userToModify, string firstNameToSet,
+        private void AttemptToSetUserAttributes(User userToModify, string firstNameToSet,
             string lastNameToSet, string emailToSet, DateTime birthdateToSet, string passwordToSet)
         {
             if (ChangeDoesNotCauseRepeatedUserEmails(userToModify, emailToSet))
             {
-                userToModify.FirstName = firstNameToSet;
-                userToModify.LastName = lastNameToSet;
-                userToModify.Email = emailToSet;
-                userToModify.Birthdate = birthdateToSet;
-                userToModify.Password = passwordToSet;
+                SetUserAttributes(userToModify, firstNameToSet, lastNameToSet, emailToSet,
+                    birthdateToSet, passwordToSet);
             }
+            else
+            {
+                throw new RepositoryException(ErrorMessages.UserEmailMustBeUnique);
+            }
+        }
+
+        private static void SetUserAttributes(User userToModify, string firstNameToSet,
+            string lastNameToSet, string emailToSet, DateTime birthdateToSet, string passwordToSet)
+        {
+            userToModify.FirstName = firstNameToSet;
+            userToModify.LastName = lastNameToSet;
+            userToModify.Email = emailToSet;
+            userToModify.Birthdate = birthdateToSet;
+            userToModify.Password = passwordToSet;
         }
 
         private bool ChangeDoesNotCauseRepeatedUserEmails(User userToModify, string emailToSet)
@@ -60,7 +71,14 @@ namespace Persistence
 
         private bool ThereIsNoTeamWithName(string emailToSet)
         {
-            return elements.Count(u => u.Email == emailToSet) == 0;
+            return !elements.Any(u => u.Email == emailToSet);
+        }
+
+        public override string ResetUsersPassword(User userToModify)
+        {
+            ValidateActiveUserHasAdministrationPrivileges();
+            userToModify = GetActualObjectInCollection(userToModify);
+            return userToModify.ResetPassword();
         }
 
         public override void Remove(User elementToRemove)

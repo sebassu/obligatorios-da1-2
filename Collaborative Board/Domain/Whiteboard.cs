@@ -1,6 +1,7 @@
 ﻿using System;
 using Exceptions;
 using System.Linq;
+using System.Globalization;
 using System.Collections.Generic;
 
 namespace Domain
@@ -22,7 +23,7 @@ namespace Domain
         public string Name
         {
             get { return name; }
-            set
+            internal set
             {
                 if (IsValidName(value))
                 {
@@ -31,7 +32,8 @@ namespace Domain
                 }
                 else
                 {
-                    string errorMessage = string.Format(ErrorMessages.NameIsInvalid, value);
+                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                        ErrorMessages.NameIsInvalid, value);
                     throw new WhiteboardException(errorMessage);
                 }
             }
@@ -39,15 +41,14 @@ namespace Domain
 
         public static bool IsValidName(string value)
         {
-            return !string.IsNullOrEmpty(value) &&
-                Utilities.ContainsOnlyLettersDigitsOrSpaces(value);
+            return Utilities.ContainsLettersDigitsOrSpacesOnly(value);
         }
 
         private string description;
         public string Description
         {
             get { return description; }
-            set
+            internal set
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {
@@ -65,7 +66,7 @@ namespace Domain
         public int Width
         {
             get { return width; }
-            set
+            internal set
             {
                 if (value >= minimumWidth)
                 {
@@ -74,7 +75,8 @@ namespace Domain
                 }
                 else
                 {
-                    string errorMessage = string.Format(ErrorMessages.WidthIsInvalid, value);
+                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                        ErrorMessages.WidthIsInvalid, value);
                     throw new WhiteboardException(errorMessage);
                 }
             }
@@ -84,7 +86,7 @@ namespace Domain
         public int Height
         {
             get { return height; }
-            set
+            internal set
             {
                 if (value >= minimumHeight)
                 {
@@ -93,7 +95,8 @@ namespace Domain
                 }
                 else
                 {
-                    string errorMessage = string.Format(ErrorMessages.HeightIsInvalid, value);
+                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                        ErrorMessages.HeightIsInvalid, value);
                     throw new WhiteboardException(errorMessage);
                 }
             }
@@ -134,16 +137,22 @@ namespace Domain
 
         private Whiteboard()
         {
+            Creator = User.InstanceForTestingPurposes();
+            OwnerTeam = Team.InstanceForTestingPurposes();
+            SetAttributesForTesting();
+            UpdateModificationDate();
+            UpdateOwnerTeamsWhiteboardCollection();
+        }
+
+        private void SetAttributesForTesting()
+        {
             name = "Pizarrón inválido";
             description = "Descripción inválida.";
             width = int.MaxValue;
             height = int.MaxValue;
-            Creator = User.InstanceForTestingPurposes();
-            OwnerTeam = Team.InstanceForTestingPurposes();
-            UpdateModificationDate();
         }
 
-        public static Whiteboard CreatorNameDescriptionOwnerTeamWidthHeight(User creator,
+        internal static Whiteboard CreatorNameDescriptionOwnerTeamWidthHeight(User creator,
             string name, string description, Team ownerTeam, int width, int height)
         {
             return new Whiteboard(creator, name, description, ownerTeam, width, height);
@@ -158,13 +167,19 @@ namespace Domain
                 OwnerTeam = anOwnerTeam;
                 SetModifiableAttributes(aName, aDescription, aWidth, aHeight);
                 UpdateModificationDate();
+                UpdateOwnerTeamsWhiteboardCollection();
             }
             else
             {
-                string errorMessage = string.Format(ErrorMessages.CreatorIsInvalid,
-                    aCreator, anOwnerTeam);
+                string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                    ErrorMessages.CreatorIsInvalid, aCreator, anOwnerTeam);
                 throw new WhiteboardException(errorMessage);
             }
+        }
+
+        private void UpdateOwnerTeamsWhiteboardCollection()
+        {
+            OwnerTeam.AddWhiteboard(this);
         }
 
         private void SetModifiableAttributes(string aName, string aDescription, int aWidth,
