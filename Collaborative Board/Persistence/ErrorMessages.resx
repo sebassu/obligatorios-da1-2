@@ -145,7 +145,7 @@
     <value>No es posible que existan en el sistema dos equipos distintos con el mismo nombre.</value>
   </data>
   <data name="UserCannotModifyWhiteboard" xml:space="preserve">
-    <value>No es posible modificar a un pizarrón sin ser miembro del equipo asociado al mismo.</value>
+    <value>No es posible modificar a un pizarrón sin ser miembro del equipo asociado al mismo o un administrador.</value>
   </data>
   <data name="UserCannotRemoveWhiteboard" xml:space="preserve">
     <value>Es necesario ser el creador del pizarrón o un administrador del sistema para eliminarlo.</value>

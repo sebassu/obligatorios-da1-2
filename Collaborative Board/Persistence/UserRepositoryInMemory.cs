@@ -95,7 +95,7 @@ namespace Persistence
 
         private bool IsTheOnlyAdministratorLeft(User elementToRemove)
         {
-            var administrators = elements.Where(u => u.HasAdministrationPrivileges).ToList();
+            var administrators = elements.Where(u => Utilities.HasAdministrationPrivileges(u)).ToList();
             return administrators.Count == 1 && administrators.Single().Equals(elementToRemove);
         }
 

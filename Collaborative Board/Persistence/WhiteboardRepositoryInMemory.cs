@@ -83,6 +83,11 @@ namespace Persistence
         public override void Remove(Whiteboard elementToRemove)
         {
             ValidateUserCanRemoveWhiteboard(elementToRemove);
+            AttemptToPerformRemove(elementToRemove);
+        }
+
+        private void AttemptToPerformRemove(Whiteboard elementToRemove)
+        {
             if (elementToRemove != null)
             {
                 PerformRemove(elementToRemove);
@@ -93,10 +98,12 @@ namespace Persistence
             }
         }
 
-        private static void ValidateUserCanRemoveWhiteboard(Whiteboard whiteboardToModify)
+        private static void ValidateUserCanRemoveWhiteboard(Whiteboard whiteboardToRemove)
         {
             User activeUser = Session.ActiveUser();
-            if (!whiteboardToModify.UserCanRemove(activeUser))
+            bool cannotPerformRemoval = whiteboardToRemove == null
+                || !whiteboardToRemove.UserCanRemove(activeUser);
+            if (cannotPerformRemoval)
             {
                 throw new RepositoryException(ErrorMessages.UserCannotRemoveWhiteboard);
             }
@@ -107,6 +114,11 @@ namespace Persistence
             Team whiteboardsOwnerTeam = elementToRemove.OwnerTeam;
             whiteboardsOwnerTeam.RemoveWhiteboard(elementToRemove);
             base.Remove(elementToRemove);
+        }
+
+        internal override void RemoveDueToTeamDeletion(Whiteboard whiteboardToRemove)
+        {
+            AttemptToPerformRemove(whiteboardToRemove);
         }
 
         internal WhiteboardRepositoryInMemory()

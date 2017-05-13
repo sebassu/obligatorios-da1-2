@@ -106,6 +106,16 @@ namespace Domain
             get { return origin.Y; }
         }
 
+        internal double WidthContainerNeeded()
+        {
+            return width + RelativeX;
+        }
+
+        internal double HeightContainerNeeded()
+        {
+            return height + RelativeY;
+        }
+
         private readonly List<Comment> comments = new List<Comment>();
         public IReadOnlyCollection<Comment> Comments => comments.AsReadOnly();
 

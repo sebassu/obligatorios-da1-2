@@ -10,10 +10,10 @@ namespace Interface
         private Whiteboard whiteboardShown;
         private Point mouseDownLocation;
 
-        public WhiteboardVisualization()
+        public WhiteboardVisualization(Whiteboard someWhiteboard)
         {
             InitializeComponent();
-            //whiteboardShown = someWhiteboard;
+            whiteboardShown = someWhiteboard;
         }
 
         private void BtnAddImage_Click(object sender, EventArgs e)
@@ -24,22 +24,22 @@ namespace Interface
             };
             if (fileSelector.ShowDialog() == DialogResult.OK)
             {
-                /*ImageWhiteboard imageToAdd = ImageWhiteboard.CreateWithContainerSource(whiteboardShown,
-                    fileSelector.FileName);*/
+                ImageWhiteboard imageToAdd = ImageWhiteboard.CreateWithContainerSource(whiteboardShown,
+                    fileSelector.FileName);
                 PictureBox interfaceContainer = new PictureBox()
                 {
-                    //Image = imageToAdd.ActualImage,
-                    Image = Image.FromFile(fileSelector.FileName),
+                    Image = imageToAdd.ActualImage,
+                    Tag = imageToAdd,
                     SizeMode = PictureBoxSizeMode.StretchImage,
                     Parent = pnlWhiteboard
                 };
-                interfaceContainer.MouseClick += new MouseEventHandler(pictureBox1_MouseDown);
-                interfaceContainer.MouseMove += new MouseEventHandler(pictureBox1_MouseMove);
+                interfaceContainer.MouseClick += new MouseEventHandler(ClickMouseElement);
+                interfaceContainer.MouseMove += new MouseEventHandler(MoveMouseElement);
                 pnlWhiteboard.Controls.Add(interfaceContainer);
             }
         }
 
-        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        private void ClickMouseElement(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -47,7 +47,7 @@ namespace Interface
             }
         }
 
-        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        private void MoveMouseElement(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {

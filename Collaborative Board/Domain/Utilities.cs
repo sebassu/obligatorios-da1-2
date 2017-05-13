@@ -36,5 +36,10 @@ namespace Domain
         {
             return value <= DateTime.Today;
         }
+
+        public static bool HasAdministrationPrivileges(User someUser)
+        {
+            return IsNotNull(someUser) && someUser.HasAdministrationPrivileges;
+        }
     }
 }

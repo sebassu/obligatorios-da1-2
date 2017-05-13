@@ -56,51 +56,52 @@ namespace Interface
         public static void NotElementSelectedMessageBox()
         {
             DialogResult result = MessageBox.Show("Debe seleccionar un elemento de la lista!",
-                "Error" , MessageBoxButtons.OK, MessageBoxIcon.Error);
+                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         public static void GoToHome(Panel systemPanel)
         {
-            systemPanel.Controls.Clear();
-            systemPanel.Controls.Add(new UCAdministratorHome(systemPanel));
+            ChangeUserControl(new UCAdministratorHome(systemPanel), systemPanel);
         }
 
         public static void UCAdministratorTeamsToPanel(Panel systemPanel)
         {
-            systemPanel.Controls.Clear();
-            systemPanel.Controls.Add(new UCAdministratorTeams(systemPanel));
+            ChangeUserControl(new UCAdministratorUsers(systemPanel), systemPanel);
         }
 
         public static void UCAdministatorUsersToPanel(Panel systemPanel)
         {
-            systemPanel.Controls.Clear();
-            systemPanel.Controls.Add(new UCAdministratorUsers(systemPanel));
+            ChangeUserControl(new UCAdministratorUsers(systemPanel), systemPanel);
         }
 
         public static void UCWhiteboardsToPanel(Panel systemPanel)
         {
-            systemPanel.Controls.Clear();
-            systemPanel.Controls.Add(new UCWhiteboards(systemPanel));
+            ChangeUserControl(new UCWhiteboards(systemPanel), systemPanel);
         }
 
         public static void UCAdministrateTeamToPanel(Panel systemPanel, Team oneTeam)
         {
+            ChangeUserControl(new UCAdministrateTeam(systemPanel, oneTeam), systemPanel);
+        }
+
+        public static void ChangeUserControl(UserControl someUserControl, Panel systemPanel)
+        {
             systemPanel.Controls.Clear();
-            systemPanel.Controls.Add(new UCAdministrateTeam(systemPanel, oneTeam));
+            systemPanel.Controls.Add(someUserControl);
         }
 
         public static void UCAddOrModifyUserToPanel(Panel systemPanel, User oneUser = null)
         {
             systemPanel.Controls.Clear();
             if (Utilities.IsNotNull(oneUser))
-            {  
+            {
                 systemPanel.Controls.Add(new UCAddOrModifyUser(systemPanel, oneUser));
             }
             else
             {
                 systemPanel.Controls.Add(new UCAddOrModifyUser(systemPanel));
             }
-            
+
         }
 
         public static void UCAddOrModifyTeamToPanel(Panel systemPanel, Team oneTeam = null)
@@ -126,7 +127,7 @@ namespace Interface
             else
             {
                 systemPanel.Controls.Add(new UCAddOrModifyWhiteboard(systemPanel));
-            }  
+            }
         }
 
         public static string GetDateToShow(DateTime someDate)
@@ -139,6 +140,23 @@ namespace Interface
             {
                 return "N/a";
             }
+        }
+
+        public static void PerformActionIfElementIsSelected(ListView component, Action actionToPerform)
+        {
+            if (component.SelectedItems.Count > 0)
+            {
+                actionToPerform.Invoke();
+            }
+            else
+            {
+                NotElementSelectedMessageBox();
+            }
+        }
+
+        internal static void PerformActionIfElementIsSelected(object openWhiteboardVisualization)
+        {
+            throw new NotImplementedException();
         }
     }
 }

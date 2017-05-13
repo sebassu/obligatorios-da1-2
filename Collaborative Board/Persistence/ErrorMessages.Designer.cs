@@ -142,7 +142,7 @@ namespace Persistence {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No es posible modificar a un pizarrón sin ser miembro del equipo asociado al mismo..
+        ///   Looks up a localized string similar to No es posible modificar a un pizarrón sin ser miembro del equipo asociado al mismo o un administrador..
         /// </summary>
         internal static string UserCannotModifyWhiteboard {
             get {

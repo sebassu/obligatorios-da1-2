@@ -78,7 +78,7 @@ namespace Persistence
             var teamWhiteboards = elementToRemove.CreatedWhiteboards.ToList();
             foreach (var whiteboard in teamWhiteboards)
             {
-                globalWhiteboards.Remove(whiteboard);
+                globalWhiteboards.RemoveDueToTeamDeletion(whiteboard);
             }
         }
 
