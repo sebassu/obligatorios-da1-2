@@ -47,6 +47,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="WhiteboardVisualization.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WhiteboardVisualization.Designer.cs">
+      <DependentUpon>WhiteboardVisualization.cs</DependentUpon>
+	</Compile>
     <Compile Include="UCAddOrModifyTeam.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -179,6 +185,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="WhiteboardVisualization.resx">
+      <DependentUpon>WhiteboardVisualization.cs</DependentUpon>
+	</EmbeddedResource>
     <EmbeddedResource Include="UCAdministratorHome.resx">
       <DependentUpon>UCAdministratorHome.cs</DependentUpon>
     </EmbeddedResource>

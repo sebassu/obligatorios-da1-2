@@ -216,9 +216,9 @@ namespace Domain {
         /// <summary>
         ///   Looks up a localized string similar to Pizarrón no válido recibido: no se encuentra asociado al equipo en cuestión..
         /// </summary>
-        internal static string notAddedWhiteboardRecieved {
+        internal static string NotAddedWhiteboardRecieved {
             get {
-                return ResourceManager.GetString("notAddedWhiteboardRecieved", resourceCulture);
+                return ResourceManager.GetString("NotAddedWhiteboardRecieved", resourceCulture);
             }
         }
         

@@ -142,11 +142,20 @@ namespace Persistence {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Es necesario ser el creador del pizarrón o un administrador del sistema para modificar al mismo..
+        ///   Looks up a localized string similar to No es posible modificar a un pizarrón sin ser miembro del equipo asociado al mismo..
         /// </summary>
         internal static string UserCannotModifyWhiteboard {
             get {
                 return ResourceManager.GetString("UserCannotModifyWhiteboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Es necesario ser el creador del pizarrón o un administrador del sistema para eliminarlo..
+        /// </summary>
+        internal static string UserCannotRemoveWhiteboard {
+            get {
+                return ResourceManager.GetString("UserCannotRemoveWhiteboard", resourceCulture);
             }
         }
         

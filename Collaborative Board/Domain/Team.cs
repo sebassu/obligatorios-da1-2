@@ -146,7 +146,7 @@ namespace Domain
             bool whiteboardWasRemoved = createdWhiteboards.Remove(someWhiteboard);
             if (!whiteboardWasRemoved)
             {
-                throw new TeamException(ErrorMessages.notAddedWhiteboardRecieved);
+                throw new TeamException(ErrorMessages.NotAddedWhiteboardRecieved);
             }
         }
 

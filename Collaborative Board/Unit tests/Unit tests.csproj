@@ -73,7 +73,7 @@
       <Name>Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\Exceptions\Exceptions.csproj">
-      <Project>{82815c65-5a9e-44b6-bdec-9327a5cb94f9}</Project>
+      <Project>{3dee1d1c-11b9-4470-8f2b-b2b828fd3ec6}</Project>
       <Name>Exceptions</Name>
     </ProjectReference>
     <ProjectReference Include="..\Persistence\Persistence.csproj">
