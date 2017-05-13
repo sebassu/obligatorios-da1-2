@@ -135,7 +135,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserWindow.resx">
       <DependentUpon>UserWindow.cs</DependentUpon>
-	</EmbeddedResource>
+    </EmbeddedResource>
     <Compile Include="InterfaceUtilities.cs" />
     <Compile Include="Login.cs">
       <SubType>Form</SubType>

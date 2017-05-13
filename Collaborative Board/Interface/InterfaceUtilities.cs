@@ -1,6 +1,7 @@
-﻿using Exceptions;
-using System;
+﻿using System;
+using Exceptions;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace Interface
 {
@@ -35,8 +36,16 @@ namespace Interface
             systemPanel.Controls.Add(new UCAdministratorHome(systemPanel));
         }
 
-        
-
-
+        public static string GetDateToShow(DateTime someDate)
+        {
+            if (someDate != DateTime.MinValue)
+            {
+                return someDate.ToString("d", CultureInfo.CurrentCulture);
+            }
+            else
+            {
+                return "N/a";
+            }
+        }
     }
 }

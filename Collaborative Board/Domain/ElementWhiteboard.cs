@@ -1,4 +1,5 @@
 ﻿using Exceptions;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 
@@ -103,6 +104,21 @@ namespace Domain
         public double RelativeY
         {
             get { return origin.Y; }
+        }
+
+        private readonly List<Comment> comments = new List<Comment>();
+        public IReadOnlyCollection<Comment> Comments => comments.AsReadOnly();
+
+        public void AddComment(Comment someComment)
+        {
+            if (!comments.Contains(someComment))
+            {
+                comments.Add(someComment);
+            }
+            else
+            {
+                throw new CommentException(ErrorMessages.CommentAlreadyAdded);
+            }
         }
 
         protected ElementWhiteboard()

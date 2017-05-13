@@ -97,11 +97,38 @@ namespace Domain {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fecha inválida para la resolución del comentario recibida: es anterior a su creación..
+        /// </summary>
+        internal static string CannotResolveCommentBeforeCreation {
+            get {
+                return ResourceManager.GetString("CannotResolveCommentBeforeCreation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El comentario recibido ya se encuentra registrado..
+        /// </summary>
+        internal static string CommentAlreadyAdded {
+            get {
+                return ResourceManager.GetString("CommentAlreadyAdded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to El texto introducido para el comentario no es válido, reintente..
         /// </summary>
         internal static string CommentTextIsInvalid {
             get {
                 return ResourceManager.GetString("CommentTextIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El comentario recibido no se encuentra en este usuario..
+        /// </summary>
+        internal static string CommentWasNotAdded {
+            get {
+                return ResourceManager.GetString("CommentWasNotAdded", resourceCulture);
             }
         }
         
@@ -187,6 +214,15 @@ namespace Domain {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pizarrón no válido recibido: no se encuentra asociado al equipo en cuestión..
+        /// </summary>
+        internal static string notAddedWhiteboardRecieved {
+            get {
+                return ResourceManager.GetString("notAddedWhiteboardRecieved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to El elemento recibido es inválido (nulo)..
         /// </summary>
         internal static string NullElement {
@@ -246,15 +282,6 @@ namespace Domain {
         internal static string TeamIsInvalid {
             get {
                 return ResourceManager.GetString("TeamIsInvalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Pizarrón no válido recibido: no se encuentra asociado al equipo en cuestión..
-        /// </summary>
-        internal static string notAddedWhiteboardRecieved {
-            get {
-                return ResourceManager.GetString("notAddedWhiteboardRecieved", resourceCulture);
             }
         }
         
