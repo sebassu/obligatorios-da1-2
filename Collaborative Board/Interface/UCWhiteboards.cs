@@ -136,6 +136,11 @@ namespace Interface
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(PerformDeleteAction);
+        }
+
+        private void PerformDeleteAction()
+        {
             if (lstRegisteredWhiteboards.SelectedItems.Count > 0)
             {
                 Whiteboard whiteboardToDelete = lstRegisteredWhiteboards.SelectedItems[0].Tag as Whiteboard;

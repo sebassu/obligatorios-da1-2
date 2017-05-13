@@ -45,6 +45,7 @@
             this.picMarker = new System.Windows.Forms.PictureBox();
             this.lblIsAdministrator = new System.Windows.Forms.Label();
             this.cbxIsAdministrator = new System.Windows.Forms.CheckBox();
+            this.btnResetPassword = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picMarker)).BeginInit();
             this.SuspendLayout();
             // 
@@ -144,7 +145,7 @@
             // 
             this.btnCancel.BackColor = System.Drawing.Color.Red;
             this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.Location = new System.Drawing.Point(372, 430);
+            this.btnCancel.Location = new System.Drawing.Point(366, 442);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(99, 35);
             this.btnCancel.TabIndex = 10;
@@ -156,7 +157,7 @@
             // 
             this.btnAccept.BackColor = System.Drawing.Color.Lime;
             this.btnAccept.ForeColor = System.Drawing.Color.White;
-            this.btnAccept.Location = new System.Drawing.Point(250, 430);
+            this.btnAccept.Location = new System.Drawing.Point(250, 442);
             this.btnAccept.Name = "btnAccept";
             this.btnAccept.Size = new System.Drawing.Size(99, 35);
             this.btnAccept.TabIndex = 11;
@@ -190,7 +191,7 @@
             this.lblIsAdministrator.AutoSize = true;
             this.lblIsAdministrator.BackColor = System.Drawing.Color.Transparent;
             this.lblIsAdministrator.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblIsAdministrator.Location = new System.Drawing.Point(111, 383);
+            this.lblIsAdministrator.Location = new System.Drawing.Point(111, 398);
             this.lblIsAdministrator.Name = "lblIsAdministrator";
             this.lblIsAdministrator.Size = new System.Drawing.Size(124, 18);
             this.lblIsAdministrator.TabIndex = 14;
@@ -199,11 +200,21 @@
             // cbxIsAdministrator
             // 
             this.cbxIsAdministrator.AutoSize = true;
-            this.cbxIsAdministrator.Location = new System.Drawing.Point(450, 383);
+            this.cbxIsAdministrator.Location = new System.Drawing.Point(450, 402);
             this.cbxIsAdministrator.Name = "cbxIsAdministrator";
             this.cbxIsAdministrator.Size = new System.Drawing.Size(15, 14);
             this.cbxIsAdministrator.TabIndex = 15;
             this.cbxIsAdministrator.UseVisualStyleBackColor = true;
+            // 
+            // btnResetPassword
+            // 
+            this.btnResetPassword.Location = new System.Drawing.Point(335, 355);
+            this.btnResetPassword.Name = "btnResetPassword";
+            this.btnResetPassword.Size = new System.Drawing.Size(130, 27);
+            this.btnResetPassword.TabIndex = 16;
+            this.btnResetPassword.Text = "Resetear contraseña";
+            this.btnResetPassword.UseVisualStyleBackColor = true;
+            this.btnResetPassword.Click += new System.EventHandler(this.btnResetPassword_Click);
             // 
             // UCAddOrModifyUser
             // 
@@ -211,6 +222,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Controls.Add(this.btnResetPassword);
             this.Controls.Add(this.cbxIsAdministrator);
             this.Controls.Add(this.lblIsAdministrator);
             this.Controls.Add(this.picMarker);
@@ -253,5 +265,6 @@
         private System.Windows.Forms.PictureBox picMarker;
         private System.Windows.Forms.Label lblIsAdministrator;
         private System.Windows.Forms.CheckBox cbxIsAdministrator;
+        private System.Windows.Forms.Button btnResetPassword;
     }
 }

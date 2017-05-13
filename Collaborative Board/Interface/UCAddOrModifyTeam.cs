@@ -36,6 +36,7 @@ namespace Interface
         private void btnAccept_Click(object sender, EventArgs e)
         {
             InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(PerformChangeAction);
+            InterfaceUtilities.UCAdministratorTeamsToPanel(systemPanel);
         }
 
         private void PerformChangeAction()
@@ -50,7 +51,7 @@ namespace Interface
             {
                 globalTeams.AddNewTeam(txtName.Text, rtbDescription.Text, maxUsers);
             }
-            InterfaceUtilities.UCAdministratorTeamsToPanel(systemPanel);
+           
         }
         
         

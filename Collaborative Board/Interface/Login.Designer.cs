@@ -111,13 +111,13 @@
             // 
             // btnLoadTestData
             // 
-            this.btnLoadTestData.Location = new System.Drawing.Point(85, 152);
+            this.btnLoadTestData.Location = new System.Drawing.Point(49, 157);
             this.btnLoadTestData.Name = "btnLoadTestData";
             this.btnLoadTestData.Size = new System.Drawing.Size(95, 43);
             this.btnLoadTestData.TabIndex = 7;
             this.btnLoadTestData.Text = "Cargar datos de prueba";
             this.btnLoadTestData.UseVisualStyleBackColor = true;
-            this.btnLoadTestData.Click += new System.EventHandler(this.btnLoadTestData_Click);
+            this.btnLoadTestData.Click += new System.EventHandler(this.BtnLoadTestData_Click);
             // 
             // Login
             // 
@@ -137,6 +137,7 @@
             this.Controls.Add(this.txtEmail);
             this.Name = "Login";
             this.Text = "Collaborative Board";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Login_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.picLogin)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -118,6 +118,11 @@ namespace Interface
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(PerformDeleteAction);
+        }
+
+        private void PerformDeleteAction()
+        {
             if (lstUsers.SelectedItems.Count > 0)
             {
                 User userToDelete = lstUsers.SelectedItems[0].Tag as User;

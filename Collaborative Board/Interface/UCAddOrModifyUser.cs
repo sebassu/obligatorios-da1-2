@@ -40,6 +40,7 @@ namespace Interface
         private void btnAccept_Click(object sender, EventArgs e)
         {
             InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(PerformChangeAction);
+            InterfaceUtilities.UCAdministatorUsersToPanel(systemPanel);
         }
 
         private void PerformChangeAction()
@@ -55,7 +56,15 @@ namespace Interface
                 globalUsers.AddNewUser(txtFirstName.Text, txtLastName.Text,
                     txtEmail.Text, dtpBirthDate.Value, txtPassword.Text);
             }
-            InterfaceUtilities.UCAdministatorUsersToPanel(systemPanel);
+        }
+
+        private void btnResetPassword_Click(object sender, EventArgs e)
+        {
+            UserRepository globalUsers = UserRepository.GetInstance();
+            String newPassWord = globalUsers.ResetUsersPassword(userToModify);
+            txtPassword.Text = userToModify.Password;
+            DialogResult result = MessageBox.Show("La nueva contraseña es: " + newPassWord, "Reseteo de contraseña",
+                               MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

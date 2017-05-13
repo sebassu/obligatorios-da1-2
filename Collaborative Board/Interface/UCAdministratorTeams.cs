@@ -132,6 +132,11 @@ namespace Interface
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(PerformDeleteAction);
+        }
+
+        private void PerformDeleteAction()
+        {
             if (lstTeams.SelectedItems.Count > 0)
             {
                 Team teamToDelete = lstTeams.SelectedItems[0].Tag as Team;

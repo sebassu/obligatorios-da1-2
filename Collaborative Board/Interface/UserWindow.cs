@@ -9,7 +9,15 @@ namespace Interface
         {
             InitializeComponent();
             pnlSystem.Controls.Clear();
-            pnlSystem.Controls.Add(new UCAdministratorHome(pnlSystem));
+            if (Session.HasAdministrationPrivileges())
+            {
+                pnlSystem.Controls.Add(new UCAdministratorHome(pnlSystem));
+            }
+            else
+            {
+                pnlSystem.Controls.Add(new UCWhiteboards(pnlSystem));
+            }
+            
 
         }
 

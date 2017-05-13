@@ -59,12 +59,6 @@ namespace Interface
                 "Error" , MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        public static void OKLoadedTestData()
-        {
-            DialogResult result = MessageBox.Show("Se cargaron los datos de prueba con éxito!",
-                "Operación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
         public static void GoToHome(Panel systemPanel)
         {
             systemPanel.Controls.Clear();
