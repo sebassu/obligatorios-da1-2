@@ -82,9 +82,12 @@ namespace Interface
             InterfaceUtilities.UCWhiteboardsToPanel(systemPanel);
         }
 
-        private void UCAdministratorHome_Load(object sender, EventArgs e)
-        {
 
+
+        private void btnInforms_Click(object sender, EventArgs e)
+        {
+            new SelectInform(systemPanel).Show();
+            systemPanel.Enabled = false;
         }
     }
 }

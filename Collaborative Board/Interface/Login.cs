@@ -47,10 +47,10 @@ namespace Interface
                 TeamRepository globalTeams = TeamRepository.GetInstance();
                 UserRepository globalUsers = UserRepository.GetInstance();
                 WhiteboardRepository globalWhiteboards = WhiteboardRepository.GetInstance();
-                globalUsers.AddNewAdministrator("Mario", "Santos", "santos@simuladores.com", new DateTime(1959, 08, 10), "disculpeFuegoTiene");
-                User ravenna = globalUsers.AddNewUser("Emilio", "Ravenna", "ravenna@simuladores.com", new DateTime(1959, 05, 10), "hablarUnasPalabritas");
-                User lamponne = globalUsers.AddNewUser("Pablo", "Lamponne", "lamponne@simuladores.com", new DateTime(1959, 03, 19), "noHaceFaltaSaleSolo");
-                User medina = globalUsers.AddNewUser("Gabriel David", "Medina", "medina@simuladores.com", new DateTime(1968, 01, 20), "musicaSuperDivertida");
+                globalUsers.AddNewAdministrator("Mario", "Santos", "santos@simuladores.com", new DateTime(1966, 10, 04), "disculpeFuegoTiene");
+                User ravenna = globalUsers.AddNewUser("Emilio", "Ravenna", "ravenna@simuladores.com", new DateTime(1963, 02, 25), "hablarUnasPalabritas");
+                User lamponne = globalUsers.AddNewUser("Pablo", "Lamponne", "lamponne@simuladores.com", new DateTime(1969, 07, 05), "noHaceFaltaSaleSolo");
+                User medina = globalUsers.AddNewUser("Gabriel David", "Medina", "medina@simuladores.com", new DateTime(1960, 11, 20), "musicaSuperDivertida");
                 globalUsers.AddNewAdministrator("Marcos", "Mundstock", "mundstock@lesluthiers.com.ar", new DateTime(1942, 05, 25), "versiculoLIX");
                 User maronna = globalUsers.AddNewUser("Jorge Luis", "Maronna", "maronna@lesluthiers.com.ar", new DateTime(1948, 08, 01), "laNocheEstaOscura123");
                 User cortes = globalUsers.AddNewUser("Carlos Nuñez", "Cortés", "cortes@lesluthiers.com.ar", new DateTime(1942, 10, 15), "YoEraUnInfeliz");

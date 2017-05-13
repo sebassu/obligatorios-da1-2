@@ -86,6 +86,10 @@ namespace Interface
 
         private void UCWhiteboards_Load(object sender, EventArgs e)
         {
+            if (!Session.HasAdministrationPrivileges())
+            {
+                btnHome.Visible = false;
+            }
             LoadRegisteredWhiteboards();
         }
 
@@ -111,10 +115,10 @@ namespace Interface
             }
         }
 
-        private bool ValidateWhiteboardIsToBeShown(Whiteboard w)
+        private bool ValidateWhiteboardIsToBeShown(Whiteboard oneWhiteboard)
         {
-            bool whiteboardCreatorIsLoggedIn = w.Creator.Equals(Session.ActiveUser());
-            return whiteboardCreatorIsLoggedIn || Session.HasAdministrationPrivileges();
+            bool whiteboardTeamHasLoggedInUser = oneWhiteboard.OwnerTeam.Members.Contains(Session.ActiveUser());
+            return whiteboardTeamHasLoggedInUser || Session.HasAdministrationPrivileges();
         }
 
         private void BtnAdd_Click(object sender, EventArgs e)

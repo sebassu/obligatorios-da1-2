@@ -115,10 +115,10 @@ namespace Interface
 
         private bool FallsBetweenDates(Comment c)
         {
-            return c.CreationDate >= dtpCommentsCreatedFrom.Value &&
-                c.CreationDate <= dtpCommentsCreatedUntil.Value &&
-                c.ResolutionDate() >= dtpCommentsCreatedFrom.Value &&
-                c.ResolutionDate() <= dtpCommentsSolvedUntil.Value;
+            return c.CreationDate >= dtpCommentsCreatedFrom.Value.Date &&
+                c.CreationDate <= dtpCommentsCreatedUntil.Value.Date &&
+                c.ResolutionDate() >= dtpCommentsCreatedFrom.Value.Date &&
+                c.ResolutionDate() <= dtpCommentsSolvedUntil.Value.Date;
         }
     }
 }

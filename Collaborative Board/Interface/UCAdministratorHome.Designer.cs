@@ -92,6 +92,7 @@
             this.btnInforms.TabIndex = 5;
             this.btnInforms.Text = "INFORMES";
             this.btnInforms.UseVisualStyleBackColor = false;
+            this.btnInforms.Click += new System.EventHandler(this.btnInforms_Click);
             this.btnInforms.MouseEnter += new System.EventHandler(this.btnInforms_MouseEnter);
             this.btnInforms.MouseLeave += new System.EventHandler(this.btnInforms_MouseLeave);
             // 
