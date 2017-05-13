@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Persistence;
 using Domain;
@@ -92,7 +87,8 @@ namespace Interface
         private void UCWhiteboards_Load(object sender, EventArgs e)
         {
             lstRegisteredWhiteboards.Clear();
-            var globalWhiteboards = WhiteboardRepository.GetInstance().Elements.ToList();
+            var globalWhiteboards = WhiteboardRepository.GetInstance().Elements
+                .Where(w => ValidateWhiteboardIsToBeShown(w)).ToList();
             if (globalWhiteboards.Count() > 0)
             {
                 foreach (Whiteboard oneWhiteboard in globalWhiteboards)
@@ -104,12 +100,25 @@ namespace Interface
             }
             else
             {
-                lstRegisteredWhiteboards.Items.Add(new ListViewItem("No existen usuarios registrados."));
+                lstRegisteredWhiteboards.Items.Add(new ListViewItem("No existen pizarrones a mostrar."));
             }
+        }
+
+        private bool ValidateWhiteboardIsToBeShown(Whiteboard w)
+        {
+            bool whiteboardCreatorIsLoggedIn = w.Creator.Equals(Session.ActiveUser());
+            return whiteboardCreatorIsLoggedIn || Session.HasAdministrationPrivileges();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
+            systemPanel.Controls.Clear();
+            systemPanel.Controls.Add(new UCAddOrModifyWhiteboard(systemPanel));
+        }
+
+        private void btnModify_Click(object sender, EventArgs e)
+        {
+            Whiteboard whiteboardToModify
             systemPanel.Controls.Clear();
             systemPanel.Controls.Add(new UCAddOrModifyWhiteboard(systemPanel));
         }

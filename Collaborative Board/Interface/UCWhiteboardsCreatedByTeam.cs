@@ -21,8 +21,8 @@ namespace Interface
 
         private void LoadTeamComobox()
         {
-            var teams = TeamRepository.GetInstance().Elements.ToArray();
-            if (teams.Count() == 0)
+            var globalTeams = TeamRepository.GetInstance();
+            if (globalTeams.HasElements())
             {
                 InterfaceUtilities.ShowError("Para utilizar esta función es necesario que existan " +
                     "equipos registrados en el sistema.", "Error");
@@ -30,7 +30,7 @@ namespace Interface
             }
             else
             {
-                cmbTeams.Items.AddRange(teams);
+                cmbTeams.Items.AddRange(globalTeams.Elements.ToArray());
             }
         }
 

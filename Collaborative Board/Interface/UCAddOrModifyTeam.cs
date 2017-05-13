@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Domain;
 using Persistence;
@@ -42,11 +35,16 @@ namespace Interface
 
         private void btnAccept_Click(object sender, EventArgs e)
         {
+            InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(PerformChangeAction);
+        }
+
+        private void PerformChangeAction()
+        {
             TeamRepository globalTeams = TeamRepository.GetInstance();
             int maxUsers = Convert.ToInt32(Math.Round(numMaximumAmmountUsers.Value, 0));
             if (Utilities.IsNotNull(teamToModify))
             {
-                globalTeams.ModifyTeam(teamToModify, txtName.Text, rtbDescription.Text , maxUsers);
+                globalTeams.ModifyTeam(teamToModify, txtName.Text, rtbDescription.Text, maxUsers);
             }
             else
             {
