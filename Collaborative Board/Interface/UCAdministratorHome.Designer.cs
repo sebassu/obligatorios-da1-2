@@ -136,7 +136,6 @@
             this.Controls.Add(this.btnUsers);
             this.Name = "UCAdministratorHome";
             this.Size = new System.Drawing.Size(747, 538);
-            this.Load += new System.EventHandler(this.UCAdministratorHome_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

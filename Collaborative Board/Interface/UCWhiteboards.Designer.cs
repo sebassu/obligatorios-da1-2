@@ -111,6 +111,7 @@
             // 
             // lstRegisteredWhiteboards
             // 
+            this.lstRegisteredWhiteboards.Alignment = System.Windows.Forms.ListViewAlignment.Left;
             this.lstRegisteredWhiteboards.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstRegisteredWhiteboards.Location = new System.Drawing.Point(30, 155);
             this.lstRegisteredWhiteboards.MultiSelect = false;
@@ -118,7 +119,7 @@
             this.lstRegisteredWhiteboards.Size = new System.Drawing.Size(299, 343);
             this.lstRegisteredWhiteboards.TabIndex = 5;
             this.lstRegisteredWhiteboards.UseCompatibleStateImageBehavior = false;
-            this.lstRegisteredWhiteboards.View = System.Windows.Forms.View.Details;
+            this.lstRegisteredWhiteboards.View = System.Windows.Forms.View.SmallIcon;
             // 
             // lblRegisteredWhiteboards
             // 

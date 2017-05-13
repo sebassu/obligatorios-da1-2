@@ -22,7 +22,7 @@ namespace Interface
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            UCAdministatorUsersToPanel();
+            InterfaceUtilities.UCAdministatorUsersToPanel(systemPanel);
         }
 
         private void LoadUserData()
@@ -49,13 +49,7 @@ namespace Interface
                 globalUsers.AddNewUser(txtFirstName.Text, txtLastName.Text,
                     txtEmail.Text, dtpBirthDate.Value, txtPassword.Text);
             }
-            UCAdministatorUsersToPanel();
-        }
-
-        private void UCAdministatorUsersToPanel()
-        {
-            systemPanel.Controls.Clear();
-            systemPanel.Controls.Add(new UCAdministratorUsers(systemPanel));
+            InterfaceUtilities.UCAdministatorUsersToPanel(systemPanel);
         }
     }
 }

@@ -43,23 +43,17 @@ namespace Interface
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            UCAdministratorTeamsToPanel();
-        }
-
-        private void UCAdministratorTeamsToPanel()
-        {
-            systemPanel.Controls.Clear();
-            systemPanel.Controls.Add(new UCAdministratorTeams(systemPanel));
+            InterfaceUtilities.UCAdministratorTeamsToPanel(systemPanel);
         }
 
         private void btnAccept_Click(object sender, EventArgs e)
         {
-            User userToRemove = lstUsers.SelectedItems[0].Tag as User;
-            if (Utilities.IsNotNull(userToRemove))
+            if (lstUsers.SelectedItems.Count > 0)
             {
+                User userToRemove = lstUsers.SelectedItems[0].Tag as User;
                 TeamRepository globalTeams = TeamRepository.GetInstance();
                 globalTeams.RemoveMemberFromTeam(this.teamToWorkWith, userToRemove);
-                UCAdministratorTeamsToPanel();
+                InterfaceUtilities.UCAdministratorTeamsToPanel(systemPanel);
             }
             else
             {

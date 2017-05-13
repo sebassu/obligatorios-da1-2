@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Domain;
 using Persistence;
@@ -37,7 +30,7 @@ namespace Interface
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            UCAdministratorTeamsToPanel();
+            InterfaceUtilities.UCAdministratorTeamsToPanel(systemPanel);
         }
 
         private void btnAccept_Click(object sender, EventArgs e)
@@ -52,13 +45,7 @@ namespace Interface
             {
                 globalTeams.AddNewTeam(txtName.Text, rtbDescription.Text, maxUsers);
             }
-            UCAdministratorTeamsToPanel();
-        }
-
-        private void UCAdministratorTeamsToPanel()
-        {
-            systemPanel.Controls.Clear();
-            systemPanel.Controls.Add(new UCAdministratorTeams(systemPanel));
+            InterfaceUtilities.UCAdministratorTeamsToPanel(systemPanel);
         }
     }
 }

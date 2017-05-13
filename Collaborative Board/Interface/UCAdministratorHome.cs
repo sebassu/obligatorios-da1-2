@@ -64,25 +64,22 @@ namespace Interface
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            InterfaceUtilities.AskExitApplication();
+            InterfaceUtilities.AskLogOut();
         }
 
         private void btnUsers_Click(object sender, EventArgs e)
         {
-            systemPanel.Controls.Clear();
-            systemPanel.Controls.Add(new UCAdministratorUsers(systemPanel));
+            InterfaceUtilities.UCAdministatorUsersToPanel(systemPanel);
         }
 
         private void btnTeams_Click(object sender, EventArgs e)
         {
-            systemPanel.Controls.Clear();
-            systemPanel.Controls.Add(new UCAdministratorTeams(systemPanel));
+            InterfaceUtilities.UCAdministratorTeamsToPanel(systemPanel);
         }
 
         private void btnWhiteboards_Click(object sender, EventArgs e)
         {
-            systemPanel.Controls.Clear();
-            systemPanel.Controls.Add(new UCWhiteboards(systemPanel));
+            InterfaceUtilities.UCWhiteboardsToPanel(systemPanel);
         }
 
         private void UCAdministratorHome_Load(object sender, EventArgs e)

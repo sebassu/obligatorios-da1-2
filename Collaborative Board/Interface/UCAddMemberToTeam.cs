@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Domain;
 using Persistence;
@@ -42,7 +36,7 @@ namespace Interface
                         ListViewItem itemToAdd = new ListViewItem(oneUser.ToString());
                         itemToAdd.Tag = oneUser;
                         lstUsers.Items.Add(itemToAdd);
-                    }  
+                    }
                 }
             }
             else
@@ -53,29 +47,22 @@ namespace Interface
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            UCAdministratorTeamsToPanel();
-        }
-
-        private void UCAdministratorTeamsToPanel()
-        {
-            systemPanel.Controls.Clear();
-            systemPanel.Controls.Add(new UCAdministratorTeams(systemPanel));
+            InterfaceUtilities.UCAdministratorTeamsToPanel(systemPanel);
         }
 
         private void btnAccept_Click(object sender, EventArgs e)
         {
-            User userToAdd = lstUsers.SelectedItems[0].Tag as User;
-            if (Utilities.IsNotNull(userToAdd))
+            if (lstUsers.SelectedItems.Count > 0)
             {
+                User userToAdd = lstUsers.SelectedItems[0].Tag as User;
                 TeamRepository globalTeams = TeamRepository.GetInstance();
                 globalTeams.AddMemberToTeam(this.teamToWorkWith, userToAdd);
-                UCAdministratorTeamsToPanel();
+                InterfaceUtilities.UCAdministratorTeamsToPanel(systemPanel);
             }
             else
             {
                 InterfaceUtilities.NotElementSelectedMessageBox();
             }
-            
         }
 
 

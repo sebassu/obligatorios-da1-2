@@ -1,4 +1,6 @@
-﻿using Exceptions;
+﻿using Domain;
+using Exceptions;
+using Persistence;
 using System;
 using System.Windows.Forms;
 
@@ -19,13 +21,23 @@ namespace Interface
             }
         }
 
-        public static void AskExitApplication()
+        public static void AskLogOut()
         {
-            DialogResult result = MessageBox.Show("Está seguro que desea salir?", "Salir",
+            DialogResult result = MessageBox.Show("Está seguro que desea cerrar sesión?", "Salir",
                                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                Application.Exit();
+                HideAllForms();
+                Session.End();
+                (new Login()).Show();
+            }
+        }
+
+        private static void HideAllForms()
+        {
+            foreach (Form oneForm in Application.OpenForms)
+            {
+                oneForm.Hide();
             }
         }
 
@@ -41,8 +53,58 @@ namespace Interface
             systemPanel.Controls.Add(new UCAdministratorHome(systemPanel));
         }
 
-        
+        public static void UCAdministratorTeamsToPanel(Panel systemPanel)
+        {
+            systemPanel.Controls.Clear();
+            systemPanel.Controls.Add(new UCAdministratorTeams(systemPanel));
+        }
 
+        public static void UCAdministatorUsersToPanel(Panel systemPanel)
+        {
+            systemPanel.Controls.Clear();
+            systemPanel.Controls.Add(new UCAdministratorUsers(systemPanel));
+        }
+
+        public static void UCWhiteboardsToPanel(Panel systemPanel)
+        {
+            systemPanel.Controls.Clear();
+            systemPanel.Controls.Add(new UCWhiteboards(systemPanel));
+        }
+
+        /*public static void UCAdministrateTeamToPanel(Panel systemPanel, Team oneTeam)
+        {
+            systemPanel.Controls.Clear();
+            systemPanel.Controls.Add(new UCAdministrateTeam(systemPanel, oneTeam));
+        }*/
+
+        public static void UCAddOrModifyUserToPanel(Panel systemPanel, User oneUser = null)
+        {
+            if (Utilities.IsNotNull(oneUser))
+            {
+                systemPanel.Controls.Clear();
+                systemPanel.Controls.Add(new UCAddOrModifyUser(systemPanel, oneUser));
+            }
+            else
+            {
+                systemPanel.Controls.Clear();
+                systemPanel.Controls.Add(new UCAddOrModifyUser(systemPanel));
+            }
+            
+        }
+
+        public static void UCAddOrModifyTeamToPanel(Panel systemPanel, Team oneTeam = null)
+        {
+            if (Utilities.IsNotNull(oneTeam))
+            {
+                systemPanel.Controls.Clear();
+                systemPanel.Controls.Add(new UCAddOrModifyTeam(systemPanel, oneTeam));
+            }
+            else
+            {
+                systemPanel.Controls.Clear();
+                systemPanel.Controls.Add(new UCAddOrModifyTeam(systemPanel));
+            }
+        }
 
     }
 }

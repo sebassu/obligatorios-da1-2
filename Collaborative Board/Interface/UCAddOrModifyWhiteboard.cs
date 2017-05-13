@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Persistence;
 using Domain;
@@ -23,8 +17,7 @@ namespace Interface
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            systemPanel.Controls.Clear();
-            systemPanel.Controls.Add(new UCWhiteboards(systemPanel));
+            InterfaceUtilities.UCWhiteboardsToPanel(systemPanel);
         }
 
         private void UCAddOrModifyWhiteboard_Load(object sender, EventArgs e)

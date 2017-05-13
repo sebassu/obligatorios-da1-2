@@ -47,7 +47,7 @@ namespace Interface
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            InterfaceUtilities.AskExitApplication();
+            InterfaceUtilities.AskLogOut();
         }
     }
 }
