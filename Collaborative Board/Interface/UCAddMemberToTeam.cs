@@ -50,6 +50,11 @@ namespace Interface
 
         private void btnAccept_Click(object sender, EventArgs e)
         {
+            InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(PerfomAddAction);
+        }
+
+        private void PerfomAddAction()
+        {
             if (lstUsers.SelectedItems.Count > 0)
             {
                 User userToAdd = lstUsers.SelectedItems[0].Tag as User;

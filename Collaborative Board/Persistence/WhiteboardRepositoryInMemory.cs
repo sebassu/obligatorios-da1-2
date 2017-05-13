@@ -21,7 +21,6 @@ namespace Persistence
         public override void ModifyWhiteboard(Whiteboard whiteboardToModify,
             string nameToSet, string descriptionToSet, int widthToSet, int heightToSet)
         {
-            ValidateUserIsAdministratorOrCreator(whiteboardToModify);
             whiteboardToModify = GetActualObjectInCollection(whiteboardToModify);
             AttemptToSetWhiteboardAttributes(whiteboardToModify, nameToSet, descriptionToSet,
                 widthToSet, heightToSet);
