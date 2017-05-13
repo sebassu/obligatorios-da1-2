@@ -21,13 +21,6 @@ namespace Persistence
         public override void ModifyWhiteboard(Whiteboard whiteboardToModify,
             string nameToSet, string descriptionToSet, int widthToSet, int heightToSet)
         {
-            whiteboardToModify = GetActualObjectInCollection(whiteboardToModify);
-            AttemptToSetWhiteboardAttributes(whiteboardToModify, nameToSet, descriptionToSet,
-                widthToSet, heightToSet);
-        }
-
-        private static void ValidateUserIsAdministratorOrCreator(Whiteboard whiteboardToModify)
-        {
             User activeUser = Session.ActiveUser();
             whiteboardToModify = GetActualObjectInCollection(whiteboardToModify);
             if (whiteboardToModify.UserCanModify(activeUser))
