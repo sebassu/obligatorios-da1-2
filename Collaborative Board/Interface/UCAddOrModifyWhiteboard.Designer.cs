@@ -206,6 +206,7 @@
             this.Controls.Add(this.btnCancel);
             this.Name = "UCAddOrModifyWhiteboard";
             this.Size = new System.Drawing.Size(747, 538);
+            this.Load += new System.EventHandler(this.UCAddOrModifyWhiteboard_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picMarker)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numWidth)).EndInit();
