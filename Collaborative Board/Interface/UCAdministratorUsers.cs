@@ -150,6 +150,9 @@ namespace Interface
         {
             UserRepository globalUsers = UserRepository.GetInstance();
             globalUsers.Remove(oneUser);
+            if (oneUser.Equals(Session.ActiveUser())){
+                InterfaceUtilities.EndSessionAndGoToLogInForm();
+            }
         }
 
     }

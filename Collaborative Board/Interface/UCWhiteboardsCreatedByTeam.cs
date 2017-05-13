@@ -24,13 +24,13 @@ namespace Interface
             var globalTeams = TeamRepository.GetInstance();
             if (globalTeams.HasElements())
             {
-                InterfaceUtilities.ShowError("Para utilizar esta función es necesario que existan " +
-                    "equipos registrados en el sistema.", "Error");
-                InterfaceUtilities.GoToHome(systemPanel);
+                cmbTeams.Items.AddRange(globalTeams.Elements.ToArray());
             }
             else
             {
-                cmbTeams.Items.AddRange(globalTeams.Elements.ToArray());
+                InterfaceUtilities.ShowError("Para utilizar esta función es necesario que existan " +
+                    "equipos registrados en el sistema.", "Error");
+                InterfaceUtilities.GoToHome(systemPanel);
             }
         }
 
@@ -67,6 +67,7 @@ namespace Interface
 
         private void LoadGridViewWithWhiteboardsFilteringBy(Func<Whiteboard, bool> filteringFunction)
         {
+            dgvWhiteboardsCreatedByTeam.Rows.Clear();
             var whiteboardsToShow = WhiteboardRepository.GetInstance().Elements
                 .Where(p => filteringFunction(p)).ToList();
             if (whiteboardsToShow.Count == 0)
@@ -75,12 +76,12 @@ namespace Interface
             }
             else
             {
-                foreach (var whiteboard in whiteboardsToShow)
+                foreach (Whiteboard whiteboard in whiteboardsToShow)
                 {
                     var creationDateToShow = InterfaceUtilities.GetDateToShow(whiteboard.CreationDate);
                     var lastModificationDateToShow = InterfaceUtilities.GetDateToShow(whiteboard.LastModification);
                     var ownerTeamToShow = whiteboard.OwnerTeam.ToString();
-                    dgvWhiteboardsCreatedByTeam.Rows.Add(whiteboardsToShow.ToString(), ownerTeamToShow,
+                    dgvWhiteboardsCreatedByTeam.Rows.Add(whiteboard.ToString(), ownerTeamToShow,
                         creationDateToShow, lastModificationDateToShow, whiteboard.Contents.Count);
                 }
             }
@@ -93,9 +94,14 @@ namespace Interface
 
         private bool FilterByDatesAndTeam(Whiteboard p)
         {
-            return p.CreationDate >= dtpWhiteboardsCreatedFrom.Value &&
-                p.CreationDate <= dtpWhiteboardsCreatedUntil.Value &&
+            return p.CreationDate >= dtpWhiteboardsCreatedFrom.Value.Date &&
+                p.CreationDate <= dtpWhiteboardsCreatedUntil.Value.Date &&
                 cmbTeams.SelectedItem.Equals(p.OwnerTeam);
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            LoadGridViewWithWhiteboardsFilteringBy(_ => true);
         }
     }
 }

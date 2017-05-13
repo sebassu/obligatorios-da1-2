@@ -33,10 +33,15 @@ namespace Interface
                                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                HideAllForms();
-                Session.End();
-                (new Login()).Show();
+                EndSessionAndGoToLogInForm();
             }
+        }
+
+        public static void EndSessionAndGoToLogInForm()
+        {
+            HideAllForms();
+            Session.End();
+            (new Login()).Show();
         }
 
         public static void SuccesfulOperation()

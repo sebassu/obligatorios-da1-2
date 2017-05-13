@@ -47,12 +47,18 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SelectInform.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectInform.Designer.cs">
+      <DependentUpon>SelectInform.cs</DependentUpon>
+    </Compile>
     <Compile Include="WhiteboardVisualization.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="WhiteboardVisualization.Designer.cs">
       <DependentUpon>WhiteboardVisualization.cs</DependentUpon>
-	</Compile>
+    </Compile>
     <Compile Include="UCAddOrModifyTeam.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -133,6 +139,9 @@
     <Compile Include="UCAdministrateTeam.Designer.cs">
       <DependentUpon>UCAdministrateTeam.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="SelectInform.resx">
+      <DependentUpon>SelectInform.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UCAddMemberToTeam.resx">
       <DependentUpon>UCAddMemberToTeam.cs</DependentUpon>
     </EmbeddedResource>
@@ -187,7 +196,7 @@
     </Compile>
     <EmbeddedResource Include="WhiteboardVisualization.resx">
       <DependentUpon>WhiteboardVisualization.cs</DependentUpon>
-	</EmbeddedResource>
+    </EmbeddedResource>
     <EmbeddedResource Include="UCAdministratorHome.resx">
       <DependentUpon>UCAdministratorHome.cs</DependentUpon>
     </EmbeddedResource>
