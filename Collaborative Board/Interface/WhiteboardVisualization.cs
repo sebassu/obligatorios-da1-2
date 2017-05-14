@@ -1,5 +1,6 @@
 ﻿using Domain;
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Interface
@@ -19,66 +20,202 @@ namespace Interface
 
         private void BtnAddImage_Click(object sender, EventArgs e)
         {
-            FileDialog fileSelector = new OpenFileDialog()
+            CreateNewPictureBoxWithImage();
+        }
+
+        private void CreateNewPictureBoxWithImage()
+        {
+            FileDialog fileSelector = CreateImageFileChooser();
+            if (fileSelector.ShowDialog() == DialogResult.OK)
+            {
+                Action createImage = delegate { CreateNewPictureBoxWithImage(fileSelector); };
+                InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(createImage);
+            }
+        }
+
+        private static FileDialog CreateImageFileChooser()
+        {
+            return new OpenFileDialog()
             {
                 Filter = "Archivos de imagen (*.jpg, *.png, *.gif, *.jpeg)|*.JPG;*.PNG;*.GIF;*.JPEG;"
             };
-            if (fileSelector.ShowDialog() == DialogResult.OK)
+        }
+
+        private void CreateNewPictureBoxWithImage(FileDialog fileSelector)
+        {
+            ImageWhiteboard imageToAdd = ImageWhiteboard.CreateWithContainerSource(whiteboardShown,
+                fileSelector.FileName);
+            AddPictureBoxFromWhiteboardImage(imageToAdd);
+        }
+
+        private void AddPictureBoxFromWhiteboardImage(ImageWhiteboard imageToAdd)
+        {
+            PictureBox interfaceContainer = new PictureBox()
             {
-                ImageWhiteboard imageToAdd = ImageWhiteboard.CreateWithContainerSource(whiteboardShown,
-                    fileSelector.FileName);
-                PictureBox interfaceContainer = new PictureBox()
-                {
-                    Image = imageToAdd.ActualImage,
-                    Tag = imageToAdd,
-                    SizeMode = PictureBoxSizeMode.StretchImage,
-                    Parent = pnlWhiteboard,
-                    Width = imageToAdd.Width,
-                    Height = imageToAdd.Height,
-                    Location = imageToAdd.Position
-                };
-                ControlMovingOrResizingHandler.Init(interfaceContainer);
-                SetRightClickOptionsImage(interfaceContainer);
-            }
+                Image = imageToAdd.ActualImage,
+                Tag = imageToAdd,
+                SizeMode = PictureBoxSizeMode.StretchImage,
+                Parent = pnlWhiteboard,
+                Width = imageToAdd.Width,
+                Height = imageToAdd.Height,
+                Location = imageToAdd.Position
+            };
+            SetRightClickOptionsImage(interfaceContainer);
+            ControlMovingOrResizingHandler.MakeDragAndDroppable(interfaceContainer);
+            pnlWhiteboard.Controls.Add(interfaceContainer);
         }
 
         private void SetRightClickOptionsImage(PictureBox interfaceContainer)
         {
             ContextMenu contMenu = new ContextMenu();
-            MenuItem seeComments = new MenuItem("Ver comentarios");
-            MenuItem modifyImage = new MenuItem("Modificar imagen");
-            MenuItem removeImage = new MenuItem("Eliminar imagen");
-            contMenu.MenuItems.Add(seeComments);
-            contMenu.MenuItems.Add(modifyImage);
-            contMenu.MenuItems.Add(removeImage);
-            ImageWhiteboard domainElement = interfaceContainer.Tag as ImageWhiteboard;
-            seeComments.Click += (sender, e) => ClickSeeComments(domainElement, e);
-            interfaceContainer.ContextMenu = contMenu;
+            if (interfaceContainer.Tag is ImageWhiteboard domainImage)
+            {
+                AddSeeCommentsOption(domainImage, contMenu);
+                AddModifyImageOption(interfaceContainer, contMenu, domainImage);
+                AddRemoveElementOption(interfaceContainer, domainImage, contMenu);
+                interfaceContainer.ContextMenu = contMenu;
+            }
         }
 
-        private void ClickSeeComments(ImageWhiteboard image, EventArgs e)
+        private void AddSeeCommentsOption(ElementWhiteboard domainElement, ContextMenu contMenu)
         {
-            Form comments = new ElementComments(image);
+            MenuItem seeComments = new MenuItem("Ver comentarios");
+            seeComments.Click += (sender, e) => ClickSeeComments(domainElement, e);
+            contMenu.MenuItems.Add(seeComments);
+        }
+
+        private void ClickSeeComments(ElementWhiteboard sender, EventArgs e)
+        {
+            Form comments = new ElementComments(sender);
             comments.Show();
             comments.TopMost = true;
+        }
+        private void AddModifyImageOption(PictureBox interfaceContainer, ContextMenu contMenu,
+            ImageWhiteboard domainImage)
+        {
+            MenuItem modifyImage = new MenuItem("Modificar imagen");
+            modifyImage.Click += (sender, e) => ChangeDisplayedImage(interfaceContainer, domainImage);
+            contMenu.MenuItems.Add(modifyImage);
+        }
+
+        private void ChangeDisplayedImage(PictureBox container, ImageWhiteboard domainImage)
+        {
+            FileDialog fileSelector = CreateImageFileChooser();
+            if (fileSelector.ShowDialog() == DialogResult.OK)
+            {
+                Action changeImage = delegate { PerformImageChange(container, domainImage, fileSelector); };
+                InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(changeImage);
+            }
+        }
+
+        private static void PerformImageChange(PictureBox container, ImageWhiteboard domainImage,
+            FileDialog fileSelector)
+        {
+            Image imageToSet = Image.FromFile(fileSelector.FileName);
+            domainImage.ActualImage = imageToSet;
+            container.Image = imageToSet;
+            container.Update();
+        }
+
+        private void AddRemoveElementOption(Control interfaceContainer,
+            ElementWhiteboard elementToRemove, ContextMenu contMenu)
+        {
+            MenuItem removeElementItem = new MenuItem("Eliminar elemento");
+            removeElementItem.Click += (sender, e) => RemoveElement(interfaceContainer, elementToRemove);
+            contMenu.MenuItems.Add(removeElementItem);
+        }
+
+        private void RemoveElement(Control interfaceContainer, ElementWhiteboard domainElement)
+        {
+            Action deleteAction = delegate { PerformDelete(interfaceContainer, domainElement); };
+            InterfaceUtilities.AskForDeletionConfirmationAndExecute(deleteAction);
+        }
+
+        private void PerformDelete(Control interfaceContainer, ElementWhiteboard domainElement)
+        {
+            Action deleteAction = delegate { ActualDelete(interfaceContainer, domainElement); };
+            InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(deleteAction);
+        }
+
+        private void ActualDelete(Control interfaceContainer, ElementWhiteboard domainElement)
+        {
+            whiteboardShown.RemoveWhiteboardElement(domainElement);
+            pnlWhiteboard.Controls.Remove(interfaceContainer);
+            pnlWhiteboard.Update();
         }
 
         private void BtnAddText_Click(object sender, EventArgs e)
         {
-
+            TextBoxWhiteboard textBoxToAdd = TextBoxWhiteboard.CreateWithContainer(whiteboardShown);
+            AddRichTextBoxFromDomainTextBoxWhiteboard(textBoxToAdd);
         }
 
-        private void WhiteboardVisualization_Click(object sender, EventArgs e)
+        private void AddRichTextBoxFromDomainTextBoxWhiteboard(TextBoxWhiteboard textBoxToAdd)
         {
-            TopMost = true;
+            RichTextBox interfaceContainer = new RichTextBox()
+            {
+                Tag = textBoxToAdd,
+                Text = textBoxToAdd.TextContent,
+                Font = textBoxToAdd.TextFont,
+                Parent = pnlWhiteboard,
+                Width = textBoxToAdd.Width,
+                Height = textBoxToAdd.Height,
+                Location = textBoxToAdd.Position
+            };
+            Action setContextMenu = delegate { SetRightClickOptionTextBox(interfaceContainer); };
+            InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(setContextMenu);
+            ControlMovingOrResizingHandler.MakeDragAndDroppable(interfaceContainer);
+            pnlWhiteboard.Controls.Add(interfaceContainer);
         }
 
-        private void WhiteboardVisualization_MouseLeave(object sender, EventArgs e)
+        private void SetRightClickOptionTextBox(RichTextBox interfaceContainer)
         {
-            TopMost = false;
+            ContextMenu contMenu = new ContextMenu();
+            if (interfaceContainer.Tag is TextBoxWhiteboard domainTextBox)
+            {
+                AddSeeCommentsOption(domainTextBox, contMenu);
+                AddModifyFontDomainTextBox(interfaceContainer, domainTextBox, contMenu);
+                AddRemoveElementOption(interfaceContainer, domainTextBox, contMenu);
+                interfaceContainer.ContextMenu = contMenu;
+            }
         }
 
-        private void WhiteboardVisualization_MouseEnter(object sender, EventArgs e)
+        private void AddModifyFontDomainTextBox(RichTextBox interfaceContainer,
+            TextBoxWhiteboard domainTextBox, ContextMenu contMenu)
+        {
+            MenuItem removeElementItem = new MenuItem("Modificar tipo/tamaño de letra");
+            removeElementItem.Click += (sender, e) => ChangeTextBoxFont(interfaceContainer, domainTextBox);
+            contMenu.MenuItems.Add(removeElementItem);
+        }
+
+        private static void ChangeTextBoxFont(RichTextBox interfaceContainer, TextBoxWhiteboard domainTextBox)
+        {
+            FontDialog fontChooser = CreateFontChooser(interfaceContainer);
+            if (fontChooser.ShowDialog() != DialogResult.Cancel)
+            {
+                Font chosenFont = fontChooser.Font;
+                interfaceContainer.Font = chosenFont;
+                domainTextBox.TextFont = chosenFont;
+            }
+        }
+
+        private static FontDialog CreateFontChooser(RichTextBox interfaceContainer)
+        {
+            return new FontDialog()
+            {
+                ShowColor = false,
+                FontMustExist = true,
+                Font = interfaceContainer.Font,
+                ShowEffects = true
+            };
+        }
+
+        private void BtnPrintPDF_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnPrintPng_Click(object sender, EventArgs e)
         {
             TopMost = true;
         }

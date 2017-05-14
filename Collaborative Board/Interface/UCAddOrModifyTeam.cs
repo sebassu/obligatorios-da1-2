@@ -10,10 +10,10 @@ namespace Interface
         private Panel systemPanel;
         private Team teamToModify;
 
-        public UCAddOrModifyTeam(Panel systemPanel, Team oneTeam = null)
+        public UCAddOrModifyTeam(Panel somePanel, Team oneTeam = null)
         {
             InitializeComponent();
-            this.systemPanel = systemPanel;
+            systemPanel = somePanel;
             teamToModify = oneTeam;
             if (Utilities.IsNotNull(oneTeam))
             {
@@ -28,12 +28,12 @@ namespace Interface
             numMaximumAmmountUsers.Value = teamToModify.MaximumMembers;
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
             InterfaceUtilities.UCAdministratorTeamsToPanel(systemPanel);
         }
 
-        private void btnAccept_Click(object sender, EventArgs e)
+        private void BtnAccept_Click(object sender, EventArgs e)
         {
             InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(PerformChangeAction);
             InterfaceUtilities.UCAdministratorTeamsToPanel(systemPanel);
@@ -51,9 +51,7 @@ namespace Interface
             {
                 globalTeams.AddNewTeam(txtName.Text, rtbDescription.Text, maxUsers);
             }
-           
+            InterfaceUtilities.SuccessfulOperation();
         }
-        
-        
     }
 }

@@ -8,7 +8,7 @@ namespace Interface
 {
     internal class ControlMovingOrResizingHandler
     {
-        private const int edgePrecision = 10;
+        private const int edgePrecision = 20;
         private static readonly Cursor[] leftCursors = { Cursors.SizeNWSE, Cursors.SizeNESW,
             Cursors.SizeWE };
         private static readonly Cursor[] rightCursors = { Cursors.SizeNESW, Cursors.SizeNWSE,
@@ -27,7 +27,7 @@ namespace Interface
         private static bool MouseIsInTopEdge { get; set; }
         private static bool MouseIsInBottomEdge { get; set; }
 
-        internal static void Init(Control interfaceObject)
+        internal static void MakeDragAndDroppable(Control interfaceObject)
         {
             cursorStartPoint = Point.Empty;
             interfaceObject.MouseDown += new MouseEventHandler(StartMovingOrResizing);
@@ -35,39 +35,52 @@ namespace Interface
             interfaceObject.MouseUp += new MouseEventHandler(StopDragOrResizing);
         }
 
-        private static void UpdateMouseCursor(Control control)
+        private static void UpdateMouseCursor(Control interfaceObject)
         {
             if (MouseIsInLeftEdge)
             {
-                GetCorrespondingCursor(control, leftCursors);
+                GetCorrespondingVerticalOrientationForCursor(interfaceObject, leftCursors);
             }
             else if (MouseIsInRightEdge)
             {
-                GetCorrespondingCursor(control, rightCursors);
+                GetCorrespondingVerticalOrientationForCursor(interfaceObject, rightCursors);
             }
             else if (MouseIsInTopEdge || MouseIsInBottomEdge)
             {
-                control.Cursor = Cursors.SizeNS;
+                interfaceObject.Cursor = Cursors.SizeNS;
             }
             else
             {
-                control.Cursor = Cursors.Hand;
+                interfaceObject.Cursor = GetCorrespondingDefaultCursor(interfaceObject);
             }
         }
 
-        private static void GetCorrespondingCursor(Control control, Cursor[] cursorsToSet)
+        private static void GetCorrespondingVerticalOrientationForCursor(Control interfaceObject,
+            Cursor[] cursorsToSet)
         {
             if (MouseIsInTopEdge)
             {
-                control.Cursor = cursorsToSet[0];
+                interfaceObject.Cursor = cursorsToSet[0];
             }
             else if (MouseIsInBottomEdge)
             {
-                control.Cursor = cursorsToSet[1];
+                interfaceObject.Cursor = cursorsToSet[1];
             }
             else
             {
-                control.Cursor = cursorsToSet[2];
+                interfaceObject.Cursor = cursorsToSet[2];
+            }
+        }
+
+        private static Cursor GetCorrespondingDefaultCursor(Control interfaceObject)
+        {
+            if (interfaceObject is RichTextBox)
+            {
+                return Cursors.IBeam;
+            }
+            else
+            {
+                return Cursors.Default;
             }
         }
 

@@ -86,7 +86,7 @@
             this.btnEnter.TabIndex = 4;
             this.btnEnter.Text = "Ingresar";
             this.btnEnter.UseVisualStyleBackColor = true;
-            this.btnEnter.Click += new System.EventHandler(this.btnEnter_Click);
+            this.btnEnter.Click += new System.EventHandler(this.BtnEnter_Click);
             // 
             // lblWelcome
             // 

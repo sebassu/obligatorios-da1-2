@@ -10,11 +10,12 @@ namespace Interface
     {
         private Panel systemPanel;
         private Team teamToWorkWith;
-        public UCAddMemberToTeam(Panel systemPanel, Team oneTeam)
+
+        public UCAddMemberToTeam(Panel somePanel, Team oneTeam)
         {
             InitializeComponent();
-            this.systemPanel = systemPanel;
-            this.teamToWorkWith = oneTeam;
+            systemPanel = somePanel;
+            teamToWorkWith = oneTeam;
             LoadData();
         }
 
@@ -31,8 +32,10 @@ namespace Interface
             {
                 if (!teamToWorkWith.Members.Contains(oneUser))
                 {
-                    ListViewItem itemToAdd = new ListViewItem(oneUser.ToString());
-                    itemToAdd.Tag = oneUser;
+                    ListViewItem itemToAdd = new ListViewItem(oneUser.ToString())
+                    {
+                        Tag = oneUser
+                    };
                     lstUsers.Items.Add(itemToAdd);
                 }
                 if (lstUsers.Items.Count == 0)
@@ -43,30 +46,24 @@ namespace Interface
             }
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
             InterfaceUtilities.UCAdministrateTeamToPanel(systemPanel, teamToWorkWith);
         }
 
-        private void btnAccept_Click(object sender, EventArgs e)
+        private void BtnAccept_Click(object sender, EventArgs e)
         {
-            InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(PerfomAddAction);
+            Action acceptAction = delegate { InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(PerfomAddAction); };
+            InterfaceUtilities.PerformActionIfElementIsSelected(lstUsers, acceptAction);
         }
 
         private void PerfomAddAction()
         {
-            if (lstUsers.SelectedItems.Count > 0)
-            {
-                User userToAdd = lstUsers.SelectedItems[0].Tag as User;
-                TeamRepository globalTeams = TeamRepository.GetInstance();
-                globalTeams.AddMemberToTeam(this.teamToWorkWith, userToAdd);
-                InterfaceUtilities.SuccesfulOperation();
-                InterfaceUtilities.UCAdministrateTeamToPanel(systemPanel, teamToWorkWith);
-            }
-            else
-            {
-                InterfaceUtilities.NotElementSelectedMessageBox();
-            }
+            User userToAdd = lstUsers.SelectedItems[0].Tag as User;
+            TeamRepository globalTeams = TeamRepository.GetInstance();
+            globalTeams.AddMemberToTeam(teamToWorkWith, userToAdd);
+            InterfaceUtilities.UCAdministrateTeamToPanel(systemPanel, teamToWorkWith);
+            InterfaceUtilities.SuccessfulOperation();
         }
     }
 }

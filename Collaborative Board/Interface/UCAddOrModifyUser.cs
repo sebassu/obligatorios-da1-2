@@ -10,10 +10,10 @@ namespace Interface
         private Panel systemPanel;
         private User userToModify;
 
-        public UCAddOrModifyUser(Panel systemPanel, User someUser = null)
+        public UCAddOrModifyUser(Panel somePanel, User someUser = null)
         {
             InitializeComponent();
-            this.systemPanel = systemPanel;
+            systemPanel = somePanel;
             if (Utilities.IsNotNull(someUser))
             {
                 userToModify = someUser;
@@ -21,7 +21,7 @@ namespace Interface
             }
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
             InterfaceUtilities.UCAdministatorUsersToPanel(systemPanel);
         }
@@ -37,7 +37,7 @@ namespace Interface
             cbxIsAdministrator.Enabled = false;
         }
 
-        private void btnAccept_Click(object sender, EventArgs e)
+        private void BtnAccept_Click(object sender, EventArgs e)
         {
             InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(PerformChangeAction);
             InterfaceUtilities.UCAdministatorUsersToPanel(systemPanel);
@@ -56,9 +56,10 @@ namespace Interface
                 globalUsers.AddNewUser(txtFirstName.Text, txtLastName.Text,
                     txtEmail.Text, dtpBirthDate.Value, txtPassword.Text);
             }
+            InterfaceUtilities.SuccessfulOperation();
         }
 
-        private void btnResetPassword_Click(object sender, EventArgs e)
+        private void BtnResetPassword_Click(object sender, EventArgs e)
         {
             UserRepository globalUsers = UserRepository.GetInstance();
             String newPassWord = globalUsers.ResetUsersPassword(userToModify);

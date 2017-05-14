@@ -70,7 +70,7 @@
             this.btnAccept.TabIndex = 18;
             this.btnAccept.Text = "Aceptar";
             this.btnAccept.UseVisualStyleBackColor = false;
-            this.btnAccept.Click += new System.EventHandler(this.btnAccept_Click);
+            this.btnAccept.Click += new System.EventHandler(this.BtnAccept_Click);
             // 
             // btnCancel
             // 
@@ -83,7 +83,7 @@
             this.btnCancel.TabIndex = 19;
             this.btnCancel.Text = "Cancelar";
             this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // lblTeam
             // 

@@ -33,7 +33,7 @@ namespace Interface
             rtbDescription.Text = whiteboardToModify.Description;
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
             InterfaceUtilities.UCWhiteboardsToPanel(systemPanel);
         }
@@ -44,7 +44,7 @@ namespace Interface
             cmbOwnerTeam.Items.AddRange(globalTeams.Elements.ToArray());
         }
 
-        private void btnAccept_Click(object sender, EventArgs e)
+        private void BtnAccept_Click(object sender, EventArgs e)
         {
             InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(PerformChangeAction);
             InterfaceUtilities.UCWhiteboardsToPanel(systemPanel);
@@ -66,7 +66,7 @@ namespace Interface
                 globalWhiteboards.AddNewWhiteboard(txtName.Text,
                     rtbDescription.Text, teamToSet, widthToSet, heightToSet);
             }
-            
+            InterfaceUtilities.SuccessfulOperation();
         }
     }
 }

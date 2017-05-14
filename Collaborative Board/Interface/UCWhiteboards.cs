@@ -113,6 +113,9 @@ namespace Interface
             else
             {
                 lstRegisteredWhiteboards.Items.Add(new ListViewItem("No existen pizarrones a mostrar."));
+                btnModify.Enabled = false;
+                btnDelete.Enabled = false;
+                btnView.Enabled = false;
             }
         }
 
