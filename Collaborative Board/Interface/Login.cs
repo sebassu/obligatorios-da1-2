@@ -52,7 +52,7 @@ namespace Interface
                 User lamponne = globalUsers.AddNewUser("Pablo", "Lamponne", "lamponne@simuladores.com", new DateTime(1969, 07, 05), "noHaceFaltaSaleSolo");
                 User medina = globalUsers.AddNewUser("Gabriel David", "Medina", "medina@simuladores.com", new DateTime(1960, 11, 20), "musicaSuperDivertida");
                 globalUsers.AddNewAdministrator("Marcos", "Mundstock", "mundstock@lesluthiers.com.ar", new DateTime(1942, 05, 25), "versiculoLIX");
-                User maronna = globalUsers.AddNewUser("Jorge Luis", "Maronna", "maronna@lesluthiers.com.ar", new DateTime(1948, 08, 01), "laNocheEstaOscura123");
+                User maronna = globalUsers.AddNewUser("Jorge Luis", "Maronna", "maronna@lesluthiers.com.ar", new DateTime(1948, 08, 01), "laNocheEstabaOscura");
                 User cortes = globalUsers.AddNewUser("Carlos Nuñez", "Cortés", "cortes@lesluthiers.com.ar", new DateTime(1942, 10, 15), "YoEraUnInfeliz");
                 User rabinovich = globalUsers.AddNewUser("Daniel Abraham", "Rabinovich", "rabinovich@lesluthiers.com.ar", new DateTime(1943, 11, 18), "achicoria");
                 User lopezPuccio = globalUsers.AddNewUser("Carlos", "Lopez Puccio", "lopezpuccio@lesluthiers.com.ar", new DateTime(1946, 10, 09), "horizontal4Letras");
@@ -74,7 +74,7 @@ namespace Interface
                 Session.End();
 
                 Session.Start("mundstock@lesluthiers.com.ar", "versiculoLIX");
-                Team lesLuthiers = globalTeams.AddNewTeam("Les Luthiers", "Grupo de seguidores de Johan Sebastian" +
+                Team lesLuthiers = globalTeams.AddNewTeam("Les Luthiers", "Grupo de seguidores de Johann Sebastian" +
                     " Maestropiero.", 5);
                 globalTeams.AddMemberToTeam(lesLuthiers, maronna);
                 globalTeams.AddMemberToTeam(lesLuthiers, cortes);
@@ -109,7 +109,7 @@ namespace Interface
                 globalWhiteboards.AddNewWhiteboard("Esther Piscore", "El merengue es un delicioso postre.", lesLuthiers, 1500, 1500);
                 Session.End();
 
-                Session.Start("maronna@lesluthiers.com.ar", "laNocheEstaOscura123");
+                Session.Start("maronna@lesluthiers.com.ar", "laNocheEstabaOscura");
                 globalWhiteboards.AddNewWhiteboard("La payada de la vaca", "Nombreme usted el animal, nombreme usted el animal que " +
                     "no es toro ni cebú", lesLuthiers, 1500, 1200);
                 Session.End();

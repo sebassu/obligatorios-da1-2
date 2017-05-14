@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Exceptions;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -16,6 +17,26 @@ namespace Interface
             pnlWhiteboard.Width = someWhiteboard.Width;
             pnlWhiteboard.Height = someWhiteboard.Height;
             Text = "Pizarrón: " + someWhiteboard.ToString();
+            InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(LoadWhiteboardComponentsOnInteface);
+        }
+
+        private void LoadWhiteboardComponentsOnInteface()
+        {
+            foreach (var element in whiteboardShown.Contents)
+            {
+                if (element is ImageWhiteboard imageToAdd)
+                {
+                    AddPictureBoxFromWhiteboardImage(imageToAdd);
+                }
+                else if (element is TextBoxWhiteboard textBoxToAdd)
+                {
+                    AddRichTextBoxFromDomainTextBoxWhiteboard(textBoxToAdd);
+                }
+                else
+                {
+                    throw new BoardException("Elemento desconocido encontrado.");
+                }
+            }
         }
 
         private void BtnAddImage_Click(object sender, EventArgs e)
@@ -60,7 +81,8 @@ namespace Interface
                 Height = imageToAdd.Height,
                 Location = imageToAdd.Position
             };
-            SetRightClickOptionsImage(interfaceContainer);
+            Action setContextMenu = delegate { SetRightClickOptionsImage(interfaceContainer); };
+            InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(setContextMenu);
             ControlMovingOrResizingHandler.MakeDragAndDroppable(interfaceContainer);
             pnlWhiteboard.Controls.Add(interfaceContainer);
         }
@@ -165,6 +187,7 @@ namespace Interface
             };
             Action setContextMenu = delegate { SetRightClickOptionTextBox(interfaceContainer); };
             InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(setContextMenu);
+            interfaceContainer.TextChanged += (sender, e) => UpdateElementText(interfaceContainer, textBoxToAdd);
             ControlMovingOrResizingHandler.MakeDragAndDroppable(interfaceContainer);
             pnlWhiteboard.Controls.Add(interfaceContainer);
         }
@@ -179,6 +202,11 @@ namespace Interface
                 AddRemoveElementOption(interfaceContainer, domainTextBox, contMenu);
                 interfaceContainer.ContextMenu = contMenu;
             }
+        }
+
+        private void UpdateElementText(RichTextBox interfaceContainer, TextBoxWhiteboard domainTextBox)
+        {
+            domainTextBox.TextContent = interfaceContainer.Text;
         }
 
         private void AddModifyFontDomainTextBox(RichTextBox interfaceContainer,
