@@ -102,7 +102,7 @@
             this.btnModifyElement.Name = "btnModifyElement";
             this.btnModifyElement.Size = new System.Drawing.Size(198, 65);
             this.btnModifyElement.TabIndex = 3;
-            this.btnModifyElement.Text = "Modificar elemento";
+            this.btnModifyElement.Text = "Ver comentarios de elemento";
             this.btnModifyElement.UseVisualStyleBackColor = false;
             // 
             // btnAddImage
