@@ -48,10 +48,9 @@
             this.lblName.AutoSize = true;
             this.lblName.BackColor = System.Drawing.Color.Transparent;
             this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblName.Location = new System.Drawing.Point(115, 358);
-            this.lblName.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
+            this.lblName.Location = new System.Drawing.Point(43, 150);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(167, 44);
+            this.lblName.Size = new System.Drawing.Size(66, 18);
             this.lblName.TabIndex = 0;
             this.lblName.Text = "Nombre:";
             // 
@@ -60,10 +59,9 @@
             this.lblDescription.AutoSize = true;
             this.lblDescription.BackColor = System.Drawing.Color.Transparent;
             this.lblDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDescription.Location = new System.Drawing.Point(115, 634);
-            this.lblDescription.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
+            this.lblDescription.Location = new System.Drawing.Point(43, 266);
             this.lblDescription.Name = "lblDescription";
-            this.lblDescription.Size = new System.Drawing.Size(230, 44);
+            this.lblDescription.Size = new System.Drawing.Size(91, 18);
             this.lblDescription.TabIndex = 1;
             this.lblDescription.Text = "Descripción:";
             // 
@@ -72,19 +70,17 @@
             this.lblMaximumAmmountUsers.AutoSize = true;
             this.lblMaximumAmmountUsers.BackColor = System.Drawing.Color.Transparent;
             this.lblMaximumAmmountUsers.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMaximumAmmountUsers.Location = new System.Drawing.Point(115, 496);
-            this.lblMaximumAmmountUsers.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
+            this.lblMaximumAmmountUsers.Location = new System.Drawing.Point(43, 208);
             this.lblMaximumAmmountUsers.Name = "lblMaximumAmmountUsers";
-            this.lblMaximumAmmountUsers.Size = new System.Drawing.Size(535, 44);
+            this.lblMaximumAmmountUsers.Size = new System.Drawing.Size(207, 18);
             this.lblMaximumAmmountUsers.TabIndex = 2;
             this.lblMaximumAmmountUsers.Text = "Cantidad máxima de usuarios:";
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(683, 360);
-            this.txtName.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.txtName.Location = new System.Drawing.Point(256, 151);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(585, 38);
+            this.txtName.Size = new System.Drawing.Size(222, 20);
             this.txtName.TabIndex = 10;
             // 
             // lblTeamData
@@ -92,24 +88,22 @@
             this.lblTeamData.AutoSize = true;
             this.lblTeamData.BackColor = System.Drawing.Color.Transparent;
             this.lblTeamData.Font = new System.Drawing.Font("Segoe Script", 15.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTeamData.Location = new System.Drawing.Point(643, 193);
-            this.lblTeamData.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
+            this.lblTeamData.Location = new System.Drawing.Point(241, 81);
             this.lblTeamData.Name = "lblTeamData";
-            this.lblTeamData.Size = new System.Drawing.Size(488, 87);
+            this.lblTeamData.Size = new System.Drawing.Size(192, 34);
             this.lblTeamData.TabIndex = 13;
             this.lblTeamData.Text = "Datos de equipo";
             // 
             // numMaximumAmmountUsers
             // 
-            this.numMaximumAmmountUsers.Location = new System.Drawing.Point(683, 502);
-            this.numMaximumAmmountUsers.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.numMaximumAmmountUsers.Location = new System.Drawing.Point(256, 211);
             this.numMaximumAmmountUsers.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.numMaximumAmmountUsers.Name = "numMaximumAmmountUsers";
-            this.numMaximumAmmountUsers.Size = new System.Drawing.Size(592, 38);
+            this.numMaximumAmmountUsers.Size = new System.Drawing.Size(222, 20);
             this.numMaximumAmmountUsers.TabIndex = 14;
             this.numMaximumAmmountUsers.Value = new decimal(new int[] {
             1,
@@ -119,21 +113,20 @@
             // 
             // rtbDescription
             // 
-            this.rtbDescription.Location = new System.Drawing.Point(683, 634);
-            this.rtbDescription.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.rtbDescription.Location = new System.Drawing.Point(256, 266);
             this.rtbDescription.Name = "rtbDescription";
-            this.rtbDescription.Size = new System.Drawing.Size(585, 245);
+            this.rtbDescription.Size = new System.Drawing.Size(222, 105);
             this.rtbDescription.TabIndex = 15;
             this.rtbDescription.Text = "";
             // 
             // btnAccept
             // 
             this.btnAccept.BackColor = System.Drawing.Color.Lime;
+            this.btnAccept.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAccept.ForeColor = System.Drawing.Color.White;
-            this.btnAccept.Location = new System.Drawing.Point(685, 975);
-            this.btnAccept.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.btnAccept.Location = new System.Drawing.Point(257, 409);
             this.btnAccept.Name = "btnAccept";
-            this.btnAccept.Size = new System.Drawing.Size(264, 83);
+            this.btnAccept.Size = new System.Drawing.Size(99, 35);
             this.btnAccept.TabIndex = 17;
             this.btnAccept.Text = "Aceptar";
             this.btnAccept.UseVisualStyleBackColor = false;
@@ -142,11 +135,11 @@
             // btnCancel
             // 
             this.btnCancel.BackColor = System.Drawing.Color.Red;
+            this.btnCancel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.Location = new System.Drawing.Point(1011, 975);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.btnCancel.Location = new System.Drawing.Point(379, 409);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(264, 83);
+            this.btnCancel.Size = new System.Drawing.Size(99, 35);
             this.btnCancel.TabIndex = 16;
             this.btnCancel.Text = "Cancelar";
             this.btnCancel.UseVisualStyleBackColor = false;
@@ -155,17 +148,16 @@
             // picMarker
             // 
             this.picMarker.Image = ((System.Drawing.Image)(resources.GetObject("picMarker.Image")));
-            this.picMarker.Location = new System.Drawing.Point(1381, 596);
-            this.picMarker.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.picMarker.Location = new System.Drawing.Point(518, 250);
             this.picMarker.Name = "picMarker";
-            this.picMarker.Size = new System.Drawing.Size(571, 620);
+            this.picMarker.Size = new System.Drawing.Size(214, 260);
             this.picMarker.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picMarker.TabIndex = 18;
             this.picMarker.TabStop = false;
             // 
             // UCAddOrModifyTeam
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -179,9 +171,8 @@
             this.Controls.Add(this.lblMaximumAmmountUsers);
             this.Controls.Add(this.lblDescription);
             this.Controls.Add(this.lblName);
-            this.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.Name = "UCAddOrModifyTeam";
-            this.Size = new System.Drawing.Size(1992, 1283);
+            this.Size = new System.Drawing.Size(747, 538);
             ((System.ComponentModel.ISupportInitialize)(this.numMaximumAmmountUsers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picMarker)).EndInit();
             this.ResumeLayout(false);

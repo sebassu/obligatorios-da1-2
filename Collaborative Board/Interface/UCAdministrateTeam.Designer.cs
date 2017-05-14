@@ -74,6 +74,7 @@
             // btnAddUser
             // 
             this.btnAddUser.BackColor = System.Drawing.Color.DarkRed;
+            this.btnAddUser.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAddUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddUser.ForeColor = System.Drawing.Color.White;
             this.btnAddUser.Location = new System.Drawing.Point(280, 248);
@@ -87,6 +88,7 @@
             // btnRemoveUser
             // 
             this.btnRemoveUser.BackColor = System.Drawing.Color.DarkRed;
+            this.btnRemoveUser.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRemoveUser.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRemoveUser.ForeColor = System.Drawing.Color.White;
             this.btnRemoveUser.Location = new System.Drawing.Point(280, 335);
@@ -102,6 +104,7 @@
             this.btnBack.BackColor = System.Drawing.Color.Transparent;
             this.btnBack.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnBack.BackgroundImage")));
             this.btnBack.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnBack.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnBack.Location = new System.Drawing.Point(36, 37);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(80, 79);

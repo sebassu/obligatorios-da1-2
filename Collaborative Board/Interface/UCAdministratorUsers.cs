@@ -118,20 +118,21 @@ namespace Interface
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(PerformDeleteAction);
-        }
-
-        private void PerformDeleteAction()
-        {
             if (lstUsers.SelectedItems.Count > 0)
             {
-                User userToDelete = lstUsers.SelectedItems[0].Tag as User;
-                AskDeleteUser(userToDelete);
+                InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(PerformDeleteAction);
             }
             else
             {
                 InterfaceUtilities.NotElementSelectedMessageBox();
             }
+
+        }
+
+        private void PerformDeleteAction()
+        {
+            User userToDelete = lstUsers.SelectedItems[0].Tag as User;
+            AskDeleteUser(userToDelete);
         }
 
         private void AskDeleteUser(User oneUser)
@@ -150,7 +151,8 @@ namespace Interface
         {
             UserRepository globalUsers = UserRepository.GetInstance();
             globalUsers.Remove(oneUser);
-            if (oneUser.Equals(Session.ActiveUser())){
+            if (oneUser.Equals(Session.ActiveUser()))
+            {
                 InterfaceUtilities.EndSessionAndGoToLogInForm();
             }
         }

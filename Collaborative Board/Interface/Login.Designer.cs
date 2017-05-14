@@ -78,6 +78,7 @@
             // 
             // btnEnter
             // 
+            this.btnEnter.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnEnter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEnter.Location = new System.Drawing.Point(330, 165);
             this.btnEnter.Name = "btnEnter";
@@ -111,6 +112,7 @@
             // 
             // btnLoadTestData
             // 
+            this.btnLoadTestData.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnLoadTestData.Location = new System.Drawing.Point(49, 157);
             this.btnLoadTestData.Name = "btnLoadTestData";
             this.btnLoadTestData.Size = new System.Drawing.Size(95, 43);

@@ -82,8 +82,6 @@ namespace Interface
             InterfaceUtilities.UCWhiteboardsToPanel(systemPanel);
         }
 
-
-
         private void btnInforms_Click(object sender, EventArgs e)
         {
             new SelectInform(systemPanel).Show();

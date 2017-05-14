@@ -144,6 +144,7 @@
             // btnCancel
             // 
             this.btnCancel.BackColor = System.Drawing.Color.Red;
+            this.btnCancel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCancel.ForeColor = System.Drawing.Color.White;
             this.btnCancel.Location = new System.Drawing.Point(366, 442);
             this.btnCancel.Name = "btnCancel";
@@ -156,6 +157,7 @@
             // btnAccept
             // 
             this.btnAccept.BackColor = System.Drawing.Color.Lime;
+            this.btnAccept.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAccept.ForeColor = System.Drawing.Color.White;
             this.btnAccept.Location = new System.Drawing.Point(250, 442);
             this.btnAccept.Name = "btnAccept";
@@ -208,6 +210,7 @@
             // 
             // btnResetPassword
             // 
+            this.btnResetPassword.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnResetPassword.Location = new System.Drawing.Point(335, 355);
             this.btnResetPassword.Name = "btnResetPassword";
             this.btnResetPassword.Size = new System.Drawing.Size(130, 27);

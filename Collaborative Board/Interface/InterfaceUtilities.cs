@@ -152,6 +152,7 @@ namespace Interface
             if (component.SelectedItems.Count > 0)
             {
                 actionToPerform.Invoke();
+
             }
             else
             {

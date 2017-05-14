@@ -139,12 +139,12 @@ namespace Interface
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
-            InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(PerformDeleteAction);
+            InterfaceUtilities.PerformActionIfElementIsSelected(lstRegisteredWhiteboards, PerformDeleteAction);
         }
 
         private void PerformDeleteAction()
         {
-            InterfaceUtilities.PerformActionIfElementIsSelected(lstRegisteredWhiteboards, GetWhiteboardAndAttemptToDelete);
+            InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(GetWhiteboardAndAttemptToDelete);
         }
 
         private void GetWhiteboardAndAttemptToDelete()
