@@ -146,24 +146,11 @@ namespace Interface
             }
         }
 
-        public static string GetDateToShow(DateTime someDate)
-        {
-            if (someDate != DateTime.MinValue)
-            {
-                return someDate.ToString("d", CultureInfo.CurrentCulture);
-            }
-            else
-            {
-                return "N/a";
-            }
-        }
-
         public static void PerformActionIfElementIsSelected(ListView component, Action actionToPerform)
         {
             if (component.SelectedItems.Count > 0)
             {
                 actionToPerform.Invoke();
-
             }
             else
             {

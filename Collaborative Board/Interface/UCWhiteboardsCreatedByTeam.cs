@@ -78,8 +78,8 @@ namespace Interface
             {
                 foreach (Whiteboard whiteboard in whiteboardsToShow)
                 {
-                    var creationDateToShow = InterfaceUtilities.GetDateToShow(whiteboard.CreationDate);
-                    var lastModificationDateToShow = InterfaceUtilities.GetDateToShow(whiteboard.LastModification);
+                    var creationDateToShow = Utilities.GetDateToShow(whiteboard.CreationDate);
+                    var lastModificationDateToShow = Utilities.GetDateToShow(whiteboard.LastModification);
                     var ownerTeamToShow = whiteboard.OwnerTeam.ToString();
                     dgvWhiteboardsCreatedByTeam.Rows.Add(whiteboard.ToString(), ownerTeamToShow,
                         creationDateToShow, lastModificationDateToShow, whiteboard.Contents.Count);

@@ -11,7 +11,7 @@ namespace Interface
     public partial class UCAdministratorCommentsSolvedByUser : UserControl
     {
         private Panel systemPanel;
-        private List<Comment> comments = new List<Comment>();
+        private readonly List<Comment> allComments = new List<Comment>();
 
         public UCAdministratorCommentsSolvedByUser(Panel systemPanel)
         {
@@ -19,7 +19,6 @@ namespace Interface
             this.systemPanel = systemPanel;
             LoadUserComboboxes();
             SetDateTimePickerFormat();
-            SetDateTimePickerMinimumValidDates();
         }
 
         private void LoadUserComboboxes()
@@ -30,6 +29,8 @@ namespace Interface
                 cmbCreatorUser.Items.Add(user);
                 cmbSolverUser.Items.Add(user);
             }
+            cmbCreatorUser.SelectedIndex = 0;
+            cmbSolverUser.SelectedIndex = 0;
         }
 
         public void SetDateTimePickerFormat()
@@ -40,27 +41,21 @@ namespace Interface
             dtpCommentsSolvedUntil.CustomFormat = "dd/MM/yyyy";
         }
 
-        private void SetDateTimePickerMinimumValidDates()
-        {
-            dtpCommentsCreatedFrom.MinDate = DateTime.Today;
-            dtpCommentsCreatedUntil.MinDate = DateTime.Today;
-            dtpCommentsSolvedFrom.MinDate = DateTime.Today;
-            dtpCommentsSolvedUntil.MinDate = DateTime.Today;
-        }
-
         private void UCAdministratorCommentsSolvedByUser_Load(object sender, EventArgs e)
         {
             UserRepository globalUsers = UserRepository.GetInstance();
             foreach (var user in globalUsers.Elements)
             {
-                comments.AddRange(user.CommentsCreated.Where(c => c.IsResolved));
+                var aux = user.CommentsCreated.Where(c => c.IsResolved).ToList();
+                allComments.AddRange(aux);
             }
-            LoadGridViewWithCommentsFilteringBy(_ => true);
+            LoadGridViewWithCommentsFilteringBy(allComments, (_ => true));
         }
 
-        private void LoadGridViewWithCommentsFilteringBy(Func<Comment, bool> filteringFunction)
+        private void LoadGridViewWithCommentsFilteringBy(List<Comment> comments, Func<Comment, bool> filteringFunction)
         {
             var commentsToShow = comments.Where(c => filteringFunction(c)).ToList();
+            dgvCommentsSolvedByUser.Rows.Clear();
             if (commentsToShow.Count == 0)
             {
                 dgvCommentsSolvedByUser.Rows.Add("Sin", "datos", "a", " mostrar.");
@@ -69,8 +64,8 @@ namespace Interface
             {
                 foreach (var comment in commentsToShow)
                 {
-                    var creationDateToShow = InterfaceUtilities.GetDateToShow(comment.CreationDate);
-                    var resolutionDateToShow = InterfaceUtilities.GetDateToShow(comment.ResolutionDate());
+                    var creationDateToShow = Utilities.GetDateToShow(comment.CreationDate);
+                    var resolutionDateToShow = Utilities.GetDateToShow(comment.ResolutionDate());
                     var creatorToShow = comment.Creator.Email;
                     var resolverToShow = comment.Resolver.Email;
                     var whiteboardToShow = comment.AssociatedWhiteboard.ToString();
@@ -80,24 +75,27 @@ namespace Interface
             }
         }
 
-        private void btnHome_MouseEnter(object sender, EventArgs e)
+        private void BtnHome_MouseEnter(object sender, EventArgs e)
         {
             btnHome.Size = new Size(87, 67);
         }
 
-        private void btnHome_MouseLeave(object sender, EventArgs e)
+        private void BtnHome_MouseLeave(object sender, EventArgs e)
         {
             btnHome.Size = new Size(80, 62);
         }
 
-        private void btnExit_Click(object sender, EventArgs e)
+        private void BtnExit_Click(object sender, EventArgs e)
         {
             InterfaceUtilities.AskLogOut();
         }
 
-        private void btnApllyFilters_Click(object sender, EventArgs e)
+        private void BtnApplyFilters_Click(object sender, EventArgs e)
         {
-            LoadGridViewWithCommentsFilteringBy(c => FilterByCreatorResolverAndDates(c));
+            User selectedResolver = cmbSolverUser.SelectedItem as User;
+            var resolvedComments = selectedResolver.CommentsResolved.ToList();
+            LoadGridViewWithCommentsFilteringBy(resolvedComments,
+                (c => FilterByCreatorResolverAndDates(c)));
         }
 
         private bool FilterByCreatorResolverAndDates(Comment c)
@@ -107,18 +105,18 @@ namespace Interface
 
         private bool CreatorAndResolverMatchSelection(Comment c)
         {
-            User selectedCreator = cmbCreatorUser.SelectedValue as User;
-            User selectedResolver = cmbSolverUser.SelectedValue as User;
+            User selectedCreator = cmbCreatorUser.SelectedItem as User;
+            User selectedResolver = cmbSolverUser.SelectedItem as User;
             return selectedCreator.Equals(c.Creator) &&
                 selectedResolver.Equals(c.Resolver);
         }
 
         private bool FallsBetweenDates(Comment c)
         {
-            return c.CreationDate >= dtpCommentsCreatedFrom.Value.Date &&
-                c.CreationDate <= dtpCommentsCreatedUntil.Value.Date &&
-                c.ResolutionDate() >= dtpCommentsCreatedFrom.Value.Date &&
-                c.ResolutionDate() <= dtpCommentsSolvedUntil.Value.Date;
+            return c.CreationDate.Date >= dtpCommentsCreatedFrom.Value.Date &&
+                c.CreationDate.Date <= dtpCommentsCreatedUntil.Value.Date &&
+                c.ResolutionDate().Date >= dtpCommentsCreatedFrom.Value.Date &&
+                c.ResolutionDate().Date <= dtpCommentsSolvedUntil.Value.Date;
         }
     }
 }

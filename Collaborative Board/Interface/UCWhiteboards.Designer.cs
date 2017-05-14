@@ -125,6 +125,7 @@
             this.lstRegisteredWhiteboards.Name = "lstRegisteredWhiteboards";
             this.lstRegisteredWhiteboards.Size = new System.Drawing.Size(299, 343);
             this.lstRegisteredWhiteboards.TabIndex = 5;
+            this.lstRegisteredWhiteboards.TileSize = new System.Drawing.Size(299, 36);
             this.lstRegisteredWhiteboards.UseCompatibleStateImageBehavior = false;
             this.lstRegisteredWhiteboards.View = System.Windows.Forms.View.Tile;
             // 

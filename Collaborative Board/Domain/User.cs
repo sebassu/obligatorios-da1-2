@@ -137,14 +137,6 @@ namespace Domain
             }
         }
 
-        internal void RemoveCreatedComment(Comment someComment)
-        {
-            if (!commentsCreated.Remove(someComment))
-            {
-                throw new UserException(ErrorMessages.CommentWasNotAdded);
-            }
-        }
-
         internal void AddResolvedComment(Comment someComment)
         {
             if (!commentsResolved.Contains(someComment))
@@ -154,14 +146,6 @@ namespace Domain
             else
             {
                 throw new CommentException(ErrorMessages.CommentAlreadyAdded);
-            }
-        }
-
-        internal void RemoveResolvedComment(Comment someComment)
-        {
-            if (!commentsResolved.Remove(someComment))
-            {
-                throw new UserException(ErrorMessages.CommentWasNotAdded);
             }
         }
 

@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Linq;
 
 namespace Domain
@@ -40,6 +41,18 @@ namespace Domain
         public static bool HasAdministrationPrivileges(User someUser)
         {
             return IsNotNull(someUser) && someUser.HasAdministrationPrivileges;
+        }
+
+        public static string GetDateToShow(DateTime someDate)
+        {
+            if (someDate != DateTime.MinValue)
+            {
+                return someDate.ToString("d/M/yyyy, h:mm tt", CultureInfo.CurrentCulture);
+            }
+            else
+            {
+                return "N/a";
+            }
         }
     }
 }

@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ElementComments));
             this.lblElementComments = new System.Windows.Forms.Label();
             this.lstComments = new System.Windows.Forms.ListView();
+            this.comments = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnSolve = new System.Windows.Forms.Button();
             this.btnAddComment = new System.Windows.Forms.Button();
             this.rtbNewComment = new System.Windows.Forms.RichTextBox();
@@ -50,11 +51,21 @@
             // 
             // lstComments
             // 
+            this.lstComments.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.comments});
+            this.lstComments.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lstComments.Location = new System.Drawing.Point(33, 85);
+            this.lstComments.MultiSelect = false;
             this.lstComments.Name = "lstComments";
             this.lstComments.Size = new System.Drawing.Size(466, 196);
             this.lstComments.TabIndex = 15;
+            this.lstComments.TileSize = new System.Drawing.Size(466, 40);
             this.lstComments.UseCompatibleStateImageBehavior = false;
+            this.lstComments.View = System.Windows.Forms.View.Tile;
+            // 
+            // comments
+            // 
+            this.comments.Width = 466;
             // 
             // btnSolve
             // 
@@ -68,7 +79,7 @@
             this.btnSolve.TabIndex = 16;
             this.btnSolve.Text = "Resolver";
             this.btnSolve.UseVisualStyleBackColor = false;
-            this.btnSolve.Click += new System.EventHandler(this.btnSolve_Click);
+            this.btnSolve.Click += new System.EventHandler(this.BtnSolve_Click);
             // 
             // btnAddComment
             // 
@@ -79,10 +90,11 @@
             this.btnAddComment.TabIndex = 17;
             this.btnAddComment.Text = "Agregar comentario";
             this.btnAddComment.UseVisualStyleBackColor = true;
-            this.btnAddComment.Click += new System.EventHandler(this.btnAddComment_Click);
+            this.btnAddComment.Click += new System.EventHandler(this.BtnAddComment_Click);
             // 
             // rtbNewComment
             // 
+            this.rtbNewComment.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtbNewComment.Location = new System.Drawing.Point(158, 300);
             this.rtbNewComment.Name = "rtbNewComment";
             this.rtbNewComment.Size = new System.Drawing.Size(364, 96);
@@ -101,7 +113,7 @@
             this.btnSaveComment.Text = "Guardar comentario";
             this.btnSaveComment.UseVisualStyleBackColor = true;
             this.btnSaveComment.Visible = false;
-            this.btnSaveComment.Click += new System.EventHandler(this.btnSaveComment_Click);
+            this.btnSaveComment.Click += new System.EventHandler(this.BtnSaveComment_Click);
             // 
             // ElementComments
             // 
@@ -132,5 +144,6 @@
         private System.Windows.Forms.Button btnAddComment;
         private System.Windows.Forms.RichTextBox rtbNewComment;
         private System.Windows.Forms.Button btnSaveComment;
+        private System.Windows.Forms.ColumnHeader comments;
     }
 }

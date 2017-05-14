@@ -48,6 +48,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControlMovingOrResizingHandler.cs" />
+    <Compile Include="ElementComments.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ElementComments.Designer.cs">
+      <DependentUpon>ElementComments.cs</DependentUpon>
+    </Compile>
     <Compile Include="SelectReport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -140,6 +146,9 @@
     <Compile Include="UCAdministrateTeam.Designer.cs">
       <DependentUpon>UCAdministrateTeam.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ElementComments.resx">
+      <DependentUpon>ElementComments.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SelectReport.resx">
       <DependentUpon>SelectReport.cs</DependentUpon>
     </EmbeddedResource>
