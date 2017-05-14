@@ -37,9 +37,8 @@ namespace Interface
                     Height = imageToAdd.Height,
                     Location = imageToAdd.Position
                 };
+                ControlMovingOrResizingHandler.Init(interfaceContainer);
                 SetRightClickOptionsImage(interfaceContainer);
-                SetDragAndDropEvents(interfaceContainer);
-                pnlWhiteboard.Controls.Add(interfaceContainer);
             }
         }
 
@@ -51,17 +50,10 @@ namespace Interface
             MenuItem removeImage = new MenuItem("Eliminar imagen");
             contMenu.MenuItems.Add(seeComments);
             contMenu.MenuItems.Add(modifyImage);
+            contMenu.MenuItems.Add(removeImage);
             ImageWhiteboard domainElement = interfaceContainer.Tag as ImageWhiteboard;
             seeComments.Click += (sender, e) => ClickSeeComments(domainElement, e);
             interfaceContainer.ContextMenu = contMenu;
-        }
-
-        private void SetDragAndDropEvents(Control interfaceObject)
-        {
-            ControlMovingOrResizingHandler.Init(interfaceObject);
-            interfaceObject.MouseClick += new MouseEventHandler(ClickMouseElement);
-            interfaceObject.MouseMove += new MouseEventHandler(MoveMouseElement);
-            interfaceObject.MouseUp += new MouseEventHandler(UpMouseElement);
         }
 
         private void ClickSeeComments(ImageWhiteboard image, EventArgs e)
@@ -71,44 +63,24 @@ namespace Interface
             comments.TopMost = true;
         }
 
-        private void ClickMouseElement(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                Control interfaceComponent = ((Control)sender);
-                mouseDownLocation = e.Location;
-                componentInitialPosition = interfaceComponent.Location;
-            }
-        }
-
-        private void MoveMouseElement(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                Control componentToBeMoved = sender as Control;
-                componentToBeMoved.Left = e.X + componentToBeMoved.Left - mouseDownLocation.X;
-                componentToBeMoved.Top = e.Y + componentToBeMoved.Top - mouseDownLocation.Y;
-            }
-        }
-
-        private void UpMouseElement(object sender, MouseEventArgs e)
-        {
-            Control interfaceComponent = ((Control)sender);
-            ElementWhiteboard boardElement = interfaceComponent.Tag as ElementWhiteboard;
-            try
-            {
-                boardElement.Position = interfaceComponent.Location;
-            }
-            catch (BoardException exception)
-            {
-                interfaceComponent.Location = componentInitialPosition;
-                InterfaceUtilities.ShowError(exception.Message, "Movimiento inválido");
-            }
-        }
-
         private void BtnAddText_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void WhiteboardVisualization_Click(object sender, EventArgs e)
+        {
+            TopMost = true;
+        }
+
+        private void WhiteboardVisualization_MouseLeave(object sender, EventArgs e)
+        {
+            TopMost = false;
+        }
+
+        private void WhiteboardVisualization_MouseEnter(object sender, EventArgs e)
+        {
+            TopMost = true;
         }
     }
 }

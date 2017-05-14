@@ -25,5 +25,10 @@ namespace Interface
         {
             Application.Exit();
         }
+
+        private void PnlSystem_Click(object sender, System.EventArgs e)
+        {
+            Activate();
+        }
     }
 }

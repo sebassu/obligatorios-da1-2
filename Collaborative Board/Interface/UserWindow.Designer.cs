@@ -37,6 +37,7 @@
             this.pnlSystem.Name = "pnlSystem";
             this.pnlSystem.Size = new System.Drawing.Size(747, 538);
             this.pnlSystem.TabIndex = 0;
+            this.pnlSystem.Click += new System.EventHandler(this.PnlSystem_Click);
             // 
             // UserWindow
             // 

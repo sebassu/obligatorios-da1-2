@@ -177,5 +177,10 @@ namespace Interface
             Whiteboard whiteboardToShow = lstRegisteredWhiteboards.SelectedItems[0].Tag as Whiteboard;
             (new WhiteboardVisualization(whiteboardToShow)).Show();
         }
+
+        private void UCWhiteboards_Click(object sender, EventArgs e)
+        {
+            InterfaceUtilities.UCWhiteboardsToPanel(systemPanel);
+        }
     }
 }

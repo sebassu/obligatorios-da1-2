@@ -70,7 +70,7 @@
             this.btnHome.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnHome.Location = new System.Drawing.Point(42, 29);
             this.btnHome.Name = "btnHome";
-            this.btnHome.Size = new System.Drawing.Size(80, 79);
+            this.btnHome.Size = new System.Drawing.Size(80, 62);
             this.btnHome.TabIndex = 0;
             this.btnHome.UseVisualStyleBackColor = true;
             this.btnHome.MouseEnter += new System.EventHandler(this.BtnHome_MouseEnter);

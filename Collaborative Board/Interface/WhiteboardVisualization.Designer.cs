@@ -31,8 +31,8 @@
             this.pnlOptions = new System.Windows.Forms.Panel();
             this.btnPrintPng = new System.Windows.Forms.Button();
             this.btnPrintPDF = new System.Windows.Forms.Button();
-            this.btnAddImage = new System.Windows.Forms.Button();
             this.btnAddText = new System.Windows.Forms.Button();
+            this.btnAddImage = new System.Windows.Forms.Button();
             this.pnlWhiteboard = new System.Windows.Forms.Panel();
             this.pnlOptions.SuspendLayout();
             this.SuspendLayout();
@@ -75,20 +75,6 @@
             this.btnPrintPDF.Text = "Imprimir en PDF";
             this.btnPrintPDF.UseVisualStyleBackColor = false;
             // 
-            // btnAddImage
-            // 
-            this.btnAddImage.BackColor = System.Drawing.Color.Navy;
-            this.btnAddImage.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnAddImage.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAddImage.ForeColor = System.Drawing.Color.White;
-            this.btnAddImage.Location = new System.Drawing.Point(3, 23);
-            this.btnAddImage.Name = "btnAddImage";
-            this.btnAddImage.Size = new System.Drawing.Size(198, 92);
-            this.btnAddImage.TabIndex = 1;
-            this.btnAddImage.Text = "Agregar imagen";
-            this.btnAddImage.UseVisualStyleBackColor = false;
-            this.btnAddImage.Click += new System.EventHandler(this.BtnAddImage_Click);
-            // 
             // btnAddText
             // 
             this.btnAddText.BackColor = System.Drawing.Color.Navy;
@@ -102,6 +88,20 @@
             this.btnAddText.Text = "Agregar texto";
             this.btnAddText.UseVisualStyleBackColor = false;
             this.btnAddText.Click += new System.EventHandler(this.BtnAddText_Click);
+            // 
+            // btnAddImage
+            // 
+            this.btnAddImage.BackColor = System.Drawing.Color.Navy;
+            this.btnAddImage.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAddImage.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAddImage.ForeColor = System.Drawing.Color.White;
+            this.btnAddImage.Location = new System.Drawing.Point(3, 23);
+            this.btnAddImage.Name = "btnAddImage";
+            this.btnAddImage.Size = new System.Drawing.Size(198, 92);
+            this.btnAddImage.TabIndex = 1;
+            this.btnAddImage.Text = "Agregar imagen";
+            this.btnAddImage.UseVisualStyleBackColor = false;
+            this.btnAddImage.Click += new System.EventHandler(this.BtnAddImage_Click);
             // 
             // pnlWhiteboard
             // 
@@ -117,7 +117,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(508, 307);
+            this.ClientSize = new System.Drawing.Size(525, 307);
             this.Controls.Add(this.pnlWhiteboard);
             this.Controls.Add(this.pnlOptions);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
