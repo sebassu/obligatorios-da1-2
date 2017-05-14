@@ -10,10 +10,10 @@ using System.Windows.Forms;
 
 namespace Interface
 {
-    public partial class SelectInform : Form
+    public partial class SelectReport : Form
     {
         private Panel systemPanel;
-        public SelectInform(Panel systemPanel)
+        public SelectReport(Panel systemPanel)
         {
             InitializeComponent();
             this.systemPanel = systemPanel;
@@ -24,7 +24,7 @@ namespace Interface
             systemPanel.Enabled = true;
         }
 
-        private void btnWhiteboardsCreatedByTeam_Click(object sender, EventArgs e)
+        private void BtnWhiteboardsCreatedByTeam_Click(object sender, EventArgs e)
         {
             Hide();
             systemPanel.Controls.Clear();
@@ -33,13 +33,12 @@ namespace Interface
 
         }
 
-        private void btnCommentsSolvedByUser_Click(object sender, EventArgs e)
+        private void BtnCommentsSolvedByUser_Click(object sender, EventArgs e)
         {
             Hide();
             systemPanel.Controls.Clear();
             systemPanel.Controls.Add(new UCAdministratorCommentsSolvedByUser(systemPanel));
             systemPanel.Enabled = true;
-
         }
     }
 }

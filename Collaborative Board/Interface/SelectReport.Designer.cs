@@ -1,6 +1,6 @@
 ﻿namespace Interface
 {
-    partial class SelectInform
+    partial class SelectReport
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SelectInform));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SelectReport));
             this.btnWhiteboardsCreatedByTeam = new System.Windows.Forms.Button();
             this.btnCommentsSolvedByUser = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -45,7 +45,7 @@
             this.btnWhiteboardsCreatedByTeam.TabIndex = 0;
             this.btnWhiteboardsCreatedByTeam.Text = "Pizarrones creados por equipo";
             this.btnWhiteboardsCreatedByTeam.UseVisualStyleBackColor = false;
-            this.btnWhiteboardsCreatedByTeam.Click += new System.EventHandler(this.btnWhiteboardsCreatedByTeam_Click);
+            this.btnWhiteboardsCreatedByTeam.Click += new System.EventHandler(this.BtnWhiteboardsCreatedByTeam_Click);
             // 
             // btnCommentsSolvedByUser
             // 
@@ -59,7 +59,7 @@
             this.btnCommentsSolvedByUser.TabIndex = 1;
             this.btnCommentsSolvedByUser.Text = "Comentarios resueltos por usuario";
             this.btnCommentsSolvedByUser.UseVisualStyleBackColor = false;
-            this.btnCommentsSolvedByUser.Click += new System.EventHandler(this.btnCommentsSolvedByUser_Click);
+            this.btnCommentsSolvedByUser.Click += new System.EventHandler(this.BtnCommentsSolvedByUser_Click);
             // 
             // SelectInform
             // 

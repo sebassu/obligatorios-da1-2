@@ -47,11 +47,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SelectInform.cs">
+    <Compile Include="SelectReport.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SelectInform.Designer.cs">
-      <DependentUpon>SelectInform.cs</DependentUpon>
+    <Compile Include="SelectReport.Designer.cs">
+      <DependentUpon>SelectReport.cs</DependentUpon>
     </Compile>
     <Compile Include="WhiteboardVisualization.cs">
       <SubType>Form</SubType>
@@ -139,8 +139,8 @@
     <Compile Include="UCAdministrateTeam.Designer.cs">
       <DependentUpon>UCAdministrateTeam.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="SelectInform.resx">
-      <DependentUpon>SelectInform.cs</DependentUpon>
+    <EmbeddedResource Include="SelectReport.resx">
+      <DependentUpon>SelectReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UCAddMemberToTeam.resx">
       <DependentUpon>UCAddMemberToTeam.cs</DependentUpon>

@@ -18,6 +18,7 @@ namespace Interface
             whiteboardShown = someWhiteboard;
             pnlWhiteboard.Width = someWhiteboard.Width;
             pnlWhiteboard.Height = someWhiteboard.Height;
+            Text = "Pizarrón: " + someWhiteboard.ToString();
         }
 
         private void BtnAddImage_Click(object sender, EventArgs e)
