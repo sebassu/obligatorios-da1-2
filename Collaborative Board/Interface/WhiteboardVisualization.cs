@@ -41,9 +41,23 @@ namespace Interface
                     Height = imageToAdd.Height,
                     Location = imageToAdd.Position
                 };
+                SetRightClickOptionsImage(interfaceContainer);
                 SetDragAndDropEvents(interfaceContainer);
                 pnlWhiteboard.Controls.Add(interfaceContainer);
             }
+        }
+
+        private void SetRightClickOptionsImage(PictureBox interfaceContainer)
+        {
+            ContextMenu contMenu = new ContextMenu();
+            MenuItem seeComments = new MenuItem("Ver comentarios");
+            MenuItem modifyImage = new MenuItem("Modificar imagen");
+            MenuItem removeImage = new MenuItem("Eliminar imagen");
+            contMenu.MenuItems.Add(seeComments);
+            contMenu.MenuItems.Add(modifyImage);
+            ImageWhiteboard domainElement = interfaceContainer.Tag as ImageWhiteboard;
+            seeComments.Click += (sender, e) => ClickSeeComments(domainElement, e);
+            interfaceContainer.ContextMenu = contMenu;
         }
 
         private void SetDragAndDropEvents(Control interfaceObject)
@@ -51,6 +65,13 @@ namespace Interface
             interfaceObject.MouseClick += new MouseEventHandler(ClickMouseElement);
             interfaceObject.MouseMove += new MouseEventHandler(MoveMouseElement);
             interfaceObject.MouseUp += new MouseEventHandler(UpMouseElement);
+        }
+
+        private void ClickSeeComments(ImageWhiteboard image, EventArgs e)
+        {
+            Form comments = new ElementComments(image);
+            comments.Show();
+            comments.TopMost = true;
         }
 
         private void ClickMouseElement(object sender, MouseEventArgs e)

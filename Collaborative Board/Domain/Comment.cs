@@ -34,7 +34,6 @@ namespace Domain
         }
 
         private DateTime resolutionDate;
-
         public DateTime ResolutionDate()
         {
             if (resolutionDate != DateTime.MinValue)
@@ -121,7 +120,7 @@ namespace Domain
                 Creator = someUser;
                 AssociatedElement = someElement;
                 Text = someText;
-                UpdateElementCommentList(someElement);
+                UpdateReferencesComments(someElement);
             }
             else
             {
@@ -129,8 +128,9 @@ namespace Domain
             }
         }
 
-        private void UpdateElementCommentList(ElementWhiteboard someElement)
+        private void UpdateReferencesComments(ElementWhiteboard someElement)
         {
+            Creator.AddCreatedComment(this);
             someElement.AddComment(this);
         }
 
@@ -156,6 +156,11 @@ namespace Domain
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return Text + " <" + Utilities.GetDateToShow(CreationDate) + " >" + " <" + Creator.Email + ">";
         }
     }
 }

@@ -103,6 +103,7 @@
             this.lstUsers.Name = "lstUsers";
             this.lstUsers.Size = new System.Drawing.Size(377, 220);
             this.lstUsers.TabIndex = 21;
+            this.lstUsers.TileSize = new System.Drawing.Size(377, 30);
             this.lstUsers.UseCompatibleStateImageBehavior = false;
             this.lstUsers.View = System.Windows.Forms.View.Tile;
             // 

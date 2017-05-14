@@ -46,7 +46,7 @@ namespace Interface
 
         public static void SuccesfulOperation()
         {
-            DialogResult result = MessageBox.Show("La operación se completo exitosamente.", "Operación exitosa",
+            DialogResult result = MessageBox.Show("La operación se completó exitosamente.", "Operación exitosa",
                                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -135,24 +135,11 @@ namespace Interface
             }
         }
 
-        public static string GetDateToShow(DateTime someDate)
-        {
-            if (someDate != DateTime.MinValue)
-            {
-                return someDate.ToString("d", CultureInfo.CurrentCulture);
-            }
-            else
-            {
-                return "N/a";
-            }
-        }
-
         public static void PerformActionIfElementIsSelected(ListView component, Action actionToPerform)
         {
             if (component.SelectedItems.Count > 0)
             {
                 actionToPerform.Invoke();
-
             }
             else
             {

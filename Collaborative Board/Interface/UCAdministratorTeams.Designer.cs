@@ -120,6 +120,7 @@
             this.lstTeams.Name = "lstTeams";
             this.lstTeams.Size = new System.Drawing.Size(242, 319);
             this.lstTeams.TabIndex = 5;
+            this.lstTeams.TileSize = new System.Drawing.Size(242, 36);
             this.lstTeams.UseCompatibleStateImageBehavior = false;
             this.lstTeams.View = System.Windows.Forms.View.Tile;
             // 

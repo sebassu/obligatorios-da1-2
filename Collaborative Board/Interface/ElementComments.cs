@@ -1,13 +1,8 @@
 ﻿using Domain;
 using Persistence;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Interface
@@ -21,23 +16,31 @@ namespace Interface
             this.selectedElement = selectedElement;
         }
 
-        private void btnAddComment_Click(object sender, EventArgs e)
+        private void BtnAddComment_Click(object sender, EventArgs e)
         {
             rtbNewComment.Visible = true;
             btnSaveComment.Visible = true;
             btnAddComment.Visible = false;
         }
 
-        private void btnSaveComment_Click(object sender, EventArgs e)
+        private void BtnSaveComment_Click(object sender, EventArgs e)
         {
+            InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(CreateNewComment);
+        }
+
+        private void CreateNewComment()
+        {
+            ListViewItem itemToAdd = new ListViewItem(rtbNewComment.Text)
+            {
+                Tag = Comment.CreatorElementText(Session.ActiveUser(),
+                selectedElement, rtbNewComment.Text)
+            };
             btnSaveComment.Visible = false;
             rtbNewComment.Visible = false;
             btnAddComment.Visible = true;
-            ListViewItem itemToAdd = new ListViewItem(rtbNewComment.Text);
-            lstComments.Items.Add(rtbNewComment.Text);
-            itemToAdd.Tag = Comment.CreatorElementText(Session.ActiveUser(),
-                selectedElement, rtbNewComment.Text);
             lstComments.Items.Add(itemToAdd);
+            rtbNewComment.Text = "";
+            btnSolve.Enabled = true;
         }
 
         private void ElementComments_Load(object sender, EventArgs e)
@@ -60,7 +63,7 @@ namespace Interface
                     lstComments.Items.Add(itemToAdd);
                     if (comment.IsResolved)
                     {
-                        itemToAdd.ForeColor = Color.Green;
+                        itemToAdd.ForeColor = Color.Lime;
                     }
                 }
             }
@@ -70,17 +73,22 @@ namespace Interface
             }
         }
 
-        private void btnSolve_Click(object sender, EventArgs e)
+        private void BtnSolve_Click(object sender, EventArgs e)
         {
-            InterfaceUtilities.PerformActionIfElementIsSelected(lstComments, AddNewComment);
+            InterfaceUtilities.PerformActionIfElementIsSelected(lstComments, AttemptToResolveComment);
         }
 
-        private void AddNewComment()
+        private void AttemptToResolveComment()
+        {
+            InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(ResolveComment);
+        }
+
+        private void ResolveComment()
         {
             ListViewItem selectedItem = lstComments.SelectedItems[0];
             Comment commentToSolve = selectedItem.Tag as Comment;
             commentToSolve.Resolve(Session.ActiveUser());
-            selectedItem.ForeColor = Color.Green;
+            selectedItem.ForeColor = Color.Lime;
         }
     }
 }

@@ -73,8 +73,8 @@
             this.btnHome.Size = new System.Drawing.Size(80, 79);
             this.btnHome.TabIndex = 0;
             this.btnHome.UseVisualStyleBackColor = true;
-            this.btnHome.MouseEnter += new System.EventHandler(this.btnHome_MouseEnter);
-            this.btnHome.MouseLeave += new System.EventHandler(this.btnHome_MouseLeave);
+            this.btnHome.MouseEnter += new System.EventHandler(this.BtnHome_MouseEnter);
+            this.btnHome.MouseLeave += new System.EventHandler(this.BtnHome_MouseLeave);
             // 
             // btnExit
             // 
@@ -85,7 +85,7 @@
             this.btnExit.Size = new System.Drawing.Size(80, 83);
             this.btnExit.TabIndex = 1;
             this.btnExit.UseVisualStyleBackColor = true;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            this.btnExit.Click += new System.EventHandler(this.BtnExit_Click);
             // 
             // lblCommentsSolvedByUser
             // 
@@ -158,7 +158,7 @@
             this.lblSolverUser.AutoSize = true;
             this.lblSolverUser.BackColor = System.Drawing.Color.Transparent;
             this.lblSolverUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSolverUser.Location = new System.Drawing.Point(341, 196);
+            this.lblSolverUser.Location = new System.Drawing.Point(334, 196);
             this.lblSolverUser.Name = "lblSolverUser";
             this.lblSolverUser.Size = new System.Drawing.Size(154, 18);
             this.lblSolverUser.TabIndex = 8;
@@ -176,9 +176,9 @@
             // cmbSolverUser
             // 
             this.cmbSolverUser.FormattingEnabled = true;
-            this.cmbSolverUser.Location = new System.Drawing.Point(501, 195);
+            this.cmbSolverUser.Location = new System.Drawing.Point(486, 195);
             this.cmbSolverUser.Name = "cmbSolverUser";
-            this.cmbSolverUser.Size = new System.Drawing.Size(121, 21);
+            this.cmbSolverUser.Size = new System.Drawing.Size(139, 21);
             this.cmbSolverUser.Sorted = true;
             this.cmbSolverUser.TabIndex = 11;
             // 
@@ -188,7 +188,7 @@
             this.dtpCommentsCreatedFrom.Location = new System.Drawing.Point(224, 134);
             this.dtpCommentsCreatedFrom.MinDate = new System.DateTime(2017, 5, 12, 0, 0, 0, 0);
             this.dtpCommentsCreatedFrom.Name = "dtpCommentsCreatedFrom";
-            this.dtpCommentsCreatedFrom.Size = new System.Drawing.Size(90, 20);
+            this.dtpCommentsCreatedFrom.Size = new System.Drawing.Size(92, 20);
             this.dtpCommentsCreatedFrom.TabIndex = 12;
             // 
             // dtpCommentsCreatedUntil
@@ -196,7 +196,7 @@
             this.dtpCommentsCreatedUntil.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpCommentsCreatedUntil.Location = new System.Drawing.Point(223, 164);
             this.dtpCommentsCreatedUntil.Name = "dtpCommentsCreatedUntil";
-            this.dtpCommentsCreatedUntil.Size = new System.Drawing.Size(90, 20);
+            this.dtpCommentsCreatedUntil.Size = new System.Drawing.Size(93, 20);
             this.dtpCommentsCreatedUntil.TabIndex = 13;
             // 
             // dtpCommentsSolvedFrom
@@ -220,13 +220,13 @@
             this.btnApllyFilters.BackColor = System.Drawing.SystemColors.ControlDark;
             this.btnApllyFilters.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnApllyFilters.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnApllyFilters.Location = new System.Drawing.Point(626, 195);
+            this.btnApllyFilters.Location = new System.Drawing.Point(626, 228);
             this.btnApllyFilters.Name = "btnApllyFilters";
             this.btnApllyFilters.Size = new System.Drawing.Size(99, 36);
             this.btnApllyFilters.TabIndex = 16;
             this.btnApllyFilters.Text = "Aplicar";
             this.btnApllyFilters.UseVisualStyleBackColor = false;
-            this.btnApllyFilters.Click += new System.EventHandler(this.btnApllyFilters_Click);
+            this.btnApllyFilters.Click += new System.EventHandler(this.BtnApplyFilters_Click);
             // 
             // dgvCommentsSolvedByUser
             // 
