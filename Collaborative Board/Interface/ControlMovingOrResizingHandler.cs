@@ -27,7 +27,7 @@ namespace Interface
         private static bool MouseIsInTopEdge { get; set; }
         private static bool MouseIsInBottomEdge { get; set; }
 
-        internal static void Init(Control interfaceObject)
+        internal static void MakeDragAndDroppable(Control interfaceObject)
         {
             cursorStartPoint = Point.Empty;
             interfaceObject.MouseDown += new MouseEventHandler(StartMovingOrResizing);

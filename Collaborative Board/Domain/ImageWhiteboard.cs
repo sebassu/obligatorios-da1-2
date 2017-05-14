@@ -6,7 +6,7 @@ namespace Domain
 {
     public class ImageWhiteboard : ElementWhiteboard
     {
-        public Image ActualImage { get; }
+        public Image ActualImage { get; set; }
 
         internal static ImageWhiteboard InstanceForTestingPurposes()
         {

@@ -66,7 +66,7 @@ namespace Interface
                 globalWhiteboards.AddNewWhiteboard(txtName.Text,
                     rtbDescription.Text, teamToSet, widthToSet, heightToSet);
             }
-            
+            InterfaceUtilities.SuccesfulOperation();
         }
     }
 }

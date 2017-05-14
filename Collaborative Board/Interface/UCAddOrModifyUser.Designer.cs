@@ -152,7 +152,7 @@
             this.btnCancel.TabIndex = 10;
             this.btnCancel.Text = "Cancelar";
             this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // btnAccept
             // 
@@ -165,7 +165,7 @@
             this.btnAccept.TabIndex = 11;
             this.btnAccept.Text = "Aceptar";
             this.btnAccept.UseVisualStyleBackColor = false;
-            this.btnAccept.Click += new System.EventHandler(this.btnAccept_Click);
+            this.btnAccept.Click += new System.EventHandler(this.BtnAccept_Click);
             // 
             // lblUserData
             // 
@@ -217,7 +217,7 @@
             this.btnResetPassword.TabIndex = 16;
             this.btnResetPassword.Text = "Resetear contraseña";
             this.btnResetPassword.UseVisualStyleBackColor = true;
-            this.btnResetPassword.Click += new System.EventHandler(this.btnResetPassword_Click);
+            this.btnResetPassword.Click += new System.EventHandler(this.BtnResetPassword_Click);
             // 
             // UCAddOrModifyUser
             // 
