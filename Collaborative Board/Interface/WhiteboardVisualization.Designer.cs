@@ -132,10 +132,10 @@
             this.btnAddText.TabIndex = 2;
             this.btnAddText.Text = "Agregar texto";
             this.btnAddText.UseVisualStyleBackColor = false;
+            this.btnAddText.Click += new System.EventHandler(this.BtnAddText_Click);
             // 
             // pnlWhiteboard
             // 
-            this.pnlWhiteboard.AutoScroll = true;
             this.pnlWhiteboard.BackColor = System.Drawing.Color.White;
             this.pnlWhiteboard.Location = new System.Drawing.Point(594, 13);
             this.pnlWhiteboard.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
@@ -145,7 +145,6 @@
             // 
             // WhiteboardVisualization
             // 
-            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;

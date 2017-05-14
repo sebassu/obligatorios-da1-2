@@ -65,16 +65,20 @@ namespace Domain
             return newHeight >= minimumHeight && DoesNotOverflowContainerY(RelativeY, newHeight);
         }
 
-        private Point origin;
-        public void SetOriginPoint(Point newOrigin)
+        private Point position;
+        public Point Position
         {
-            if (IsValidOriginPoint(newOrigin))
+            get { return position; }
+            set
             {
-                origin = newOrigin;
-            }
-            else
-            {
-                throw new ElementException(ErrorMessages.OriginPointIsInvalid);
+                if (IsValidOriginPoint(value))
+                {
+                    position = value;
+                }
+                else
+                {
+                    throw new ElementException(ErrorMessages.OriginPointIsInvalid);
+                }
             }
         }
 
@@ -98,12 +102,12 @@ namespace Domain
 
         public double RelativeX
         {
-            get { return origin.X; }
+            get { return position.X; }
         }
 
         public double RelativeY
         {
-            get { return origin.Y; }
+            get { return position.Y; }
         }
 
         internal double WidthContainerNeeded()
@@ -134,7 +138,7 @@ namespace Domain
         protected ElementWhiteboard()
         {
             Container = Whiteboard.InstanceForTestingPurposes();
-            origin = new Point(0, 0);
+            position = new Point(0, 0);
         }
 
         protected ElementWhiteboard(Whiteboard container)
@@ -158,7 +162,7 @@ namespace Domain
             int yForCentering = containerHeight / 3;
             width = xForCentering;
             height = yForCentering;
-            origin = new Point(xForCentering, yForCentering);
+            position = new Point(xForCentering, yForCentering);
         }
     }
 }

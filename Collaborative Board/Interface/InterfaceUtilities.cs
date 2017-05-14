@@ -71,7 +71,7 @@ namespace Interface
 
         public static void UCAdministratorTeamsToPanel(Panel systemPanel)
         {
-            ChangeUserControl(new UCAdministratorUsers(systemPanel), systemPanel);
+            ChangeUserControl(new UCAdministratorTeams(systemPanel), systemPanel);
         }
 
         public static void UCAdministatorUsersToPanel(Panel systemPanel)
