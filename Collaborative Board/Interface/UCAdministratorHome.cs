@@ -84,7 +84,7 @@ namespace Interface
 
         private void btnInforms_Click(object sender, EventArgs e)
         {
-            new SelectInform(systemPanel).Show();
+            new SelectReport(systemPanel).Show();
             systemPanel.Enabled = false;
         }
     }

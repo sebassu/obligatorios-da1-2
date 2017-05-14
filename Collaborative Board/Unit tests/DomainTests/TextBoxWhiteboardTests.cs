@@ -109,18 +109,16 @@ namespace UnitTests.DomainTests
         public void TextBoxSetValidOriginPointTest()
         {
             Point newOrigin = new Point(23, 37);
-            testingTextBox.SetOriginPoint(newOrigin);
-            Assert.AreEqual(newOrigin.X, testingTextBox.RelativeX);
-            Assert.AreEqual(newOrigin.Y, testingTextBox.RelativeY);
+            testingTextBox.Position = newOrigin;
+            Assert.AreEqual(newOrigin, testingTextBox.Position);
         }
 
         [TestMethod]
         public void TextBoxSetMinimumValidOriginPointTest()
         {
             Point newOrigin = new Point(0, 0);
-            testingTextBox.SetOriginPoint(newOrigin);
-            Assert.AreEqual(newOrigin.X, testingTextBox.RelativeX);
-            Assert.AreEqual(newOrigin.Y, testingTextBox.RelativeY);
+            testingTextBox.Position = newOrigin;
+            Assert.AreEqual(newOrigin, testingTextBox.Position);
         }
 
         [TestMethod]
@@ -128,7 +126,7 @@ namespace UnitTests.DomainTests
         public void TextBoxSetOriginPointInvalidXTest()
         {
             Point newOrigin = new Point(-100, 10);
-            testingTextBox.SetOriginPoint(newOrigin);
+            testingTextBox.Position = newOrigin;
         }
 
         [TestMethod]
@@ -136,7 +134,7 @@ namespace UnitTests.DomainTests
         public void TextBoxSetOriginPointInvalidYTest()
         {
             Point newOrigin = new Point(200, -99);
-            testingTextBox.SetOriginPoint(newOrigin);
+            testingTextBox.Position = newOrigin;
         }
 
         [TestMethod]
@@ -144,7 +142,7 @@ namespace UnitTests.DomainTests
         public void TextBoxSetInvalidOriginPointTest()
         {
             Point newOrigin = new Point(-2112, -1000);
-            testingTextBox.SetOriginPoint(newOrigin);
+            testingTextBox.Position = newOrigin;
         }
 
         [TestMethod]
@@ -186,9 +184,8 @@ namespace UnitTests.DomainTests
         {
             Point newOrigin = new Point(250, 10);
             GenerateNonGenericTestSituation();
-            testingTextBox.SetOriginPoint(newOrigin);
-            Assert.AreEqual(newOrigin.X, testingTextBox.RelativeX);
-            Assert.AreEqual(newOrigin.Y, testingTextBox.RelativeY);
+            testingTextBox.Position = newOrigin;
+            Assert.AreEqual(newOrigin, testingTextBox.Position);
         }
 
         [TestMethod]
@@ -196,9 +193,8 @@ namespace UnitTests.DomainTests
         {
             Point newOrigin = new Point(250, 200);
             GenerateNonGenericTestSituation();
-            testingTextBox.SetOriginPoint(newOrigin);
-            Assert.AreEqual(newOrigin.X, testingTextBox.RelativeX);
-            Assert.AreEqual(newOrigin.Y, testingTextBox.RelativeY);
+            testingTextBox.Position = newOrigin;
+            Assert.AreEqual(newOrigin, testingTextBox.Position);
         }
 
         [TestMethod]
@@ -207,7 +203,7 @@ namespace UnitTests.DomainTests
         {
             Point newOrigin = new Point(1200, 10);
             GenerateNonGenericTestSituation();
-            testingTextBox.SetOriginPoint(newOrigin);
+            testingTextBox.Position = newOrigin;
         }
 
         [TestMethod]
@@ -216,7 +212,7 @@ namespace UnitTests.DomainTests
         {
             Point newOrigin = new Point(200, 9000);
             GenerateNonGenericTestSituation();
-            testingTextBox.SetOriginPoint(newOrigin);
+            testingTextBox.Position = newOrigin;
         }
 
         [TestMethod]
@@ -225,7 +221,7 @@ namespace UnitTests.DomainTests
         {
             Point newOrigin = new Point(3000, 3000);
             GenerateNonGenericTestSituation();
-            testingTextBox.SetOriginPoint(newOrigin);
+            testingTextBox.Position = newOrigin;
         }
 
         [TestMethod]

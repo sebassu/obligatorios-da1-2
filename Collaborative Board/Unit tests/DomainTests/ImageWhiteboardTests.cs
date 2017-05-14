@@ -111,18 +111,16 @@ namespace UnitTests.DomainTests
         public void ImageSetValidOriginPointTest()
         {
             Point newOrigin = new Point(23, 37);
-            testingImage.SetOriginPoint(newOrigin);
-            Assert.AreEqual(newOrigin.X, testingImage.RelativeX);
-            Assert.AreEqual(newOrigin.Y, testingImage.RelativeY);
+            testingImage.Position = newOrigin;
+            Assert.AreEqual(newOrigin, testingImage.Position);
         }
 
         [TestMethod]
         public void ImageSetMinimumValidOriginPointTest()
         {
             Point newOrigin = new Point(0, 0);
-            testingImage.SetOriginPoint(newOrigin);
-            Assert.AreEqual(newOrigin.X, testingImage.RelativeX);
-            Assert.AreEqual(newOrigin.Y, testingImage.RelativeY);
+            testingImage.Position = newOrigin;
+            Assert.AreEqual(newOrigin, testingImage.Position);
         }
 
         [TestMethod]
@@ -130,7 +128,7 @@ namespace UnitTests.DomainTests
         public void ImageSetOriginPointInvalidXTest()
         {
             Point newOrigin = new Point(-100, 10);
-            testingImage.SetOriginPoint(newOrigin);
+            testingImage.Position = newOrigin;
         }
 
         [TestMethod]
@@ -138,7 +136,7 @@ namespace UnitTests.DomainTests
         public void ImageSetOriginPointInvalidYTest()
         {
             Point newOrigin = new Point(200, -99);
-            testingImage.SetOriginPoint(newOrigin);
+            testingImage.Position = newOrigin;
         }
 
         [TestMethod]
@@ -146,7 +144,7 @@ namespace UnitTests.DomainTests
         public void ImageSetInvalidOriginPointTest()
         {
             Point newOrigin = new Point(-2112, -1000);
-            testingImage.SetOriginPoint(newOrigin);
+            testingImage.Position = newOrigin;
         }
 
         [TestMethod]
@@ -188,9 +186,8 @@ namespace UnitTests.DomainTests
         {
             Point newOrigin = new Point(250, 10);
             GenerateNonGenericTestSituation();
-            testingImage.SetOriginPoint(newOrigin);
-            Assert.AreEqual(newOrigin.X, testingImage.RelativeX);
-            Assert.AreEqual(newOrigin.Y, testingImage.RelativeY);
+            testingImage.Position = newOrigin;
+            Assert.AreEqual(newOrigin, testingImage.Position); ;
         }
 
         [TestMethod]
@@ -198,9 +195,8 @@ namespace UnitTests.DomainTests
         {
             Point newOrigin = new Point(250, 200);
             GenerateNonGenericTestSituation();
-            testingImage.SetOriginPoint(newOrigin);
-            Assert.AreEqual(newOrigin.X, testingImage.RelativeX);
-            Assert.AreEqual(newOrigin.Y, testingImage.RelativeY);
+            testingImage.Position = newOrigin;
+            Assert.AreEqual(newOrigin, testingImage.Position);
         }
 
         [TestMethod]
@@ -209,7 +205,7 @@ namespace UnitTests.DomainTests
         {
             Point newOrigin = new Point(1200, 10);
             GenerateNonGenericTestSituation();
-            testingImage.SetOriginPoint(newOrigin);
+            testingImage.Position = newOrigin;
         }
 
         [TestMethod]
@@ -218,7 +214,7 @@ namespace UnitTests.DomainTests
         {
             Point newOrigin = new Point(200, 9000);
             GenerateNonGenericTestSituation();
-            testingImage.SetOriginPoint(newOrigin);
+            testingImage.Position = newOrigin;
         }
 
         [TestMethod]
@@ -227,7 +223,7 @@ namespace UnitTests.DomainTests
         {
             Point newOrigin = new Point(3000, 3000);
             GenerateNonGenericTestSituation();
-            testingImage.SetOriginPoint(newOrigin);
+            testingImage.Position = newOrigin;
         }
 
         [TestMethod]

@@ -49,7 +49,7 @@ namespace Domain
 
         public User Resolver { get; private set; }
 
-        internal void Resolve(User aUser)
+        public void Resolve(User aUser)
         {
             if (IsResolved)
             {
@@ -106,7 +106,7 @@ namespace Domain
             text = "Comentario inválido.";
         }
 
-        internal static Comment CreatorElementText(User someUser,
+        public static Comment CreatorElementText(User someUser,
             ElementWhiteboard container, string someText)
         {
             return new Comment(someUser, container, someText);
