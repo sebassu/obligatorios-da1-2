@@ -16,70 +16,70 @@ namespace Interface
             this.systemPanel = systemPanel;
         }
 
-        private void btnAdd_MouseEnter(object sender, EventArgs e)
+        private void BtnAdd_MouseEnter(object sender, EventArgs e)
         {
             btnAdd.BackColor = Color.Maroon;
             btnAdd.Font = new Font(btnAdd.Font.Name, 19, FontStyle.Bold);
         }
 
-        private void btnAdd_MouseLeave(object sender, EventArgs e)
+        private void BtnAdd_MouseLeave(object sender, EventArgs e)
         {
             btnAdd.BackColor = Color.DarkRed;
             btnAdd.Font = new Font(btnAdd.Font.Name, 18, FontStyle.Bold);
         }
 
-        private void btnModify_MouseEnter(object sender, EventArgs e)
+        private void BtnModify_MouseEnter(object sender, EventArgs e)
         {
             btnModify.BackColor = Color.Maroon;
             btnModify.Font = new Font(btnModify.Font.Name, 19, FontStyle.Bold);
         }
 
-        private void btnModify_MouseLeave(object sender, EventArgs e)
+        private void BtnModify_MouseLeave(object sender, EventArgs e)
         {
             btnModify.BackColor = Color.DarkRed;
             btnModify.Font = new Font(btnModify.Font.Name, 18, FontStyle.Bold);
         }
 
-        private void btnDelete_MouseEnter(object sender, EventArgs e)
+        private void BtnDelete_MouseEnter(object sender, EventArgs e)
         {
             btnDelete.BackColor = Color.Maroon;
             btnDelete.Font = new Font(btnDelete.Font.Name, 19, FontStyle.Bold);
         }
 
-        private void btnDelete_MouseLeave(object sender, EventArgs e)
+        private void BtnDelete_MouseLeave(object sender, EventArgs e)
         {
             btnDelete.BackColor = Color.DarkRed;
             btnDelete.Font = new Font(btnDelete.Font.Name, 18, FontStyle.Bold);
         }
 
-        private void btnAdministrate_MouseEnter(object sender, EventArgs e)
+        private void BtnAdministrate_MouseEnter(object sender, EventArgs e)
         {
             btnAdministrate.BackColor = Color.Maroon;
             btnAdministrate.Font = new Font(btnAdministrate.Font.Name, 19, FontStyle.Bold);
         }
 
-        private void btnAdministrate_MouseLeave(object sender, EventArgs e)
+        private void BtnAdministrate_MouseLeave(object sender, EventArgs e)
         {
             btnAdministrate.BackColor = Color.DarkRed;
             btnAdministrate.Font = new Font(btnAdministrate.Font.Name, 18, FontStyle.Bold);
         }
 
-        private void btnHome_MouseEnter(object sender, EventArgs e)
+        private void BtnHome_MouseEnter(object sender, EventArgs e)
         {
             btnHome.Size = new Size(87, 67);
         }
 
-        private void btnHome_MouseLeave(object sender, EventArgs e)
+        private void BtnHome_MouseLeave(object sender, EventArgs e)
         {
             btnHome.Size = new Size(80, 62);
         }
 
-        private void btnExit_Click(object sender, EventArgs e)
+        private void BtnExit_Click(object sender, EventArgs e)
         {
             InterfaceUtilities.AskLogOut();
         }
 
-        private void btnHome_Click(object sender, EventArgs e)
+        private void BtnHome_Click(object sender, EventArgs e)
         {
             InterfaceUtilities.GoToHome(systemPanel);
         }
@@ -97,8 +97,10 @@ namespace Interface
             {
                 foreach (Team oneTeam in globalTeams)
                 {
-                    ListViewItem itemToAdd = new ListViewItem(oneTeam.ToString());
-                    itemToAdd.Tag = oneTeam;
+                    ListViewItem itemToAdd = new ListViewItem(oneTeam.ToString())
+                    {
+                        Tag = oneTeam
+                    };
                     lstTeams.Items.Add(itemToAdd);
                 }
             }
@@ -111,12 +113,12 @@ namespace Interface
             }
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void BtnAdd_Click(object sender, EventArgs e)
         {
             InterfaceUtilities.UCAddOrModifyTeamToPanel(systemPanel);
         }
 
-        private void btnModify_Click(object sender, EventArgs e)
+        private void BtnModify_Click(object sender, EventArgs e)
         {
             if (lstTeams.SelectedItems.Count > 0)
             {
@@ -130,7 +132,7 @@ namespace Interface
 
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        private void BtnDelete_Click(object sender, EventArgs e)
         {
             if (lstTeams.SelectedItems.Count > 0)
             {
@@ -148,37 +150,28 @@ namespace Interface
             AskDeleteTeam(teamToDelete);
         }
 
-        private void AskDeleteTeam(Team oneTeam)
+        private void AskDeleteTeam(Team teamToDelete)
         {
-            DialogResult result = MessageBox.Show("Está seguro que desea eliminar el elemento seleccionado?", "Eliminar",
-                               MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
-            {
-                DeleteTeam(oneTeam);
-                LoadRegisteredTeams();
-            }
-
+            Action deleteTeam = delegate { DeleteTeam(teamToDelete); };
+            InterfaceUtilities.AskForDeletionConfirmationAndExecute(deleteTeam);
         }
 
         private void DeleteTeam(Team oneTeam)
         {
             TeamRepository globalTeams = TeamRepository.GetInstance();
             globalTeams.Remove(oneTeam);
+            LoadRegisteredTeams();
         }
 
-
-        private void btnAdministrate_Click(object sender, EventArgs e)
+        private void BtnAdministrate_Click(object sender, EventArgs e)
         {
-            if (lstTeams.SelectedItems.Count > 0)
-            {
-                Team teamToVisualize = lstTeams.SelectedItems[0].Tag as Team;
-                InterfaceUtilities.UCAdministrateTeamToPanel(systemPanel, teamToVisualize);
-            }
-            else
-            {
-                InterfaceUtilities.NotElementSelectedMessageBox();
-            }
+            InterfaceUtilities.PerformActionIfElementIsSelected(lstTeams, OpenAdministrateTeam);
+        }
 
+        private void OpenAdministrateTeam()
+        {
+            Team teamToVisualize = lstTeams.SelectedItems[0].Tag as Team;
+            InterfaceUtilities.UCAdministrateTeamToPanel(systemPanel, teamToVisualize);
         }
     }
 }

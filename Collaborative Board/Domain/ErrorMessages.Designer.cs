@@ -160,7 +160,7 @@ namespace Domain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Altura inválida recibida: {0} píxeles..
+        ///   Looks up a localized string similar to Altura inválida recibida: escapa al pizarrón..
         /// </summary>
         internal static string HeightIsInvalid {
             get {
@@ -304,7 +304,7 @@ namespace Domain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ancho inválido recibido: {0} píxeles..
+        ///   Looks up a localized string similar to Ancho inválido recibido: escapa al pizarrón..
         /// </summary>
         internal static string WidthIsInvalid {
             get {

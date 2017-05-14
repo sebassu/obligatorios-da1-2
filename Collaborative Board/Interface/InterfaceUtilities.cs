@@ -29,11 +29,22 @@ namespace Interface
 
         public static void AskLogOut()
         {
-            DialogResult result = MessageBox.Show("Está seguro que desea cerrar sesión?", "Salir",
+            DialogResult result = MessageBox.Show("¿Está seguro que desea cerrar sesión?", "Salir",
                                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
                 EndSessionAndGoToLogInForm();
+            }
+        }
+
+        public static void AskForDeletionConfirmationAndExecute(Action deletionAction)
+        {
+            DialogResult result = MessageBox.Show("¿Está seguro que desea eliminar al elemento " +
+                "seleccionado? La operación es irreversible.", "Confirmación", MessageBoxButtons.YesNo,
+                 MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
+            {
+                deletionAction.Invoke();
             }
         }
 
@@ -46,7 +57,7 @@ namespace Interface
 
         public static void SuccesfulOperation()
         {
-            DialogResult result = MessageBox.Show("La operación se completo exitosamente.", "Operación exitosa",
+            DialogResult result = MessageBox.Show("La operación se completó exitosamente.", "Operación exitosa",
                                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -60,7 +71,7 @@ namespace Interface
 
         public static void NotElementSelectedMessageBox()
         {
-            DialogResult result = MessageBox.Show("Debe seleccionar un elemento de la lista!",
+            DialogResult result = MessageBox.Show("Debe seleccionar un elemento de la lista.",
                 "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
@@ -158,11 +169,6 @@ namespace Interface
             {
                 NotElementSelectedMessageBox();
             }
-        }
-
-        internal static void PerformActionIfElementIsSelected(object openWhiteboardVisualization)
-        {
-            throw new NotImplementedException();
         }
     }
 }

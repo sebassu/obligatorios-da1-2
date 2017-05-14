@@ -47,7 +47,7 @@
             this.btnExit.Size = new System.Drawing.Size(80, 87);
             this.btnExit.TabIndex = 0;
             this.btnExit.UseVisualStyleBackColor = true;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            this.btnExit.Click += new System.EventHandler(this.BtnExit_Click);
             // 
             // btnAdd
             // 
@@ -61,9 +61,9 @@
             this.btnAdd.TabIndex = 1;
             this.btnAdd.Text = "AGREGAR";
             this.btnAdd.UseVisualStyleBackColor = false;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-            this.btnAdd.MouseEnter += new System.EventHandler(this.btnAdd_MouseEnter);
-            this.btnAdd.MouseLeave += new System.EventHandler(this.btnAdd_MouseLeave);
+            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
+            this.btnAdd.MouseEnter += new System.EventHandler(this.BtnAdd_MouseEnter);
+            this.btnAdd.MouseLeave += new System.EventHandler(this.BtnAdd_MouseLeave);
             // 
             // btnModify
             // 
@@ -77,9 +77,9 @@
             this.btnModify.TabIndex = 2;
             this.btnModify.Text = "MODIFICAR";
             this.btnModify.UseVisualStyleBackColor = false;
-            this.btnModify.Click += new System.EventHandler(this.btnModify_Click);
-            this.btnModify.MouseEnter += new System.EventHandler(this.btnModify_MouseEnter);
-            this.btnModify.MouseLeave += new System.EventHandler(this.btnModify_MouseLeave);
+            this.btnModify.Click += new System.EventHandler(this.BtnModify_Click);
+            this.btnModify.MouseEnter += new System.EventHandler(this.BtnModify_MouseEnter);
+            this.btnModify.MouseLeave += new System.EventHandler(this.BtnModify_MouseLeave);
             // 
             // btnDelete
             // 
@@ -93,9 +93,9 @@
             this.btnDelete.TabIndex = 3;
             this.btnDelete.Text = "ELIMINAR";
             this.btnDelete.UseVisualStyleBackColor = false;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            this.btnDelete.MouseEnter += new System.EventHandler(this.btnDelete_MouseEnter);
-            this.btnDelete.MouseLeave += new System.EventHandler(this.btnDelete_MouseLeave);
+            this.btnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
+            this.btnDelete.MouseEnter += new System.EventHandler(this.BtnDelete_MouseEnter);
+            this.btnDelete.MouseLeave += new System.EventHandler(this.BtnDelete_MouseLeave);
             // 
             // btnHome
             // 
@@ -108,9 +108,9 @@
             this.btnHome.Size = new System.Drawing.Size(80, 62);
             this.btnHome.TabIndex = 4;
             this.btnHome.UseVisualStyleBackColor = false;
-            this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
-            this.btnHome.MouseEnter += new System.EventHandler(this.btnHome_MouseEnter);
-            this.btnHome.MouseLeave += new System.EventHandler(this.btnHome_MouseLeave);
+            this.btnHome.Click += new System.EventHandler(this.BtnHome_Click);
+            this.btnHome.MouseEnter += new System.EventHandler(this.BtnHome_MouseEnter);
+            this.btnHome.MouseLeave += new System.EventHandler(this.BtnHome_MouseLeave);
             // 
             // lstUsers
             // 

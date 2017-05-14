@@ -146,7 +146,7 @@
             this.pnlWhiteboard.Location = new System.Drawing.Point(594, 13);
             this.pnlWhiteboard.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.pnlWhiteboard.Name = "pnlWhiteboard";
-            this.pnlWhiteboard.Size = new System.Drawing.Size(1909, 1445);
+            this.pnlWhiteboard.Size = new System.Drawing.Size(0, 0);
             this.pnlWhiteboard.TabIndex = 1;
             // 
             // WhiteboardVisualization
@@ -161,13 +161,13 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(2552, 1562);
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(2552, 1562);
             this.Name = "WhiteboardVisualization";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Whiteboard";
             this.TopMost = true;
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.pnlOptions.ResumeLayout(false);
             this.ResumeLayout(false);
 

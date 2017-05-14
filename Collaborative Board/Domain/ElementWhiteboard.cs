@@ -15,57 +15,7 @@ namespace Domain
 
         public Whiteboard Container { get; }
 
-        protected int width;
-        public int Width
-        {
-            get { return width; }
-            set
-            {
-                if (IsValidWidth(value))
-                {
-                    width = value;
-                    Container.UpdateModificationDate();
-                }
-                else
-                {
-                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
-                        ErrorMessages.WidthIsInvalid, value);
-                    throw new ElementException(errorMessage);
-                }
-            }
-        }
-
-        private bool IsValidWidth(int newWidth)
-        {
-            return newWidth >= minimumWidth && DoesNotOverflowContainerX(RelativeX, newWidth);
-        }
-
-        protected int height;
-        public int Height
-        {
-            get { return height; }
-            set
-            {
-                if (IsValidHeight(value))
-                {
-                    height = value;
-                    Container.UpdateModificationDate();
-                }
-                else
-                {
-                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
-                        ErrorMessages.HeightIsInvalid, value);
-                    throw new ElementException(errorMessage);
-                }
-            }
-        }
-
-        private bool IsValidHeight(int newHeight)
-        {
-            return newHeight >= minimumHeight && DoesNotOverflowContainerY(RelativeY, newHeight);
-        }
-
-        private Point position;
+        private Point position = new Point();
         public Point Position
         {
             get { return position; }
@@ -85,8 +35,79 @@ namespace Domain
         private bool IsValidOriginPoint(Point aPoint)
         {
             bool hasValidCoordinates = aPoint.X >= containerOriginX && aPoint.Y >= containerOriginY;
-            return hasValidCoordinates && DoesNotOverflowContainerX(aPoint.X, width)
-                && DoesNotOverflowContainerY(aPoint.Y, height);
+            return hasValidCoordinates && DoesNotOverflowContainerX(aPoint.X, Width)
+                && DoesNotOverflowContainerY(aPoint.Y, size.Height);
+        }
+
+        private Size size = new Size();
+        public Size Size
+        {
+            get { return size; }
+            set
+            {
+                if (IsValidSize(value))
+                {
+                    size = value;
+                }
+            }
+        }
+
+        private bool IsValidSize(Size value)
+        {
+            return Utilities.IsNotNull(value) &&
+                IsValidWidth(value.Width) && IsValidHeight(value.Height);
+        }
+
+        public int Width
+        {
+            get { return size.Width; }
+            internal set
+            {
+                if (IsValidWidth(value))
+                {
+                    size.Width = value;
+                    Container.UpdateModificationDate();
+                }
+            }
+        }
+
+        private bool IsValidWidth(int newWidth)
+        {
+            bool isValid = newWidth >= minimumWidth && DoesNotOverflowContainerX(RelativeX, newWidth);
+            if (isValid)
+            {
+                return true;
+            }
+            else
+            {
+                throw new ElementException(ErrorMessages.WidthIsInvalid);
+            }
+        }
+
+        public int Height
+        {
+            get { return size.Height; }
+            internal set
+            {
+                if (IsValidHeight(value))
+                {
+                    size.Height = value;
+                    Container.UpdateModificationDate();
+                }
+            }
+        }
+
+        private bool IsValidHeight(int newHeight)
+        {
+            bool isValid = newHeight >= minimumHeight && DoesNotOverflowContainerY(RelativeY, newHeight);
+            if (isValid)
+            {
+                return true;
+            }
+            else
+            {
+                throw new ElementException(ErrorMessages.HeightIsInvalid);
+            }
         }
 
         // Order of parameters is not critical, as its sum is commutative.
@@ -112,12 +133,12 @@ namespace Domain
 
         internal double WidthContainerNeeded()
         {
-            return width + RelativeX;
+            return size.Width + RelativeX;
         }
 
         internal double HeightContainerNeeded()
         {
-            return height + RelativeY;
+            return size.Height + RelativeY;
         }
 
         private readonly List<Comment> comments = new List<Comment>();
@@ -138,7 +159,6 @@ namespace Domain
         protected ElementWhiteboard()
         {
             Container = Whiteboard.InstanceForTestingPurposes();
-            position = new Point(0, 0);
         }
 
         protected ElementWhiteboard(Whiteboard container)
@@ -160,9 +180,8 @@ namespace Domain
         {
             int xForCentering = containerWidth / 3;
             int yForCentering = containerHeight / 3;
-            width = xForCentering;
-            height = yForCentering;
             position = new Point(xForCentering, yForCentering);
+            size = new Size(xForCentering, yForCentering);
         }
     }
 }

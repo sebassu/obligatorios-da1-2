@@ -10,11 +10,12 @@ namespace Interface
     {
         private Panel systemPanel;
         private Team teamToWorkWith;
-        public UCRemoveMemberFromTeam(Panel systemPanel, Team oneTeam)
+
+        public UCRemoveMemberFromTeam(Panel somePanel, Team oneTeam)
         {
             InitializeComponent();
-            this.systemPanel = systemPanel;
-            this.teamToWorkWith = oneTeam;
+            systemPanel = somePanel;
+            teamToWorkWith = oneTeam;
             LoadData();
         }
 
@@ -30,8 +31,10 @@ namespace Interface
             {
                 foreach (User oneUser in teamToWorkWith.Members)
                 {
-                    ListViewItem itemToAdd = new ListViewItem(oneUser.ToString());
-                    itemToAdd.Tag = oneUser;
+                    ListViewItem itemToAdd = new ListViewItem(oneUser.ToString())
+                    {
+                        Tag = oneUser
+                    };
                     lstUsers.Items.Add(itemToAdd);
                 }
             }
@@ -41,12 +44,12 @@ namespace Interface
             }
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
             InterfaceUtilities.UCAdministrateTeamToPanel(systemPanel, teamToWorkWith);
         }
 
-        private void btnAccept_Click(object sender, EventArgs e)
+        private void BtnAccept_Click(object sender, EventArgs e)
         {
             if (lstUsers.SelectedItems.Count > 0)
             {

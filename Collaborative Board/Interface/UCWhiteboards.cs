@@ -10,6 +10,7 @@ namespace Interface
     public partial class UCWhiteboards : UserControl
     {
         private Panel systemPanel;
+
         public UCWhiteboards(Panel systemPanel)
         {
             InitializeComponent();
@@ -155,19 +156,15 @@ namespace Interface
 
         private void AskDeleteWhiteboard(Whiteboard whiteboardToDelete)
         {
-            DialogResult result = MessageBox.Show("Está seguro que desea eliminar el elemento seleccionado?", "Eliminar",
-                               MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
-            {
-                DeleteWhiteboard(whiteboardToDelete);
-                LoadRegisteredWhiteboards();
-            }
+            Action whiteboardDeletion = delegate { DeleteWhiteboard(whiteboardToDelete); };
+            InterfaceUtilities.AskForDeletionConfirmationAndExecute(whiteboardDeletion);
         }
 
         private void DeleteWhiteboard(Whiteboard whiteboardToDelete)
         {
             WhiteboardRepository globalWhiteboards = WhiteboardRepository.GetInstance();
             globalWhiteboards.Remove(whiteboardToDelete);
+            LoadRegisteredWhiteboards();
         }
 
         private void BtnView_Click(object sender, EventArgs e)
