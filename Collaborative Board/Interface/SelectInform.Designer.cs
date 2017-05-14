@@ -36,6 +36,7 @@
             // btnWhiteboardsCreatedByTeam
             // 
             this.btnWhiteboardsCreatedByTeam.BackColor = System.Drawing.Color.DarkBlue;
+            this.btnWhiteboardsCreatedByTeam.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnWhiteboardsCreatedByTeam.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnWhiteboardsCreatedByTeam.ForeColor = System.Drawing.Color.White;
             this.btnWhiteboardsCreatedByTeam.Location = new System.Drawing.Point(29, 57);
@@ -49,6 +50,7 @@
             // btnCommentsSolvedByUser
             // 
             this.btnCommentsSolvedByUser.BackColor = System.Drawing.Color.DarkBlue;
+            this.btnCommentsSolvedByUser.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCommentsSolvedByUser.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCommentsSolvedByUser.ForeColor = System.Drawing.Color.White;
             this.btnCommentsSolvedByUser.Location = new System.Drawing.Point(271, 57);

@@ -54,6 +54,7 @@
             // 
             this.btnHome.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnHome.BackgroundImage")));
             this.btnHome.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnHome.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnHome.Location = new System.Drawing.Point(42, 29);
             this.btnHome.Name = "btnHome";
             this.btnHome.Size = new System.Drawing.Size(80, 62);
@@ -66,6 +67,7 @@
             // btnAdd
             // 
             this.btnAdd.BackColor = System.Drawing.Color.DarkRed;
+            this.btnAdd.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAdd.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAdd.ForeColor = System.Drawing.Color.White;
             this.btnAdd.Location = new System.Drawing.Point(290, 160);
@@ -81,6 +83,7 @@
             // btnModify
             // 
             this.btnModify.BackColor = System.Drawing.Color.DarkRed;
+            this.btnModify.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnModify.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnModify.ForeColor = System.Drawing.Color.White;
             this.btnModify.Location = new System.Drawing.Point(499, 160);
@@ -96,6 +99,7 @@
             // btnDelete
             // 
             this.btnDelete.BackColor = System.Drawing.Color.DarkRed;
+            this.btnDelete.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnDelete.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDelete.ForeColor = System.Drawing.Color.White;
             this.btnDelete.Location = new System.Drawing.Point(290, 279);
@@ -133,6 +137,7 @@
             // btnAdministrate
             // 
             this.btnAdministrate.BackColor = System.Drawing.Color.DarkRed;
+            this.btnAdministrate.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAdministrate.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAdministrate.ForeColor = System.Drawing.Color.White;
             this.btnAdministrate.Location = new System.Drawing.Point(499, 279);

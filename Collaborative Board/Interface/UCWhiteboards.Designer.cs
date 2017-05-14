@@ -42,12 +42,12 @@
             // btnAdd
             // 
             this.btnAdd.BackColor = System.Drawing.Color.Yellow;
+            this.btnAdd.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAdd.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAdd.ForeColor = System.Drawing.Color.White;
-            this.btnAdd.Location = new System.Drawing.Point(893, 324);
-            this.btnAdd.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.btnAdd.Location = new System.Drawing.Point(335, 136);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(509, 217);
+            this.btnAdd.Size = new System.Drawing.Size(191, 91);
             this.btnAdd.TabIndex = 0;
             this.btnAdd.Text = "AGREGAR";
             this.btnAdd.UseVisualStyleBackColor = false;
@@ -58,12 +58,12 @@
             // btnModify
             // 
             this.btnModify.BackColor = System.Drawing.Color.Yellow;
+            this.btnModify.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnModify.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnModify.ForeColor = System.Drawing.Color.White;
-            this.btnModify.Location = new System.Drawing.Point(1419, 324);
-            this.btnModify.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.btnModify.Location = new System.Drawing.Point(532, 136);
             this.btnModify.Name = "btnModify";
-            this.btnModify.Size = new System.Drawing.Size(523, 217);
+            this.btnModify.Size = new System.Drawing.Size(196, 91);
             this.btnModify.TabIndex = 1;
             this.btnModify.Text = "MODIFICAR";
             this.btnModify.UseVisualStyleBackColor = false;
@@ -74,12 +74,12 @@
             // btnDelete
             // 
             this.btnDelete.BackColor = System.Drawing.Color.Yellow;
+            this.btnDelete.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnDelete.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDelete.ForeColor = System.Drawing.Color.White;
-            this.btnDelete.Location = new System.Drawing.Point(893, 646);
-            this.btnDelete.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.btnDelete.Location = new System.Drawing.Point(335, 271);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(509, 217);
+            this.btnDelete.Size = new System.Drawing.Size(191, 91);
             this.btnDelete.TabIndex = 2;
             this.btnDelete.Text = "ELIMINAR";
             this.btnDelete.UseVisualStyleBackColor = false;
@@ -90,12 +90,12 @@
             // btnView
             // 
             this.btnView.BackColor = System.Drawing.Color.Yellow;
+            this.btnView.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnView.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnView.ForeColor = System.Drawing.Color.White;
-            this.btnView.Location = new System.Drawing.Point(1419, 646);
-            this.btnView.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.btnView.Location = new System.Drawing.Point(532, 271);
             this.btnView.Name = "btnView";
-            this.btnView.Size = new System.Drawing.Size(523, 217);
+            this.btnView.Size = new System.Drawing.Size(196, 91);
             this.btnView.TabIndex = 3;
             this.btnView.Text = "VISUALIZAR";
             this.btnView.UseVisualStyleBackColor = false;
@@ -107,10 +107,10 @@
             // 
             this.btnHome.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnHome.BackgroundImage")));
             this.btnHome.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnHome.Location = new System.Drawing.Point(112, 69);
-            this.btnHome.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.btnHome.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnHome.Location = new System.Drawing.Point(42, 29);
             this.btnHome.Name = "btnHome";
-            this.btnHome.Size = new System.Drawing.Size(213, 148);
+            this.btnHome.Size = new System.Drawing.Size(80, 62);
             this.btnHome.TabIndex = 4;
             this.btnHome.UseVisualStyleBackColor = true;
             this.btnHome.Click += new System.EventHandler(this.BtnHome_Click);
@@ -120,11 +120,10 @@
             // lstRegisteredWhiteboards
             // 
             this.lstRegisteredWhiteboards.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lstRegisteredWhiteboards.Location = new System.Drawing.Point(80, 370);
-            this.lstRegisteredWhiteboards.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.lstRegisteredWhiteboards.Location = new System.Drawing.Point(30, 155);
             this.lstRegisteredWhiteboards.MultiSelect = false;
             this.lstRegisteredWhiteboards.Name = "lstRegisteredWhiteboards";
-            this.lstRegisteredWhiteboards.Size = new System.Drawing.Size(791, 812);
+            this.lstRegisteredWhiteboards.Size = new System.Drawing.Size(299, 343);
             this.lstRegisteredWhiteboards.TabIndex = 5;
             this.lstRegisteredWhiteboards.UseCompatibleStateImageBehavior = false;
             this.lstRegisteredWhiteboards.View = System.Windows.Forms.View.Tile;
@@ -134,10 +133,9 @@
             this.lblRegisteredWhiteboards.AutoSize = true;
             this.lblRegisteredWhiteboards.BackColor = System.Drawing.Color.Transparent;
             this.lblRegisteredWhiteboards.Font = new System.Drawing.Font("Segoe Script", 15.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRegisteredWhiteboards.Location = new System.Drawing.Point(147, 248);
-            this.lblRegisteredWhiteboards.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
+            this.lblRegisteredWhiteboards.Location = new System.Drawing.Point(55, 104);
             this.lblRegisteredWhiteboards.Name = "lblRegisteredWhiteboards";
-            this.lblRegisteredWhiteboards.Size = new System.Drawing.Size(658, 87);
+            this.lblRegisteredWhiteboards.Size = new System.Drawing.Size(261, 34);
             this.lblRegisteredWhiteboards.TabIndex = 6;
             this.lblRegisteredWhiteboards.Text = "Pizarrones registrados";
             // 
@@ -145,17 +143,16 @@
             // 
             this.btnExit.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnExit.BackgroundImage")));
             this.btnExit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnExit.Location = new System.Drawing.Point(1691, 1040);
-            this.btnExit.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.btnExit.Location = new System.Drawing.Point(634, 436);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(213, 148);
+            this.btnExit.Size = new System.Drawing.Size(80, 62);
             this.btnExit.TabIndex = 7;
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.BtnExit_Click);
             // 
             // UCWhiteboards
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -167,9 +164,8 @@
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnModify);
             this.Controls.Add(this.btnAdd);
-            this.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.Name = "UCWhiteboards";
-            this.Size = new System.Drawing.Size(1992, 1283);
+            this.Size = new System.Drawing.Size(747, 538);
             this.Load += new System.EventHandler(this.UCWhiteboards_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

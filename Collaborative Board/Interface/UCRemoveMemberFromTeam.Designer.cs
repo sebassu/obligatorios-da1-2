@@ -41,6 +41,7 @@
             // btnCancel
             // 
             this.btnCancel.BackColor = System.Drawing.Color.Red;
+            this.btnCancel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCancel.ForeColor = System.Drawing.Color.White;
             this.btnCancel.Location = new System.Drawing.Point(592, 453);
             this.btnCancel.Name = "btnCancel";
@@ -53,6 +54,7 @@
             // btnAccept
             // 
             this.btnAccept.BackColor = System.Drawing.Color.Lime;
+            this.btnAccept.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAccept.ForeColor = System.Drawing.Color.White;
             this.btnAccept.Location = new System.Drawing.Point(477, 453);
             this.btnAccept.Name = "btnAccept";

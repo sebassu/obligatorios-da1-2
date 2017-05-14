@@ -60,6 +60,7 @@
             // 
             this.btnHome.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnHome.BackgroundImage")));
             this.btnHome.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnHome.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnHome.Location = new System.Drawing.Point(42, 29);
             this.btnHome.Name = "btnHome";
             this.btnHome.Size = new System.Drawing.Size(80, 62);
@@ -151,6 +152,7 @@
             // btnApplyFilters
             // 
             this.btnApplyFilters.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.btnApplyFilters.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnApplyFilters.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnApplyFilters.Location = new System.Drawing.Point(634, 145);
             this.btnApplyFilters.Name = "btnApplyFilters";
@@ -273,6 +275,7 @@
             // btnReset
             // 
             this.btnReset.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.btnReset.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnReset.Location = new System.Drawing.Point(614, 84);
             this.btnReset.Name = "btnReset";
