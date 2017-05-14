@@ -51,18 +51,16 @@ namespace Interface
 
         private void BtnAccept_Click(object sender, EventArgs e)
         {
-            if (lstUsers.SelectedItems.Count > 0)
-            {
-                User userToRemove = lstUsers.SelectedItems[0].Tag as User;
-                TeamRepository globalTeams = TeamRepository.GetInstance();
-                globalTeams.RemoveMemberFromTeam(this.teamToWorkWith, userToRemove);
-                InterfaceUtilities.SuccesfulOperation();
-                InterfaceUtilities.UCAdministrateTeamToPanel(systemPanel, teamToWorkWith);
-            }
-            else
-            {
-                InterfaceUtilities.NotElementSelectedMessageBox();
-            }
+            InterfaceUtilities.PerformActionIfElementIsSelected(lstUsers, RemoveMember);
+        }
+
+        private void RemoveMember()
+        {
+            User userToRemove = lstUsers.SelectedItems[0].Tag as User;
+            TeamRepository globalTeams = TeamRepository.GetInstance();
+            globalTeams.RemoveMemberFromTeam(teamToWorkWith, userToRemove);
+            InterfaceUtilities.SuccessfulOperation();
+            InterfaceUtilities.UCAdministrateTeamToPanel(systemPanel, teamToWorkWith);
         }
     }
 }

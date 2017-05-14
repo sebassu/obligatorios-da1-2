@@ -43,6 +43,7 @@ namespace Interface
             if (result == DialogResult.Yes)
             {
                 deletionAction.Invoke();
+                SuccessfulOperation();
             }
         }
 
@@ -53,7 +54,7 @@ namespace Interface
             (new Login()).Show();
         }
 
-        public static void SuccesfulOperation()
+        public static void SuccessfulOperation()
         {
             DialogResult result = MessageBox.Show("La operación se completó exitosamente.", "Operación exitosa",
                                MessageBoxButtons.OK, MessageBoxIcon.Information);

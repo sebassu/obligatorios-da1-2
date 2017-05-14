@@ -1,8 +1,12 @@
-﻿namespace Domain
+﻿using System.Drawing;
+
+namespace Domain
 {
     public class TextBoxWhiteboard : ElementWhiteboard
     {
         public string TextContent { get; set; }
+
+        public Font TextFont { get; set; }
 
         internal static TextBoxWhiteboard InstanceForTestingPurposes()
         {

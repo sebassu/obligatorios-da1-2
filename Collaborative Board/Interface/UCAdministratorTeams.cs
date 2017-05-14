@@ -134,14 +134,8 @@ namespace Interface
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
-            if (lstTeams.SelectedItems.Count > 0)
-            {
-                InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(PerformDeleteAction);
-            }
-            else
-            {
-                InterfaceUtilities.NotElementSelectedMessageBox();
-            }
+            Action deleteTeam = delegate { InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(PerformDeleteAction); };
+            InterfaceUtilities.PerformActionIfElementIsSelected(lstTeams, deleteTeam);
         }
 
         private void PerformDeleteAction()

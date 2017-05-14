@@ -63,7 +63,7 @@ namespace Interface
             TeamRepository globalTeams = TeamRepository.GetInstance();
             globalTeams.AddMemberToTeam(teamToWorkWith, userToAdd);
             InterfaceUtilities.UCAdministrateTeamToPanel(systemPanel, teamToWorkWith);
-            InterfaceUtilities.SuccesfulOperation();
+            InterfaceUtilities.SuccessfulOperation();
         }
     }
 }

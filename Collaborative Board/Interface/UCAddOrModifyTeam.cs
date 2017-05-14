@@ -51,7 +51,7 @@ namespace Interface
             {
                 globalTeams.AddNewTeam(txtName.Text, rtbDescription.Text, maxUsers);
             }
-            InterfaceUtilities.SuccesfulOperation();
+            InterfaceUtilities.SuccessfulOperation();
         }
     }
 }

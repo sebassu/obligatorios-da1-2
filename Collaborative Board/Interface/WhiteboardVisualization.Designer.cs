@@ -56,13 +56,14 @@
             this.btnPrintPng.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnPrintPng.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnPrintPng.ForeColor = System.Drawing.Color.White;
-            this.btnPrintPng.Location = new System.Drawing.Point(8, 1176);
+            this.btnPrintPng.Location = new System.Drawing.Point(8, 802);
             this.btnPrintPng.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.btnPrintPng.Name = "btnPrintPng";
             this.btnPrintPng.Size = new System.Drawing.Size(528, 219);
             this.btnPrintPng.TabIndex = 2;
             this.btnPrintPng.Text = "Imprimir en png";
             this.btnPrintPng.UseVisualStyleBackColor = false;
+            this.btnPrintPng.Click += new System.EventHandler(this.BtnPrintPng_Click);
             // 
             // btnPrintPDF
             // 
@@ -70,13 +71,14 @@
             this.btnPrintPDF.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnPrintPDF.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnPrintPDF.ForeColor = System.Drawing.Color.White;
-            this.btnPrintPDF.Location = new System.Drawing.Point(8, 794);
+            this.btnPrintPDF.Location = new System.Drawing.Point(8, 1165);
             this.btnPrintPDF.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.btnPrintPDF.Name = "btnPrintPDF";
             this.btnPrintPDF.Size = new System.Drawing.Size(528, 219);
             this.btnPrintPDF.TabIndex = 1;
             this.btnPrintPDF.Text = "Imprimir en PDF";
             this.btnPrintPDF.UseVisualStyleBackColor = false;
+            this.btnPrintPDF.Click += new System.EventHandler(this.BtnPrintPDF_Click);
             // 
             // btnAddText
             // 
@@ -110,11 +112,11 @@
             // 
             // pnlWhiteboard
             // 
-            this.pnlWhiteboard.BackColor = System.Drawing.Color.White;
+            this.pnlWhiteboard.BackColor = System.Drawing.Color.LightGray;
             this.pnlWhiteboard.Location = new System.Drawing.Point(595, 12);
             this.pnlWhiteboard.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.pnlWhiteboard.Name = "pnlWhiteboard";
-            this.pnlWhiteboard.Size = new System.Drawing.Size(0, 0);
+            this.pnlWhiteboard.Size = new System.Drawing.Size(1785, 1445);
             this.pnlWhiteboard.TabIndex = 1;
             // 
             // WhiteboardVisualization

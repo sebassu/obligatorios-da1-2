@@ -56,7 +56,7 @@ namespace Interface
                 globalUsers.AddNewUser(txtFirstName.Text, txtLastName.Text,
                     txtEmail.Text, dtpBirthDate.Value, txtPassword.Text);
             }
-            InterfaceUtilities.SuccesfulOperation();
+            InterfaceUtilities.SuccessfulOperation();
         }
 
         private void BtnResetPassword_Click(object sender, EventArgs e)

@@ -126,7 +126,7 @@ namespace Interface
                 globalWhiteboards.AddNewWhiteboard("El pequeño problema del gran hombre", "Trata sobre el problema de impotencia sexual del " +
                     "presidente de la nación.", losSimuladores, 400, 500);
                 Session.End();
-                InterfaceUtilities.SuccesfulOperation();
+                InterfaceUtilities.SuccessfulOperation();
             }
             catch (BoardException)
             {

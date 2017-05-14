@@ -68,14 +68,16 @@ namespace Interface
         private void SetRightClickOptionsImage(PictureBox interfaceContainer)
         {
             ContextMenu contMenu = new ContextMenu();
-            ImageWhiteboard domainImage = interfaceContainer.Tag as ImageWhiteboard;
-            AddSeeCommentsOption(contMenu, domainImage);
-            AddModifyImageOption(interfaceContainer, contMenu, domainImage);
-            AddRemoveElementOption(interfaceContainer, domainImage, contMenu);
-            interfaceContainer.ContextMenu = contMenu;
+            if (interfaceContainer.Tag is ImageWhiteboard domainImage)
+            {
+                AddSeeCommentsOption(domainImage, contMenu);
+                AddModifyImageOption(interfaceContainer, contMenu, domainImage);
+                AddRemoveElementOption(interfaceContainer, domainImage, contMenu);
+                interfaceContainer.ContextMenu = contMenu;
+            }
         }
 
-        private void AddSeeCommentsOption(ContextMenu contMenu, ElementWhiteboard domainElement)
+        private void AddSeeCommentsOption(ElementWhiteboard domainElement, ContextMenu contMenu)
         {
             MenuItem seeComments = new MenuItem("Ver comentarios");
             seeComments.Click += (sender, e) => ClickSeeComments(domainElement, e);
@@ -89,7 +91,8 @@ namespace Interface
             comments.TopMost = true;
         }
 
-        private void AddModifyImageOption(PictureBox interfaceContainer, ContextMenu contMenu, ImageWhiteboard domainImage)
+        private void AddModifyImageOption(PictureBox interfaceContainer, ContextMenu contMenu,
+            ImageWhiteboard domainImage)
         {
             MenuItem modifyImage = new MenuItem("Modificar imagen");
             modifyImage.Click += (sender, e) => ChangeDisplayedImage(interfaceContainer, domainImage);
@@ -115,7 +118,7 @@ namespace Interface
             container.Update();
         }
 
-        private void AddRemoveElementOption(PictureBox interfaceContainer,
+        private void AddRemoveElementOption(Control interfaceContainer,
             ElementWhiteboard elementToRemove, ContextMenu contMenu)
         {
             MenuItem removeElementItem = new MenuItem("Eliminar elemento");
@@ -123,19 +126,19 @@ namespace Interface
             contMenu.MenuItems.Add(removeElementItem);
         }
 
-        private void RemoveElement(PictureBox interfaceContainer, ElementWhiteboard domainElement)
+        private void RemoveElement(Control interfaceContainer, ElementWhiteboard domainElement)
         {
             Action deleteAction = delegate { PerformDelete(interfaceContainer, domainElement); };
             InterfaceUtilities.AskForDeletionConfirmationAndExecute(deleteAction);
         }
 
-        private void PerformDelete(PictureBox interfaceContainer, ElementWhiteboard domainElement)
+        private void PerformDelete(Control interfaceContainer, ElementWhiteboard domainElement)
         {
             Action deleteAction = delegate { ActualDelete(interfaceContainer, domainElement); };
             InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(deleteAction);
         }
 
-        private void ActualDelete(PictureBox interfaceContainer, ElementWhiteboard domainElement)
+        private void ActualDelete(Control interfaceContainer, ElementWhiteboard domainElement)
         {
             whiteboardShown.RemoveWhiteboardElement(domainElement);
             pnlWhiteboard.Controls.Remove(interfaceContainer);
@@ -145,16 +148,77 @@ namespace Interface
         private void BtnAddText_Click(object sender, EventArgs e)
         {
             TextBoxWhiteboard textBoxToAdd = TextBoxWhiteboard.CreateWithContainer(whiteboardShown);
+            AddRichTextBoxFromDomainTextBoxWhiteboard(textBoxToAdd);
+        }
+
+        private void AddRichTextBoxFromDomainTextBoxWhiteboard(TextBoxWhiteboard textBoxToAdd)
+        {
             RichTextBox interfaceContainer = new RichTextBox()
             {
                 Tag = textBoxToAdd,
+                Text = textBoxToAdd.TextContent,
+                Font = textBoxToAdd.TextFont,
                 Parent = pnlWhiteboard,
                 Width = textBoxToAdd.Width,
                 Height = textBoxToAdd.Height,
                 Location = textBoxToAdd.Position
             };
+            Action setContextMenu = delegate { SetRightClickOptionTextBox(interfaceContainer); };
+            InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(setContextMenu);
             ControlMovingOrResizingHandler.MakeDragAndDroppable(interfaceContainer);
             pnlWhiteboard.Controls.Add(interfaceContainer);
+        }
+
+        private void SetRightClickOptionTextBox(RichTextBox interfaceContainer)
+        {
+            ContextMenu contMenu = new ContextMenu();
+            if (interfaceContainer.Tag is TextBoxWhiteboard domainTextBox)
+            {
+                AddSeeCommentsOption(domainTextBox, contMenu);
+                AddModifyFontDomainTextBox(interfaceContainer, domainTextBox, contMenu);
+                AddRemoveElementOption(interfaceContainer, domainTextBox, contMenu);
+                interfaceContainer.ContextMenu = contMenu;
+            }
+        }
+
+        private void AddModifyFontDomainTextBox(RichTextBox interfaceContainer,
+            TextBoxWhiteboard domainTextBox, ContextMenu contMenu)
+        {
+            MenuItem removeElementItem = new MenuItem("Modificar tipo/tamaño de letra");
+            removeElementItem.Click += (sender, e) => ChangeTextBoxFont(interfaceContainer, domainTextBox);
+            contMenu.MenuItems.Add(removeElementItem);
+        }
+
+        private static void ChangeTextBoxFont(RichTextBox interfaceContainer, TextBoxWhiteboard domainTextBox)
+        {
+            FontDialog fontChooser = CreateFontChooser(interfaceContainer);
+            if (fontChooser.ShowDialog() != DialogResult.Cancel)
+            {
+                Font chosenFont = fontChooser.Font;
+                interfaceContainer.Font = chosenFont;
+                domainTextBox.TextFont = chosenFont;
+            }
+        }
+
+        private static FontDialog CreateFontChooser(RichTextBox interfaceContainer)
+        {
+            return new FontDialog()
+            {
+                ShowColor = false,
+                FontMustExist = true,
+                Font = interfaceContainer.Font,
+                ShowEffects = true
+            };
+        }
+
+        private void BtnPrintPDF_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnPrintPng_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
