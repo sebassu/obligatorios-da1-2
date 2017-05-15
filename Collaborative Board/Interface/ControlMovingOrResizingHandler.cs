@@ -6,6 +6,10 @@ using System.Windows.Forms;
 
 namespace GraphicInterface
 {
+
+    /**
+    * Code adapted from http://stackoverflow.com/questions/2308987/resizing-controls-at-runtime
+    */
     internal static class ControlMovingOrResizingHandler
     {
         private const int edgePrecision = 20;
