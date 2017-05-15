@@ -27,21 +27,19 @@ namespace Interface
 
         private void LoadNotMembersOfTeam()
         {
-            var globalUsers = UserRepository.GetInstance().Elements.ToList();
-            foreach (User oneUser in globalUsers)
+            var globalUsers = UserRepository.GetInstance().Elements;
+            var notMembersOfTeam = globalUsers.Where(u => !teamToWorkWith.Members.Contains(u)).ToList();
+            if (Utilities.IsEmpty(notMembersOfTeam))
             {
-                if (!teamToWorkWith.Members.Contains(oneUser))
+                lstUsers.Items.Add(new ListViewItem("No existen usuarios no miembros del equipo."));
+                btnAccept.Enabled = false;
+            }
+            else
+            {
+                foreach (User oneUser in notMembersOfTeam)
                 {
-                    ListViewItem itemToAdd = new ListViewItem(oneUser.ToString())
-                    {
-                        Tag = oneUser
-                    };
+                    ListViewItem itemToAdd = new ListViewItem(oneUser.ToString()) { Tag = oneUser };
                     lstUsers.Items.Add(itemToAdd);
-                }
-                if (lstUsers.Items.Count == 0)
-                {
-                    lstUsers.Items.Add(new ListViewItem("No existen usuarios no miembros del equipo."));
-                    btnAccept.Enabled = false;
                 }
             }
         }

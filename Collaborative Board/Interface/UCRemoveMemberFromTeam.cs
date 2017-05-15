@@ -31,10 +31,7 @@ namespace Interface
             {
                 foreach (User oneUser in teamToWorkWith.Members)
                 {
-                    ListViewItem itemToAdd = new ListViewItem(oneUser.ToString())
-                    {
-                        Tag = oneUser
-                    };
+                    ListViewItem itemToAdd = new ListViewItem(oneUser.ToString()) { Tag = oneUser };
                     lstUsers.Items.Add(itemToAdd);
                 }
             }

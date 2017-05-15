@@ -97,10 +97,7 @@ namespace Interface
             {
                 foreach (Team oneTeam in globalTeams)
                 {
-                    ListViewItem itemToAdd = new ListViewItem(oneTeam.ToString())
-                    {
-                        Tag = oneTeam
-                    };
+                    ListViewItem itemToAdd = new ListViewItem(oneTeam.ToString()) { Tag = oneTeam };
                     lstTeams.Items.Add(itemToAdd);
                 }
             }

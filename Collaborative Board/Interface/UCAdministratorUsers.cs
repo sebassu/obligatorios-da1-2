@@ -83,10 +83,7 @@ namespace Interface
             var globalUsers = UserRepository.GetInstance().Elements.ToList();
             foreach (User oneUser in globalUsers)
             {
-                ListViewItem itemToAdd = new ListViewItem(oneUser.ToString())
-                {
-                    Tag = oneUser
-                };
+                ListViewItem itemToAdd = new ListViewItem(oneUser.ToString()) { Tag = oneUser };
                 lstUsers.Items.Add(itemToAdd);
                 if (oneUser.HasAdministrationPrivileges)
                 {

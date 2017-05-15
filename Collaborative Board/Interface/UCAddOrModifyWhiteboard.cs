@@ -16,6 +16,7 @@ namespace Interface
         {
             InitializeComponent();
             this.systemPanel = systemPanel;
+            InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(LoadTeamCombobox);
             if (Utilities.IsNotNull(someWhiteboard))
             {
                 whiteboardToModify = someWhiteboard;
@@ -38,10 +39,13 @@ namespace Interface
             InterfaceUtilities.UCWhiteboardsToPanel(systemPanel);
         }
 
-        private void UCAddOrModifyWhiteboard_Load(object sender, EventArgs e)
+        private void LoadTeamCombobox()
         {
             var globalTeams = TeamRepository.GetInstance();
-            cmbOwnerTeam.Items.AddRange(globalTeams.Elements.ToArray());
+            var activeUser = Session.ActiveUser();
+            var teamsToShow = globalTeams.Elements.Where(t => t.Members.Contains(activeUser));
+            cmbOwnerTeam.Items.AddRange(teamsToShow.ToArray());
+            cmbOwnerTeam.SelectedIndex = 0;
         }
 
         private void BtnAccept_Click(object sender, EventArgs e)

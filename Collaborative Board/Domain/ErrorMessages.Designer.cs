@@ -178,7 +178,7 @@ namespace Domain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Máxima cantidad de miembros inválida: {0} (tiene un mínimo de {1})..
+        ///   Looks up a localized string similar to Máxima cantidad de miembros inválida: {0} (contiene actualmente {1})..
         /// </summary>
         internal static string InvalidMaximumMembers {
             get {
@@ -282,6 +282,15 @@ namespace Domain {
         internal static string TeamIsInvalid {
             get {
                 return ResourceManager.GetString("TeamIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Todos los equipos deben contener al menos un miembro..
+        /// </summary>
+        internal static string TeamsCannotBeEmpty {
+            get {
+                return ResourceManager.GetString("TeamsCannotBeEmpty", resourceCulture);
             }
         }
         

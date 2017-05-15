@@ -11,10 +11,17 @@ namespace Interface
     {
         private Panel systemPanel;
 
-        public UCWhiteboards(Panel systemPanel)
+        public UCWhiteboards(Panel somePanel)
         {
             InitializeComponent();
-            this.systemPanel = systemPanel;
+            systemPanel = somePanel;
+        }
+
+        private bool ActiveUserBelongsToAnyTeam()
+        {
+            TeamRepository globalTeams = TeamRepository.GetInstance();
+            User activeUser = Session.ActiveUser();
+            return globalTeams.Elements.Any(t => t.Members.Contains(activeUser));
         }
 
         private void BtnAdd_MouseEnter(object sender, EventArgs e)
@@ -103,10 +110,7 @@ namespace Interface
             {
                 foreach (Whiteboard oneWhiteboard in globalWhiteboards)
                 {
-                    ListViewItem itemToAdd = new ListViewItem(oneWhiteboard.ToString())
-                    {
-                        Tag = oneWhiteboard
-                    };
+                    ListViewItem itemToAdd = new ListViewItem(oneWhiteboard.ToString()) { Tag = oneWhiteboard };
                     lstRegisteredWhiteboards.Items.Add(itemToAdd);
                 }
             }
@@ -127,7 +131,15 @@ namespace Interface
 
         private void BtnAdd_Click(object sender, EventArgs e)
         {
-            InterfaceUtilities.UCAddOrModifyWhiteboardToPanel(systemPanel);
+            if (ActiveUserBelongsToAnyTeam())
+            {
+                InterfaceUtilities.UCAddOrModifyWhiteboardToPanel(systemPanel);
+            }
+            else
+            {
+                InterfaceUtilities.ShowError("Es necesario pertenecer a algún equipo para acceder " +
+                    "a esta funcionalidad", "Error");
+            }
         }
 
         private void BtnModify_Click(object sender, EventArgs e)
