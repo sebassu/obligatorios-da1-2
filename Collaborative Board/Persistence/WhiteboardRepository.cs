@@ -9,6 +9,7 @@ namespace Persistence
             Team ownerTeam, int width, int height);
         public abstract void ModifyWhiteboard(Whiteboard whiteboardToModify,
             string nameToSet, string descriptionToSet, int widthToSet, int heightToSet);
+        internal abstract void RemoveDueToTeamDeletion(Whiteboard whiteboardToRemove);
 
         private static volatile WhiteboardRepositoryInMemory instance;
         private static object syncRoot = new Object();

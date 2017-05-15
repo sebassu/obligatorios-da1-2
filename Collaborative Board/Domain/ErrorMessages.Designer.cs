@@ -97,11 +97,38 @@ namespace Domain {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fecha inválida para la resolución del comentario recibida: es anterior a su creación..
+        /// </summary>
+        internal static string CannotResolveCommentBeforeCreation {
+            get {
+                return ResourceManager.GetString("CannotResolveCommentBeforeCreation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El comentario recibido ya se encuentra registrado..
+        /// </summary>
+        internal static string CommentAlreadyAdded {
+            get {
+                return ResourceManager.GetString("CommentAlreadyAdded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to El texto introducido para el comentario no es válido, reintente..
         /// </summary>
         internal static string CommentTextIsInvalid {
             get {
                 return ResourceManager.GetString("CommentTextIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El comentario recibido no se encuentra en este usuario..
+        /// </summary>
+        internal static string CommentWasNotAdded {
+            get {
+                return ResourceManager.GetString("CommentWasNotAdded", resourceCulture);
             }
         }
         
@@ -133,7 +160,7 @@ namespace Domain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Altura inválida recibida: {0} píxeles..
+        ///   Looks up a localized string similar to Altura inválida recibida: genera situación en los cuales elementos escapan al pizarrón..
         /// </summary>
         internal static string HeightIsInvalid {
             get {
@@ -151,7 +178,7 @@ namespace Domain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Máxima cantidad de miembros inválida: {0} (tiene un mínimo de {1})..
+        ///   Looks up a localized string similar to Máxima cantidad de miembros inválida: {0} (contiene actualmente {1})..
         /// </summary>
         internal static string InvalidMaximumMembers {
             get {
@@ -183,6 +210,15 @@ namespace Domain {
         internal static string NonMemberElement {
             get {
                 return ResourceManager.GetString("NonMemberElement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pizarrón no válido recibido: no se encuentra asociado al equipo en cuestión..
+        /// </summary>
+        internal static string NotAddedWhiteboardRecieved {
+            get {
+                return ResourceManager.GetString("NotAddedWhiteboardRecieved", resourceCulture);
             }
         }
         
@@ -250,11 +286,11 @@ namespace Domain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pizarrón no válido recibido: no se encuentra asociado al equipo en cuestión..
+        ///   Looks up a localized string similar to Todos los equipos deben contener al menos un miembro..
         /// </summary>
-        internal static string notAddedWhiteboardRecieved {
+        internal static string TeamsCannotBeEmpty {
             get {
-                return ResourceManager.GetString("notAddedWhiteboardRecieved", resourceCulture);
+                return ResourceManager.GetString("TeamsCannotBeEmpty", resourceCulture);
             }
         }
         
@@ -277,7 +313,7 @@ namespace Domain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ancho inválido recibido: {0} píxeles..
+        ///   Looks up a localized string similar to Ancho inválido recibido: genera situación en los cuales elementos escapan al pizarrón..
         /// </summary>
         internal static string WidthIsInvalid {
             get {

@@ -9,7 +9,7 @@ namespace Domain
 {
     public class Team
     {
-        private const byte minimumMembers = 1;
+        private const byte absoluteMinimumMembers = 1;
 
         private string name;
         public string Name
@@ -60,17 +60,33 @@ namespace Domain
             get { return maximumMembers; }
             internal set
             {
-                if (value >= minimumMembers)
+                int minimumMembersNeeded =
+                    Math.Max(absoluteMinimumMembers, members.Count);
+                if (value >= minimumMembersNeeded)
                 {
                     maximumMembers = value;
                 }
                 else
                 {
-                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
-                        ErrorMessages.InvalidMaximumMembers, value, minimumMembers);
-                    throw new TeamException(errorMessage);
+                    MaximumMembersNotHighEnoughError(value, minimumMembersNeeded);
                 }
             }
+        }
+
+        private static void MaximumMembersNotHighEnoughError(int value,
+            int minimumMaximumMembersNeeded)
+        {
+            string errorMessage;
+            if (value < 1)
+            {
+                errorMessage = ErrorMessages.InvalidMaximumMembers;
+            }
+            else
+            {
+                errorMessage = string.Format(CultureInfo.CurrentCulture,
+                    ErrorMessages.InvalidMaximumMembers, value, minimumMaximumMembersNeeded);
+            }
+            throw new TeamException(errorMessage);
         }
 
         private readonly List<User> members = new List<User>();
@@ -113,7 +129,7 @@ namespace Domain
 
         private bool WasRemoved(User aUser)
         {
-            return members.Count > minimumMembers && members.Remove(aUser);
+            return members.Count > absoluteMinimumMembers && members.Remove(aUser);
         }
 
         public void AddWhiteboard(Whiteboard whiteboardToAdd)
@@ -146,7 +162,7 @@ namespace Domain
             bool whiteboardWasRemoved = createdWhiteboards.Remove(someWhiteboard);
             if (!whiteboardWasRemoved)
             {
-                throw new TeamException(ErrorMessages.notAddedWhiteboardRecieved);
+                throw new TeamException(ErrorMessages.NotAddedWhiteboardRecieved);
             }
         }
 

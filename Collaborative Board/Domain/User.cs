@@ -119,12 +119,34 @@ namespace Domain
             return password.Reset();
         }
 
+        private readonly List<Comment> commentsCreated = new List<Comment>();
+        public IReadOnlyCollection<Comment> CommentsCreated => commentsCreated.AsReadOnly();
+
         private readonly List<Comment> commentsResolved = new List<Comment>();
         public IReadOnlyCollection<Comment> CommentsResolved => commentsResolved.AsReadOnly();
 
-        internal void AddResolvedComment(Comment aComment)
+        internal void AddCreatedComment(Comment someComment)
         {
-            commentsResolved.Add(aComment);
+            if (!commentsCreated.Contains(someComment))
+            {
+                commentsCreated.Add(someComment);
+            }
+            else
+            {
+                throw new CommentException(ErrorMessages.CommentAlreadyAdded);
+            }
+        }
+
+        internal void AddResolvedComment(Comment someComment)
+        {
+            if (!commentsResolved.Contains(someComment))
+            {
+                commentsResolved.Add(someComment);
+            }
+            else
+            {
+                throw new CommentException(ErrorMessages.CommentAlreadyAdded);
+            }
         }
 
         internal static User InstanceForTestingPurposes()

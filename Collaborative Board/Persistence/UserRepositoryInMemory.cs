@@ -89,13 +89,41 @@ namespace Persistence
             }
             else
             {
+                ValidateNoWhiteboardHasUserAsCreator(elementToRemove);
+                RemoveUserFromAllTeams(elementToRemove);
                 base.Remove(elementToRemove);
+            }
+        }
+
+        private void ValidateNoWhiteboardHasUserAsCreator(User elementToRemove)
+        {
+            var allWhiteboards = WhiteboardRepository.GetInstance().Elements;
+            bool userToRemoveIsCreator = allWhiteboards.Any(w => w.Creator.Equals(elementToRemove));
+            if (userToRemoveIsCreator)
+            {
+                throw new RepositoryException(ErrorMessages.CannotRemoveWhiteboardCreator);
+            }
+        }
+
+        private void RemoveUserFromAllTeams(User userToRemove)
+        {
+            var allTeams = TeamRepository.GetInstance().Elements;
+            var teamsThatContainUserToRemove = allTeams.Where(t => t.Members.Contains(userToRemove)).ToList();
+            bool teamsOnlyWithUserToRemoveAsMemberExist =
+                teamsThatContainUserToRemove.Any(t => t.Members.Count == 1);
+            if (teamsOnlyWithUserToRemoveAsMemberExist)
+            {
+                throw new RepositoryException(ErrorMessages.UserIsLoneMemberOfSomeTeam);
+            }
+            else
+            {
+                teamsThatContainUserToRemove.ForEach(t => t.RemoveMember(userToRemove));
             }
         }
 
         private bool IsTheOnlyAdministratorLeft(User elementToRemove)
         {
-            var administrators = elements.Where(u => u.HasAdministrationPrivileges).ToList();
+            var administrators = elements.Where(u => Utilities.HasAdministrationPrivileges(u)).ToList();
             return administrators.Count == 1 && administrators.Single().Equals(elementToRemove);
         }
 

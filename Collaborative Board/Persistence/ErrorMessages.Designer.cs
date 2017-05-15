@@ -79,6 +79,15 @@ namespace Persistence {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No es posible eliminar al usuario: es el creador de algún pizarrón..
+        /// </summary>
+        internal static string CannotRemoveWhiteboardCreator {
+            get {
+                return ResourceManager.GetString("CannotRemoveWhiteboardCreator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to El elemento que se intenta registrar ya existe en el sistema..
         /// </summary>
         internal static string ElementAlreadyExists {
@@ -142,11 +151,20 @@ namespace Persistence {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Es necesario ser el creador del pizarrón o un administrador del sistema para modificar al mismo..
+        ///   Looks up a localized string similar to No es posible modificar a un pizarrón sin ser miembro del equipo asociado al mismo o un administrador..
         /// </summary>
         internal static string UserCannotModifyWhiteboard {
             get {
                 return ResourceManager.GetString("UserCannotModifyWhiteboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Es necesario ser el creador del pizarrón o un administrador del sistema para eliminarlo..
+        /// </summary>
+        internal static string UserCannotRemoveWhiteboard {
+            get {
+                return ResourceManager.GetString("UserCannotRemoveWhiteboard", resourceCulture);
             }
         }
         
@@ -156,6 +174,15 @@ namespace Persistence {
         internal static string UserEmailMustBeUnique {
             get {
                 return ResourceManager.GetString("UserEmailMustBeUnique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No es posible eliminar al usuario: es el único miembro de un equipo..
+        /// </summary>
+        internal static string UserIsLoneMemberOfSomeTeam {
+            get {
+                return ResourceManager.GetString("UserIsLoneMemberOfSomeTeam", resourceCulture);
             }
         }
         

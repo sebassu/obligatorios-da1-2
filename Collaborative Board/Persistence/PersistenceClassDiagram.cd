@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Persistence.ErrorMessages">
+    <Position X="6.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAgCAQACAAQAAEKAgBEAgAAQAAAAABAIAAIAAgAoA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistence.RepositoryInMemory&lt;T&gt;" Collapsed="true">
+    <Position X="2.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAABAAAAAYBIAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>RepositoryInMemory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistence.Session">
+    <Position X="9.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAIADIAAAAAEAAAAAAAAAIAAAAAgAAAAAAAAAg=</HashCode>
+      <FileName>Session.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistence.TeamRepository" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAQQAAAACAAABABAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>TeamRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistence.TeamRepositoryInMemory" Collapsed="true">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAQAAAAADAAAAAAAAABACAASAQAEAAA=</HashCode>
+      <FileName>TeamRepositoryInMemory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistence.UserRepository" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQAQAAAAAABAFAAAAAAgAAAABAAAA=</HashCode>
+      <FileName>UserRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistence.UserRepositoryInMemory" Collapsed="true">
+    <Position X="5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAACQAABIECAAkAAAAAAgACAABAAAA=</HashCode>
+      <FileName>UserRepositoryInMemory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistence.WhiteboardRepository" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAQAAAAAAAABABAAAAACAIAAAAAAAA=</HashCode>
+      <FileName>WhiteboardRepository.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistence.WhiteboardRepositoryInMemory" Collapsed="true">
+    <Position X="2.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABBAAAAEAAAAAAEAAgAABAIAAAAAEACAiAIAAAAAAAA=</HashCode>
+      <FileName>WhiteboardRepositoryInMemory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

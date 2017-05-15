@@ -11,6 +11,8 @@ namespace Domain
         private const byte minimumWidth = 1;
         private const byte minimumHeight = 1;
 
+        public DateTime CreationDate { get; } = DateTime.Today;
+
         public DateTime LastModification { get; private set; }
 
         internal void UpdateModificationDate()
@@ -68,18 +70,27 @@ namespace Domain
             get { return width; }
             internal set
             {
-                if (value >= minimumWidth)
+                if (IsValidWidth(value))
                 {
                     width = value;
                     UpdateModificationDate();
                 }
                 else
                 {
-                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
-                        ErrorMessages.WidthIsInvalid, value);
-                    throw new WhiteboardException(errorMessage);
+                    throw new WhiteboardException(ErrorMessages.WidthIsInvalid);
                 }
             }
+        }
+
+        private bool IsValidWidth(int value)
+        {
+            return value >= minimumWidth &&
+                (Utilities.IsEmpty(contents) || value >= GetMaximumWidthNeededOfComponents());
+        }
+
+        private double GetMaximumWidthNeededOfComponents()
+        {
+            return contents.Max(c => c.WidthContainerNeeded());
         }
 
         private int height;
@@ -88,18 +99,27 @@ namespace Domain
             get { return height; }
             internal set
             {
-                if (value >= minimumHeight)
+                if (IsValidHeight(value))
                 {
                     height = value;
                     UpdateModificationDate();
                 }
                 else
                 {
-                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
-                        ErrorMessages.HeightIsInvalid, value);
-                    throw new WhiteboardException(errorMessage);
+                    throw new WhiteboardException(ErrorMessages.HeightIsInvalid);
                 }
             }
+        }
+
+        private bool IsValidHeight(int value)
+        {
+            return value >= minimumWidth &&
+                (Utilities.IsEmpty(contents) || value >= GetMaximumHeightNeededOfComponents());
+        }
+
+        private double GetMaximumHeightNeededOfComponents()
+        {
+            return contents.Max(c => c.WidthContainerNeeded());
         }
 
         public User Creator { get; }
@@ -128,6 +148,19 @@ namespace Domain
             {
                 throw new WhiteboardException(ErrorMessages.NonMemberElement);
             }
+        }
+
+        internal bool UserCanModify(User someUser)
+        {
+            var teamMembers = OwnerTeam.Members.ToList();
+            return Utilities.HasAdministrationPrivileges(someUser)
+                || teamMembers.Contains(someUser);
+        }
+
+        internal bool UserCanRemove(User someUser)
+        {
+            return Utilities.HasAdministrationPrivileges(someUser)
+                || Creator.Equals(someUser);
         }
 
         internal static Whiteboard InstanceForTestingPurposes()
