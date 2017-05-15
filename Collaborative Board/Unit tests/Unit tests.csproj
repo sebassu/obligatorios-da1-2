@@ -65,6 +65,7 @@
     <Compile Include="PersistenceTests\WhiteboardRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="UnitTestsClassDiagram.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
