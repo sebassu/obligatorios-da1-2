@@ -118,5 +118,10 @@ namespace Interface
                 c.ResolutionDate().Date >= dtpCommentsCreatedFrom.Value.Date &&
                 c.ResolutionDate().Date <= dtpCommentsSolvedUntil.Value.Date;
         }
+
+        private void btnHome_Click(object sender, EventArgs e)
+        {
+            InterfaceUtilities.GoToHome(systemPanel);
+        }
     }
 }
