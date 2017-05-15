@@ -5,6 +5,7 @@ using Exceptions;
 using System.Drawing;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace UnitTests.DomainTests
 {
@@ -25,7 +26,7 @@ namespace UnitTests.DomainTests
             string testImageLocation = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName
                 + "\\..\\Resources\\TestImage.jpg";
             User creator = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
-                "ravenna@simuladores.com", DateTime.Today, "contraseñaVálida123");
+                "ravenna@simuladores.com", DateTime.Today, "HablarUnasPalabritas");
             Team ownerTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo 3", "Descripción.", 5);
             Whiteboard imageContainer = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
                 "Pizarrón de prueba", "Descripción.", ownerTeam, 900, 300);
@@ -44,6 +45,8 @@ namespace UnitTests.DomainTests
             Whiteboard containerAttribute = testingImage.Container;
             Assert.AreEqual(imageContainer, containerAttribute);
             Assert.AreEqual(DateTime.Today, containerAttribute.LastModification.Date);
+            Assert.AreEqual(0, testingImage.WidthContainerNeeded());
+            Assert.AreEqual(0, testingImage.HeightContainerNeeded());
         }
 
         [TestMethod]
@@ -148,6 +151,46 @@ namespace UnitTests.DomainTests
         }
 
         [TestMethod]
+        public void ImageSetValidDimensionsTest()
+        {
+            Size newSize = new Size(50, 50);
+            testingImage.Dimensions = newSize;
+            Assert.AreEqual(newSize, testingImage.Dimensions);
+        }
+
+        [TestMethod]
+        public void ImageSetMinimumDimensionsTest()
+        {
+            Size newSize = new Size(1, 1);
+            testingImage.Dimensions = newSize;
+            Assert.AreEqual(newSize, testingImage.Dimensions);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ElementException))]
+        public void ImageSetDimensionsInvalidWidthTest()
+        {
+            Size newSize = new Size(-100, 10);
+            testingImage.Dimensions = newSize;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ElementException))]
+        public void ImageSetDimensionsInvalidHeightTest()
+        {
+            Size newSize = new Size(658, -2112);
+            testingImage.Dimensions = newSize;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ElementException))]
+        public void ImageSetInvalidDimensionsTest()
+        {
+            Size newSize = new Size(-2112, -1000);
+            testingImage.Dimensions = newSize;
+        }
+
+        [TestMethod]
         public void ImageSetWidthConsideringContainerValidTest()
         {
             int widthToSet = 100;
@@ -242,6 +285,8 @@ namespace UnitTests.DomainTests
             Whiteboard containerAttribute = testingImage.Container;
             Assert.AreEqual(imageContainer, containerAttribute);
             Assert.AreEqual(DateTime.Today, containerAttribute.LastModification.Date);
+            Assert.AreEqual(600, testingImage.WidthContainerNeeded());
+            Assert.AreEqual(200, testingImage.HeightContainerNeeded());
         }
 
         [TestMethod]
@@ -280,6 +325,68 @@ namespace UnitTests.DomainTests
                 + "\\..\\Resources\\TestTextFile.txt";
             Whiteboard imageContainer = GenerateNonGenericTestSituation();
             testingImage = ImageWhiteboard.CreateWithContainerSource(imageContainer, testImageLocation);
+        }
+
+        [TestMethod]
+        public void ImageSetDimensionsConsideringContainerValidTest()
+        {
+            Point newOrigin = new Point(250, 10);
+            GenerateNonGenericTestSituation();
+            testingImage.Position = newOrigin;
+            Assert.AreEqual(newOrigin, testingImage.Position); ;
+        }
+
+        [TestMethod]
+        public void ImageSetDimensionsLimitRightCornerOfContainerTest()
+        {
+            Size newSize = new Size(250, 200);
+            GenerateNonGenericTestSituation();
+            testingImage.Dimensions = newSize;
+            Assert.AreEqual(newSize, testingImage.Dimensions);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ElementException))]
+        public void ImageSetDimensionsInvalidWidthConsideringContainerTest()
+        {
+            Size newSize = new Size(9000, 10);
+            GenerateNonGenericTestSituation();
+            testingImage.Dimensions = newSize;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ElementException))]
+        public void ImageSetDimensionsInvalidHeightConsideringContainerTest()
+        {
+            Size newSize = new Size(10, 9000);
+            GenerateNonGenericTestSituation();
+            testingImage.Dimensions = newSize;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ElementException))]
+        public void ImageSetInvalidDimensionsConsideringContainerTest()
+        {
+            Size newSize = new Size(3000, 3000);
+            GenerateNonGenericTestSituation();
+            testingImage.Dimensions = newSize;
+        }
+
+        [TestMethod]
+        public void ImageAddCommentValidTest()
+        {
+            Comment testingComment = Comment.InstanceForTestingPurposes();
+            testingImage.AddComment(testingComment);
+            CollectionAssert.Contains(testingImage.Comments.ToList(), testingComment);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(CommentException))]
+        public void ImageAddRepeatedCommentInvalidTest()
+        {
+            Comment testingComment = Comment.InstanceForTestingPurposes();
+            testingImage.AddComment(testingComment);
+            testingImage.AddComment(testingComment);
         }
     }
 }

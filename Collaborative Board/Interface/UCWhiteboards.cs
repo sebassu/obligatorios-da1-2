@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using Persistence;
 using Domain;
 
-namespace Interface
+namespace GraphicInterface
 {
     public partial class UCWhiteboards : UserControl
     {
@@ -17,7 +17,7 @@ namespace Interface
             systemPanel = somePanel;
         }
 
-        private bool ActiveUserBelongsToAnyTeam()
+        private static bool ActiveUserBelongsToAnyTeam()
         {
             TeamRepository globalTeams = TeamRepository.GetInstance();
             User activeUser = Session.ActiveUser();
@@ -84,7 +84,7 @@ namespace Interface
 
         private void BtnExit_Click(object sender, EventArgs e)
         {
-            InterfaceUtilities.AskLogOut();
+            InterfaceUtilities.AskLogOff();
         }
 
         private void BtnHome_Click(object sender, EventArgs e)
@@ -123,7 +123,7 @@ namespace Interface
             }
         }
 
-        private bool ValidateWhiteboardIsToBeShown(Whiteboard oneWhiteboard)
+        private static bool ValidateWhiteboardIsToBeShown(Whiteboard oneWhiteboard)
         {
             bool whiteboardTeamHasLoggedInUser = oneWhiteboard.OwnerTeam.Members.Contains(Session.ActiveUser());
             return whiteboardTeamHasLoggedInUser || Session.HasAdministrationPrivileges();

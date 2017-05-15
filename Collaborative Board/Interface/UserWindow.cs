@@ -1,7 +1,7 @@
 ﻿using Persistence;
 using System.Windows.Forms;
 
-namespace Interface
+namespace GraphicInterface
 {
     public partial class UserWindow : Form
     {

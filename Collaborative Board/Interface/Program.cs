@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Interface
+namespace GraphicInterface
 {
     internal static class Program
     {
@@ -10,7 +10,7 @@ namespace Interface
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Login());
+            Application.Run(new LogOn());
         }
     }
 }

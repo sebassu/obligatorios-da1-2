@@ -4,7 +4,7 @@ using Persistence;
 using System;
 using System.Windows.Forms;
 
-namespace Interface
+namespace GraphicInterface
 {
     public static class InterfaceUtilities
     {
@@ -25,13 +25,13 @@ namespace Interface
             MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        public static void AskLogOut()
+        public static void AskLogOff()
         {
             DialogResult result = MessageBox.Show("¿Está seguro que desea cerrar sesión?", "Salir",
                                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                EndSessionAndGoToLogInForm();
+                EndSessionAndGoToLogOnForm();
             }
         }
 
@@ -46,17 +46,17 @@ namespace Interface
             }
         }
 
-        public static void EndSessionAndGoToLogInForm()
+        public static void EndSessionAndGoToLogOnForm()
         {
             HideAllForms();
             Session.End();
-            (new Login()).Show();
+            (new LogOn()).Show();
         }
 
         public static void SuccessfulOperation()
         {
-            DialogResult result = MessageBox.Show("La operación se completó exitosamente.", "Operación exitosa",
-                               MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("La operación se completó exitosamente.", "Operación exitosa",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private static void HideAllForms()
@@ -98,7 +98,7 @@ namespace Interface
             ChangeUserControl(new UCAdministrateTeam(systemPanel, oneTeam), systemPanel);
         }
 
-        public static void ChangeUserControl(UserControl someUserControl, Panel systemPanel)
+        public static void ChangeUserControl(UserControl someUserControl, Control systemPanel)
         {
             systemPanel.Controls.Clear();
             systemPanel.Controls.Add(someUserControl);

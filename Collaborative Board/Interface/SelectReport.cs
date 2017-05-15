@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Interface
+namespace GraphicInterface
 {
     public partial class SelectReport : Form
     {

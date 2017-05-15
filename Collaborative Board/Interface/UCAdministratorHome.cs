@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Interface
+namespace GraphicInterface
 {
     public partial class UCAdministratorHome : UserControl
     {
@@ -64,7 +64,7 @@ namespace Interface
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            InterfaceUtilities.AskLogOut();
+            InterfaceUtilities.AskLogOff();
         }
 
         private void btnUsers_Click(object sender, EventArgs e)

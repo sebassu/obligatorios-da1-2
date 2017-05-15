@@ -4,6 +4,7 @@ using Exceptions;
 using System.Threading;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace UnitTests.DomainTests
 {
@@ -409,6 +410,40 @@ namespace UnitTests.DomainTests
             Thread.Sleep(15);
             string secondResultObtained = testingUser.ResetPassword();
             Assert.AreNotEqual(firstResultObtained, secondResultObtained);
+        }
+
+        [TestMethod]
+        public void UserAddCreatedCommentValidTest()
+        {
+            Comment testingComment = Comment.InstanceForTestingPurposes();
+            testingUser.AddCreatedComment(testingComment);
+            CollectionAssert.Contains(testingUser.CommentsCreated.ToList(), testingComment);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
+        public void UserAddRepeatedCreatedCommentInvalidTest()
+        {
+            Comment testingComment = Comment.InstanceForTestingPurposes();
+            testingUser.AddCreatedComment(testingComment);
+            testingUser.AddCreatedComment(testingComment);
+        }
+
+        [TestMethod]
+        public void UserAddResolvedCommentValidTest()
+        {
+            Comment testingComment = Comment.InstanceForTestingPurposes();
+            testingUser.AddResolvedComment(testingComment);
+            CollectionAssert.Contains(testingUser.CommentsResolved.ToList(), testingComment);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UserException))]
+        public void UserAddRepeatedResolvedCommentInvalidTest()
+        {
+            Comment testingComment = Comment.InstanceForTestingPurposes();
+            testingUser.AddResolvedComment(testingComment);
+            testingUser.AddResolvedComment(testingComment);
         }
     }
 }

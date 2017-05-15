@@ -158,7 +158,15 @@ namespace UnitTests.PersistenceTests
 
         [TestMethod]
         [ExpectedException(typeof(RepositoryException))]
-        public void URepositoryRemoveNullUserInvalidTest()
+        public void WRepositoryRemoveUnregisteredWhiteboardInvalidTest()
+        {
+            Whiteboard whiteboardToFailRemoving = Whiteboard.InstanceForTestingPurposes();
+            globalWhiteboards.Remove(whiteboardToFailRemoving);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(RepositoryException))]
+        public void WRepositoryRemoveNullUserInvalidTest()
         {
             globalWhiteboards.Remove(null);
         }
@@ -345,6 +353,15 @@ namespace UnitTests.PersistenceTests
             Whiteboard whiteboardToVerify = globalWhiteboards.Elements.First();
             globalWhiteboards.ModifyWhiteboard(whiteboardToVerify, "Pizarrón",
                 "Una descripción válida.", 500, 700);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(RepositoryException))]
+        public void UWRepositoryAttemptToRemoveWhiteboardCreatorUserInvalidTest()
+        {
+            User userToFailRemoving = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
+                "ravenna@simuladores.com", DateTime.Today, "HablarUnasPalabritas");
+            UserRepository.GetInstance().Remove(userToFailRemoving);
         }
     }
 }

@@ -1,5 +1,0 @@
-[Red] Se crea una nueva prueba unitaria fallida para el método "...metodo...".
-
-[Green] Se codifica lo mínimo necesario para que las pruebas pasen.
-
-[Refactor] Se arreglan aspectos de claridad y calidad del código. 

@@ -1,5 +1,0 @@
-DUDAS
-	- Si borro un usuario y tiene pizarrones creados:
-		- Borro los pizarrones?
-		- Queda el admin que lo borro como creador del pizarrones
-	- Puede haber mas de un admin en un equipo?

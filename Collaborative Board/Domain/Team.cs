@@ -68,25 +68,23 @@ namespace Domain
                 }
                 else
                 {
-                    MaximumMembersNotHighEnoughError(value, minimumMembersNeeded);
+                    string errorMessage = GenerateMaximumMembersNotHighEnoughErrorMessage(value,
+                        minimumMembersNeeded);
+                    throw new TeamException(errorMessage);
                 }
             }
         }
 
-        private static void MaximumMembersNotHighEnoughError(int value,
+        private static string GenerateMaximumMembersNotHighEnoughErrorMessage(int value,
             int minimumMaximumMembersNeeded)
         {
-            string errorMessage;
-            if (value < 1)
-            {
-                errorMessage = ErrorMessages.InvalidMaximumMembers;
-            }
-            else
+            string errorMessage = ErrorMessages.InvalidMaximumMembers;
+            if (value >= 1)
             {
                 errorMessage = string.Format(CultureInfo.CurrentCulture,
                     ErrorMessages.InvalidMaximumMembers, value, minimumMaximumMembersNeeded);
             }
-            throw new TeamException(errorMessage);
+            return errorMessage;
         }
 
         private readonly List<User> members = new List<User>();
@@ -114,9 +112,9 @@ namespace Domain
             }
         }
 
-        private bool IsPossibleToAdd(User aMember)
+        private bool IsPossibleToAdd(User someUser)
         {
-            return members.Count < maximumMembers && !members.Contains(aMember);
+            return members.Count < maximumMembers && !members.Contains(someUser);
         }
 
         internal void RemoveMember(User userToRemove)
@@ -127,12 +125,12 @@ namespace Domain
             }
         }
 
-        private bool WasRemoved(User aUser)
+        private bool WasRemoved(User userToRemove)
         {
-            return members.Count > absoluteMinimumMembers && members.Remove(aUser);
+            return members.Count > absoluteMinimumMembers && members.Remove(userToRemove);
         }
 
-        public void AddWhiteboard(Whiteboard whiteboardToAdd)
+        internal void AddWhiteboard(Whiteboard whiteboardToAdd)
         {
             if (Utilities.IsNotNull(whiteboardToAdd))
             {
@@ -157,7 +155,7 @@ namespace Domain
             }
         }
 
-        public void RemoveWhiteboard(Whiteboard someWhiteboard)
+        internal void RemoveWhiteboard(Whiteboard someWhiteboard)
         {
             bool whiteboardWasRemoved = createdWhiteboards.Remove(someWhiteboard);
             if (!whiteboardWasRemoved)
@@ -206,9 +204,9 @@ namespace Domain
             }
         }
 
-        private bool HasSameName(Team aTeam)
+        private bool HasSameName(Team teamToCompareAgainst)
         {
-            return name.Equals(aTeam.name);
+            return name.Equals(teamToCompareAgainst.name);
         }
 
         public override int GetHashCode()

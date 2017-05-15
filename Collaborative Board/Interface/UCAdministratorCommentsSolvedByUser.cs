@@ -6,7 +6,7 @@ using Domain;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Interface
+namespace GraphicInterface
 {
     public partial class UCAdministratorCommentsSolvedByUser : UserControl
     {
@@ -87,7 +87,7 @@ namespace Interface
 
         private void BtnExit_Click(object sender, EventArgs e)
         {
-            InterfaceUtilities.AskLogOut();
+            InterfaceUtilities.AskLogOff();
         }
 
         private void BtnApplyFilters_Click(object sender, EventArgs e)

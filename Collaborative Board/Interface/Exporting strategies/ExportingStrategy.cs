@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using System;
 using System.Globalization;
 
-namespace Interface
+namespace GraphicInterface
 {
     public abstract class ExportingStrategy
     {
@@ -15,7 +15,7 @@ namespace Interface
         private Panel panelToBeExported;
         private string fileNameBeginning;
 
-        public ExportingStrategy(Panel whiteboardPanel, string whiteboardName)
+        protected ExportingStrategy(Panel whiteboardPanel, string whiteboardName)
         {
             try
             {

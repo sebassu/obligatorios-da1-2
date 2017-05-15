@@ -133,7 +133,7 @@ namespace Domain
             }
             else
             {
-                throw new CommentException(ErrorMessages.CommentAlreadyAdded);
+                throw new UserException(ErrorMessages.CommentAlreadyAdded);
             }
         }
 
@@ -145,7 +145,7 @@ namespace Domain
             }
             else
             {
-                throw new CommentException(ErrorMessages.CommentAlreadyAdded);
+                throw new UserException(ErrorMessages.CommentAlreadyAdded);
             }
         }
 

@@ -33,6 +33,8 @@ namespace UnitTests.PersistenceTests
                 "lamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
             globalUsers.AddNewUser("Martín", "Vanegas",
                 "vanegas@brigadab.com", DateTime.Today, "tipoONegativo");
+            globalUsers.AddNewUser("José", "Feller",
+                "feller@brigadab.com", DateTime.Today, "puntaPariñas");
         }
 
         [TestInitialize]

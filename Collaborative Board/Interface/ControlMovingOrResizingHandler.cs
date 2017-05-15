@@ -4,9 +4,9 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Interface
+namespace GraphicInterface
 {
-    internal class ControlMovingOrResizingHandler
+    internal static class ControlMovingOrResizingHandler
     {
         private const int edgePrecision = 20;
         private static readonly Cursor[] leftCursors = { Cursors.SizeNWSE, Cursors.SizeNESW,
@@ -203,7 +203,7 @@ namespace Interface
             try
             {
                 boardElement.Position = interfaceObject.Location;
-                boardElement.Size = interfaceObject.Size;
+                boardElement.Dimensions = interfaceObject.Size;
             }
             catch (BoardException exception)
             {

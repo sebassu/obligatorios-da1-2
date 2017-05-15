@@ -404,5 +404,18 @@ namespace UnitTests.DomainTests
             Whiteboard someRandomWhiteboard = Whiteboard.InstanceForTestingPurposes();
             testingTeam.RemoveWhiteboard(someRandomWhiteboard);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(TeamException))]
+        public void TeamLowerMaximumMembersWithTeamSurpassingItInvalidTest()
+        {
+            DateTime aBirthdate = new DateTime(1990, 05, 05);
+            User creator = User.NamesEmailBirthdatePassword("Creator", "Team",
+                "creador@usuario.com", aBirthdate, "password125");
+            testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator,
+                "Equipo 1", "No hace tareas.", 2);
+            testingTeam.AddMember(User.InstanceForTestingPurposes());
+            testingTeam.MaximumMembers = 1;
+        }
     }
 }

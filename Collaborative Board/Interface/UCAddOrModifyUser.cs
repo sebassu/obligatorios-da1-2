@@ -3,7 +3,7 @@ using System;
 using Persistence;
 using System.Windows.Forms;
 
-namespace Interface
+namespace GraphicInterface
 {
     public partial class UCAddOrModifyUser : UserControl
     {
@@ -83,7 +83,7 @@ namespace Interface
             UserRepository globalUsers = UserRepository.GetInstance();
             String newPassWord = globalUsers.ResetUsersPassword(userToModify);
             txtPassword.Text = userToModify.Password;
-            DialogResult result = MessageBox.Show("La nueva contraseña es: " + newPassWord, "Reseteo de contraseña",
+            MessageBox.Show("La nueva contraseña es: " + newPassWord, "Reseteo de contraseña",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }

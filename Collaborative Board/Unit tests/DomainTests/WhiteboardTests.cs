@@ -4,6 +4,7 @@ using Exceptions;
 using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
 
 namespace UnitTests.DomainTests
 {
@@ -19,6 +20,22 @@ namespace UnitTests.DomainTests
             testingWhiteboard = Whiteboard.InstanceForTestingPurposes();
         }
 
+        private static void GenerateNonGenericTestSituation()
+        {
+            string testImageLocation = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName
+                + "\\..\\Resources\\TestImage.jpg";
+            User creator = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
+                "ravenna@simuladores.com", DateTime.Today, "HablarUnasPalabritas");
+            Team ownerTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo 3",
+                "Descripción.", 5);
+            testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
+                "Pizarrón de prueba", "Descripción.", ownerTeam, 1200, 600);
+            TextBoxWhiteboard.CreateWithContainer(testingWhiteboard);
+            var image = ImageWhiteboard.CreateWithContainerSource(testingWhiteboard, testImageLocation);
+            image.Width = 600;
+            image.Height = 250;
+        }
+
         [TestMethod]
         public void WhiteboardForTestingPurposesTest()
         {
@@ -30,6 +47,7 @@ namespace UnitTests.DomainTests
                 testingWhiteboard.Creator);
             Assert.AreEqual(Team.InstanceForTestingPurposes(),
                 testingWhiteboard.OwnerTeam);
+            Assert.AreEqual(testingWhiteboard.CreationDate, DateTime.Today);
         }
 
         [TestMethod]
@@ -160,6 +178,7 @@ namespace UnitTests.DomainTests
             Assert.AreEqual(ownerTeam, testingWhiteboard.OwnerTeam);
             Assert.AreEqual(500, testingWhiteboard.Width);
             Assert.AreEqual(500, testingWhiteboard.Height);
+            Assert.AreEqual(testingWhiteboard.CreationDate, DateTime.Today);
             CollectionAssert.Contains(ownerTeam.CreatedWhiteboards.ToList(), testingWhiteboard);
         }
 
@@ -365,6 +384,65 @@ namespace UnitTests.DomainTests
         public void WhiteboardRemoveElementNullTest()
         {
             testingWhiteboard.RemoveWhiteboardElement(null);
+        }
+
+        [TestMethod]
+        public void WhiteboardChangeWidthWhenNotEmptyValidTest()
+        {
+            GenerateNonGenericTestSituation();
+            testingWhiteboard.Width = 1150;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(WhiteboardException))]
+        public void WhiteboardChangeWidthWhenNotEmptyInvalidTest()
+        {
+            GenerateNonGenericTestSituation();
+            testingWhiteboard.Width = 1;
+        }
+
+        [TestMethod]
+        public void WhiteboardChangeHeightWhenNotEmptyValidTest()
+        {
+            GenerateNonGenericTestSituation();
+            testingWhiteboard.Height = 500;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(WhiteboardException))]
+        public void WhiteboardChangeHeightWhenNotEmptyInvalidTest()
+        {
+            GenerateNonGenericTestSituation();
+            testingWhiteboard.Height = 1;
+        }
+
+        [TestMethod]
+        public void WhiteboardUserCanRemoveTest()
+        {
+            Assert.IsTrue(testingWhiteboard.UserCanRemove(testingWhiteboard.Creator));
+        }
+
+        [TestMethod]
+        public void WhiteboardUserCanRemoveAdministratorTest()
+        {
+            Administrator someAdministrator = Administrator.NamesEmailBirthdatePassword("Mario",
+                "Santos", "santos@simuladores.com", DateTime.Today, "DisculpeFuegoTiene");
+            Assert.AreNotEqual(someAdministrator, testingWhiteboard.Creator);
+            Assert.IsTrue(testingWhiteboard.UserCanRemove(someAdministrator));
+        }
+
+        [TestMethod]
+        public void WhiteboardUserCanRemoveUserNonCreatorTest()
+        {
+            User someOtherUser = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
+                "ravenna@simuladores.com", DateTime.Today, "HablarUnasPalabritas");
+            Assert.IsFalse(testingWhiteboard.UserCanRemove(someOtherUser));
+        }
+
+        [TestMethod]
+        public void WhiteboardUserCanRemoveNullUserTest()
+        {
+            Assert.IsFalse(testingWhiteboard.UserCanRemove(null));
         }
     }
 }

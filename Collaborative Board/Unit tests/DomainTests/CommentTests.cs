@@ -4,6 +4,8 @@ using Exceptions;
 using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Threading;
+using System.Globalization;
 
 namespace UnitTests.DomainTests
 {
@@ -24,10 +26,12 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void CommentForTestingPurposesTest()
         {
-            Assert.IsNull(testingComment.Creator);
+            Assert.AreEqual(User.InstanceForTestingPurposes(),
+                testingComment.Creator);
             Assert.AreEqual("Comentario inválido.", testingComment.Text);
             Assert.IsFalse(testingComment.IsResolved);
             Assert.IsNull(testingComment.Resolver);
+            Assert.IsNotNull(testingComment.AssociatedElement);
         }
 
         [TestMethod]
@@ -39,6 +43,9 @@ namespace UnitTests.DomainTests
                 testingElement, someText);
             Assert.AreEqual(creator, testingComment.Creator);
             Assert.AreEqual(someText, testingComment.Text);
+            Assert.AreEqual(testingElement, testingComment.AssociatedElement);
+            Assert.AreEqual(testingElement.Container,
+                testingComment.AssociatedWhiteboard);
             Assert.IsFalse(testingComment.IsResolved);
         }
 
@@ -52,6 +59,8 @@ namespace UnitTests.DomainTests
                 testingElement, someText);
             Assert.AreEqual(creator, testingComment.Creator);
             Assert.AreEqual(someText, testingComment.Text);
+            Assert.AreEqual(testingElement.Container,
+                testingComment.AssociatedWhiteboard);
             Assert.IsFalse(testingComment.IsResolved);
         }
 
@@ -203,6 +212,80 @@ namespace UnitTests.DomainTests
         {
             object testingCommentAsObject = testingComment;
             Assert.AreEqual(testingCommentAsObject.GetHashCode(), testingComment.GetHashCode());
+        }
+
+        [TestMethod]
+        public void CommentEqualsReflexiveValidTest()
+        {
+            Assert.AreEqual(testingComment, testingComment);
+        }
+
+        [TestMethod]
+        public void CommentEqualsDifferentTypesInvalidTest()
+        {
+            object differentObject = new object();
+            Assert.AreNotEqual(testingComment, differentObject);
+            Assert.AreNotEqual(differentObject, testingComment);
+        }
+
+        [TestMethod]
+        public void CommentEqualsDifferentCreatorsInvalidTest()
+        {
+            string someText = "Falta resolver el issue 12-3.";
+            User creator = User.InstanceForTestingPurposes();
+            User anotherCreator = User.NamesEmailBirthdatePassword("Mario", "Santos",
+                "santos@simuladores.com", DateTime.Today, "contraseñaVálida123");
+            testingComment = Comment.CreatorElementText(creator,
+                testingElement, someText);
+            Comment otherTestingComment = Comment.CreatorElementText(anotherCreator,
+                testingElement, someText);
+            Assert.AreNotEqual(testingComment, otherTestingComment);
+        }
+
+        [TestMethod]
+        public void CommentEqualsDifferentTextInvalidTest()
+        {
+            string someText = "Falta resolver el issue 12-3.";
+            string someOtherText = "En el habitual espacio lírico";
+            User creator = User.InstanceForTestingPurposes();
+            testingComment = Comment.CreatorElementText(creator,
+                testingElement, someText);
+            Comment otherTestingComment = Comment.CreatorElementText(creator,
+                testingElement, someOtherText);
+            Assert.AreNotEqual(testingComment, otherTestingComment);
+        }
+
+        [TestMethod]
+        public void CommentEqualsDifferentDateTimesInvalidTest()
+        {
+            string someText = "Falta resolver el issue 12-3.";
+            User creator = User.InstanceForTestingPurposes();
+            testingComment = Comment.CreatorElementText(creator,
+                testingElement, someText);
+            Thread.Sleep(30);
+            Comment otherTestingComment = Comment.CreatorElementText(creator,
+                testingElement, someText);
+            Assert.AreNotEqual(testingComment, otherTestingComment);
+        }
+
+        [TestMethod]
+        public void CommentToStringTest()
+        {
+            string someText = "Falta resolver el issue 12-3.";
+            User creator = User.NamesEmailBirthdatePassword("Mario", "Santos",
+                "santos@simuladores.com", DateTime.Today, "contraseñaVálida123");
+            testingComment = Comment.CreatorElementText(creator,
+                testingElement, someText);
+            string dateShown = DateTime.Now.ToString("d/M/yyyy, h:mm tt", CultureInfo.CurrentCulture);
+            Assert.AreEqual("Falta resolver el issue 12-3. <" + dateShown + "> <santos@simuladores.com>",
+                testingComment.ToString());
+        }
+
+        [TestMethod]
+        public void UtilitiesGetDateToShowTest()
+        {
+            string expectedResult = "N/a";
+            Assert.AreEqual(expectedResult, Utilities.GetDateToShow(DateTime.MinValue));
         }
     }
 }

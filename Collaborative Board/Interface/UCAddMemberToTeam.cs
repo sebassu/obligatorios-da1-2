@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using Domain;
 using Persistence;
 
-namespace Interface
+namespace GraphicInterface
 {
     public partial class UCAddMemberToTeam : UserControl
     {

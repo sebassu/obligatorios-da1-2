@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Interface
+namespace GraphicInterface
 {
     public partial class ElementComments : Form
     {
@@ -51,10 +51,10 @@ namespace Interface
         private void LoadComments()
         {
             lstComments.Clear();
-            var comments = selectedElement.Comments.ToList();
-            if (comments.Count > 0)
+            var commentsOfElement = selectedElement.Comments.ToList();
+            if (commentsOfElement.Count > 0)
             {
-                foreach (Comment comment in comments)
+                foreach (Comment comment in commentsOfElement)
                 {
                     ListViewItem itemToAdd = new ListViewItem(comment.ToString()) { Tag = comment };
                     lstComments.Items.Add(itemToAdd);

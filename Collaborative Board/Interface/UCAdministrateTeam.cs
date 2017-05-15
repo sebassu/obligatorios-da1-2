@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Domain;
 
-namespace Interface
+namespace GraphicInterface
 {
     public partial class UCAdministrateTeam : UserControl
     {
@@ -41,7 +41,7 @@ namespace Interface
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            InterfaceUtilities.AskLogOut();
+            InterfaceUtilities.AskLogOff();
         }
 
         private void btnBack_Click(object sender, EventArgs e)

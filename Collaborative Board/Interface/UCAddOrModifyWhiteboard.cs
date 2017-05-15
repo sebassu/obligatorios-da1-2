@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using Persistence;
 using Domain;
 
-namespace Interface
+namespace GraphicInterface
 {
     public partial class UCAddOrModifyWhiteboard : UserControl
     {

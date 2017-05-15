@@ -5,7 +5,7 @@ using Domain;
 using Persistence;
 using System.Linq;
 
-namespace Interface
+namespace GraphicInterface
 {
     public partial class UCWhiteboardsCreatedByTeam : UserControl
     {
@@ -53,7 +53,7 @@ namespace Interface
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            InterfaceUtilities.AskLogOut();
+            InterfaceUtilities.AskLogOff();
         }
 
         private void btnHome_Click(object sender, EventArgs e)

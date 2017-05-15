@@ -4,6 +4,7 @@ using Exceptions;
 using System.Drawing;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace UnitTests.DomainTests
 {
@@ -22,13 +23,13 @@ namespace UnitTests.DomainTests
         private static Whiteboard GenerateNonGenericTestSituation()
         {
             User creator = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
-                "ravenna@simuladores.com", DateTime.Today, "contraseñaVálida123");
+                "ravenna@simuladores.com", DateTime.Today, "HablarUnasPalabritas");
             Team ownerTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo 3",
                 "Descripción.", 5);
-            Whiteboard container = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
+            Whiteboard textBoxContainer = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
                 "Pizarrón de prueba", "Descripción.", ownerTeam, 1200, 600);
-            testingTextBox = TextBoxWhiteboard.CreateWithContainer(container);
-            return container;
+            testingTextBox = TextBoxWhiteboard.CreateWithContainer(textBoxContainer);
+            return textBoxContainer;
         }
 
         [TestMethod]
@@ -42,6 +43,8 @@ namespace UnitTests.DomainTests
             Whiteboard containerAttribute = testingTextBox.Container;
             Assert.AreEqual(textBoxContainer, containerAttribute);
             Assert.AreEqual(DateTime.Today, containerAttribute.LastModification.Date);
+            Assert.AreEqual(0, testingTextBox.WidthContainerNeeded());
+            Assert.AreEqual(0, testingTextBox.HeightContainerNeeded());
         }
 
         [TestMethod]
@@ -225,6 +228,46 @@ namespace UnitTests.DomainTests
         }
 
         [TestMethod]
+        public void TextBoxSetValidDimensionsTest()
+        {
+            Size newSize = new Size(50, 50);
+            testingTextBox.Dimensions = newSize;
+            Assert.AreEqual(newSize, testingTextBox.Dimensions);
+        }
+
+        [TestMethod]
+        public void TextBoxSetMinimumDimensionsTest()
+        {
+            Size newSize = new Size(1, 1);
+            testingTextBox.Dimensions = newSize;
+            Assert.AreEqual(newSize, testingTextBox.Dimensions);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ElementException))]
+        public void TextBoxSetDimensionsInvalidWidthTest()
+        {
+            Size newSize = new Size(-100, 10);
+            testingTextBox.Dimensions = newSize;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ElementException))]
+        public void TextBoxSetDimensionsInvalidHeightTest()
+        {
+            Size newSize = new Size(658, -2112);
+            testingTextBox.Dimensions = newSize;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ElementException))]
+        public void TextBoxSetInvalidDimensionsTest()
+        {
+            Size newSize = new Size(-2112, -1000);
+            testingTextBox.Dimensions = newSize;
+        }
+
+        [TestMethod]
         public void TextBoxParameterFactoryMethodValidTest()
         {
             Whiteboard textBoxContainer = GenerateNonGenericTestSituation();
@@ -237,6 +280,8 @@ namespace UnitTests.DomainTests
             Whiteboard containerAttribute = testingTextBox.Container;
             Assert.AreEqual(textBoxContainer, containerAttribute);
             Assert.AreEqual(DateTime.Today, containerAttribute.LastModification.Date);
+            Assert.AreEqual(800, testingTextBox.WidthContainerNeeded());
+            Assert.AreEqual(400, testingTextBox.HeightContainerNeeded());
         }
 
         [TestMethod]
@@ -280,6 +325,76 @@ namespace UnitTests.DomainTests
         public void TextBoxSetTextContentValidNullTest()
         {
             testingTextBox.TextContent = null;
+        }
+
+        [TestMethod]
+        public void TextBoxSetDimensionsConsideringContainerValidTest()
+        {
+            Point newOrigin = new Point(250, 10);
+            GenerateNonGenericTestSituation();
+            testingTextBox.Position = newOrigin;
+            Assert.AreEqual(newOrigin, testingTextBox.Position); ;
+        }
+
+        [TestMethod]
+        public void TextBoxSetDimensionsLimitRightCornerOfContainerTest()
+        {
+            Size newSize = new Size(250, 200);
+            GenerateNonGenericTestSituation();
+            testingTextBox.Dimensions = newSize;
+            Assert.AreEqual(newSize, testingTextBox.Dimensions);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ElementException))]
+        public void TextBoxSetDimensionsInvalidWidthConsideringContainerTest()
+        {
+            Size newSize = new Size(9000, 10);
+            GenerateNonGenericTestSituation();
+            testingTextBox.Dimensions = newSize;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ElementException))]
+        public void TextBoxSetDimensionsInvalidHeightConsideringContainerTest()
+        {
+            Size newSize = new Size(10, 9000);
+            GenerateNonGenericTestSituation();
+            testingTextBox.Dimensions = newSize;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ElementException))]
+        public void ImageSetInvalidDimensionsConsideringContainerTest()
+        {
+            Size newSize = new Size(3000, 3000);
+            GenerateNonGenericTestSituation();
+            testingTextBox.Dimensions = newSize;
+        }
+
+        [TestMethod]
+        public void TextBoxAddCommentValidTest()
+        {
+            Comment testingComment = Comment.InstanceForTestingPurposes();
+            testingTextBox.AddComment(testingComment);
+            CollectionAssert.Contains(testingTextBox.Comments.ToList(), testingComment);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(CommentException))]
+        public void TextBoxAddRepeatedCommentInvalidTest()
+        {
+            Comment testingComment = Comment.InstanceForTestingPurposes();
+            testingTextBox.AddComment(testingComment);
+            testingTextBox.AddComment(testingComment);
+        }
+
+        [TestMethod]
+        public void TextBoxSetFontTest()
+        {
+            Font someFont = new Font("Times New Roman", 12.0f);
+            testingTextBox.TextFont = someFont;
+            Assert.AreEqual(someFont, testingTextBox.TextFont);
         }
     }
 }

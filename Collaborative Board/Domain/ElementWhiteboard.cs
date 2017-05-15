@@ -1,7 +1,6 @@
 ﻿using Exceptions;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Globalization;
 
 namespace Domain
 {
@@ -34,13 +33,14 @@ namespace Domain
 
         private bool IsValidOriginPoint(Point aPoint)
         {
-            bool hasValidCoordinates = aPoint.X >= containerOriginX && aPoint.Y >= containerOriginY;
+            bool hasValidCoordinates = aPoint.X >= containerOriginX
+                && aPoint.Y >= containerOriginY;
             return hasValidCoordinates && DoesNotOverflowContainerX(aPoint.X, Width)
                 && DoesNotOverflowContainerY(aPoint.Y, Height);
         }
 
         private Size size = new Size();
-        public Size Size
+        public Size Dimensions
         {
             get { return size; }
             set
@@ -49,13 +49,17 @@ namespace Domain
                 {
                     size = value;
                 }
+                else
+                {
+                    throw new ElementException(ErrorMessages.InvalidWhiteboardDimensions);
+                }
             }
         }
 
         private bool IsValidSize(Size value)
         {
-            return Utilities.IsNotNull(value) &&
-                IsValidWidth(value.Width) && IsValidHeight(value.Height);
+            return IsValidWidth(value.Width) &&
+                IsValidHeight(value.Height);
         }
 
         public int Width
@@ -68,20 +72,17 @@ namespace Domain
                     size.Width = value;
                     Container.UpdateModificationDate();
                 }
+                else
+                {
+                    throw new ElementException(ErrorMessages.WidthIsInvalid);
+                }
             }
         }
 
         private bool IsValidWidth(int newWidth)
         {
-            bool isValid = newWidth >= minimumWidth && DoesNotOverflowContainerX(RelativeX, newWidth);
-            if (isValid)
-            {
-                return true;
-            }
-            else
-            {
-                throw new ElementException(ErrorMessages.WidthIsInvalid);
-            }
+            return newWidth >= minimumWidth &&
+                 DoesNotOverflowContainerX(RelativeX, newWidth);
         }
 
         public int Height
@@ -94,49 +95,46 @@ namespace Domain
                     size.Height = value;
                     Container.UpdateModificationDate();
                 }
+                else
+                {
+                    throw new ElementException(ErrorMessages.HeightIsInvalid);
+                }
             }
         }
 
         private bool IsValidHeight(int newHeight)
         {
-            bool isValid = newHeight >= minimumHeight && DoesNotOverflowContainerY(RelativeY, newHeight);
-            if (isValid)
-            {
-                return true;
-            }
-            else
-            {
-                throw new ElementException(ErrorMessages.HeightIsInvalid);
-            }
+            return newHeight >= minimumHeight &&
+                DoesNotOverflowContainerY(RelativeY, newHeight);
         }
 
         // Order of parameters is not critical, as its sum is commutative.
-        private bool DoesNotOverflowContainerX(double elementX, double elementWidth)
+        private bool DoesNotOverflowContainerX(int elementX, int elementWidth)
         {
             return (elementX + elementWidth) <= Container.Width;
         }
 
-        private bool DoesNotOverflowContainerY(double elementY, double elementHeight)
+        private bool DoesNotOverflowContainerY(int elementY, int elementHeight)
         {
             return (elementY + elementHeight) <= Container.Height;
         }
 
-        public double RelativeX
+        public int RelativeX
         {
             get { return position.X; }
         }
 
-        public double RelativeY
+        public int RelativeY
         {
             get { return position.Y; }
         }
 
-        internal double WidthContainerNeeded()
+        internal int WidthContainerNeeded()
         {
             return size.Width + RelativeX;
         }
 
-        internal double HeightContainerNeeded()
+        internal int HeightContainerNeeded()
         {
             return size.Height + RelativeY;
         }

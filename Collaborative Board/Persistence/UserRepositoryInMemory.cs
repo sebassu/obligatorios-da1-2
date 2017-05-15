@@ -95,7 +95,7 @@ namespace Persistence
             }
         }
 
-        private void ValidateNoWhiteboardHasUserAsCreator(User elementToRemove)
+        private static void ValidateNoWhiteboardHasUserAsCreator(User elementToRemove)
         {
             var allWhiteboards = WhiteboardRepository.GetInstance().Elements;
             bool userToRemoveIsCreator = allWhiteboards.Any(w => w.Creator.Equals(elementToRemove));
@@ -105,7 +105,7 @@ namespace Persistence
             }
         }
 
-        private void RemoveUserFromAllTeams(User userToRemove)
+        private static void RemoveUserFromAllTeams(User userToRemove)
         {
             var allTeams = TeamRepository.GetInstance().Elements;
             var teamsThatContainUserToRemove = allTeams.Where(t => t.Members.Contains(userToRemove)).ToList();

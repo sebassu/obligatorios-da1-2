@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using Domain;
 using Persistence;
 
-namespace Interface
+namespace GraphicInterface
 {
     public partial class UCAdministratorUsers : UserControl
     {
@@ -64,7 +64,7 @@ namespace Interface
 
         private void BtnExit_Click(object sender, EventArgs e)
         {
-            InterfaceUtilities.AskLogOut();
+            InterfaceUtilities.AskLogOff();
         }
 
         private void BtnHome_Click(object sender, EventArgs e)
@@ -135,7 +135,7 @@ namespace Interface
             InterfaceUtilities.SuccessfulOperation();
             if (oneUser.Equals(Session.ActiveUser()))
             {
-                InterfaceUtilities.EndSessionAndGoToLogInForm();
+                InterfaceUtilities.EndSessionAndGoToLogOnForm();
             }
             else
             {

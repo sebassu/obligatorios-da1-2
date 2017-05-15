@@ -6,11 +6,11 @@ using Domain;
 using System.IO;
 using System.Drawing;
 
-namespace Interface
+namespace GraphicInterface
 {
-    public partial class Login : Form
+    public partial class LogOn : Form
     {
-        public Login()
+        public LogOn()
         {
             InitializeComponent();
         }
@@ -61,7 +61,7 @@ namespace Interface
                 User cortes = globalUsers.AddNewUser("Carlos Nuñez", "Cortés", "cortes@lesluthiers.com.ar", new DateTime(1942, 10, 15), "YoEraUnInfeliz");
                 User rabinovich = globalUsers.AddNewUser("Daniel Abraham", "Rabinovich", "rabinovich@lesluthiers.com.ar", new DateTime(1943, 11, 18), "achicoria");
                 User lopezPuccio = globalUsers.AddNewUser("Carlos", "Lopez Puccio", "lopezpuccio@lesluthiers.com.ar", new DateTime(1946, 10, 09), "horizontal4Letras");
-                User daly = globalUsers.AddNewAdministrator("Charles Jerome", "Daly", "daly@dreamteam.com", new DateTime(1930, 07, 20), "chuckCoach1992");
+                globalUsers.AddNewAdministrator("Charles Jerome", "Daly", "daly@dreamteam.com", new DateTime(1930, 07, 20), "chuckCoach1992");
                 User johnson = globalUsers.AddNewUser("Earvin Magic", "Johnson", "magic@dreamteam.com", new DateTime(1959, 08, 14), "magic32johnson");
                 User jordan = globalUsers.AddNewUser("Michael Jeffrey", "Jordan", "jordan@dreamteam.com", new DateTime(1963, 02, 17), "suMajestadMJ23");
                 User bird = globalUsers.AddNewUser("Larry Joe", "Bird", "bird@dreamteam.com", new DateTime(1956, 12, 07), "larryLegend33");
@@ -136,11 +136,11 @@ namespace Interface
 
                 ImageWhiteboard portal = ImageWhiteboard.CreateWithContainerSource(mastropiero, imageLocations + "Portal.jpg");
                 portal.Position = new Point(10, 10);
-                portal.Size = new Size(700, 500);
+                portal.Dimensions = new Size(700, 500);
 
                 ImageWhiteboard bioshock = ImageWhiteboard.CreateWithContainerSource(mastropiero, imageLocations + "BioShock.jpg");
                 bioshock.Position = new Point(300, 520);
-                bioshock.Size = new Size(350, 200);
+                bioshock.Dimensions = new Size(350, 200);
 
                 Session.End();
                 InterfaceUtilities.SuccessfulOperation();

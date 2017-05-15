@@ -119,7 +119,7 @@ namespace Domain
 
         private double GetMaximumHeightNeededOfComponents()
         {
-            return contents.Max(c => c.WidthContainerNeeded());
+            return contents.Max(c => c.HeightContainerNeeded());
         }
 
         public User Creator { get; }
@@ -254,14 +254,14 @@ namespace Domain
             }
         }
 
-        private bool HasSameName(Whiteboard aWhiteboard)
+        private bool HasSameName(Whiteboard someWhiteboard)
         {
-            return name.Equals(aWhiteboard.name);
+            return name.Equals(someWhiteboard.name);
         }
 
-        private bool HasSameOwnerTeam(Whiteboard aWhiteboard)
+        private bool HasSameOwnerTeam(Whiteboard someWhiteboard)
         {
-            return OwnerTeam.Equals(aWhiteboard.OwnerTeam);
+            return OwnerTeam.Equals(someWhiteboard.OwnerTeam);
         }
 
         public override int GetHashCode()

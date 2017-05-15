@@ -1,4 +1,4 @@
-﻿namespace Interface
+﻿namespace GraphicInterface
 {
     partial class UCAddOrModifyTeam
     {

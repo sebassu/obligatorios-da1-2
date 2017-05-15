@@ -26,7 +26,7 @@ namespace Domain
 
         public User Creator { get; }
 
-        private ElementWhiteboard AssociatedElement { get; }
+        internal ElementWhiteboard AssociatedElement { get; }
 
         public Whiteboard AssociatedWhiteboard
         {
@@ -48,7 +48,7 @@ namespace Domain
 
         public User Resolver { get; private set; }
 
-        public void Resolve(User aUser)
+        public void Resolve(User someResolver)
         {
             if (IsResolved)
             {
@@ -56,15 +56,15 @@ namespace Domain
             }
             else
             {
-                ProcessResolutionIfPossible(aUser);
+                ProcessResolutionIfPossible(someResolver);
             }
         }
 
-        private void ProcessResolutionIfPossible(User aUser)
+        private void ProcessResolutionIfPossible(User someResolver)
         {
-            if (Utilities.IsNotNull(aUser))
+            if (Utilities.IsNotNull(someResolver))
             {
-                SetResolutionAttributes(aUser);
+                SetResolutionAttributes(someResolver);
             }
             else
             {
@@ -72,10 +72,10 @@ namespace Domain
             }
         }
 
-        private void SetResolutionAttributes(User aUser)
+        private void SetResolutionAttributes(User someResolver)
         {
-            Resolver = aUser;
-            aUser.AddResolvedComment(this);
+            Resolver = someResolver;
+            someResolver.AddResolvedComment(this);
             resolutionDate = DateTime.Now;
         }
 
@@ -103,21 +103,23 @@ namespace Domain
         private Comment()
         {
             text = "Comentario inválido.";
+            Creator = User.InstanceForTestingPurposes();
+            AssociatedElement = TextBoxWhiteboard.InstanceForTestingPurposes();
         }
 
-        public static Comment CreatorElementText(User someUser,
-            ElementWhiteboard container, string someText)
+        public static Comment CreatorElementText(User someCreator,
+            ElementWhiteboard someElement, string someText)
         {
-            return new Comment(someUser, container, someText);
+            return new Comment(someCreator, someElement, someText);
         }
 
-        private Comment(User someUser, ElementWhiteboard someElement, string someText)
+        private Comment(User someCreator, ElementWhiteboard someElement, string someText)
         {
-            bool creationParametersAreValid = Utilities.IsNotNull(someUser)
+            bool creationParametersAreValid = Utilities.IsNotNull(someCreator)
                 && Utilities.IsNotNull(someElement);
             if (creationParametersAreValid)
             {
-                Creator = someUser;
+                Creator = someCreator;
                 AssociatedElement = someElement;
                 Text = someText;
                 UpdateReferencesComments(someElement);
@@ -149,8 +151,8 @@ namespace Domain
         private bool CreatorDateAndTextAreEqual(Comment commentToCompareAgainst)
         {
             return Creator.Equals(commentToCompareAgainst.Creator) &&
-                CreationDate.Equals(commentToCompareAgainst.CreationDate) &&
-                text.Equals(commentToCompareAgainst.text);
+                text.Equals(commentToCompareAgainst.text) &&
+                CreationDate.Equals(commentToCompareAgainst.CreationDate);
         }
 
         public override int GetHashCode()
@@ -160,7 +162,7 @@ namespace Domain
 
         public override string ToString()
         {
-            return Text + " <" + Utilities.GetDateToShow(CreationDate) + " >"
+            return Text + " <" + Utilities.GetDateToShow(CreationDate) + ">"
                 + " <" + Creator.Email + ">";
         }
     }

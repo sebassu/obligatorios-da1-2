@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using Persistence;
 using Domain;
 
-namespace Interface
+namespace GraphicInterface
 {
     public partial class UCAdministratorTeams : UserControl
     {
@@ -76,7 +76,7 @@ namespace Interface
 
         private void BtnExit_Click(object sender, EventArgs e)
         {
-            InterfaceUtilities.AskLogOut();
+            InterfaceUtilities.AskLogOff();
         }
 
         private void BtnHome_Click(object sender, EventArgs e)

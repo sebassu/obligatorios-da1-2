@@ -1,9 +1,9 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
-using System;
+using System.Runtime.InteropServices;
 
-namespace Interface
+namespace GraphicInterface
 {
     public class PngConcreteExportingStrategy : ExportingStrategy
     {
@@ -16,7 +16,7 @@ namespace Interface
             {
                 AttemptToGenerateImage();
             }
-            catch (Exception exceptionCaught)
+            catch (ExternalException exceptionCaught)
             {
                 InterfaceUtilities.ShowError(exceptionCaught.Message, "Error desconocido");
             }

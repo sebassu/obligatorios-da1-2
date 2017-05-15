@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using System.Drawing.Imaging;
 using System;
 
-namespace Interface
+namespace GraphicInterface
 {
     public class PDFConcreteExportingStrategy : ExportingStrategy
     {

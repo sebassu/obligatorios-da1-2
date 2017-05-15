@@ -83,19 +83,7 @@ namespace Persistence
         public override void Remove(Whiteboard elementToRemove)
         {
             ValidateUserCanRemoveWhiteboard(elementToRemove);
-            AttemptToPerformRemove(elementToRemove);
-        }
-
-        private void AttemptToPerformRemove(Whiteboard elementToRemove)
-        {
-            if (elementToRemove != null)
-            {
-                PerformRemove(elementToRemove);
-            }
-            else
-            {
-                throw new RepositoryException(ErrorMessages.ElementDoesNotExist);
-            }
+            PerformRemove(elementToRemove);
         }
 
         private static void ValidateUserCanRemoveWhiteboard(Whiteboard whiteboardToRemove)
@@ -118,7 +106,7 @@ namespace Persistence
 
         internal override void RemoveDueToTeamDeletion(Whiteboard whiteboardToRemove)
         {
-            AttemptToPerformRemove(whiteboardToRemove);
+            PerformRemove(whiteboardToRemove);
         }
 
         internal WhiteboardRepositoryInMemory()

@@ -187,6 +187,15 @@ namespace Domain {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dimensiones inválidas para el elemento recibido: escapan al pizarrón contenedor..
+        /// </summary>
+        internal static string InvalidWhiteboardDimensions {
+            get {
+                return ResourceManager.GetString("InvalidWhiteboardDimensions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Apellido inválido: &quot;{0}&quot;..
         /// </summary>
         internal static string LastNameIsInvalid {

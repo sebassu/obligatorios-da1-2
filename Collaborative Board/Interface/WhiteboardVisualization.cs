@@ -4,7 +4,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Interface
+namespace GraphicInterface
 {
     public partial class WhiteboardVisualization : Form
     {
@@ -100,20 +100,20 @@ namespace Interface
             }
         }
 
-        private void AddSeeCommentsOption(ElementWhiteboard domainElement, ContextMenu contMenu)
+        private static void AddSeeCommentsOption(ElementWhiteboard domainElement, ContextMenu contMenu)
         {
             MenuItem seeComments = new MenuItem("Ver comentarios");
-            seeComments.Click += (sender, e) => ClickSeeComments(domainElement, e);
+            seeComments.Click += (sender, e) => ClickSeeComments(domainElement);
             contMenu.MenuItems.Add(seeComments);
         }
 
-        private void ClickSeeComments(ElementWhiteboard sender, EventArgs e)
+        private static void ClickSeeComments(ElementWhiteboard sender)
         {
             Form comments = new ElementComments(sender);
             comments.Show();
             comments.TopMost = true;
         }
-        private void AddModifyImageOption(PictureBox interfaceContainer, ContextMenu contMenu,
+        private static void AddModifyImageOption(PictureBox interfaceContainer, ContextMenu contMenu,
             ImageWhiteboard domainImage)
         {
             MenuItem modifyImage = new MenuItem("Modificar imagen");
@@ -121,7 +121,7 @@ namespace Interface
             contMenu.MenuItems.Add(modifyImage);
         }
 
-        private void ChangeDisplayedImage(PictureBox container, ImageWhiteboard domainImage)
+        private static void ChangeDisplayedImage(PictureBox container, ImageWhiteboard domainImage)
         {
             FileDialog fileSelector = CreateImageFileChooser();
             if (fileSelector.ShowDialog() == DialogResult.OK)
@@ -204,12 +204,12 @@ namespace Interface
             }
         }
 
-        private void UpdateElementText(RichTextBox interfaceContainer, TextBoxWhiteboard domainTextBox)
+        private static void UpdateElementText(RichTextBox interfaceContainer, TextBoxWhiteboard domainTextBox)
         {
             domainTextBox.TextContent = interfaceContainer.Text;
         }
 
-        private void AddModifyFontDomainTextBox(RichTextBox interfaceContainer,
+        private static void AddModifyFontDomainTextBox(RichTextBox interfaceContainer,
             TextBoxWhiteboard domainTextBox, ContextMenu contMenu)
         {
             MenuItem modifyFontItem = new MenuItem("Modificar tipo/tamaño de letra");

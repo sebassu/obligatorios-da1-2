@@ -313,5 +313,32 @@ namespace UnitTests.PersistenceTests
             Team teamToRemoveFrom = testingTeamRepository.Elements.Single();
             testingTeamRepository.RemoveMemberFromTeam(teamToRemoveFrom, onlyMember);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(RepositoryException))]
+        public void UTRepositoryRemoveLastMemberWhenRemovingUserInvalidTest()
+        {
+            Administrator onlyMember = Administrator.NamesEmailBirthdatePassword("Mario", "Santos",
+                "santos@simuladores.com", DateTime.Today, "contraseñaVálida123");
+            ChangeActiveUser("santos@simuladores.com", "DisculpeFuegoTiene");
+            testingTeamRepository = TeamRepository.GetInstance();
+            string descriptionToSet = "Una estupidez de Videomatch.";
+            testingTeamRepository.AddNewTeam("Los Disimuladores", descriptionToSet, 4);
+            UserRepository.GetInstance().Remove(onlyMember);
+        }
+
+        [TestMethod]
+        public void UTRepositoryRemoveMemberWhenRemovingUserValidTest()
+        {
+            ChangeActiveUser("santos@simuladores.com", "DisculpeFuegoTiene");
+            testingTeamRepository = TeamRepository.GetInstance();
+            string descriptionToSet = "Ha sido catalogado con triple X.";
+            Team teamToVerify = testingTeamRepository.AddNewTeam("Equipo X", descriptionToSet, 5);
+            User memberToAddAndRemove = User.NamesEmailBirthdatePassword("José", "Feller",
+                "feller@brigadab.com", DateTime.Today, "puntaPariñas");
+            testingTeamRepository.AddMemberToTeam(teamToVerify, memberToAddAndRemove);
+            UserRepository.GetInstance().Remove(memberToAddAndRemove);
+            CollectionAssert.DoesNotContain(teamToVerify.Members.ToList(), memberToAddAndRemove);
+        }
     }
 }
