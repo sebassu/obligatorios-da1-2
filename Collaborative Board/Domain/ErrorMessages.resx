@@ -142,7 +142,7 @@
     <value>No es posible ingresar una descripción vacía.</value>
   </data>
   <data name="HeightIsInvalid" xml:space="preserve">
-    <value>Altura inválida recibida: escapa al pizarrón.</value>
+    <value>Altura inválida recibida: genera situación en los cuales elementos escapan al pizarrón.</value>
   </data>
   <data name="ImageLoadingError" xml:space="preserve">
     <value>Ha ocurrido un error al intentar cargar la imagen, verifique que la ruta que ha introducido es válida y no se ha movido o renombrado a la misma.</value>
@@ -190,7 +190,7 @@
     <value>Nombre inválido: "{0}".</value>
   </data>
   <data name="WidthIsInvalid" xml:space="preserve">
-    <value>Ancho inválido recibido: escapa al pizarrón.</value>
+    <value>Ancho inválido recibido: genera situación en los cuales elementos escapan al pizarrón.</value>
   </data>
   <data name="CannotResolveCommentBeforeCreation" xml:space="preserve">
     <value>Fecha inválida para la resolución del comentario recibida: es anterior a su creación.</value>

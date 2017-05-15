@@ -160,7 +160,7 @@ namespace Domain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Altura inválida recibida: escapa al pizarrón..
+        ///   Looks up a localized string similar to Altura inválida recibida: genera situación en los cuales elementos escapan al pizarrón..
         /// </summary>
         internal static string HeightIsInvalid {
             get {
@@ -313,7 +313,7 @@ namespace Domain {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ancho inválido recibido: escapa al pizarrón..
+        ///   Looks up a localized string similar to Ancho inválido recibido: genera situación en los cuales elementos escapan al pizarrón..
         /// </summary>
         internal static string WidthIsInvalid {
             get {

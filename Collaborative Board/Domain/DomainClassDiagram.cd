@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Domain.Administrator">
+    <Position X="5.25" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAEAAAAAAAAAAAAAAAAAABAAAAAAQA=</HashCode>
+      <FileName>Administrator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Comment">
+    <Position X="17.75" Y="1.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAACCAAAAkggAAAAAAABABBKAIEARASAAECAA=</HashCode>
+      <FileName>Comment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.ElementWhiteboard">
+    <Position X="1.25" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAwgAAQIBCAAhIIgAIAAIEABAAAAAQAgA0AAAAAAICA=</HashCode>
+      <FileName>ElementWhiteboard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.ErrorMessages">
+    <Position X="20.5" Y="3.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AgCIgABgAAQACAAIABSBEAKAAQIACAGACA0AAYYAAII=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.ImageWhiteboard">
+    <Position X="4" Y="5.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAABAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>ImageWhiteboard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Password" BaseTypeListCollapsed="true">
+    <Position X="15" Y="5.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAABABIAAAACQAAAQABAAAAACQCAAAAQAAAA=</HashCode>
+      <FileName>Password.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Domain.Team">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAACgAAAAQQgQAAE4AAIAIQAAQAkAIQAFIBGABAAAAA=</HashCode>
+      <FileName>Team.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.TextBoxWhiteboard">
+    <Position X="4.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAABQCAAAAAA=</HashCode>
+      <FileName>TextBoxWhiteboard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.User">
+    <Position X="9.25" Y="3" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAADDAAAAkhMACAAQAAAAAAIACAgFACgAAAQg=</HashCode>
+      <FileName>User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Utilities">
+    <Position X="0.75" Y="7.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>BABAgAAAABEAAAAAAAIAAAQAAQAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>Utilities.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Domain.Whiteboard">
+    <Position X="12.25" Y="1.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>QFAABAABBBCyBIQE4AAAAEQIAAAEgIAIEEBQBgRAACA=</HashCode>
+      <FileName>Whiteboard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Domain.IPassword">
+    <Position X="15.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IPassword.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

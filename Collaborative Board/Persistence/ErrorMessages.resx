@@ -123,6 +123,9 @@
   <data name="CannotRemoveAllAdministrators" xml:space="preserve">
     <value>No es posible eliminar a todos los administradores del sistema; quedaría inutilizable.</value>
   </data>
+  <data name="CannotRemoveWhiteboardCreator" xml:space="preserve">
+    <value>No es posible eliminar al usuario: es el creador de algún pizarrón.</value>
+  </data>
   <data name="ElementAlreadyExists" xml:space="preserve">
     <value>El elemento que se intenta registrar ya existe en el sistema.</value>
   </data>
@@ -152,6 +155,9 @@
   </data>
   <data name="UserEmailMustBeUnique" xml:space="preserve">
     <value>No es posible tener dos usuarios registrados con la misma dirección de correo electrónico.</value>
+  </data>
+  <data name="UserIsLoneMemberOfSomeTeam" xml:space="preserve">
+    <value>No es posible eliminar al usuario: es el único miembro de un equipo.</value>
   </data>
   <data name="WhiteboardNameTeamMustBeUnique" xml:space="preserve">
     <value>El equipo "{0}" ya posee un pizarrón con el nombre "{1}".</value>

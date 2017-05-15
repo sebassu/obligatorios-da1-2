@@ -3,6 +3,7 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
+using System;
 
 namespace Interface
 {
@@ -12,6 +13,18 @@ namespace Interface
             : base(whiteboardPanel, whiteboardName) { }
 
         public override void ExportImage()
+        {
+            try
+            {
+                AttemptToGenerateDocument();
+            }
+            catch (Exception exceptionCaught)
+            {
+                InterfaceUtilities.ShowError(exceptionCaught.Message, "Error desconocido");
+            }
+        }
+
+        private void AttemptToGenerateDocument()
         {
             Document pdfDocument = new Document(PageSize.A4);
             PdfWriter.GetInstance(pdfDocument, new FileStream(GeneratePathToSave() + ".pdf",

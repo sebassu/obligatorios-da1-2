@@ -17,9 +17,16 @@ namespace Interface
 
         public ExportingStrategy(Panel whiteboardPanel, string whiteboardName)
         {
-            Directory.CreateDirectory(saveDestination);
-            panelToBeExported = whiteboardPanel;
-            fileNameBeginning = whiteboardName;
+            try
+            {
+                Directory.CreateDirectory(saveDestination);
+                panelToBeExported = whiteboardPanel;
+                fileNameBeginning = whiteboardName;
+            }
+            catch (Exception exceptionCaught)
+            {
+                InterfaceUtilities.ShowError(exceptionCaught.Message, "Error desconocido");
+            }
         }
 
         protected Bitmap GenerateImageOfPanel()

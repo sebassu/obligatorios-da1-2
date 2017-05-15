@@ -16,12 +16,19 @@ namespace Interface
         {
             InitializeComponent();
             this.systemPanel = systemPanel;
-            InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(LoadTeamCombobox);
-            if (Utilities.IsNotNull(someWhiteboard))
+            bool isForModification = Utilities.IsNotNull(someWhiteboard);
+            if (isForModification)
             {
                 whiteboardToModify = someWhiteboard;
-                LoadWhiteboardData();
+                InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(
+                    LoadWhiteboardData);
             }
+            else
+            {
+                InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(
+                    LoadTeamComboboxWithActiveUsersTeams);
+            }
+            cmbOwnerTeam.SelectedIndex = 0;
         }
 
         private void LoadWhiteboardData()
@@ -29,9 +36,9 @@ namespace Interface
             txtName.Text = whiteboardToModify.Name;
             numWidth.Value = whiteboardToModify.Width;
             numHeight.Value = whiteboardToModify.Height;
-            cmbOwnerTeam.SelectedItem = whiteboardToModify.OwnerTeam;
-            cmbOwnerTeam.Enabled = false;
             rtbDescription.Text = whiteboardToModify.Description;
+            cmbOwnerTeam.Items.Add(whiteboardToModify.OwnerTeam);
+            cmbOwnerTeam.Enabled = false;
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
@@ -39,13 +46,12 @@ namespace Interface
             InterfaceUtilities.UCWhiteboardsToPanel(systemPanel);
         }
 
-        private void LoadTeamCombobox()
+        private void LoadTeamComboboxWithActiveUsersTeams()
         {
             var globalTeams = TeamRepository.GetInstance();
             var activeUser = Session.ActiveUser();
             var teamsToShow = globalTeams.Elements.Where(t => t.Members.Contains(activeUser));
             cmbOwnerTeam.Items.AddRange(teamsToShow.ToArray());
-            cmbOwnerTeam.SelectedIndex = 0;
         }
 
         private void BtnAccept_Click(object sender, EventArgs e)
@@ -58,7 +64,8 @@ namespace Interface
             WhiteboardRepository globalWhiteboards = WhiteboardRepository.GetInstance();
             int widthToSet = (int)numWidth.Value;
             int heightToSet = (int)numHeight.Value;
-            if (Utilities.IsNotNull(whiteboardToModify))
+            bool isForModification = Utilities.IsNotNull(whiteboardToModify);
+            if (isForModification)
             {
                 globalWhiteboards.ModifyWhiteboard(whiteboardToModify, txtName.Text,
                     rtbDescription.Text, widthToSet, heightToSet);

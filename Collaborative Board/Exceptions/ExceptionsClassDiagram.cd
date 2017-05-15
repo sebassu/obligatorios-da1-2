@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Exceptions.BoardException">
+    <Position X="8.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BoardException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Exceptions.CommentException">
+    <Position X="5" Y="2.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CommentException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Exceptions.ElementException">
+    <Position X="11.75" Y="2.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ElementException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Exceptions.PasswordException">
+    <Position X="0.5" Y="2.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PasswordException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Exceptions.RepositoryException">
+    <Position X="7.25" Y="2.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RepositoryException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Exceptions.SessionException">
+    <Position X="14" Y="2.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SessionException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Exceptions.TeamException">
+    <Position X="2.75" Y="2.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TeamException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Exceptions.UserException">
+    <Position X="9.5" Y="2.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UserException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Exceptions.WhiteboardException">
+    <Position X="16.25" Y="2.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WhiteboardException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

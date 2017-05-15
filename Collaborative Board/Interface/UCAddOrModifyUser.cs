@@ -18,6 +18,7 @@ namespace Interface
             {
                 userToModify = someUser;
                 LoadUserData();
+                btnResetPassword.Visible = true;
             }
         }
 
@@ -52,20 +53,38 @@ namespace Interface
             }
             else
             {
-                globalUsers.AddNewUser(txtFirstName.Text, txtLastName.Text,
-                    txtEmail.Text, dtpBirthDate.Value, txtPassword.Text);
+                CreateNewUser(globalUsers);
             }
             InterfaceUtilities.UCAdministatorUsersToPanel(systemPanel);
             InterfaceUtilities.SuccessfulOperation();
         }
 
+        private void CreateNewUser(UserRepository globalUsers)
+        {
+            if (cbxIsAdministrator.Checked)
+            {
+                globalUsers.AddNewAdministrator(txtFirstName.Text, txtLastName.Text,
+                    txtEmail.Text, dtpBirthDate.Value, txtPassword.Text);
+            }
+            else
+            {
+                globalUsers.AddNewUser(txtFirstName.Text, txtLastName.Text,
+                    txtEmail.Text, dtpBirthDate.Value, txtPassword.Text);
+            }
+        }
+
         private void BtnResetPassword_Click(object sender, EventArgs e)
+        {
+            InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(ResetUsersPassword);
+        }
+
+        private void ResetUsersPassword()
         {
             UserRepository globalUsers = UserRepository.GetInstance();
             String newPassWord = globalUsers.ResetUsersPassword(userToModify);
             txtPassword.Text = userToModify.Password;
             DialogResult result = MessageBox.Show("La nueva contraseña es: " + newPassWord, "Reseteo de contraseña",
-                               MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
