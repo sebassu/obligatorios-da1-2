@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Globalization;
 using System.Linq;
 
@@ -31,6 +32,11 @@ namespace Domain
         private static bool IsLetterOrSpace(char value)
         {
             return char.IsLetter(value) || char.IsWhiteSpace(value);
+        }
+
+        public static bool IsEmpty(ICollection someCollection)
+        {
+            return someCollection.Count == 0;
         }
 
         public static bool IsTodayOrBefore(DateTime value)

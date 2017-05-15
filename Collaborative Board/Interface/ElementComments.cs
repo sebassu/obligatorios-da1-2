@@ -56,10 +56,7 @@ namespace Interface
             {
                 foreach (Comment comment in comments)
                 {
-                    ListViewItem itemToAdd = new ListViewItem(comment.ToString())
-                    {
-                        Tag = comment
-                    };
+                    ListViewItem itemToAdd = new ListViewItem(comment.ToString()) { Tag = comment };
                     lstComments.Items.Add(itemToAdd);
                     if (comment.IsResolved)
                     {

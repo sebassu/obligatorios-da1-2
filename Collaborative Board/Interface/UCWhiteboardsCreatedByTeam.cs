@@ -25,6 +25,7 @@ namespace Interface
             if (globalTeams.HasElements())
             {
                 cmbTeams.Items.AddRange(globalTeams.Elements.ToArray());
+                cmbTeams.SelectedIndex = 0;
             }
             else
             {
@@ -70,7 +71,7 @@ namespace Interface
             dgvWhiteboardsCreatedByTeam.Rows.Clear();
             var whiteboardsToShow = WhiteboardRepository.GetInstance().Elements
                 .Where(p => filteringFunction(p)).ToList();
-            if (whiteboardsToShow.Count == 0)
+            if (Utilities.IsEmpty(whiteboardsToShow))
             {
                 dgvWhiteboardsCreatedByTeam.Rows.Add("Sin", "datos", "a", " mostrar.");
             }

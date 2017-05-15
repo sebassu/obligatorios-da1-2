@@ -160,7 +160,8 @@ namespace Domain
 
         public override string ToString()
         {
-            return Text + " <" + Utilities.GetDateToShow(CreationDate) + " >" + " <" + Creator.Email + ">";
+            return Text + " <" + Utilities.GetDateToShow(CreationDate) + " >"
+                + " <" + Creator.Email + ">";
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Interface
 {
     public partial class WhiteboardVisualization : Form
     {
+
         private Whiteboard whiteboardShown;
 
         public WhiteboardVisualization(Whiteboard someWhiteboard)
@@ -182,7 +183,7 @@ namespace Interface
                 Parent = pnlWhiteboard,
                 Width = textBoxToAdd.Width,
                 Height = textBoxToAdd.Height,
-                Location = textBoxToAdd.Position
+                Location = textBoxToAdd.Position,
             };
             Action setContextMenu = delegate { SetRightClickOptionTextBox(interfaceContainer); };
             InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(setContextMenu);
@@ -240,12 +241,22 @@ namespace Interface
 
         private void BtnPrintPDF_Click(object sender, EventArgs e)
         {
-
+            ExportingStrategy pngGenerator = new PDFConcreteExportingStrategy(pnlWhiteboard,
+                whiteboardShown.Name);
+            ExportImage(pngGenerator);
         }
 
         private void BtnPrintPng_Click(object sender, EventArgs e)
         {
-            TopMost = true;
+            ExportingStrategy pdfGenerator = new PngConcreteExportingStrategy(pnlWhiteboard,
+                whiteboardShown.Name);
+            ExportImage(pdfGenerator);
+        }
+
+        private static void ExportImage(ExportingStrategy strategyToUse)
+        {
+            strategyToUse.ExportImage();
+            InterfaceUtilities.SuccessfulOperation();
         }
     }
 }

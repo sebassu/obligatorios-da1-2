@@ -148,7 +148,7 @@
     <value>Ha ocurrido un error al intentar cargar la imagen, verifique que la ruta que ha introducido es válida y no se ha movido o renombrado a la misma.</value>
   </data>
   <data name="InvalidMaximumMembers" xml:space="preserve">
-    <value>Máxima cantidad de miembros inválida: {0} (tiene un mínimo de {1}).</value>
+    <value>Máxima cantidad de miembros inválida: {0} (contiene actualmente {1}).</value>
   </data>
   <data name="LastNameIsInvalid" xml:space="preserve">
     <value>Apellido inválido: "{0}".</value>
@@ -200,5 +200,8 @@
   </data>
   <data name="CommentWasNotAdded" xml:space="preserve">
     <value>El comentario recibido no se encuentra en este usuario.</value>
+  </data>
+  <data name="TeamsCannotBeEmpty" xml:space="preserve">
+    <value>Todos los equipos deben contener al menos un miembro.</value>
   </data>
 </root>

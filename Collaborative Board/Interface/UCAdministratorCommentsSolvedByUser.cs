@@ -56,7 +56,7 @@ namespace Interface
         {
             var commentsToShow = comments.Where(c => filteringFunction(c)).ToList();
             dgvCommentsSolvedByUser.Rows.Clear();
-            if (commentsToShow.Count == 0)
+            if (Utilities.IsEmpty(commentsToShow))
             {
                 dgvCommentsSolvedByUser.Rows.Add("Sin", "datos", "a", " mostrar.");
             }

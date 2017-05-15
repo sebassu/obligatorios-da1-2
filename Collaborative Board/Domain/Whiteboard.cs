@@ -85,7 +85,12 @@ namespace Domain
         private bool IsValidWidth(int value)
         {
             return value >= minimumWidth &&
-                (contents.Count == 0 || value >= contents.Max(c => c.WidthContainerNeeded()));
+                (Utilities.IsEmpty(contents) || value >= GetMaximumWidthNeededOfComponents());
+        }
+
+        private double GetMaximumWidthNeededOfComponents()
+        {
+            return contents.Max(c => c.WidthContainerNeeded());
         }
 
         private int height;
@@ -109,7 +114,12 @@ namespace Domain
         private bool IsValidHeight(int value)
         {
             return value >= minimumWidth &&
-                (contents.Count == 0 || value >= contents.Max(c => c.WidthContainerNeeded()));
+                (Utilities.IsEmpty(contents) || value >= GetMaximumHeightNeededOfComponents());
+        }
+
+        private double GetMaximumHeightNeededOfComponents()
+        {
+            return contents.Max(c => c.WidthContainerNeeded());
         }
 
         public User Creator { get; }

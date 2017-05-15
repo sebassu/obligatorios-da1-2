@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="itextsharp, Version=5.5.11.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.11\lib\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -54,6 +57,9 @@
     <Compile Include="ElementComments.Designer.cs">
       <DependentUpon>ElementComments.cs</DependentUpon>
     </Compile>
+    <Compile Include="Exporting strategies\ExportingStrategy.cs" />
+    <Compile Include="Exporting strategies\PDFConcreteExportingStrategy.cs" />
+    <Compile Include="Exporting strategies\PngConcreteExportingStrategy.cs" />
     <Compile Include="SelectReport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -148,9 +154,11 @@
     </Compile>
     <EmbeddedResource Include="ElementComments.resx">
       <DependentUpon>ElementComments.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="SelectReport.resx">
       <DependentUpon>SelectReport.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UCAddMemberToTeam.resx">
       <DependentUpon>UCAddMemberToTeam.cs</DependentUpon>
@@ -194,6 +202,7 @@
     </Compile>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -213,6 +222,7 @@
     <EmbeddedResource Include="UCAdministrateTeam.resx">
       <DependentUpon>UCAdministrateTeam.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
