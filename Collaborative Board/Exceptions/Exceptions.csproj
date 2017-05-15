@@ -53,5 +53,8 @@
     <Compile Include="TeamException.cs" />
     <Compile Include="WhiteboardException.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ExceptionsClassDiagram.cd" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
