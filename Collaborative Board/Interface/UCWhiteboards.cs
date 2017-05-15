@@ -180,6 +180,7 @@ namespace Interface
             WhiteboardRepository globalWhiteboards = WhiteboardRepository.GetInstance();
             globalWhiteboards.Remove(whiteboardToDelete);
             LoadRegisteredWhiteboards();
+            InterfaceUtilities.SuccessfulOperation();
         }
 
         private void BtnView_Click(object sender, EventArgs e)

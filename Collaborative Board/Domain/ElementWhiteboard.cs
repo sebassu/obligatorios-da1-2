@@ -36,7 +36,7 @@ namespace Domain
         {
             bool hasValidCoordinates = aPoint.X >= containerOriginX && aPoint.Y >= containerOriginY;
             return hasValidCoordinates && DoesNotOverflowContainerX(aPoint.X, Width)
-                && DoesNotOverflowContainerY(aPoint.Y, size.Height);
+                && DoesNotOverflowContainerY(aPoint.Y, Height);
         }
 
         private Size size = new Size();

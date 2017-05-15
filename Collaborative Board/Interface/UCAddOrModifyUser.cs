@@ -40,7 +40,6 @@ namespace Interface
         private void BtnAccept_Click(object sender, EventArgs e)
         {
             InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(PerformChangeAction);
-            InterfaceUtilities.UCAdministatorUsersToPanel(systemPanel);
         }
 
         private void PerformChangeAction()
@@ -56,6 +55,7 @@ namespace Interface
                 globalUsers.AddNewUser(txtFirstName.Text, txtLastName.Text,
                     txtEmail.Text, dtpBirthDate.Value, txtPassword.Text);
             }
+            InterfaceUtilities.UCAdministatorUsersToPanel(systemPanel);
             InterfaceUtilities.SuccessfulOperation();
         }
 

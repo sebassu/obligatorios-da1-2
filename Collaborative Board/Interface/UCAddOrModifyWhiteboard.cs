@@ -51,7 +51,6 @@ namespace Interface
         private void BtnAccept_Click(object sender, EventArgs e)
         {
             InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(PerformChangeAction);
-            InterfaceUtilities.UCWhiteboardsToPanel(systemPanel);
         }
 
         private void PerformChangeAction()
@@ -70,6 +69,7 @@ namespace Interface
                 globalWhiteboards.AddNewWhiteboard(txtName.Text,
                     rtbDescription.Text, teamToSet, widthToSet, heightToSet);
             }
+            InterfaceUtilities.UCWhiteboardsToPanel(systemPanel);
             InterfaceUtilities.SuccessfulOperation();
         }
     }

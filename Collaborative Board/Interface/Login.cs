@@ -3,6 +3,8 @@ using System.Windows.Forms;
 using Persistence;
 using Exceptions;
 using Domain;
+using System.IO;
+using System.Drawing;
 
 namespace Interface
 {
@@ -43,6 +45,9 @@ namespace Interface
         {
             try
             {
+                string imageLocations = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName
+                    + "\\..\\Resources\\";
+
                 Session.Start("administrator@tf2.com", "Victory");
                 TeamRepository globalTeams = TeamRepository.GetInstance();
                 UserRepository globalUsers = UserRepository.GetInstance();
@@ -81,7 +86,10 @@ namespace Interface
                 globalTeams.AddMemberToTeam(lesLuthiers, rabinovich);
                 globalTeams.AddMemberToTeam(lesLuthiers, lopezPuccio);
                 globalWhiteboards.AddNewWhiteboard("El sendero de Warren Sanchez", "Libertad bajo fianza.", lesLuthiers, 450, 550);
-                globalWhiteboards.AddNewWhiteboard("Mastropiero que nunca", "Una de nuestras mejores obras.", lesLuthiers, 800, 800);
+
+                Whiteboard mastropiero =
+                    globalWhiteboards.AddNewWhiteboard("Mastropiero que nunca", "Una de nuestras mejores obras.", lesLuthiers, 800, 800);
+
                 Session.End();
 
                 Session.Start("daly@dreamteam.com", "chuckCoach1992");
@@ -125,6 +133,15 @@ namespace Interface
                     "muy informal, casi imprentable. Mientras que la de la novia es todo lo contrario.", losSimuladores, 840, 840);
                 globalWhiteboards.AddNewWhiteboard("El pequeño problema del gran hombre", "Trata sobre el problema de impotencia sexual del " +
                     "presidente de la nación.", losSimuladores, 400, 500);
+
+                ImageWhiteboard portal = ImageWhiteboard.CreateWithContainerSource(mastropiero, imageLocations + "Portal.jpg");
+                portal.Position = new Point(10, 10);
+                portal.Size = new Size(700, 500);
+
+                ImageWhiteboard bioshock = ImageWhiteboard.CreateWithContainerSource(mastropiero, imageLocations + "BioShock.jpg");
+                bioshock.Position = new Point(300, 520);
+                bioshock.Size = new Size(350, 200);
+
                 Session.End();
                 InterfaceUtilities.SuccessfulOperation();
             }

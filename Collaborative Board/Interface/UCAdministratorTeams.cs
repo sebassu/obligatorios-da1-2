@@ -152,6 +152,7 @@ namespace Interface
             TeamRepository globalTeams = TeamRepository.GetInstance();
             globalTeams.Remove(oneTeam);
             LoadRegisteredTeams();
+            InterfaceUtilities.SuccessfulOperation();
         }
 
         private void BtnAdministrate_Click(object sender, EventArgs e)

@@ -212,9 +212,9 @@ namespace Interface
         private void AddModifyFontDomainTextBox(RichTextBox interfaceContainer,
             TextBoxWhiteboard domainTextBox, ContextMenu contMenu)
         {
-            MenuItem removeElementItem = new MenuItem("Modificar tipo/tamaño de letra");
-            removeElementItem.Click += (sender, e) => ChangeTextBoxFont(interfaceContainer, domainTextBox);
-            contMenu.MenuItems.Add(removeElementItem);
+            MenuItem modifyFontItem = new MenuItem("Modificar tipo/tamaño de letra");
+            modifyFontItem.Click += (sender, e) => ChangeTextBoxFont(interfaceContainer, domainTextBox);
+            contMenu.MenuItems.Add(modifyFontItem);
         }
 
         private static void ChangeTextBoxFont(RichTextBox interfaceContainer, TextBoxWhiteboard domainTextBox)

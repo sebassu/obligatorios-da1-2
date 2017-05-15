@@ -43,7 +43,6 @@ namespace Interface
             if (result == DialogResult.Yes)
             {
                 deletionAction.Invoke();
-                SuccessfulOperation();
             }
         }
 
