@@ -155,5 +155,27 @@ namespace GraphicInterface
                 NotElementSelectedMessageBox();
             }
         }
+
+        public static void UCScoreMenuToPanel(Panel systemPanel)
+        {
+            ChangeUserControl(new UCScoreMenu(systemPanel), systemPanel);
+        }
+
+        public static void UCAssignScoreToEventsToPanel(Panel systemPanel)
+        {
+            ChangeUserControl(new UCAssignScoreToEvents(systemPanel), systemPanel);
+        }
+
+        public static void GoToHomeRespectiveHome(Panel systemPanel)
+        {
+            if (Session.HasAdministrationPrivileges())
+            {
+                ChangeUserControl(new UCAdministratorHome(systemPanel), systemPanel);
+            }
+            else
+            {
+                ChangeUserControl(new UCUserHome(systemPanel), systemPanel);
+            }            
+        }
     }
 }

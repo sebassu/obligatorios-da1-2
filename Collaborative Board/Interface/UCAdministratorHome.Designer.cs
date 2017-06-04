@@ -35,6 +35,7 @@
             this.btnInforms = new System.Windows.Forms.Button();
             this.btnUsers = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
+            this.btnScore = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblHomeMenu
@@ -42,7 +43,7 @@
             this.lblHomeMenu.AutoSize = true;
             this.lblHomeMenu.BackColor = System.Drawing.Color.Transparent;
             this.lblHomeMenu.Font = new System.Drawing.Font("Segoe Script", 27.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHomeMenu.Location = new System.Drawing.Point(200, 76);
+            this.lblHomeMenu.Location = new System.Drawing.Point(191, 37);
             this.lblHomeMenu.Name = "lblHomeMenu";
             this.lblHomeMenu.Size = new System.Drawing.Size(339, 61);
             this.lblHomeMenu.TabIndex = 7;
@@ -54,7 +55,7 @@
             this.btnTeams.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnTeams.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnTeams.ForeColor = System.Drawing.Color.White;
-            this.btnTeams.Location = new System.Drawing.Point(381, 179);
+            this.btnTeams.Location = new System.Drawing.Point(381, 111);
             this.btnTeams.Name = "btnTeams";
             this.btnTeams.Size = new System.Drawing.Size(196, 111);
             this.btnTeams.TabIndex = 3;
@@ -70,7 +71,7 @@
             this.btnWhiteboards.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnWhiteboards.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnWhiteboards.ForeColor = System.Drawing.Color.White;
-            this.btnWhiteboards.Location = new System.Drawing.Point(169, 306);
+            this.btnWhiteboards.Location = new System.Drawing.Point(169, 238);
             this.btnWhiteboards.Name = "btnWhiteboards";
             this.btnWhiteboards.Size = new System.Drawing.Size(196, 111);
             this.btnWhiteboards.TabIndex = 4;
@@ -86,7 +87,7 @@
             this.btnInforms.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnInforms.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnInforms.ForeColor = System.Drawing.Color.White;
-            this.btnInforms.Location = new System.Drawing.Point(381, 306);
+            this.btnInforms.Location = new System.Drawing.Point(381, 238);
             this.btnInforms.Name = "btnInforms";
             this.btnInforms.Size = new System.Drawing.Size(196, 111);
             this.btnInforms.TabIndex = 5;
@@ -102,7 +103,7 @@
             this.btnUsers.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnUsers.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnUsers.ForeColor = System.Drawing.Color.White;
-            this.btnUsers.Location = new System.Drawing.Point(169, 179);
+            this.btnUsers.Location = new System.Drawing.Point(169, 111);
             this.btnUsers.Name = "btnUsers";
             this.btnUsers.Size = new System.Drawing.Size(196, 111);
             this.btnUsers.TabIndex = 6;
@@ -123,12 +124,27 @@
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
+            // btnScore
+            // 
+            this.btnScore.BackColor = System.Drawing.Color.Gray;
+            this.btnScore.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnScore.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnScore.ForeColor = System.Drawing.Color.White;
+            this.btnScore.Location = new System.Drawing.Point(278, 364);
+            this.btnScore.Name = "btnScore";
+            this.btnScore.Size = new System.Drawing.Size(196, 111);
+            this.btnScore.TabIndex = 9;
+            this.btnScore.Text = "PUNTAJE";
+            this.btnScore.UseVisualStyleBackColor = false;
+            this.btnScore.Click += new System.EventHandler(this.btnScore_Click);
+            // 
             // UCAdministratorHome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Controls.Add(this.btnScore);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.lblHomeMenu);
             this.Controls.Add(this.btnTeams);
@@ -150,5 +166,6 @@
         private System.Windows.Forms.Button btnInforms;
         private System.Windows.Forms.Button btnUsers;
         private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.Button btnScore;
     }
 }

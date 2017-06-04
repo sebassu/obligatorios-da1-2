@@ -89,15 +89,11 @@ namespace GraphicInterface
 
         private void BtnHome_Click(object sender, EventArgs e)
         {
-            InterfaceUtilities.GoToHome(systemPanel);
+            InterfaceUtilities.GoToHomeRespectiveHome(systemPanel);
         }
 
         private void UCWhiteboards_Load(object sender, EventArgs e)
         {
-            if (!Session.HasAdministrationPrivileges())
-            {
-                btnHome.Visible = false;
-            }
             LoadRegisteredWhiteboards();
         }
 

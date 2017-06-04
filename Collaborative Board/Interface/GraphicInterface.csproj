@@ -66,6 +66,30 @@
     <Compile Include="SelectReport.Designer.cs">
       <DependentUpon>SelectReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="UCAssignScoreToEvents.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCAssignScoreToEvents.Designer.cs">
+      <DependentUpon>UCAssignScoreToEvents.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCScoreMenu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCScoreMenu.Designer.cs">
+      <DependentUpon>UCScoreMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCTeamRanking.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCTeamRanking.Designer.cs">
+      <DependentUpon>UCTeamRanking.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UCUserHome.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UCUserHome.Designer.cs">
+      <DependentUpon>UCUserHome.cs</DependentUpon>
+    </Compile>
     <Compile Include="WhiteboardVisualization.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -181,8 +205,20 @@
     <EmbeddedResource Include="UCAdministratorUsers.resx">
       <DependentUpon>UCAdministratorUsers.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UCAssignScoreToEvents.resx">
+      <DependentUpon>UCAssignScoreToEvents.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UCRemoveMemberFromTeam.resx">
       <DependentUpon>UCRemoveMemberFromTeam.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCScoreMenu.resx">
+      <DependentUpon>UCScoreMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCTeamRanking.resx">
+      <DependentUpon>UCTeamRanking.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCUserHome.resx">
+      <DependentUpon>UCUserHome.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UCWhiteboards.resx">
       <DependentUpon>UCWhiteboards.cs</DependentUpon>
