@@ -7,16 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Domain;
 
 namespace GraphicInterface
 {
     public partial class UCTeamRanking : UserControl
     {
         private Panel systemPanel;
-        public UCTeamRanking(Panel somePanel)
+        private Team teamToWorkWith;
+        public UCTeamRanking(Panel somePanel, Team oneTeam) 
         {
             InitializeComponent();
             systemPanel = somePanel;
+            teamToWorkWith = oneTeam;
+            lblTeamSelected.Text = oneTeam.Name;
         }
 
         private void btnExit_Click(object sender, EventArgs e)

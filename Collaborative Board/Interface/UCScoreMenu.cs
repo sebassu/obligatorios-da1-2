@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Persistence;
 
@@ -74,7 +68,6 @@ namespace GraphicInterface
                 btnResetTeamScore.Visible = false;
             }
         }
-
         private void btnHome_Click(object sender, EventArgs e)
         {
             InterfaceUtilities.GoToHomeRespectiveHome(systemPanel);
@@ -88,6 +81,22 @@ namespace GraphicInterface
         private void btnHome_MouseLeave(object sender, EventArgs e)
         {
             btnHome.Size = new Size(80, 62);
+        }
+
+        private void btnResetTeamScore_Click(object sender, EventArgs e)
+        {
+            ResetTeamScore();
+        }
+
+        private static void ResetTeamScore()
+        {
+            DialogResult result = MessageBox.Show("¿Está seguro que desea resetear el puntaje del equipo seleccionado? " +
+                " La operación es irreversible.", "Confirmación", MessageBoxButtons.YesNo,
+                 MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
+            {
+                //HACER RESET DE RANKING DEL EQUIPO
+            }
         }
     }
 }
