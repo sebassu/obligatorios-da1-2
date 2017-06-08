@@ -20,7 +20,7 @@ namespace UnitTests.PersistenceTests
         [TestMethod]
         public void SessionStartUserValidTest()
         {
-            User userToVerify = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
+            User userToVerify = User.CreateNewCollaborator("Emilio", "Ravenna",
                 "ravenna@simuladores.com", DateTime.Today, "HablarUnasPalabritas");
             Session.Start("ravenna@simuladores.com", "HablarUnasPalabritas");
             Assert.AreEqual(userToVerify, Session.ActiveUser());

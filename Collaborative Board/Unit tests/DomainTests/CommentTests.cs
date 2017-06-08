@@ -53,7 +53,7 @@ namespace UnitTests.DomainTests
         public void CommentParameterFactoryMethodValidTest2()
         {
             string someText = "Falta resolver el issue 12-3.";
-            User creator = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
+            User creator = User.CreateNewCollaborator("Emilio", "Ravenna",
                 "ravenna@simuladores.com", DateTime.Today, "contraseñaVálida123");
             testingComment = Comment.CreatorElementText(creator,
                 testingElement, someText);
@@ -156,7 +156,7 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void CommentResolutionValidTest2()
         {
-            User aUser = User.NamesEmailBirthdatePassword("Mario", "Santos",
+            User aUser = User.CreateNewCollaborator("Mario", "Santos",
                 "santos@simuladores.com", DateTime.Today, "contraseñaVálida123");
             testingComment.Resolve(aUser);
             Assert.IsTrue(testingComment.IsResolved);
@@ -202,7 +202,7 @@ namespace UnitTests.DomainTests
             Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate().Date);
             Assert.AreEqual(testingComment.Resolver, aUser);
             CollectionAssert.Contains(aUser.CommentsResolved.ToList(), testingComment);
-            User differentUser = User.NamesEmailBirthdatePassword("Mario", "Santos",
+            User differentUser = User.CreateNewCollaborator("Mario", "Santos",
                 "santos@simuladores.com", DateTime.Today, "contraseñaVálida123");
             testingComment.Resolve(differentUser);
         }
@@ -233,7 +233,7 @@ namespace UnitTests.DomainTests
         {
             string someText = "Falta resolver el issue 12-3.";
             User creator = User.InstanceForTestingPurposes();
-            User anotherCreator = User.NamesEmailBirthdatePassword("Mario", "Santos",
+            User anotherCreator = User.CreateNewCollaborator("Mario", "Santos",
                 "santos@simuladores.com", DateTime.Today, "contraseñaVálida123");
             testingComment = Comment.CreatorElementText(creator,
                 testingElement, someText);
@@ -272,7 +272,7 @@ namespace UnitTests.DomainTests
         public void CommentToStringTest()
         {
             string someText = "Falta resolver el issue 12-3.";
-            User creator = User.NamesEmailBirthdatePassword("Mario", "Santos",
+            User creator = User.CreateNewCollaborator("Mario", "Santos",
                 "santos@simuladores.com", DateTime.Today, "contraseñaVálida123");
             testingComment = Comment.CreatorElementText(creator,
                 testingElement, someText);

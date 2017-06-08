@@ -24,7 +24,7 @@ namespace UnitTests.DomainTests
         {
             string testImageLocation = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName
                 + "\\..\\Resources\\TestImage.jpg";
-            User creator = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
+            User creator = User.CreateNewCollaborator("Emilio", "Ravenna",
                 "ravenna@simuladores.com", DateTime.Today, "HablarUnasPalabritas");
             Team ownerTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo 3",
                 "Descripción.", 5);
@@ -226,7 +226,7 @@ namespace UnitTests.DomainTests
         [ExpectedException(typeof(WhiteboardException))]
         public void WhiteboardParameterFactoryMethodUserNotInTeamTest()
         {
-            User creator = User.NamesEmailBirthdatePassword("Pablo", "Lamponne",
+            User creator = User.CreateNewCollaborator("Pablo", "Lamponne",
                 "lamponne@simuladores.com", DateTime.Today, "contraseñaVálida123");
             Team ownerTeam = Team.InstanceForTestingPurposes();
             testingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
@@ -434,7 +434,7 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void WhiteboardUserCanRemoveUserNonCreatorTest()
         {
-            User someOtherUser = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
+            User someOtherUser = User.CreateNewCollaborator("Emilio", "Ravenna",
                 "ravenna@simuladores.com", DateTime.Today, "HablarUnasPalabritas");
             Assert.IsFalse(testingWhiteboard.UserCanRemove(someOtherUser));
         }

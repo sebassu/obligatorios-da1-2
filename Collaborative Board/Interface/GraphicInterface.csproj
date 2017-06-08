@@ -223,7 +223,6 @@
     <EmbeddedResource Include="UCAdministrateTeam.resx">
       <DependentUpon>UCAdministrateTeam.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="InterfaceClassDiagram.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

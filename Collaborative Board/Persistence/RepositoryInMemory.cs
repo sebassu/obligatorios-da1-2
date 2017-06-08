@@ -1,10 +1,8 @@
 ﻿using System;
 using Exceptions;
 using System.Linq;
-using System.Resources;
 using System.Collections.Generic;
 
-[assembly: NeutralResourcesLanguage("es")]
 namespace Persistence
 {
     public abstract class RepositoryInMemory<T>

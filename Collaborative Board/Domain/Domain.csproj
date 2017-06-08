@@ -44,7 +44,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Administrator.cs" />
     <Compile Include="Comment.cs" />
     <Compile Include="ElementWhiteboard.cs" />
     <Compile Include="ErrorMessages.Designer.cs">
@@ -53,12 +52,12 @@
       <DependentUpon>ErrorMessages.resx</DependentUpon>
     </Compile>
     <Compile Include="ImageWhiteboard.cs" />
-    <Compile Include="IPassword.cs" />
-    <Compile Include="Password.cs" />
+    <Compile Include="User\PasswordUtilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextBoxWhiteboard.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="User\User.cs" />
     <Compile Include="Team.cs" />
+    <Compile Include="User\UserDataEntityFramework.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="Whiteboard.cs" />
   </ItemGroup>
@@ -73,9 +72,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ErrorMessages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="DomainClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

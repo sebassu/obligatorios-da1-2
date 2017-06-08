@@ -222,7 +222,7 @@ namespace UnitTests.PersistenceTests
         [TestMethod]
         public void TRepositoryAddMemberValidTest()
         {
-            User userToAdd = User.NamesEmailBirthdatePassword("Pablo", "Lamponne",
+            User userToAdd = User.CreateNewCollaborator("Pablo", "Lamponne",
                 "lamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
             Team teamToAddTo = testingTeamRepository.Elements.Single();
             testingTeamRepository.AddMemberToTeam(teamToAddTo, userToAdd);
@@ -233,7 +233,7 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(RepositoryException))]
         public void TRepositoryAddMemberToNotAddedTeamTest()
         {
-            User userToAdd = User.NamesEmailBirthdatePassword("Pablo", "Lamponne",
+            User userToAdd = User.CreateNewCollaborator("Pablo", "Lamponne",
                 "lamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
             Team teamToAddTo = Team.InstanceForTestingPurposes();
             testingTeamRepository.AddMemberToTeam(teamToAddTo, userToAdd);
@@ -261,7 +261,7 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(TeamException))]
         public void TRepositoryAddMoreThanMaximumMembersTest()
         {
-            User userToAdd = User.NamesEmailBirthdatePassword("Pablo", "Lamponne",
+            User userToAdd = User.CreateNewCollaborator("Pablo", "Lamponne",
                 "lamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
             Team teamToAddTo = testingTeamRepository.Elements.Single();
             teamToAddTo.MaximumMembers = 1;
@@ -271,7 +271,7 @@ namespace UnitTests.PersistenceTests
         [TestMethod]
         public void TRepositoryRemoveMemberValidTest()
         {
-            User userToRemove = User.NamesEmailBirthdatePassword("Pablo", "Lamponne",
+            User userToRemove = User.CreateNewCollaborator("Pablo", "Lamponne",
                 "lamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
             Team teamToRemoveFrom = testingTeamRepository.Elements.Single();
             testingTeamRepository.AddMemberToTeam(teamToRemoveFrom, userToRemove);
@@ -334,7 +334,7 @@ namespace UnitTests.PersistenceTests
             testingTeamRepository = TeamRepository.GetInstance();
             string descriptionToSet = "Ha sido catalogado con triple X.";
             Team teamToVerify = testingTeamRepository.AddNewTeam("Equipo X", descriptionToSet, 5);
-            User memberToAddAndRemove = User.NamesEmailBirthdatePassword("José", "Feller",
+            User memberToAddAndRemove = User.CreateNewCollaborator("José", "Feller",
                 "feller@brigadab.com", DateTime.Today, "puntaPariñas");
             testingTeamRepository.AddMemberToTeam(teamToVerify, memberToAddAndRemove);
             UserRepository.GetInstance().Remove(memberToAddAndRemove);

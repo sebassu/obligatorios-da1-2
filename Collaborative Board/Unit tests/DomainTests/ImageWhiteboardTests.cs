@@ -25,7 +25,7 @@ namespace UnitTests.DomainTests
         {
             string testImageLocation = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName
                 + "\\..\\Resources\\TestImage.jpg";
-            User creator = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
+            User creator = User.CreateNewCollaborator("Emilio", "Ravenna",
                 "ravenna@simuladores.com", DateTime.Today, "HablarUnasPalabritas");
             Team ownerTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo 3", "Descripción.", 5);
             Whiteboard imageContainer = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,

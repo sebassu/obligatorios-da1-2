@@ -124,7 +124,7 @@ namespace UnitTests.DomainTests
         public void TeamParameterFactoryMethodValidTest()
         {
             string descriptionToSet = "Un grupo de personas que resuelve todo tipo de problemas.";
-            User creator = User.NamesEmailBirthdatePassword("Mario", "Santos",
+            User creator = User.CreateNewCollaborator("Mario", "Santos",
                 "santos@simuladores.com", DateTime.Today, "DisculpeFuegoTiene");
             testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Los Simuladores",
                 descriptionToSet, 4);
@@ -139,7 +139,7 @@ namespace UnitTests.DomainTests
         [ExpectedException(typeof(TeamException))]
         public void TeamParameterFactoryMethodInvalidNameTest()
         {
-            User creator = User.NamesEmailBirthdatePassword("Creator", "Team",
+            User creator = User.CreateNewCollaborator("Creator", "Team",
                 "creador@usuario.com", DateTime.Today, "password125");
             testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator,
                 "Equipo#11.32!", "Tareas:", 5);
@@ -149,7 +149,7 @@ namespace UnitTests.DomainTests
         [ExpectedException(typeof(TeamException))]
         public void TeamParameterFactoryMethodInvalidMaximumNumberTest()
         {
-            User creator = User.NamesEmailBirthdatePassword("Creator", "Team",
+            User creator = User.CreateNewCollaborator("Creator", "Team",
                 "creador@usuario.com", DateTime.Today, "password125");
             testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator,
                 "Equipo 2", "Tareas:", 0);
@@ -159,7 +159,7 @@ namespace UnitTests.DomainTests
         [ExpectedException(typeof(TeamException))]
         public void TeamParameterFactoryMethodInvalidDescriptionTest()
         {
-            User creator = User.NamesEmailBirthdatePassword("Creator", "Team",
+            User creator = User.CreateNewCollaborator("Creator", "Team",
                 "creador@usuario.com", DateTime.Today, "password125");
             testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo 3", "", 5);
         }
@@ -188,7 +188,7 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void TeamAddValidMemberTest()
         {
-            User aUser = User.NamesEmailBirthdatePassword("Pablo", "Lamponne",
+            User aUser = User.CreateNewCollaborator("Pablo", "Lamponne",
                 "lamponne@simuladores.com", DateTime.Now, "contraseñaVálida123");
             testingTeam.AddMember(aUser);
             CollectionAssert.Contains(testingTeam.Members.ToList(), aUser);
@@ -197,9 +197,9 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void TeamAddValidMembersTest()
         {
-            User aUser = User.NamesEmailBirthdatePassword("Nombre", "Apellido",
+            User aUser = User.CreateNewCollaborator("Nombre", "Apellido",
                 "mail@usuario.com", DateTime.Today, "password123");
-            User bUser = User.NamesEmailBirthdatePassword("Name", "LastName",
+            User bUser = User.CreateNewCollaborator("Name", "LastName",
                 "mail2@usuario.com", DateTime.Today, "password122");
             testingTeam.AddMember(aUser);
             testingTeam.AddMember(bUser);
@@ -211,9 +211,9 @@ namespace UnitTests.DomainTests
         [ExpectedException(typeof(TeamException))]
         public void TeamAddSameMemberTest()
         {
-            User aUser = User.NamesEmailBirthdatePassword("Nombre", "Apellido",
+            User aUser = User.CreateNewCollaborator("Nombre", "Apellido",
                 "mail@usuario.com", DateTime.Today, "password123");
-            User bUser = User.NamesEmailBirthdatePassword("Name", "LastName",
+            User bUser = User.CreateNewCollaborator("Name", "LastName",
                 "mail@usuario.com", DateTime.Today, "password122");
             testingTeam.AddMember(aUser);
             testingTeam.AddMember(bUser);
@@ -226,7 +226,7 @@ namespace UnitTests.DomainTests
             User creator = User.InstanceForTestingPurposes();
             testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator,
                 "Equipo 1", "No hace tareas.", 1);
-            User aUser = User.NamesEmailBirthdatePassword("Nombre", "Apellido",
+            User aUser = User.CreateNewCollaborator("Nombre", "Apellido",
                 "mail@usuario.com", DateTime.Today, "password123");
             testingTeam.AddMember(aUser);
         }
@@ -241,7 +241,7 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void TeamRemoveMemberTest()
         {
-            User creator = User.NamesEmailBirthdatePassword("Creator", "Team",
+            User creator = User.CreateNewCollaborator("Creator", "Team",
                 "creador@usuario.com", DateTime.Today, "password125");
             testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator,
                 "Equipo 1", "No hace tareas.", 10);
@@ -255,7 +255,7 @@ namespace UnitTests.DomainTests
         [ExpectedException(typeof(TeamException))]
         public void TeamRemoveUniqueMemberTest()
         {
-            User creator = User.NamesEmailBirthdatePassword("Creator", "Team",
+            User creator = User.CreateNewCollaborator("Creator", "Team",
                 "creador@usuario.com", DateTime.Today, "password125");
             testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator,
                 "Equipo 1", "No hace tareas.", 10);
@@ -287,7 +287,7 @@ namespace UnitTests.DomainTests
         public void TeamEqualsTransitiveTest()
         {
             User oneCreator = User.InstanceForTestingPurposes();
-            User anotherCreator = User.NamesEmailBirthdatePassword("Gabriel", "Medina",
+            User anotherCreator = User.CreateNewCollaborator("Gabriel", "Medina",
                 "medina@simuladores.com", DateTime.Now, "contraseñaVálida123");
             testingTeam = Team.CreatorNameDescriptionMaximumMembers(oneCreator, "Same name",
                 "Description 1", 10);
@@ -334,7 +334,7 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void TeamAddValidWhiteboardTest()
         {
-            User creator = User.NamesEmailBirthdatePassword("Creator", "Team",
+            User creator = User.CreateNewCollaborator("Creator", "Team",
                 "creador@usuario.com", DateTime.Today, "password125");
             testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo 1",
                 "No hace tareas.", 10);
@@ -346,7 +346,7 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void TeamAddValidWhiteboardsTest()
         {
-            User creator = User.NamesEmailBirthdatePassword("Creator", "Team",
+            User creator = User.CreateNewCollaborator("Creator", "Team",
                 "creador@usuario.com", DateTime.Today, "password125");
             testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo 1",
                 "No hace tareas.", 10);
@@ -362,7 +362,7 @@ namespace UnitTests.DomainTests
         [ExpectedException(typeof(TeamException))]
         public void TeamAddSameWhiteboardTest()
         {
-            User creator = User.NamesEmailBirthdatePassword("Creator", "Team",
+            User creator = User.CreateNewCollaborator("Creator", "Team",
                 "creador@usuario.com", DateTime.Today, "password125");
             testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo 1",
                 "No hace tareas.", 10);
@@ -382,7 +382,7 @@ namespace UnitTests.DomainTests
         public void TeamRemoveValidWhiteboardTest()
         {
             DateTime aBirthdate = new DateTime(1990, 05, 05);
-            User creator = User.NamesEmailBirthdatePassword("Creator", "Team",
+            User creator = User.CreateNewCollaborator("Creator", "Team",
                 "creador@usuario.com", aBirthdate, "password125");
             testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo 1",
                 "No hace tareas.", 10);
@@ -397,7 +397,7 @@ namespace UnitTests.DomainTests
         public void TeamRemoveAnUncreatedWhiteboardTest()
         {
             DateTime aBirthdate = new DateTime(1990, 05, 05);
-            User creator = User.NamesEmailBirthdatePassword("Creator", "Team",
+            User creator = User.CreateNewCollaborator("Creator", "Team",
                 "creador@usuario.com", aBirthdate, "password125");
             testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator,
                 "Equipo 1", "No hace tareas.", 10);
@@ -410,7 +410,7 @@ namespace UnitTests.DomainTests
         public void TeamLowerMaximumMembersWithTeamSurpassingItInvalidTest()
         {
             DateTime aBirthdate = new DateTime(1990, 05, 05);
-            User creator = User.NamesEmailBirthdatePassword("Creator", "Team",
+            User creator = User.CreateNewCollaborator("Creator", "Team",
                 "creador@usuario.com", aBirthdate, "password125");
             testingTeam = Team.CreatorNameDescriptionMaximumMembers(creator,
                 "Equipo 1", "No hace tareas.", 2);

@@ -56,7 +56,7 @@ namespace UnitTests.PersistenceTests
         private static void AddNewInstanceOfRemovedTeam()
         {
             ChangeActiveUser("santos@simuladores.com", "DisculpeFuegoTiene");
-            User userToAdd = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
+            User userToAdd = User.CreateNewCollaborator("Emilio", "Ravenna",
                 "ravenna@simuladores.com", DateTime.Today, "HablarUnasPalabritas");
             string descriptionToSet = "Un grupo de personas que resuelve todo tipo de problemas.";
             testingOwnerTeam = globalTeams.AddNewTeam("Los Simuladores", descriptionToSet, 4);
@@ -359,7 +359,7 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(RepositoryException))]
         public void UWRepositoryAttemptToRemoveWhiteboardCreatorUserInvalidTest()
         {
-            User userToFailRemoving = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
+            User userToFailRemoving = User.CreateNewCollaborator("Emilio", "Ravenna",
                 "ravenna@simuladores.com", DateTime.Today, "HablarUnasPalabritas");
             UserRepository.GetInstance().Remove(userToFailRemoving);
         }

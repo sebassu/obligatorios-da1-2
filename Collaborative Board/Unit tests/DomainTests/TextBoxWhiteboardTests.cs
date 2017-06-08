@@ -22,7 +22,7 @@ namespace UnitTests.DomainTests
 
         private static Whiteboard GenerateNonGenericTestSituation()
         {
-            User creator = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
+            User creator = User.CreateNewCollaborator("Emilio", "Ravenna",
                 "ravenna@simuladores.com", DateTime.Today, "HablarUnasPalabritas");
             Team ownerTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo 3",
                 "Descripción.", 5);

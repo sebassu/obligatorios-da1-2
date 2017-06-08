@@ -40,7 +40,7 @@ namespace UnitTests.PersistenceTests
         [TestInitialize]
         public void TestSetup()
         {
-            testingUserRepository = new UserRepositoryInMemory();
+            testingUserRepository = new UserRepositoryEntityFramework();
             ChangeActiveUser("santos@simuladores.com", "DisculpeFuegoTiene");
         }
 
@@ -63,7 +63,7 @@ namespace UnitTests.PersistenceTests
         [TestMethod]
         public void URepositoryAddNewUserValidTest()
         {
-            User userToVerify = User.NamesEmailBirthdatePassword("Pablo", "Lamponne",
+            User userToVerify = User.CreateNewCollaborator("Pablo", "Lamponne",
                 "lamponne@simuladores.com", DateTime.Today, "MúsicaSuperDivertida");
             testingUserRepository.AddNewUser("Pablo", "Lamponne ",
                 "lamponne@simuladores.com", DateTime.Today, "MúsicaSuperDivertida");
@@ -281,7 +281,7 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(RepositoryException))]
         public void URepositoryRemoveUserNotInDirectoryInvalidTest()
         {
-            User userToVerify = User.NamesEmailBirthdatePassword("Gabriel David", "Medina",
+            User userToVerify = User.CreateNewCollaborator("Gabriel David", "Medina",
                 "medina@simuladores.com", DateTime.Today, "MúsicaSuperDivertida");
             testingUserRepository.Remove(userToVerify);
         }
@@ -353,7 +353,7 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(RepositoryException))]
         public void URepositoryModifyNotAddedUserInvalidTest()
         {
-            User NotAddedUser = User.NamesEmailBirthdatePassword("Pablo", "Lamponne",
+            User NotAddedUser = User.CreateNewCollaborator("Pablo", "Lamponne",
                 "lamponne@simuladores.com", DateTime.Today, "MúsicaSuperDivertida");
             testingUserRepository.ModifyUser(NotAddedUser, "Gabriel David", "Medina",
                 "medina@simuladores.com", DateTime.MinValue, "MúsicaSuperDivertida");
