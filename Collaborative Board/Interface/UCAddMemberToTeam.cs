@@ -27,7 +27,7 @@ namespace GraphicInterface
 
         private void LoadNotMembersOfTeam()
         {
-            var globalUsers = UserRepository.GetInstance().Elements;
+            var globalUsers = UserRepository.Elements;
             var notMembersOfTeam = globalUsers.Where(u => !teamToWorkWith.Members.Contains(u)).ToList();
             if (Utilities.IsEmpty(notMembersOfTeam))
             {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using Persistence;
 
 namespace GraphicInterface
 {
@@ -8,9 +9,10 @@ namespace GraphicInterface
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
+            /*Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LogOn());
+            Application.Run(new LogOn());*/
+            UserRepository.AddNewAdministrator("a", "a", "a@a.com", DateTime.Now, "aaa121a2a");
         }
     }
 }

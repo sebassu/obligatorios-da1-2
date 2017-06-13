@@ -14,6 +14,28 @@ namespace UnitTests.PersistenceTests
     {
         private static TeamRepository testingTeamRepository;
 
+        [ClassInitialize]
+        public static void ClassSetup(TestContext context)
+        {
+            Session.Start("administrator@tf2.com", "Victory");
+            AddTestData();
+            Session.End();
+        }
+
+        private static void AddTestData()
+        {
+            UserRepository.AddNewAdministrator("Mario", "Santos",
+                "santos@simuladores.com", DateTime.Today, "DisculpeFuegoTiene");
+            UserRepository.AddNewUser("Emilio", "Ravenna",
+                "ravenna@simuladores.com", DateTime.Today, "HablarUnasPalabritas");
+            UserRepository.AddNewUser("Pablo", "Lamponne",
+                "lamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
+            UserRepository.AddNewUser("Martín", "Vanegas",
+                "vanegas@brigadab.com", DateTime.Today, "tipoONegativo");
+            UserRepository.AddNewUser("José", "Feller",
+                "feller@brigadab.com", DateTime.Today, "puntaPariñas");
+        }
+
         [TestInitialize]
         public void TestSetup()
         {
@@ -243,7 +265,7 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(TeamException))]
         public void TRepositoryAddRepeatedMemberTest()
         {
-            Administrator repeatedUser = Administrator.NamesEmailBirthdatePassword("Mario",
+            User repeatedUser = User.CreateNewAdministrator("Mario",
                 "Santos", "santos@simuladores.com", DateTime.Today, "DisculpeFuegoTiene");
             Team teamToAddTo = testingTeamRepository.Elements.Single();
             testingTeamRepository.AddMemberToTeam(teamToAddTo, repeatedUser);
@@ -308,7 +330,7 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(TeamException))]
         public void TRepositoryRemoveLastMemberInvalidTest()
         {
-            Administrator onlyMember = Administrator.NamesEmailBirthdatePassword("Mario", "Santos",
+            User onlyMember = User.CreateNewAdministrator("Mario", "Santos",
                 "santos@simuladores.com", DateTime.Today, "contraseñaVálida123");
             Team teamToRemoveFrom = testingTeamRepository.Elements.Single();
             testingTeamRepository.RemoveMemberFromTeam(teamToRemoveFrom, onlyMember);
@@ -318,13 +340,13 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(RepositoryException))]
         public void UTRepositoryRemoveLastMemberWhenRemovingUserInvalidTest()
         {
-            Administrator onlyMember = Administrator.NamesEmailBirthdatePassword("Mario", "Santos",
+            User onlyMember = User.CreateNewAdministrator("Mario", "Santos",
                 "santos@simuladores.com", DateTime.Today, "contraseñaVálida123");
             ChangeActiveUser("santos@simuladores.com", "DisculpeFuegoTiene");
             testingTeamRepository = TeamRepository.GetInstance();
             string descriptionToSet = "Una estupidez de Videomatch.";
             testingTeamRepository.AddNewTeam("Los Disimuladores", descriptionToSet, 4);
-            UserRepository.GetInstance().Remove(onlyMember);
+            UserRepository.Remove(onlyMember);
         }
 
         [TestMethod]
@@ -337,7 +359,7 @@ namespace UnitTests.PersistenceTests
             User memberToAddAndRemove = User.CreateNewCollaborator("José", "Feller",
                 "feller@brigadab.com", DateTime.Today, "puntaPariñas");
             testingTeamRepository.AddMemberToTeam(teamToVerify, memberToAddAndRemove);
-            UserRepository.GetInstance().Remove(memberToAddAndRemove);
+            UserRepository.Remove(memberToAddAndRemove);
             CollectionAssert.DoesNotContain(teamToVerify.Members.ToList(), memberToAddAndRemove);
         }
     }

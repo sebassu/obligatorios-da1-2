@@ -1,6 +1,7 @@
 ﻿using System;
 using Exceptions;
 using System.Drawing;
+using System.IO;
 
 namespace Domain
 {
@@ -8,12 +9,27 @@ namespace Domain
     {
         public Image ActualImage { get; set; }
 
+        public virtual byte[] ImageToSave
+        {
+            get
+            {
+                ImageConverter converter = new ImageConverter();
+                return converter.ConvertTo(ActualImage, typeof(byte[])) as byte[];
+            }
+            set
+            {
+                var memoryStream = new MemoryStream(value);
+                Image imageToSet = Image.FromStream(memoryStream);
+                ActualImage = imageToSet;
+            }
+        }
+
         internal static ImageWhiteboard InstanceForTestingPurposes()
         {
             return new ImageWhiteboard();
         }
 
-        private ImageWhiteboard() : base() { }
+        public ImageWhiteboard() : base() { }
 
         public static ImageWhiteboard CreateWithContainerSource(Whiteboard container,
             string imageLocation)

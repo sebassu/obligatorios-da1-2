@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("UnitTests")]
 namespace Persistence
 {
-    public class UserRepositoryEntityFramework : EntityFrameworkRepository<UserDataEntityFramework>
+    public class UserRepository : EntityFrameworkRepository<User>
     {
         public static User AddNewUser(string firstName, string lastName,
             string email, DateTime birthdate, string password)
@@ -15,17 +15,17 @@ namespace Persistence
             ValidateActiveUserHasAdministrationPrivileges();
             User userToAdd = User.CreateNewCollaborator(firstName, lastName,
                 email, birthdate, password);
-            Add(userToAdd.userData);
+            Add(userToAdd);
             return userToAdd;
         }
 
-        public static User AddNewUser(string firstName, string lastName,
+        public static User AddNewAdministrator(string firstName, string lastName,
             string email, DateTime birthdate, string password)
         {
-            ValidateActiveUserHasAdministrationPrivileges();
-            User UserToAdd = User.CreateNewUser(firstName,
+            //ValidateActiveUserHasAdministrationPrivileges();
+            User UserToAdd = User.CreateNewAdministrator(firstName,
                 lastName, email, birthdate, password);
-            Add(UserToAdd.userData);
+            Add(UserToAdd);
             return UserToAdd;
         }
 
@@ -44,7 +44,7 @@ namespace Persistence
             {
                 if (ChangeDoesNotCauseRepeatedUserEmails(userToModify, emailToSet))
                 {
-                    var databaseObject = userToModify.userData;
+                    var databaseObject = userToModify;
                     AttachIfCorresponds(databaseObject);
                     SetUserAttributes(databaseObject, firstNameToSet, lastNameToSet, emailToSet,
                         birthdateToSet, passwordToSet);
@@ -57,7 +57,7 @@ namespace Persistence
             }
         }
 
-        private static void SetUserAttributes(UserDataEntityFramework userToModify, string firstNameToSet,
+        private static void SetUserAttributes(User userToModify, string firstNameToSet,
             string lastNameToSet, string emailToSet, DateTime birthdateToSet, string passwordToSet)
         {
             userToModify.FirstName = firstNameToSet;
@@ -83,24 +83,24 @@ namespace Persistence
             using (var context = new BoardContext())
             {
                 ValidateActiveUserHasAdministrationPrivileges();
-                AttachIfCorresponds(userToModify.userData);
+                AttachIfCorresponds(userToModify);
                 string result = userToModify.ResetPassword();
                 context.SaveChanges();
                 return result;
             }
         }
 
-        public static void Remove(User elementToRemove)
+        new public static void Remove(User elementToRemove)
         {
             if (IsTheOnlyUserLeft(elementToRemove))
             {
-                throw new RepositoryException(ErrorMessages.CannotRemoveAllUsers);
+                throw new RepositoryException(ErrorMessages.CannotRemoveAllAdministrators);
             }
             else
             {
                 ValidateNoWhiteboardHasUserAsCreator(elementToRemove);
                 RemoveUserFromAllTeams(elementToRemove);
-                Remove(elementToRemove.userData);
+                EntityFrameworkRepository<User>.Remove(elementToRemove);
             }
         }
 
@@ -133,16 +133,16 @@ namespace Persistence
         private static bool IsTheOnlyUserLeft(User elementToRemove)
         {
             var Users = Elements.Where(u => u.HasAdministrationPrivileges).ToList();
-            return Users.Count == 1 && Users.Single().Equals(elementToRemove.userData);
+            return Users.Count == 1 && Users.Single().Equals(elementToRemove);
         }
 
         private static void InsertOriginalSystemUser()
         {
             using (var context = new BoardContext())
             {
-                var elements = context.Set<UserDataEntityFramework>();
-                var baseUser = new UserDataEntityFramework("The",
-                 "User", "User@tf2.com", DateTime.Today, "Victory", true);
+                var elements = context.Set<User>();
+                var baseUser = User.CreateNewAdministrator("The", "Administrator",
+                    "administrator@tf2.com", DateTime.Today, "Victory");
                 elements.Add(baseUser);
                 context.SaveChanges();
             }

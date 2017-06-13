@@ -23,8 +23,7 @@ namespace GraphicInterface
 
         private void LoadUserComboboxes()
         {
-            UserRepository globalUsers = UserRepository.GetInstance();
-            foreach (var user in globalUsers.Elements)
+            foreach (var user in UserRepository.Elements)
             {
                 cmbCreatorUser.Items.Add(user);
                 cmbSolverUser.Items.Add(user);
@@ -43,8 +42,7 @@ namespace GraphicInterface
 
         private void UCAdministratorCommentsSolvedByUser_Load(object sender, EventArgs e)
         {
-            UserRepository globalUsers = UserRepository.GetInstance();
-            foreach (var user in globalUsers.Elements)
+            foreach (var user in UserRepository.Elements)
             {
                 var aux = user.CommentsCreated.Where(c => c.IsResolved).ToList();
                 allComments.AddRange(aux);
@@ -65,7 +63,7 @@ namespace GraphicInterface
                 foreach (var comment in commentsToShow)
                 {
                     var creationDateToShow = Utilities.GetDateToShow(comment.CreationDate);
-                    var resolutionDateToShow = Utilities.GetDateToShow(comment.ResolutionDate());
+                    var resolutionDateToShow = Utilities.GetDateToShow(comment.ResolutionDate);
                     var creatorToShow = comment.Creator.Email;
                     var resolverToShow = comment.Resolver.Email;
                     var whiteboardToShow = comment.AssociatedWhiteboard.ToString();
@@ -115,8 +113,8 @@ namespace GraphicInterface
         {
             return c.CreationDate.Date >= dtpCommentsCreatedFrom.Value.Date &&
                 c.CreationDate.Date <= dtpCommentsCreatedUntil.Value.Date &&
-                c.ResolutionDate().Date >= dtpCommentsCreatedFrom.Value.Date &&
-                c.ResolutionDate().Date <= dtpCommentsSolvedUntil.Value.Date;
+                c.ResolutionDate.Date >= dtpCommentsCreatedFrom.Value.Date &&
+                c.ResolutionDate.Date <= dtpCommentsSolvedUntil.Value.Date;
         }
 
         private void btnHome_Click(object sender, EventArgs e)

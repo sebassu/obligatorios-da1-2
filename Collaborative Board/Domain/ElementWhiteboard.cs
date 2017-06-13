@@ -6,13 +6,15 @@ namespace Domain
 {
     public abstract class ElementWhiteboard
     {
+        public virtual int Id { get; set; }
+
         private const byte minimumWidth = 1;
         private const byte minimumHeight = 1;
 
         private const byte containerOriginX = 0;
         private const byte containerOriginY = 0;
 
-        public Whiteboard Container { get; }
+        public virtual Whiteboard Container { get; set; }
 
         private Point position = new Point();
         public Point Position
@@ -39,6 +41,18 @@ namespace Domain
                 && DoesNotOverflowContainerY(aPoint.Y, Height);
         }
 
+        public virtual int RelativeX
+        {
+            get { return position.X; }
+            set { position.X = value; }
+        }
+
+        public virtual int RelativeY
+        {
+            get { return position.Y; }
+            set { position.Y = value; }
+        }
+
         private Size size = new Size();
         public Size Dimensions
         {
@@ -62,21 +76,10 @@ namespace Domain
                 IsValidHeight(value.Height);
         }
 
-        public int Width
+        public virtual int Width
         {
             get { return size.Width; }
-            internal set
-            {
-                if (IsValidWidth(value))
-                {
-                    size.Width = value;
-                    Container.UpdateModificationDate();
-                }
-                else
-                {
-                    throw new ElementException(ErrorMessages.WidthIsInvalid);
-                }
-            }
+            set { size.Width = value; }
         }
 
         private bool IsValidWidth(int newWidth)
@@ -85,21 +88,10 @@ namespace Domain
                  DoesNotOverflowContainerX(RelativeX, newWidth);
         }
 
-        public int Height
+        public virtual int Height
         {
             get { return size.Height; }
-            internal set
-            {
-                if (IsValidHeight(value))
-                {
-                    size.Height = value;
-                    Container.UpdateModificationDate();
-                }
-                else
-                {
-                    throw new ElementException(ErrorMessages.HeightIsInvalid);
-                }
-            }
+            set { size.Height = value; }
         }
 
         private bool IsValidHeight(int newHeight)
@@ -119,16 +111,6 @@ namespace Domain
             return (elementY + elementHeight) <= Container.Height;
         }
 
-        public int RelativeX
-        {
-            get { return position.X; }
-        }
-
-        public int RelativeY
-        {
-            get { return position.Y; }
-        }
-
         internal int WidthContainerNeeded()
         {
             return size.Width + RelativeX;
@@ -139,14 +121,14 @@ namespace Domain
             return size.Height + RelativeY;
         }
 
-        private readonly List<Comment> comments = new List<Comment>();
-        public IReadOnlyCollection<Comment> Comments => comments.AsReadOnly();
+        public virtual List<Comment> Comments { get; set; }
+            = new List<Comment>();
 
         public void AddComment(Comment someComment)
         {
-            if (!comments.Contains(someComment))
+            if (!Comments.Contains(someComment))
             {
-                comments.Add(someComment);
+                Comments.Add(someComment);
             }
             else
             {
@@ -154,7 +136,7 @@ namespace Domain
             }
         }
 
-        protected ElementWhiteboard()
+        public ElementWhiteboard()
         {
             Container = Whiteboard.InstanceForTestingPurposes();
         }

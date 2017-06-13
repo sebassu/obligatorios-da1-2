@@ -19,10 +19,25 @@ namespace UnitTests.PersistenceTests
         [ClassInitialize]
         public static void ClassSetup(TestContext context)
         {
+            Session.Start("administrator@tf2.com", "Victory");
+            AddTestData();
             ChangeActiveUser("santos@simuladores.com", "DisculpeFuegoTiene");
             globalTeams = TeamRepository.GetInstance();
             globalTeams.AddNewTeam("Brigada B",
                 "Para casos menores, más sencillos.", 4);
+        }
+        private static void AddTestData()
+        {
+            UserRepository.AddNewAdministrator("Mario", "Santos",
+                "santos@simuladores.com", DateTime.Today, "DisculpeFuegoTiene");
+            UserRepository.AddNewUser("Emilio", "Ravenna",
+                "ravenna@simuladores.com", DateTime.Today, "HablarUnasPalabritas");
+            UserRepository.AddNewUser("Pablo", "Lamponne",
+                "lamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
+            UserRepository.AddNewUser("Martín", "Vanegas",
+                "vanegas@brigadab.com", DateTime.Today, "tipoONegativo");
+            UserRepository.AddNewUser("José", "Feller",
+                "feller@brigadab.com", DateTime.Today, "puntaPariñas");
         }
 
         [TestInitialize]
@@ -361,7 +376,7 @@ namespace UnitTests.PersistenceTests
         {
             User userToFailRemoving = User.CreateNewCollaborator("Emilio", "Ravenna",
                 "ravenna@simuladores.com", DateTime.Today, "HablarUnasPalabritas");
-            UserRepository.GetInstance().Remove(userToFailRemoving);
+            UserRepository.Remove(userToFailRemoving);
         }
     }
 }

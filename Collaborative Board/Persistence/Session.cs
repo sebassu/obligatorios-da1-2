@@ -41,7 +41,7 @@ namespace Persistence
 
         private static void LoginUserWithData(string emailEntered, string passwordEntered)
         {
-            var users = UserRepository.GetInstance().Elements;
+            var users = UserRepository.Elements;
             try
             {
                 UpdateLoggedUser(emailEntered, passwordEntered, users);

@@ -30,7 +30,7 @@ namespace UnitTests.PersistenceTests
         [TestMethod]
         public void SessionStartAdministratorValidTest()
         {
-            Administrator administratorToVerify = Administrator.NamesEmailBirthdatePassword("Mario",
+            User administratorToVerify = User.CreateNewAdministrator("Mario",
                 "Santos", "santos@simuladores.com", DateTime.Today, "DisculpeFuegoTiene");
             Session.Start("santos@simuladores.com", "DisculpeFuegoTiene");
             Assert.AreEqual(administratorToVerify, Session.ActiveUser());

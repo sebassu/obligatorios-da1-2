@@ -5,10 +5,10 @@ namespace Persistence
 {
     public class BoardContext : DbContext
     {
-        public DbSet<UserDataEntityFramework> Users { get; set; }
-        /*public DbSet<Team> Teams { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Team> Teams { get; set; }
         public DbSet<Whiteboard> Whiteboards { get; set; }
-        public DbSet<ElementWhiteboard> Elements { get; set; }*/
+        public DbSet<ElementWhiteboard> Elements { get; set; }
 
         public BoardContext() : base()
         {
@@ -24,7 +24,12 @@ namespace Persistence
 
         private static void SetUsersConfiguration(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserDataEntityFramework>().HasKey(u => u.Email);
+            modelBuilder.Entity<User>().HasKey(u => u.Email);
+            modelBuilder.Entity<Team>().HasKey(t => t.Name);
+            modelBuilder.Entity<ElementWhiteboard>().Ignore(e => e.Position);
+            modelBuilder.Entity<ElementWhiteboard>().Ignore(e => e.Dimensions);
+            modelBuilder.Entity<ImageWhiteboard>().Ignore(i => i.ActualImage);
+            modelBuilder.Entity<TextBoxWhiteboard>().Ignore(t => t.TextFont);
         }
     }
 }

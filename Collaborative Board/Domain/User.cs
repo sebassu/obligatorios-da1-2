@@ -12,16 +12,16 @@ namespace Domain
 {
     public class User
     {
-        internal readonly UserDataEntityFramework userData;
 
-        public string FirstName
+        private string firstName;
+        public virtual string FirstName
         {
-            get { return userData.FirstName; }
-            internal set
+            get { return firstName; }
+            set
             {
                 if (IsValidName(value))
                 {
-                    userData.FirstName = value.Trim();
+                    firstName = value.Trim();
                 }
                 else
                 {
@@ -32,14 +32,15 @@ namespace Domain
             }
         }
 
-        public string LastName
+        private string lastName;
+        public virtual string LastName
         {
-            get { return userData.LastName; }
-            internal set
+            get { return lastName; }
+            set
             {
                 if (IsValidName(value))
                 {
-                    userData.LastName = value.Trim();
+                    lastName = value.Trim();
                 }
                 else
                 {
@@ -55,15 +56,16 @@ namespace Domain
             return Utilities.ContainsLettersOrSpacesOnly(value);
         }
 
-        public string Email
+        public string email;
+        public virtual string Email
         {
-            get { return userData.Email; }
-            internal set
+            get { return email; }
+            set
             {
                 try
                 {
                     MailAddress emailToSet = new MailAddress(value);
-                    userData.Email = emailToSet.ToString();
+                    email = emailToSet.ToString();
                 }
                 catch (SystemException)
                 {
@@ -74,15 +76,16 @@ namespace Domain
             }
         }
 
-        public DateTime Birthdate
+        private DateTime birthdate;
+        public virtual DateTime Birthdate
         {
-            get { return userData.Birthdate; }
-            internal set
+            get { return birthdate; }
+            set
             {
                 var dateToSet = value.Date;
                 if (Utilities.IsTodayOrBefore(dateToSet))
                 {
-                    userData.Birthdate = dateToSet;
+                    birthdate = dateToSet;
                 }
                 else
                 {
@@ -94,14 +97,15 @@ namespace Domain
             }
         }
 
-        public string Password
+        private string password;
+        public virtual string Password
         {
-            get { return userData.Password; }
-            internal set
+            get { return password; }
+            set
             {
                 if (PasswordUtilities.IsValidPassword(value))
                 {
-                    userData.Password = value;
+                    password = value;
                 }
                 else
                 {
@@ -113,25 +117,26 @@ namespace Domain
             }
         }
 
-        public virtual bool HasAdministrationPrivileges => userData.HasAdministrationPrivileges;
+        public virtual bool HasAdministrationPrivileges { get; set; }
 
         internal string ResetPassword()
         {
             string newPassword = PasswordUtilities.GenerateNewPassword();
-            userData.Password = newPassword;
+            password = newPassword;
             return newPassword;
         }
 
-        public IReadOnlyCollection<Comment> CommentsCreated => userData.CommentsCreated.AsReadOnly();
+        public virtual List<Comment> CommentsCreated { get; set; }
+            = new List<Comment>();
 
-        public IReadOnlyCollection<Comment> CommentsResolved => userData.CommentsResolved.AsReadOnly();
+        public virtual List<Comment> CommentsResolved { get; set; }
+            = new List<Comment>();
 
         internal void AddCreatedComment(Comment someComment)
         {
-            var commentsCreated = userData.CommentsCreated;
-            if (!commentsCreated.Contains(someComment))
+            if (!CommentsCreated.Contains(someComment))
             {
-                commentsCreated.Add(someComment);
+                CommentsCreated.Add(someComment);
             }
             else
             {
@@ -141,10 +146,9 @@ namespace Domain
 
         internal void AddResolvedComment(Comment someComment)
         {
-            var commentsResolved = userData.CommentsResolved;
-            if (!commentsResolved.Contains(someComment))
+            if (!CommentsResolved.Contains(someComment))
             {
-                commentsResolved.Add(someComment);
+                CommentsResolved.Add(someComment);
             }
             else
             {
@@ -157,12 +161,14 @@ namespace Domain
             return new User();
         }
 
-        protected User()
+        public User()
         {
-            userData = new UserDataEntityFramework();
+            firstName = "Usuario";
+            lastName = "inválido.";
+            email = "mailInvalido@usuarioInvalido";
         }
 
-        internal static User CreateNewUser(string firstName, string lastName,
+        internal static User CreateNewAdministrator(string firstName, string lastName,
             string email, DateTime birthdate, string password)
         {
             return new User(firstName, lastName, email, birthdate, password, true);
@@ -174,16 +180,21 @@ namespace Domain
             return new User(firstName, lastName, email, birthdate, password);
         }
 
-        protected User(string firstName, string lastName, string email, DateTime birthdate,
-            string password, bool hasUserPrivileges = false)
+        private User(string firstNameToSet, string lastNameToSet, string emailToSet,
+            DateTime birthdateToSet, string passwordToSet, bool isAdministrator = false)
         {
-            userData = new UserDataEntityFramework(firstName, lastName, email, birthdate,
-                password, hasUserPrivileges);
+            FirstName = firstNameToSet;
+            LastName = lastNameToSet;
+            Email = emailToSet;
+            Birthdate = birthdateToSet;
+            Password = passwordToSet;
+            HasAdministrationPrivileges = isAdministrator;
         }
 
         public override bool Equals(object obj)
         {
-            if (obj is User userToCompareAgainst)
+            User userToCompareAgainst = obj as User;
+            if (Utilities.IsNotNull(userToCompareAgainst))
             {
                 return HasSameEmail(userToCompareAgainst);
             }

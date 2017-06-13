@@ -5,8 +5,10 @@ namespace Domain
 {
     public class Comment
     {
+        public virtual int Id { get; set; }
+
         private string text;
-        public string Text
+        public virtual string Text
         {
             get { return text; }
             set
@@ -22,31 +24,21 @@ namespace Domain
             }
         }
 
-        public DateTime CreationDate { get; } = DateTime.Now;
+        public virtual DateTime CreationDate { get; set; } = DateTime.Now;
 
-        public User Creator { get; }
+        public virtual User Creator { get; set; }
 
-        internal ElementWhiteboard AssociatedElement { get; }
+        public virtual ElementWhiteboard AssociatedElement { get; set; }
 
         public Whiteboard AssociatedWhiteboard
         {
             get { return AssociatedElement.Container; }
         }
 
-        private DateTime resolutionDate;
-        public DateTime ResolutionDate()
-        {
-            if (resolutionDate != DateTime.MinValue)
-            {
-                return resolutionDate;
-            }
-            else
-            {
-                throw new CommentException(ErrorMessages.UnresolvedComment);
-            }
-        }
+        public virtual DateTime ResolutionDate { get; set; }
 
-        public User Resolver { get; private set; }
+
+        public virtual User Resolver { get; set; }
 
         public void Resolve(User someResolver)
         {
@@ -76,23 +68,19 @@ namespace Domain
         {
             Resolver = someResolver;
             someResolver.AddResolvedComment(this);
-            resolutionDate = DateTime.Now;
-        }
-
-        public bool IsResolved
-        {
-            get
-            {
-                return ResolutionDateWasSet();
-            }
+            ResolutionDate = DateTime.Now;
         }
 
         // Valid since resolutionDate will never be set to DateTime.MinValue, which represents 
         // a date that already passed. Usage of DateTime? (System.Nullable<DateTime>) was considered
         // but decided against due to the boxing/unboxing overhead as well as the previous alternative.
-        private bool ResolutionDateWasSet()
+        public bool IsResolved
         {
-            return (resolutionDate != DateTime.MinValue);
+            get
+            {
+                bool resolutionDateWasSet = ResolutionDate != DateTime.MinValue;
+                return resolutionDateWasSet;
+            }
         }
 
         public static Comment InstanceForTestingPurposes()
@@ -100,7 +88,7 @@ namespace Domain
             return new Comment();
         }
 
-        private Comment()
+        public Comment()
         {
             text = "Comentario inválido.";
             Creator = User.InstanceForTestingPurposes();
@@ -138,7 +126,8 @@ namespace Domain
 
         public override bool Equals(object obj)
         {
-            if (obj is Comment commentToCompareAgainst)
+            Comment commentToCompareAgainst = obj as Comment;
+            if (Utilities.IsNotNull(commentToCompareAgainst))
             {
                 return CreatorDateAndTextAreEqual(commentToCompareAgainst);
             }

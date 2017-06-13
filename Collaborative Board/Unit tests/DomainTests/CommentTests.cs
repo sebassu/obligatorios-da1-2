@@ -148,7 +148,7 @@ namespace UnitTests.DomainTests
             User aUser = User.InstanceForTestingPurposes();
             testingComment.Resolve(aUser);
             Assert.IsTrue(testingComment.IsResolved);
-            Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate().Date);
+            Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate.Date);
             Assert.AreEqual(testingComment.Resolver, aUser);
             CollectionAssert.Contains(aUser.CommentsResolved.ToList(), testingComment);
         }
@@ -160,7 +160,7 @@ namespace UnitTests.DomainTests
                 "santos@simuladores.com", DateTime.Today, "contraseñaVálida123");
             testingComment.Resolve(aUser);
             Assert.IsTrue(testingComment.IsResolved);
-            Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate().Date);
+            Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate.Date);
             Assert.AreEqual(testingComment.Resolver, aUser);
             CollectionAssert.Contains(aUser.CommentsResolved.ToList(), testingComment);
         }
@@ -174,19 +174,12 @@ namespace UnitTests.DomainTests
 
         [TestMethod]
         [ExpectedException(typeof(CommentException))]
-        public void CommentResolutionDateOfUnresolvedInvalidTest()
-        {
-            testingComment.ResolutionDate();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(CommentException))]
         public void CommentResolveResolvedCommentSameUserInvalidTest()
         {
             User aUser = User.InstanceForTestingPurposes();
             testingComment.Resolve(aUser);
             Assert.IsTrue(testingComment.IsResolved);
-            Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate().Date);
+            Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate.Date);
             Assert.AreEqual(testingComment.Resolver, aUser);
             CollectionAssert.Contains(aUser.CommentsResolved.ToList(), testingComment);
             testingComment.Resolve(aUser);
@@ -199,7 +192,7 @@ namespace UnitTests.DomainTests
             User aUser = User.InstanceForTestingPurposes();
             testingComment.Resolve(aUser);
             Assert.IsTrue(testingComment.IsResolved);
-            Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate().Date);
+            Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate.Date);
             Assert.AreEqual(testingComment.Resolver, aUser);
             CollectionAssert.Contains(aUser.CommentsResolved.ToList(), testingComment);
             User differentUser = User.CreateNewCollaborator("Mario", "Santos",

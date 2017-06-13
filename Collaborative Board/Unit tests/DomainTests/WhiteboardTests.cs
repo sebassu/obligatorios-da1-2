@@ -425,7 +425,7 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void WhiteboardUserCanRemoveAdministratorTest()
         {
-            Administrator someAdministrator = Administrator.NamesEmailBirthdatePassword("Mario",
+            User someAdministrator = User.CreateNewAdministrator("Mario",
                 "Santos", "santos@simuladores.com", DateTime.Today, "DisculpeFuegoTiene");
             Assert.AreNotEqual(someAdministrator, testingWhiteboard.Creator);
             Assert.IsTrue(testingWhiteboard.UserCanRemove(someAdministrator));

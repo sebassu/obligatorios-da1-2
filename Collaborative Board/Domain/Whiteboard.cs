@@ -8,12 +8,14 @@ namespace Domain
 {
     public class Whiteboard
     {
+        public virtual int Id { get; set; }
+
         private const byte minimumWidth = 1;
         private const byte minimumHeight = 1;
 
-        public DateTime CreationDate { get; } = DateTime.Today;
+        public virtual DateTime CreationDate { get; set; } = DateTime.Today;
 
-        public DateTime LastModification { get; private set; }
+        public virtual DateTime LastModification { get; set; }
 
         internal void UpdateModificationDate()
         {
@@ -22,10 +24,10 @@ namespace Domain
         }
 
         private string name;
-        public string Name
+        public virtual string Name
         {
             get { return name; }
-            internal set
+            set
             {
                 if (IsValidName(value))
                 {
@@ -47,10 +49,10 @@ namespace Domain
         }
 
         private string description;
-        public string Description
+        public virtual string Description
         {
             get { return description; }
-            internal set
+            set
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {
@@ -65,10 +67,10 @@ namespace Domain
         }
 
         private int width;
-        public int Width
+        public virtual int Width
         {
             get { return width; }
-            internal set
+            set
             {
                 if (IsValidWidth(value))
                 {
@@ -85,19 +87,19 @@ namespace Domain
         private bool IsValidWidth(int value)
         {
             return value >= minimumWidth &&
-                (Utilities.IsEmpty(contents) || value >= GetMaximumWidthNeededOfComponents());
+                (Utilities.IsEmpty(Contents) || value >= GetMaximumWidthNeededOfComponents());
         }
 
         private double GetMaximumWidthNeededOfComponents()
         {
-            return contents.Max(c => c.WidthContainerNeeded());
+            return Contents.Max(c => c.WidthContainerNeeded());
         }
 
         private int height;
-        public int Height
+        public virtual int Height
         {
             get { return height; }
-            internal set
+            set
             {
                 if (IsValidHeight(value))
                 {
@@ -114,26 +116,26 @@ namespace Domain
         private bool IsValidHeight(int value)
         {
             return value >= minimumWidth &&
-                (Utilities.IsEmpty(contents) || value >= GetMaximumHeightNeededOfComponents());
+                (Utilities.IsEmpty(Contents) || value >= GetMaximumHeightNeededOfComponents());
         }
 
         private double GetMaximumHeightNeededOfComponents()
         {
-            return contents.Max(c => c.HeightContainerNeeded());
+            return Contents.Max(c => c.HeightContainerNeeded());
         }
 
-        public User Creator { get; }
+        public virtual User Creator { get; set; }
 
-        public Team OwnerTeam { get; }
+        public virtual Team OwnerTeam { get; set; }
 
-        private List<ElementWhiteboard> contents = new List<ElementWhiteboard>();
-        public IReadOnlyCollection<ElementWhiteboard> Contents => contents.AsReadOnly();
+        public List<ElementWhiteboard> Contents { get; set; }
+            = new List<ElementWhiteboard>();
 
         internal void AddWhiteboardElement(ElementWhiteboard elementToAdd)
         {
             if (Utilities.IsNotNull(elementToAdd))
             {
-                contents.Add(elementToAdd);
+                Contents.Add(elementToAdd);
             }
             else
             {
@@ -143,7 +145,7 @@ namespace Domain
 
         public void RemoveWhiteboardElement(ElementWhiteboard elementToRemove)
         {
-            bool elementWasRemoved = contents.Remove(elementToRemove);
+            bool elementWasRemoved = Contents.Remove(elementToRemove);
             if (!elementWasRemoved)
             {
                 throw new WhiteboardException(ErrorMessages.NonMemberElement);
@@ -168,7 +170,7 @@ namespace Domain
             return new Whiteboard();
         }
 
-        private Whiteboard()
+        public Whiteboard()
         {
             Creator = User.InstanceForTestingPurposes();
             OwnerTeam = Team.InstanceForTestingPurposes();
@@ -243,7 +245,8 @@ namespace Domain
 
         public override bool Equals(object obj)
         {
-            if (obj is Whiteboard whiteboardToCompareAgainst)
+            Whiteboard whiteboardToCompareAgainst = obj as Whiteboard;
+            if (Utilities.IsNotNull(whiteboardToCompareAgainst))
             {
                 return HasSameOwnerTeam(whiteboardToCompareAgainst)
                     && HasSameName(whiteboardToCompareAgainst);

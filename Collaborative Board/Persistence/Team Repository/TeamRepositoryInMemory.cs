@@ -86,8 +86,6 @@ namespace Persistence
         {
             ValidateActiveUserHasAdministrationPrivileges();
             teamToAddTo = GetActualObjectInCollection(teamToAddTo);
-            UserRepository users = UserRepository.GetInstance();
-            userToAdd = users.GetActualObjectInCollection(userToAdd);
             teamToAddTo.AddMember(userToAdd);
         }
 

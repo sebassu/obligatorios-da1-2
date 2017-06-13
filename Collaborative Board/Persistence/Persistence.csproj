@@ -40,6 +40,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -59,7 +60,7 @@
     <Compile Include="Session.cs" />
     <Compile Include="Team Repository\TeamRepository.cs" />
     <Compile Include="Team Repository\TeamRepositoryInMemory.cs" />
-    <Compile Include="User Repository\UserRepositoryEntityFramework.cs" />
+    <Compile Include="UserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WhiteboardRepository\WhiteboardRepository.cs" />
     <Compile Include="WhiteboardRepository\WhiteboardRepositoryInMemory.cs" />

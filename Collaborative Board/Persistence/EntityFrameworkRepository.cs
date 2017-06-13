@@ -3,6 +3,7 @@ using System.Resources;
 using System.Linq;
 using System.Data.Entity;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 
 [assembly: NeutralResourcesLanguage("es")]
 namespace Persistence
@@ -14,19 +15,19 @@ namespace Persistence
             using (BoardContext context = new BoardContext())
             {
                 var elements = context.Set<T>();
-                if (!elements.Contains(elementToAdd))
+                try
                 {
                     elements.Add(elementToAdd);
                     context.SaveChanges();
                 }
-                else
+                catch (DbUpdateException)
                 {
                     throw new RepositoryException(ErrorMessages.ElementAlreadyExists);
                 }
             }
         }
 
-        protected static List<T> Elements
+        public static List<T> Elements
         {
             get
             {
