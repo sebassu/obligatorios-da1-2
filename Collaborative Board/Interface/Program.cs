@@ -12,10 +12,9 @@ namespace GraphicInterface
         {
             try
             {
-                /*Application.EnableVisualStyles();
+                Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new LogOn());*/
-                UserRepository.AddNewAdministrator("a", "a", "a@a.com", DateTime.Now, "aaa121a2a");
+                Application.Run(new LogOn());
             }
             catch (DataException)
             {
