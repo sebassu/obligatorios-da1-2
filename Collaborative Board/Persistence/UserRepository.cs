@@ -3,7 +3,7 @@ using System;
 using Exceptions;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 
 [assembly: InternalsVisibleTo("UnitTests")]
 namespace Persistence
@@ -13,29 +13,56 @@ namespace Persistence
         public static User AddNewUser(string firstName, string lastName,
             string email, DateTime birthdate, string password)
         {
-            ValidateActiveUserHasAdministrationPrivileges();
-            User userToAdd = User.CreateNewCollaborator(firstName, lastName,
-                email, birthdate, password);
-            Add(userToAdd);
-            return userToAdd;
+            using (var context = new BoardContext())
+            {
+                ValidateActiveUserHasAdministrationPrivileges();
+                if (ThereIsNoUserWithEmail(email))
+                {
+                    User userToAdd = User.CreateNewCollaborator(firstName, lastName,
+                        email, birthdate, password);
+                    Add(context, userToAdd);
+                    return userToAdd;
+                }
+                else
+                {
+                    throw new RepositoryException(ErrorMessages.UserEmailMustBeUnique);
+                }
+            }
         }
 
         public static User AddNewAdministrator(string firstName, string lastName,
             string email, DateTime birthdate, string password)
         {
-            ValidateActiveUserHasAdministrationPrivileges();
-            User UserToAdd = User.CreateNewAdministrator(firstName,
-                lastName, email, birthdate, password);
-            Add(UserToAdd);
-            return UserToAdd;
+            using (var context = new BoardContext())
+            {
+                ValidateActiveUserHasAdministrationPrivileges();
+                if (ThereIsNoUserWithEmail(email))
+                {
+                    User administratorToAdd = User.CreateNewAdministrator(firstName,
+                    lastName, email, birthdate, password);
+                    Add(context, administratorToAdd);
+                    return administratorToAdd;
+                }
+                else
+                {
+                    throw new RepositoryException(ErrorMessages.UserEmailMustBeUnique);
+                }
+            }
         }
 
         public static void ModifyUser(User userToModify, string firstNameToSet, string lastNameToSet,
             string emailToSet, DateTime birthdateToSet, string passwordToSet)
         {
-            ValidateActiveUserHasAdministrationPrivileges();
-            AttemptToSetUserAttributes(userToModify, firstNameToSet, lastNameToSet,
-                emailToSet, birthdateToSet, passwordToSet);
+            try
+            {
+                ValidateActiveUserHasAdministrationPrivileges();
+                AttemptToSetUserAttributes(userToModify, firstNameToSet, lastNameToSet,
+                    emailToSet, birthdateToSet, passwordToSet);
+            }
+            catch (DbUpdateException)
+            {
+                throw new RepositoryException(ErrorMessages.ElementDoesNotExist);
+            }
         }
 
         private static void AttemptToSetUserAttributes(User userToModify, string firstNameToSet,
@@ -43,9 +70,9 @@ namespace Persistence
         {
             using (var context = new BoardContext())
             {
+                AttachIfCorresponds(context, userToModify);
                 if (ChangeDoesNotCauseRepeatedUserEmails(userToModify, emailToSet))
                 {
-                    AttachIfCorresponds(context, userToModify);
                     SetUserAttributes(userToModify, firstNameToSet, lastNameToSet, emailToSet,
                         birthdateToSet, passwordToSet);
                     context.SaveChanges();
@@ -70,12 +97,15 @@ namespace Persistence
         private static bool ChangeDoesNotCauseRepeatedUserEmails(User userToModify, string emailToSet)
         {
             bool emailDoesNotChange = userToModify.Email == emailToSet;
-            return emailDoesNotChange || ThereIsNoTeamWithName(emailToSet);
+            return emailDoesNotChange || ThereIsNoUserWithEmail(emailToSet);
         }
 
-        private static bool ThereIsNoTeamWithName(string emailToSet)
+        private static bool ThereIsNoUserWithEmail(string emailToSet)
         {
-            return !Elements.Any(u => u.Email == emailToSet);
+            using (var context = new BoardContext())
+            {
+                return !context.Users.Any(u => u.Email == emailToSet);
+            }
         }
 
         public static string ResetUsersPassword(User userToModify)
@@ -93,7 +123,7 @@ namespace Persistence
         new public static void Remove(User elementToRemove)
         {
             ValidateActiveUserHasAdministrationPrivileges();
-            if (IsTheOnlyUserLeft(elementToRemove))
+            if (IsTheOnlyAdministratorLeft(elementToRemove))
             {
                 throw new RepositoryException(ErrorMessages.CannotRemoveAllAdministrators);
             }
@@ -114,19 +144,22 @@ namespace Persistence
             }
         }
 
-        private static bool IsTheOnlyUserLeft(User elementToRemove)
+        private static bool IsTheOnlyAdministratorLeft(User elementToRemove)
         {
-            var Users = Elements.Where(u => u.HasAdministrationPrivileges).ToList();
-            return Users.Count == 1 && Users.Single().Equals(elementToRemove);
+            using (var context = new BoardContext())
+            {
+                var administrators = context.Users.Where(u => u.HasAdministrationPrivileges).ToList();
+                return administrators.Count == 1 && administrators.Single().Equals(elementToRemove);
+            }
         }
 
         internal static void InsertOriginalSystemAdministrator()
         {
             using (var context = new BoardContext())
             {
-                if (!HasElements())
+                var elements = context.Users;
+                if (elements.Count() == 0)
                 {
-                    var elements = context.Set<User>();
                     var baseUser = User.CreateNewAdministrator("The", "Administrator",
                         "administrator@tf2.com", DateTime.Today, "Victory");
                     elements.Add(baseUser);

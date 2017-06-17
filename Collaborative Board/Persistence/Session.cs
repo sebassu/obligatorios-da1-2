@@ -53,7 +53,7 @@ namespace Persistence
         }
 
         private static void UpdateLoggedUser(string emailEntered, string passwordEntered,
-            IReadOnlyCollection<User> users)
+            ICollection<User> users)
         {
             activeUser = users.First(u => VerifyLoginDataMatches(u, emailEntered, passwordEntered));
         }

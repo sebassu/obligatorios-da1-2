@@ -8,12 +8,16 @@ namespace Persistence
     {
         public static Team AddNewTeam(string name, string description, int maximumMembers)
         {
-            ValidateActiveUserHasAdministrationPrivileges();
-            User creator = Session.ActiveUser();
-            Team teamToAdd = Team.CreatorNameDescriptionMaximumMembers(creator,
-                name, description, maximumMembers);
-            Add(teamToAdd);
-            return teamToAdd;
+            using (var context = new BoardContext())
+            {
+                ValidateActiveUserHasAdministrationPrivileges();
+                User creator = Session.ActiveUser();
+                EntityFrameworkRepository<User>.AttachIfCorresponds(context, creator);
+                Team teamToAdd = Team.CreatorNameDescriptionMaximumMembers(creator,
+                    name, description, maximumMembers);
+                Add(context, teamToAdd);
+                return teamToAdd;
+            }
         }
 
         public static void ModifyTeam(Team teamToModify, string nameToSet,
