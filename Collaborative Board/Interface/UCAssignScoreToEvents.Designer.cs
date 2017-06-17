@@ -54,7 +54,7 @@
             this.btnAccept.BackColor = System.Drawing.Color.Lime;
             this.btnAccept.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAccept.ForeColor = System.Drawing.Color.White;
-            this.btnAccept.Location = new System.Drawing.Point(341, 397);
+            this.btnAccept.Location = new System.Drawing.Point(281, 406);
             this.btnAccept.Name = "btnAccept";
             this.btnAccept.Size = new System.Drawing.Size(99, 35);
             this.btnAccept.TabIndex = 19;
@@ -66,7 +66,7 @@
             this.btnCancel.BackColor = System.Drawing.Color.Red;
             this.btnCancel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.Location = new System.Drawing.Point(476, 397);
+            this.btnCancel.Location = new System.Drawing.Point(423, 406);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(99, 35);
             this.btnCancel.TabIndex = 20;
@@ -138,37 +138,112 @@
             // numMarkCommentAsSolved
             // 
             this.numMarkCommentAsSolved.Location = new System.Drawing.Point(402, 350);
+            this.numMarkCommentAsSolved.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numMarkCommentAsSolved.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numMarkCommentAsSolved.Name = "numMarkCommentAsSolved";
             this.numMarkCommentAsSolved.Size = new System.Drawing.Size(120, 20);
             this.numMarkCommentAsSolved.TabIndex = 27;
+            this.numMarkCommentAsSolved.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // numAddComment
             // 
             this.numAddComment.Location = new System.Drawing.Point(402, 300);
+            this.numAddComment.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numAddComment.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numAddComment.Name = "numAddComment";
             this.numAddComment.Size = new System.Drawing.Size(120, 20);
             this.numAddComment.TabIndex = 28;
+            this.numAddComment.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // numAddElement
             // 
             this.numAddElement.Location = new System.Drawing.Point(402, 250);
+            this.numAddElement.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numAddElement.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numAddElement.Name = "numAddElement";
             this.numAddElement.Size = new System.Drawing.Size(120, 20);
             this.numAddElement.TabIndex = 29;
+            this.numAddElement.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // numDeleteWhiteboard
             // 
             this.numDeleteWhiteboard.Location = new System.Drawing.Point(402, 195);
+            this.numDeleteWhiteboard.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numDeleteWhiteboard.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numDeleteWhiteboard.Name = "numDeleteWhiteboard";
             this.numDeleteWhiteboard.Size = new System.Drawing.Size(120, 20);
             this.numDeleteWhiteboard.TabIndex = 30;
+            this.numDeleteWhiteboard.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // numCreateWhiteboard
             // 
             this.numCreateWhiteboard.Location = new System.Drawing.Point(402, 145);
+            this.numCreateWhiteboard.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numCreateWhiteboard.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numCreateWhiteboard.Name = "numCreateWhiteboard";
             this.numCreateWhiteboard.Size = new System.Drawing.Size(120, 20);
             this.numCreateWhiteboard.TabIndex = 31;
+            this.numCreateWhiteboard.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // UCAssignScoreToEvents
             // 

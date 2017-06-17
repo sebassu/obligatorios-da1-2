@@ -36,7 +36,6 @@
             this.btnEnter = new System.Windows.Forms.Button();
             this.lblWelcome = new System.Windows.Forms.Label();
             this.picLogin = new System.Windows.Forms.PictureBox();
-            this.btnLoadTestData = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picLogin)).BeginInit();
             this.SuspendLayout();
             // 
@@ -110,18 +109,7 @@
             this.picLogin.TabIndex = 6;
             this.picLogin.TabStop = false;
             // 
-            // btnLoadTestData
-            // 
-            this.btnLoadTestData.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnLoadTestData.Location = new System.Drawing.Point(49, 157);
-            this.btnLoadTestData.Name = "btnLoadTestData";
-            this.btnLoadTestData.Size = new System.Drawing.Size(95, 43);
-            this.btnLoadTestData.TabIndex = 7;
-            this.btnLoadTestData.Text = "Cargar datos de prueba";
-            this.btnLoadTestData.UseVisualStyleBackColor = true;
-            this.btnLoadTestData.Click += new System.EventHandler(this.BtnLoadTestData_Click);
-            // 
-            // Login
+            // LogOn
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -129,7 +117,6 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(518, 220);
-            this.Controls.Add(this.btnLoadTestData);
             this.Controls.Add(this.picLogin);
             this.Controls.Add(this.lblWelcome);
             this.Controls.Add(this.btnEnter);
@@ -137,7 +124,7 @@
             this.Controls.Add(this.lblEmail);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtEmail);
-            this.Name = "Login";
+            this.Name = "LogOn";
             this.Text = "Collaborative Board";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Login_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.picLogin)).EndInit();
@@ -155,7 +142,6 @@
         private System.Windows.Forms.Button btnEnter;
         private System.Windows.Forms.Label lblWelcome;
         private System.Windows.Forms.PictureBox picLogin;
-        private System.Windows.Forms.Button btnLoadTestData;
     }
 }
 
