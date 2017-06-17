@@ -21,31 +21,25 @@ namespace UnitTests.PersistenceTests
 
         private static void AddUserDataTest()
         {
-            if (!UserRepository.HasElements())
-            {
-                UserRepository.InsertOriginalSystemAdministrator();
-                ChangeActiveUser("administrator@tf2.com", "Victory");
-                UserRepository.AddNewAdministrator("Marcos", "Mundstock", 
-                    "mundstock@lesluthiers.com.ar", DateTime.Today, "versiculoLIX");
-                UserRepository.AddNewUser("Jorge Luis", "Maronna",
-                    "maronna@lesluthiers.com.ar", DateTime.Today, "laNocheEstabaOscura");
-                UserRepository.AddNewUser("Carlos Nuñez", "Cortes",
-                    "cortes@lesluthiers.com.ar", DateTime.Today, "YoEraUnInfeliz");
-                UserRepository.AddNewUser("Daniel Abraham", "Rabinovich",
-                    "rabinovich@lesluthiers.com.ar", DateTime.Today, "achicoria");
-                UserRepository.AddNewUser("Carlos", "Lopez Puccio",
-                    "lopezpuccio@lesluthiers.com.ar", DateTime.Today, "horizontal4Letras");
-            }
+            UserRepository.InsertOriginalSystemAdministrator();
+            ChangeActiveUser("administrator@tf2.com", "Victory");
+            UserRepository.AddNewAdministrator("Marcos", "Mundstock",
+                "mundstock@lesluthiers.com.ar", DateTime.Today, "versiculoLIX");
+            UserRepository.AddNewUser("Jorge Luis", "Maronna",
+                "maronna@lesluthiers.com.ar", DateTime.Today, "laNocheEstabaOscura");
+            UserRepository.AddNewUser("Carlos Nuñez", "Cortes",
+                "cortes@lesluthiers.com.ar", DateTime.Today, "YoEraUnInfeliz");
+            UserRepository.AddNewUser("Daniel Abraham", "Rabinovich",
+                "rabinovich@lesluthiers.com.ar", DateTime.Today, "achicoria");
+            UserRepository.AddNewUser("Carlos", "Lopez Puccio",
+                "lopezpuccio@lesluthiers.com.ar", DateTime.Today, "horizontal4Letras");
         }
 
         public static void AddTeamDataTest()
         {
-            if (!TeamRepository.HasElements())
-            {
-                ChangeActiveUser("mundstock@lesluthiers.com.ar", "versiculoLIX");
-                string descriptionToSet = "Grupo de seguidores de Johann Sebastian Maestropiero.";
-                TeamRepository.AddNewTeam("Les Luthiers", descriptionToSet, 5);
-            }
+            ChangeActiveUser("mundstock@lesluthiers.com.ar", "versiculoLIX");
+            string descriptionToSet = "Grupo de seguidores de Johann Sebastian Maestropiero.";
+            TeamRepository.AddNewTeam("Les Luthiers", descriptionToSet, 5);
         }
 
         private static void ChangeActiveUser(string email, string password)
@@ -54,18 +48,17 @@ namespace UnitTests.PersistenceTests
             Session.Start(email, password);
         }
 
-        [TestCleanup]
-        public void TestTeardown()
+        [TestInitialize]
+        public void TestSetup()
         {
-            UserRepository.RemoveAllUsers();
-            TeamRepository.RemoveAllTeams();
+            ChangeActiveUser("mundstock@lesluthiers.com.ar", "versiculoLIX");
         }
 
         [TestMethod]
         public void TRepositoryAddNewTeamValidTest()
         {
             User aUser = Session.ActiveUser();
-            Team teamToVerify = Team.CreatorNameDescriptionMaximumMembers(aUser, "Equipo 1",
+           Team teamToVerify = Team.CreatorNameDescriptionMaximumMembers(aUser, "Equipo 1",
                 "Descripción de equipo.", 20);
             TeamRepository.AddNewTeam("Equipo 1", "Descripción de equipo.", 20);
             CollectionAssert.Contains(TeamRepository.Elements.ToList(), teamToVerify);
@@ -240,7 +233,7 @@ namespace UnitTests.PersistenceTests
         public void TRepositoryModifyTeamCausesRepeatedNameInvalidTest()
         {
             Team addedTeam = TeamRepository.AddNewTeam("E Team", "Crack Commando Unit.", 4);
-            TeamRepository.ModifyTeam(addedTeam, "Les Luthiers", "Otra descripción.", 115);
+            TeamRepository.ModifyTeam(addedTeam, "Another Team", "Otra descripción.", 115);
         }
 
         [TestMethod]
@@ -266,9 +259,9 @@ namespace UnitTests.PersistenceTests
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
         public void TRepositoryAddRepeatedMemberTest()
-        {
+        {//ACAAAAAAAAAAAAAAAAAAAAAAAA
             User repeatedUser = User.CreateNewAdministrator("Marcos", "Mundstock",
-                    "mundstock@lesluthiers.com.ar", DateTime.Today, "versiculoLIX");
+                    "otromundstock@lesluthiers.com.ar", DateTime.Today, "versiculoLIX");
             Team teamToAddTo = TeamRepository.Elements.Single();
             TeamRepository.AddMemberToTeam(teamToAddTo, repeatedUser);
         }
@@ -333,7 +326,7 @@ namespace UnitTests.PersistenceTests
         public void TRepositoryRemoveLastMemberInvalidTest()
         {
             User onlyMember = User.CreateNewAdministrator("Marcos", "Mundstock",
-                    "mundstock@lesluthiers.com.ar", DateTime.Today, "versiculoLIX");
+                    "dosmundstock@lesluthiers.com.ar", DateTime.Today, "versiculoLIX");
             Team teamToRemoveFrom = TeamRepository.Elements.Single();
             TeamRepository.RemoveMemberFromTeam(teamToRemoveFrom, onlyMember);
         }
@@ -343,8 +336,8 @@ namespace UnitTests.PersistenceTests
         public void UTRepositoryRemoveLastMemberWhenRemovingUserInvalidTest()
         {
             User onlyMember = User.CreateNewAdministrator("Marcos", "Mundstock",
-                    "mundstock@lesluthiers.com.ar", DateTime.Today, "versiculoLIX");
-            ChangeActiveUser("mundstock@lesluthiers.com.ar", "versiculoLIX");
+                    "tresmundstock@lesluthiers.com.ar", DateTime.Today, "versiculoLIX");
+            ChangeActiveUser("tresmundstock@lesluthiers.com.ar", "versiculoLIX");
             string descriptionToSet = "Falsos luthiers descripción.";
             TeamRepository.AddNewTeam("Falsos Luthiers", descriptionToSet, 4);
             UserRepository.Remove(onlyMember);

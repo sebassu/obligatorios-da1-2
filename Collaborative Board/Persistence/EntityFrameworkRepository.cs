@@ -14,15 +14,15 @@ namespace Persistence
         protected static void Add(BoardContext context, T elementToAdd)
         {
             var elements = context.Set<T>();
-            try
-            {
+           /* try
+            {*/
                 elements.Add(elementToAdd);
                 context.SaveChanges();
-            }
+          /*  }
             catch (DbUpdateException)
             {
                 throw new RepositoryException(ErrorMessages.ElementAlreadyExists);
-            }
+            }*/
         }
 
         public static List<T> Elements

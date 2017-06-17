@@ -1,5 +1,6 @@
 ﻿using Domain;
 using Exceptions;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 
 namespace Persistence
@@ -11,21 +12,35 @@ namespace Persistence
             using (var context = new BoardContext())
             {
                 ValidateActiveUserHasAdministrationPrivileges();
-                User creator = Session.ActiveUser();
-                EntityFrameworkRepository<User>.AttachIfCorresponds(context, creator);
-                Team teamToAdd = Team.CreatorNameDescriptionMaximumMembers(creator,
-                    name, description, maximumMembers);
-                Add(context, teamToAdd);
-                return teamToAdd;
+                if (ThereIsNoTeamWithName(name))
+                {
+                    User creator = Session.ActiveUser();
+                    EntityFrameworkRepository<User>.AttachIfCorresponds(context, creator);
+                    Team teamToAdd = Team.CreatorNameDescriptionMaximumMembers(creator,
+                        name, description, maximumMembers);
+                    Add(context, teamToAdd);
+                    return teamToAdd;
+                }
+                else
+                {
+                    throw new RepositoryException(ErrorMessages.TeamNameMustBeUnique);
+                }
             }
         }
 
         public static void ModifyTeam(Team teamToModify, string nameToSet,
             string descriptionToSet, int maximumMembersToSet)
         {
-            ValidateActiveUserHasAdministrationPrivileges();
-            AttemptToSetTeamAttributes(teamToModify, nameToSet, descriptionToSet,
-                maximumMembersToSet);
+            try
+            {
+                ValidateActiveUserHasAdministrationPrivileges();
+                AttemptToSetTeamAttributes(teamToModify, nameToSet, descriptionToSet,
+                    maximumMembersToSet);
+            }
+            catch (DbUpdateException)
+            {
+                throw new RepositoryException(ErrorMessages.ElementDoesNotExist);
+            }
         }
 
         private static void AttemptToSetTeamAttributes(Team teamToModify, string nameToSet,
@@ -63,11 +78,15 @@ namespace Persistence
 
         private static bool ThereIsNoTeamWithName(string nameToSet)
         {
-            return !Elements.Any(t => t.Name == nameToSet);
+            using (var context = new BoardContext())
+            {
+                return !context.Teams.Any(t => t.Name == nameToSet);
+            }
         }
 
         new public static void Remove(Team elementToRemove)
         {
+            ValidateActiveUserHasAdministrationPrivileges();
             if (Utilities.IsNotNull(elementToRemove))
             {
                 RemoveAllTeamWhiteboardsFromRepository(elementToRemove);
