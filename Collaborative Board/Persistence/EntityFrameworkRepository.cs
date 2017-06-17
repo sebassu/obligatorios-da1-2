@@ -1,4 +1,5 @@
-﻿using Exceptions;
+﻿using Domain;
+using Exceptions;
 using System.Resources;
 using System.Linq;
 using System.Data.Entity;
@@ -10,20 +11,17 @@ namespace Persistence
 {
     public abstract class EntityFrameworkRepository<T> where T : class
     {
-        protected static void Add(T elementToAdd)
+        protected static void Add(BoardContext context, T elementToAdd)
         {
-            using (BoardContext context = new BoardContext())
+            var elements = context.Set<T>();
+            try
             {
-                var elements = context.Set<T>();
-                try
-                {
-                    elements.Add(elementToAdd);
-                    context.SaveChanges();
-                }
-                catch (DbUpdateException)
-                {
-                    throw new RepositoryException(ErrorMessages.ElementAlreadyExists);
-                }
+                elements.Add(elementToAdd);
+                context.SaveChanges();
+            }
+            catch (DbUpdateException)
+            {
+                throw new RepositoryException(ErrorMessages.ElementAlreadyExists);
             }
         }
 
@@ -39,41 +37,37 @@ namespace Persistence
             }
         }
 
-        public static DbSet<T> DbElements
-        {
-            get
-            {
-                using (BoardContext context = new BoardContext())
-                {
-                    return context.Set<T>();
-                }
-            }
-        }
-
-        public static bool HasElements()
-        {
-            using (BoardContext context = new BoardContext())
-            {
-                return !context.Set<T>().Any();
-            }
-        }
-
         public static void Remove(T elementToRemove)
         {
             using (BoardContext context = new BoardContext())
             {
-                var elements = context.Set<T>();
-                elements.Remove(elementToRemove);
-                context.SaveChanges();
+                try
+                {
+                    var elements = context.Set<T>();
+                    AttachIfCorresponds(context, elementToRemove);
+                    elements.Remove(elementToRemove);
+                    context.SaveChanges();
+                }
+                catch (DbUpdateException)
+                {
+                    throw new RepositoryException(ErrorMessages.ElementDoesNotExist);
+                }
             }
+
         }
 
         protected static void AttachIfCorresponds(BoardContext context, T element)
         {
             var elements = context.Set<T>();
-            if (context.Entry(element).State == EntityState.Detached)
+            bool IsValidElement = Utilities.IsNotNull(element) &&
+                context.Entry(element).State == EntityState.Detached;
+            if (IsValidElement)
             {
                 elements.Attach(element);
+            }
+            else
+            {
+                throw new RepositoryException(ErrorMessages.ElementDoesNotExist);
             }
         }
 

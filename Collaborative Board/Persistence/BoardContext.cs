@@ -24,7 +24,6 @@ namespace Persistence
 
         private static void SetUsersConfiguration(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().HasKey(u => u.Email);
             modelBuilder.Entity<Team>().HasKey(t => t.Name);
             modelBuilder.Entity<ElementWhiteboard>().Ignore(e => e.Position);
             modelBuilder.Entity<ElementWhiteboard>().Ignore(e => e.Dimensions);

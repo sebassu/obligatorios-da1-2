@@ -13,6 +13,8 @@ namespace Domain
     public class User
     {
 
+        public virtual int Id { get; set; }
+
         private string firstName;
         public virtual string FirstName
         {

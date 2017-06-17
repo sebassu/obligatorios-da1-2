@@ -21,9 +21,10 @@ namespace GraphicInterface
 
         private void LoadTeamComobox()
         {
-            if (TeamRepository.HasElements())
+            var elementsToAdd = TeamRepository.Elements.ToArray();
+            if (elementsToAdd.Length > 0)
             {
-                cmbTeams.Items.AddRange(TeamRepository.Elements.ToArray());
+                cmbTeams.Items.AddRange(elementsToAdd);
                 cmbTeams.SelectedIndex = 0;
             }
             else

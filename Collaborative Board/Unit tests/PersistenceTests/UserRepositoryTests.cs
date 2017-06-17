@@ -5,6 +5,7 @@ using System.Linq;
 using Persistence;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Threading;
 
 namespace UnitTests.PersistenceTests
 {
@@ -12,22 +13,17 @@ namespace UnitTests.PersistenceTests
     [ExcludeFromCodeCoverage]
     public class UserDirectoryInMemoryTests
     {
-        [TestInitialize]
-        public void TestSetup()
-        {
-            if (!UserRepository.HasElements())
-            {
-                UserRepository.InsertOriginalSystemAdministrator();
-                UserRepository.AddNewAdministrator("Mario", "Santos", "santos@simuladores.com",
-                    new DateTime(4, 10, 1966), "DisculpeFuegoTiene");
-            }
-            ChangeActiveUser("santos@simuladores.com", "DisculpeFuegoTiene");
-        }
+        private static User secondAdministrator;
 
-        [TestCleanup]
-        public void TestTeardown()
+        [ClassInitialize]
+        public static void ClassSetup(TestContext context)
         {
-            UserRepository.RemoveAllUsers();
+            UserRepository.InsertOriginalSystemAdministrator();
+            ChangeActiveUser("administrator@tf2.com", "Victory");
+            secondAdministrator = UserRepository.AddNewAdministrator("Mario",
+                "Santos", "santos@simuladores.com", DateTime.Today, "DisculpeFuegoTiene");
+            UserRepository.AddNewUser("Emilio", "Ravenna", "ravenna@simuladores.com",
+                 DateTime.Today, "HablarUnasPalabritas");
         }
 
         private static void ChangeActiveUser(string email, string password)
@@ -36,23 +32,19 @@ namespace UnitTests.PersistenceTests
             Session.Start(email, password);
         }
 
-        [TestMethod]
-        public void URepositoryNewDirectoryHasOnlyOriginalAdministratorTest()
+        [TestInitialize]
+        public void TestSetup()
         {
-            User expectedMember = User.CreateNewAdministrator("The",
-                "Administrator", "administrator@tf2.com", DateTime.Today, "Victory");
-            var users = UserRepository.Elements;
-            Assert.AreEqual(1, users.Count());
-            Assert.AreEqual(expectedMember, users.Single());
+            ChangeActiveUser("santos@simuladores.com", "DisculpeFuegoTiene");
         }
 
         [TestMethod]
         public void URepositoryAddNewUserValidTest()
         {
             User userToVerify = User.CreateNewCollaborator("Pablo", "Lamponne",
-                "lamponne@simuladores.com", DateTime.Today, "MúsicaSuperDivertida");
+                "lamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
             UserRepository.AddNewUser("Pablo", "Lamponne ",
-                "lamponne@simuladores.com", DateTime.Today, "MúsicaSuperDivertida");
+                "lamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
             CollectionAssert.Contains(UserRepository.Elements.ToList(), userToVerify);
         }
 
@@ -60,7 +52,7 @@ namespace UnitTests.PersistenceTests
         public void URepositoryAddNewUserReturnsAddedUserValidTest()
         {
             User addedUser = UserRepository.AddNewUser("Pablo", "Lamponne ",
-                "lamponne@simuladores.com", DateTime.Today, "MúsicaSuperDivertida");
+                "segundolamponne@simuladores.com", DateTime.Today, "MúsicaSuperDivertida");
             CollectionAssert.Contains(UserRepository.Elements.ToList(), addedUser);
         }
 
@@ -70,7 +62,7 @@ namespace UnitTests.PersistenceTests
         {
             ChangeActiveUser("ravenna@simuladores.com", "HablarUnasPalabritas");
             UserRepository.AddNewUser("Pablo", "Lamponne ",
-                "lamponne@simuladores.com", DateTime.Today, "MúsicaSuperDivertida");
+                "tercerlamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
         }
 
         [TestMethod]
@@ -79,7 +71,7 @@ namespace UnitTests.PersistenceTests
             User userToVerify = User.InstanceForTestingPurposes();
             userToVerify.Email = "lamponne@simuladores.com";
             UserRepository.AddNewUser("Pablo", "Lamponne",
-                "lamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
+                "cuartolamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
             CollectionAssert.Contains(UserRepository.Elements.ToList(), userToVerify);
         }
 
@@ -88,9 +80,9 @@ namespace UnitTests.PersistenceTests
         public void URepositoryAddRepeatedUserInvalidTest()
         {
             UserRepository.AddNewUser("Pablo", "Lamponne",
-                "lamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
+                "quintolamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
             UserRepository.AddNewUser("Pablo", "Lamponne",
-                "lamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
+                "quintolamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
         }
 
         [TestMethod]
@@ -99,8 +91,8 @@ namespace UnitTests.PersistenceTests
         {
             UserRepository.AddNewUser("Pablo", "Lamponne",
                 "mail@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
-            UserRepository.AddNewUser("Pablo", "Lamponne",
-                "mail@simuladores.com", DateTime.Now, "NoHaceFaltaSaleSolo");
+            UserRepository.AddNewUser("Gabriel David", "Medina",
+                "mail@simuladores.com", DateTime.Now, "MusicaSuperDivertida");
         }
 
         [TestMethod]
@@ -115,8 +107,8 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(UserException))]
         public void URepositoryAddNewUserInvalidLastNameTest()
         {
-            UserRepository.AddNewUser("Gabriel David", "*$ 563a%7*/0&d!@",
-                "medina@simuladores.com", DateTime.Today, "MúsicaSuperDivertida");
+            UserRepository.AddNewUser("Gabriel David", "*$ 563a%7*//*0&d!@",
+                "xyz@simuladores.com", DateTime.Today, "MúsicaSuperDivertida");
         }
 
         [TestMethod]
@@ -147,9 +139,9 @@ namespace UnitTests.PersistenceTests
         public void URepositoryAddNewAdministratorValidTest()
         {
             User administratorToVerify = User.CreateNewAdministrator("Pablo",
-                "Lamponne", "lamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
+                "Lamponne", "septimolamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
             UserRepository.AddNewAdministrator("Pablo", "Lamponne ",
-                "lamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
+                "septimolamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
             CollectionAssert.Contains(UserRepository.Elements.ToList(),
                 administratorToVerify);
         }
@@ -158,7 +150,7 @@ namespace UnitTests.PersistenceTests
         public void URepositoryAddNewAdministratorReturnsAddedAdministratorValidTest()
         {
             User addedAdministrator = UserRepository.AddNewAdministrator("Pablo",
-                "Lamponne ", "lamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
+                "Lamponne ", "octavolamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
             CollectionAssert.Contains(UserRepository.Elements.ToList(), addedAdministrator);
         }
 
@@ -168,7 +160,7 @@ namespace UnitTests.PersistenceTests
             User administratorToVerify = User.InstanceForTestingPurposes();
             administratorToVerify.Email = "lamponne@simuladores.com";
             UserRepository.AddNewAdministrator("Pablo", "Lamponne",
-                "lamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
+                "novenolamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
             CollectionAssert.Contains(UserRepository.Elements.ToList(),
                 administratorToVerify);
         }
@@ -178,9 +170,10 @@ namespace UnitTests.PersistenceTests
         public void URepositoryAddRepeatedAdministratorInvalidTest()
         {
             UserRepository.AddNewAdministrator("Pablo", "Lamponne",
-                "lamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
+                "decimolamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
+            Thread.Sleep(200);
             UserRepository.AddNewAdministrator("Pablo", "Lamponne",
-                "lamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
+                "decimolamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
         }
 
         [TestMethod]
@@ -188,9 +181,9 @@ namespace UnitTests.PersistenceTests
         public void URepositoryAddNewAdministratorRepeatedMailInvalidTest()
         {
             UserRepository.AddNewAdministrator("Pablo", "Lamponne",
-                "mail@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
-            UserRepository.AddNewAdministrator("Pablo", "Lamponne",
-                "mail@simuladores.com", DateTime.Now, "NoHaceFaltaSaleSolo");
+                "mail2@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
+            UserRepository.AddNewAdministrator("Gabriel David", "Medina",
+                "mail2@simuladores.com", DateTime.Now, "MusicaSuperDivertida");
         }
 
         [TestMethod]
@@ -198,15 +191,15 @@ namespace UnitTests.PersistenceTests
         public void URepositoryAddNewAdministratorInvalidFirstNameTest()
         {
             UserRepository.AddNewAdministrator("1d2@#!9 #(", "Medina",
-                "medina@simuladores.com", DateTime.Today, "MúsicaSuperDivertida");
+                "gmedina@simuladores.com", DateTime.Today, "MúsicaSuperDivertida");
         }
 
         [TestMethod]
         [ExpectedException(typeof(UserException))]
         public void URepositoryAddNewAdministratorInvalidLastNameTest()
         {
-            UserRepository.AddNewAdministrator("Gabriel David", "*$ 563a%7*/0&d!@",
-                "medina@simuladores.com", DateTime.Today, "MúsicaSuperDivertida");
+            UserRepository.AddNewAdministrator("Gabriel David", "*$ 563a%7*//*0&d!@",
+                "gdmedina@simuladores.com", DateTime.Today, "MúsicaSuperDivertida");
         }
 
         [TestMethod]
@@ -222,7 +215,7 @@ namespace UnitTests.PersistenceTests
         public void URepositoryAddNewAdministratorInvalidBirthdateTest()
         {
             UserRepository.AddNewAdministrator("Gabriel David", "Medina",
-                "medina@simuladores.com", DateTime.MaxValue, "MúsicaSuperDivertida");
+                "anidem@simuladores.com", DateTime.MaxValue, "MúsicaSuperDivertida");
         }
 
         [TestMethod]
@@ -230,15 +223,13 @@ namespace UnitTests.PersistenceTests
         public void URepositoryAddNewAdministratorInvalidPasswordTest()
         {
             UserRepository.AddNewAdministrator("Gabriel David", "Medina",
-                "medina@simuladores.com", DateTime.Today, "*#1/-asd$ !@^9");
+                "anidemg@simuladores.com", DateTime.Today, "*#1/-asd$ !@^9");
         }
 
         [TestMethod]
         public void URepositoryRemoveUserValidTest()
         {
-            User userToVerify = User.CreateNewCollaborator("Gabriel David", "Medina",
-                "medina@simuladores.com", DateTime.Today, "MúsicaSuperDivertida");
-            UserRepository.AddNewUser("Gabriel David", "Medina",
+            User userToVerify = UserRepository.AddNewUser("Gabriel David", "Medina",
                 "medina@simuladores.com", DateTime.Today, "MúsicaSuperDivertida");
             UserRepository.Remove(userToVerify);
             CollectionAssert.DoesNotContain(UserRepository.Elements.ToList(), userToVerify);
@@ -247,10 +238,8 @@ namespace UnitTests.PersistenceTests
         [TestMethod]
         public void URepositoryRemoveUserAdministratorValidTest()
         {
-            User administratorToVerify = User.CreateNewAdministrator("Gabriel David",
-                "Medina", "medina@simuladores.com", DateTime.Today, "MúsicaSuperDivertida");
-            UserRepository.AddNewUser("Gabriel David", "Medina",
-                "medina@simuladores.com", DateTime.Today, "MúsicaSuperDivertida");
+            User administratorToVerify = UserRepository.AddNewAdministrator("Gabriel David",
+                "Medina", "segundomedina@simuladores.com", DateTime.Today, "MúsicaSuperDivertida");
             UserRepository.Remove(administratorToVerify);
             CollectionAssert.DoesNotContain(UserRepository.Elements.ToList(),
                 administratorToVerify);
@@ -265,35 +254,30 @@ namespace UnitTests.PersistenceTests
 
         [TestMethod]
         [ExpectedException(typeof(RepositoryException))]
-        public void URepositoryRemoveUserNotInDirectoryInvalidTest()
+        public void URepositoryRemoveUserNotInRepositoryInvalidTest()
         {
             User userToVerify = User.CreateNewCollaborator("Gabriel David", "Medina",
-                "medina@simuladores.com", DateTime.Today, "MúsicaSuperDivertida");
+                "tercermedina@simuladores.com", DateTime.Today, "MúsicaSuperDivertida");
             UserRepository.Remove(userToVerify);
         }
 
         [TestMethod]
-        public void URepositoryRemoveOriginalAdministratorLeavingOnlyOneLeftTest()
+        public void URepositoryRemoveAdministratorLeavingOnlyOneLeftTest()
         {
+            UserRepository.Remove(secondAdministrator);
+            CollectionAssert.DoesNotContain(UserRepository.Elements, secondAdministrator);
             UserRepository.AddNewAdministrator("Mario", "Santos",
-                "santos@simuladores.com", DateTime.Today, "contraseñaVálida123");
-            User originalAdministrator = User.CreateNewAdministrator("The",
-                "Administrator", "administrator@tf2.com", DateTime.Today, "Victory");
-            UserRepository.Remove(originalAdministrator);
+                "santos@simuladores.com", DateTime.Today, "DisculpeFuegoTiene");
         }
 
         [TestMethod]
         [ExpectedException(typeof(RepositoryException))]
         public void URepositoryTryToRemoveAllAdministratorsTest()
         {
+            var users = UserRepository.Elements;
+            UserRepository.Remove(users.Last());
             UserRepository.AddNewAdministrator("Mario", "Santos",
                 "santos@simuladores.com", DateTime.Today, "DisculpeFuegoTiene");
-            var users = UserRepository.Elements;
-            var administrators = users.Where(u => u.HasAdministrationPrivileges).ToList();
-            foreach (var administrator in administrators)
-            {
-                UserRepository.Remove(administrator);
-            }
         }
 
         [TestMethod]
@@ -301,11 +285,11 @@ namespace UnitTests.PersistenceTests
         {
             User userToVerify = UserRepository.Elements.First();
             UserRepository.ModifyUser(userToVerify, "Gabriel David", "Medina",
-                "medina@simuladores.com", DateTime.MinValue, "MúsicaSuperDivertida");
+             "algunmail@simuladores.com", new DateTime(1990, 11, 25), "MúsicaSuperDivertida");
             Assert.AreEqual("Gabriel David", userToVerify.FirstName);
             Assert.AreEqual("Medina", userToVerify.LastName);
-            Assert.AreEqual("medina@simuladores.com", userToVerify.Email);
-            Assert.AreEqual(DateTime.MinValue, userToVerify.Birthdate);
+            Assert.AreEqual("algunmail@simuladores.com", userToVerify.Email);
+            Assert.AreEqual(new DateTime(1990, 11, 25), userToVerify.Birthdate);
             Assert.AreEqual("MúsicaSuperDivertida", userToVerify.Password);
         }
 
@@ -332,17 +316,17 @@ namespace UnitTests.PersistenceTests
         public void URepositoryModifyNullUserInvalidTest()
         {
             UserRepository.ModifyUser(null, "Gabriel David", "Medina",
-                "medina@simuladores.com", DateTime.MinValue, "MúsicaSuperDivertida");
+                "quintomedina@simuladores.com", DateTime.MinValue, "MúsicaSuperDivertida");
         }
 
         [TestMethod]
         [ExpectedException(typeof(RepositoryException))]
         public void URepositoryModifyNotAddedUserInvalidTest()
         {
-            User NotAddedUser = User.CreateNewCollaborator("Pablo", "Lamponne",
-                "lamponne@simuladores.com", DateTime.Today, "MúsicaSuperDivertida");
-            UserRepository.ModifyUser(NotAddedUser, "Gabriel David", "Medina",
-                "medina@simuladores.com", DateTime.MinValue, "MúsicaSuperDivertida");
+            User notAddedUser = User.CreateNewCollaborator("Pablo", "Lamponne",
+                "plamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
+            UserRepository.ModifyUser(notAddedUser, "Gabriel David", "Medina",
+               "algunMedina@simuladores.com", DateTime.MinValue, "MúsicaSuperDivertida");
         }
 
         [TestMethod]
@@ -350,8 +334,8 @@ namespace UnitTests.PersistenceTests
         public void URepositoryModifyUserInvalidFirstNameTest()
         {
             User addedUser = UserRepository.Elements.First();
-            UserRepository.ModifyUser(addedUser, "4%# !sf*!@#9", "Medina",
-                "medina@simuladores.com", DateTime.MinValue, "MúsicaSuperDivertida");
+            UserRepository.ModifyUser(addedUser, "4%# !sf*!@#9", addedUser.LastName,
+                addedUser.Email, addedUser.Birthdate, addedUser.Password);
         }
 
         [TestMethod]
@@ -359,8 +343,8 @@ namespace UnitTests.PersistenceTests
         public void URepositoryModifyUserInvalidLastNameTest()
         {
             User addedUser = UserRepository.Elements.First();
-            UserRepository.ModifyUser(addedUser, "Gabriel David", "a#$%s 9 $^!!12",
-                "medina@simuladores.com", DateTime.MinValue, "MúsicaSuperDivertida");
+            UserRepository.ModifyUser(addedUser, addedUser.FirstName, "a#$%s 9 $^!!12",
+                addedUser.Email, addedUser.Birthdate, addedUser.Password);
         }
 
         [TestMethod]
@@ -368,8 +352,8 @@ namespace UnitTests.PersistenceTests
         public void URepositoryModifyUserInvalidEmailTest()
         {
             User addedUser = UserRepository.Elements.First();
-            UserRepository.ModifyUser(addedUser, "Gabriel David", "Medina",
-                "!!12345 6789!!", DateTime.MinValue, "MúsicaSuperDivertida");
+            UserRepository.ModifyUser(addedUser, addedUser.FirstName, addedUser.LastName,
+                "!!12345 6789!!", addedUser.Birthdate, addedUser.Password);
         }
 
         [TestMethod]
@@ -377,8 +361,8 @@ namespace UnitTests.PersistenceTests
         public void URepositoryModifyUserInvalidBirthdateTest()
         {
             User addedUser = UserRepository.Elements.First();
-            UserRepository.ModifyUser(addedUser, "Gabriel David", "Medina",
-                "medina@simuladores.com", DateTime.MaxValue, "MúsicaSuperDivertida");
+            UserRepository.ModifyUser(addedUser, addedUser.FirstName, addedUser.LastName,
+                 addedUser.Email, DateTime.MaxValue, addedUser.Password);
         }
 
         [TestMethod]
@@ -386,45 +370,25 @@ namespace UnitTests.PersistenceTests
         public void URepositoryModifyUserInvalidPasswordTest()
         {
             User addedUser = UserRepository.Elements.First();
-            UserRepository.ModifyUser(addedUser, "Gabriel David", "Medina",
-                "medina@simuladores.com", DateTime.MaxValue, "a &#^ 12&$!!/*- ");
+            UserRepository.ModifyUser(addedUser, addedUser.FirstName, addedUser.LastName,
+                 addedUser.Email, addedUser.Birthdate, "a &#^ 12&$!!/*- ");
         }
 
         [TestMethod]
         [ExpectedException(typeof(RepositoryException))]
         public void URepositoryModifyUserCausesRepeatedEmailInvalidTest()
         {
-            UserRepository.AddNewUser("Mario", "Santos",
-                "santos@simuladores.com", DateTime.Today, "DisculpeFuegoTiene");
             User userToModify = UserRepository.AddNewUser("Pablo", "Lamponne",
-                "lamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
-            UserRepository.ModifyUser(userToModify, "Gabriel David", "Medina",
-                "santos@simuladores.com", DateTime.MinValue, "MúsicaSuperDivertida");
-        }
-
-        [TestMethod]
-        public void URepositoryHasElementsOneElementTest()
-        {
-            UserRepository.AddNewUser("Pablo", "Lamponne",
-                "lamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
-            Assert.IsTrue(UserRepository.HasElements());
-        }
-
-        [TestMethod]
-        public void URepositoryHasElementsTwoElementsTest()
-        {
-            UserRepository.AddNewUser("Pablo", "Lamponne",
-                "lamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
-            UserRepository.AddNewUser("Gabriel David", "Medina",
-                "medina@simuladores.com", DateTime.Today, "MúsicaSuperDivertida");
-            Assert.IsTrue(UserRepository.HasElements());
+                "algunlamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
+            UserRepository.ModifyUser(userToModify, "Mario", "Santos",
+                "santos@simuladores.com", DateTime.MinValue, "DisculpeFuegoTiene");
         }
 
         [TestMethod]
         public void URepositoryResetUsersPasswordValidTest()
         {
             User addedUser = UserRepository.AddNewUser("Pablo", "Lamponne ",
-                "lamponne@simuladores.com", DateTime.Today, "MúsicaSuperDivertida");
+                "algunotrolamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
             string newPassword = UserRepository.ResetUsersPassword(addedUser);
             Assert.AreEqual(newPassword, addedUser.Password);
         }
@@ -442,7 +406,7 @@ namespace UnitTests.PersistenceTests
         {
             ChangeActiveUser("ravenna@simuladores.com", "HablarUnasPalabritas");
             User addedUser = UserRepository.AddNewUser("Pablo", "Lamponne ",
-                "lamponne@simuladores.com", DateTime.Today, "MúsicaSuperDivertida");
+                "ultimolamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
             UserRepository.ResetUsersPassword(addedUser);
         }
     }

@@ -10,11 +10,15 @@ namespace Persistence
         public static Whiteboard AddNewWhiteboard(string name, string description,
             Team ownerTeam, int width, int height)
         {
-            User creator = Session.ActiveUser();
-            Whiteboard whiteboardToAdd = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
-                name, description, ownerTeam, width, height);
-            Add(whiteboardToAdd);
-            return whiteboardToAdd;
+            using (var context = new BoardContext())
+            {
+                User creator = Session.ActiveUser();
+                Whiteboard whiteboardToAdd = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
+                    name, description, ownerTeam, width, height);
+                EntityFrameworkRepository<Team>.AttachIfCorresponds(context, ownerTeam);
+                Add(context, whiteboardToAdd);
+                return whiteboardToAdd;
+            }
         }
 
         public static void ModifyWhiteboard(Whiteboard whiteboardToModify,
