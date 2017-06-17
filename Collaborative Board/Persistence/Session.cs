@@ -36,7 +36,6 @@ namespace Persistence
             {
                 LoginUserWithData(emailEntered, passwordEntered);
             }
-
         }
 
         private static void LoginUserWithData(string emailEntered, string passwordEntered)

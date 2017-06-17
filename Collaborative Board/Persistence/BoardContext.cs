@@ -31,6 +31,13 @@ namespace Persistence
             modelBuilder.Entity<TextBoxWhiteboard>().Ignore(t => t.TextFont);
         }
 
+        internal void DeleteAllData()
+        {
+            Database.ExecuteSqlCommand("delete from whiteboards");
+            Database.ExecuteSqlCommand("delete from teams");
+            Database.ExecuteSqlCommand("delete from users");
+        }
+
         internal void RemoveAllUsers()
         {
             Database.ExecuteSqlCommand("delete from Users");
