@@ -92,7 +92,7 @@ namespace GraphicInterface
         private void LoadRegisteredTeams()
         {
             lstTeams.Clear();
-            var globalTeams = TeamRepository.GetInstance().Elements.ToList();
+            var globalTeams = TeamRepository.Elements.ToList();
             if (globalTeams.Count() > 0)
             {
                 foreach (Team oneTeam in globalTeams)
@@ -149,8 +149,7 @@ namespace GraphicInterface
 
         private void DeleteTeam(Team oneTeam)
         {
-            TeamRepository globalTeams = TeamRepository.GetInstance();
-            globalTeams.Remove(oneTeam);
+            TeamRepository.Remove(oneTeam);
             LoadRegisteredTeams();
             InterfaceUtilities.SuccessfulOperation();
         }

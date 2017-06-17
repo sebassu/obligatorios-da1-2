@@ -1,14 +1,13 @@
 ﻿using Domain;
 using Exceptions;
-using System.Linq;
 using System.Globalization;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace Persistence
 {
-    public class WhiteboardRepositoryInMemory : WhiteboardRepository
+    public abstract class WhiteboardRepository : EntityFrameworkRepository<Whiteboard>
     {
-        public override Whiteboard AddNewWhiteboard(string name, string description,
+        public static Whiteboard AddNewWhiteboard(string name, string description,
             Team ownerTeam, int width, int height)
         {
             User creator = Session.ActiveUser();
@@ -18,11 +17,10 @@ namespace Persistence
             return whiteboardToAdd;
         }
 
-        public override void ModifyWhiteboard(Whiteboard whiteboardToModify,
+        public static void ModifyWhiteboard(Whiteboard whiteboardToModify,
             string nameToSet, string descriptionToSet, int widthToSet, int heightToSet)
         {
             User activeUser = Session.ActiveUser();
-            whiteboardToModify = GetActualObjectInCollection(whiteboardToModify);
             if (whiteboardToModify.UserCanModify(activeUser))
             {
                 AttemptToSetWhiteboardAttributes(whiteboardToModify, nameToSet, descriptionToSet,
@@ -34,20 +32,25 @@ namespace Persistence
             }
         }
 
-        private void AttemptToSetWhiteboardAttributes(Whiteboard whiteboardToModify,
+        private static void AttemptToSetWhiteboardAttributes(Whiteboard whiteboardToModify,
             string nameToSet, string descriptionToSet, int widthToSet, int heightToSet)
         {
-            if (ChangeDoesNotCauseSameWhiteboardNameAndTeam(whiteboardToModify, nameToSet))
+            using (var context = new BoardContext())
             {
-                SetWhiteboardAttributes(whiteboardToModify, nameToSet, descriptionToSet,
-                    widthToSet, heightToSet);
-            }
-            else
-            {
-                string ownerTeamName = whiteboardToModify.OwnerTeam.Name;
-                string errorMessage = string.Format(CultureInfo.CurrentCulture,
-                    ErrorMessages.WhiteboardNameTeamMustBeUnique, ownerTeamName, nameToSet);
-                throw new RepositoryException(errorMessage);
+                if (ChangeDoesNotCauseSameWhiteboardNameAndTeam(whiteboardToModify, nameToSet))
+                {
+                    AttachIfCorresponds(context, whiteboardToModify);
+                    SetWhiteboardAttributes(whiteboardToModify, nameToSet, descriptionToSet,
+                        widthToSet, heightToSet);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    string ownerTeamName = whiteboardToModify.OwnerTeam.Name;
+                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                        ErrorMessages.WhiteboardNameTeamMustBeUnique, ownerTeamName, nameToSet);
+                    throw new RepositoryException(errorMessage);
+                }
             }
         }
 
@@ -60,7 +63,7 @@ namespace Persistence
             whiteboardToModify.Height = heightToSet;
         }
 
-        private bool ChangeDoesNotCauseSameWhiteboardNameAndTeam(Whiteboard whiteboardToModify,
+        private static bool ChangeDoesNotCauseSameWhiteboardNameAndTeam(Whiteboard whiteboardToModify,
             string nameToSet)
         {
             bool nameDoesNotChange = whiteboardToModify.Name == nameToSet;
@@ -68,9 +71,13 @@ namespace Persistence
                 ThereIsNoWhiteboardWithNameAndTeam(whiteboardToModify.OwnerTeam, nameToSet);
         }
 
-        private bool ThereIsNoWhiteboardWithNameAndTeam(Team ownerTeam, string nameToSet)
+        private static bool ThereIsNoWhiteboardWithNameAndTeam(Team ownerTeam, string nameToSet)
         {
-            return !elements.Any(w => OwnerTeamAndNameEqual(ownerTeam, nameToSet, w));
+            using (BoardContext context = new BoardContext())
+            {
+                var elements = context.Whiteboards;
+                return !elements.Any(w => OwnerTeamAndNameEqual(ownerTeam, nameToSet, w));
+            }
         }
 
         private static bool OwnerTeamAndNameEqual(Team ownerTeam, string nameToSet,
@@ -80,7 +87,7 @@ namespace Persistence
                 otherWhiteboard.Name == nameToSet;
         }
 
-        public override void Remove(Whiteboard elementToRemove)
+        new public static void Remove(Whiteboard elementToRemove)
         {
             ValidateUserCanRemoveWhiteboard(elementToRemove);
             PerformRemove(elementToRemove);
@@ -97,21 +104,24 @@ namespace Persistence
             }
         }
 
-        private void PerformRemove(Whiteboard elementToRemove)
+        private static void PerformRemove(Whiteboard elementToRemove)
         {
             Team whiteboardsOwnerTeam = elementToRemove.OwnerTeam;
             whiteboardsOwnerTeam.RemoveWhiteboard(elementToRemove);
-            base.Remove(elementToRemove);
+            EntityFrameworkRepository<Whiteboard>.Remove(elementToRemove);
         }
 
-        internal override void RemoveDueToTeamDeletion(Whiteboard whiteboardToRemove)
+        internal static void RemoveDueToTeamDeletion(Whiteboard whiteboardToRemove)
         {
             PerformRemove(whiteboardToRemove);
         }
 
-        internal WhiteboardRepositoryInMemory()
+        internal static void RemoveAllWhiteboards()
         {
-            elements = new List<Whiteboard>();
+            using (var context = new BoardContext())
+            {
+                context.RemoveAllWhiteboards();
+            }
         }
     }
 }

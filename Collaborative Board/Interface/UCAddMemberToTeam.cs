@@ -58,8 +58,7 @@ namespace GraphicInterface
         private void PerfomAddAction()
         {
             User userToAdd = lstUsers.SelectedItems[0].Tag as User;
-            TeamRepository globalTeams = TeamRepository.GetInstance();
-            globalTeams.AddMemberToTeam(teamToWorkWith, userToAdd);
+            TeamRepository.AddMemberToTeam(teamToWorkWith, userToAdd);
             InterfaceUtilities.UCAdministrateTeamToPanel(systemPanel, teamToWorkWith);
             InterfaceUtilities.SuccessfulOperation();
         }

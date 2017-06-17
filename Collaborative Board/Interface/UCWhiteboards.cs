@@ -19,9 +19,8 @@ namespace GraphicInterface
 
         private static bool ActiveUserBelongsToAnyTeam()
         {
-            TeamRepository globalTeams = TeamRepository.GetInstance();
             User activeUser = Session.ActiveUser();
-            return globalTeams.Elements.Any(t => t.Members.Contains(activeUser));
+            return TeamRepository.Elements.Any(t => t.Members.Contains(activeUser));
         }
 
         private void BtnAdd_MouseEnter(object sender, EventArgs e)
@@ -104,7 +103,7 @@ namespace GraphicInterface
         private void LoadRegisteredWhiteboards()
         {
             lstRegisteredWhiteboards.Clear();
-            var globalWhiteboards = WhiteboardRepository.GetInstance().Elements
+            var globalWhiteboards = WhiteboardRepository.Elements
                 .Where(w => ValidateWhiteboardIsToBeShown(w)).ToList();
             if (globalWhiteboards.Count() > 0)
             {
@@ -177,8 +176,7 @@ namespace GraphicInterface
 
         private void DeleteWhiteboard(Whiteboard whiteboardToDelete)
         {
-            WhiteboardRepository globalWhiteboards = WhiteboardRepository.GetInstance();
-            globalWhiteboards.Remove(whiteboardToDelete);
+            WhiteboardRepository.Remove(whiteboardToDelete);
             LoadRegisteredWhiteboards();
             InterfaceUtilities.SuccessfulOperation();
         }

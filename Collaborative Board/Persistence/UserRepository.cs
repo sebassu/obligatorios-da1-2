@@ -3,11 +3,12 @@ using System;
 using Exceptions;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Data.Entity;
 
 [assembly: InternalsVisibleTo("UnitTests")]
 namespace Persistence
 {
-    public class UserRepository : EntityFrameworkRepository<User>
+    public abstract class UserRepository : EntityFrameworkRepository<User>
     {
         public static User AddNewUser(string firstName, string lastName,
             string email, DateTime birthdate, string password)
@@ -22,7 +23,7 @@ namespace Persistence
         public static User AddNewAdministrator(string firstName, string lastName,
             string email, DateTime birthdate, string password)
         {
-            //ValidateActiveUserHasAdministrationPrivileges();
+            ValidateActiveUserHasAdministrationPrivileges();
             User UserToAdd = User.CreateNewAdministrator(firstName,
                 lastName, email, birthdate, password);
             Add(UserToAdd);
@@ -44,9 +45,8 @@ namespace Persistence
             {
                 if (ChangeDoesNotCauseRepeatedUserEmails(userToModify, emailToSet))
                 {
-                    var databaseObject = userToModify;
-                    AttachIfCorresponds(databaseObject);
-                    SetUserAttributes(databaseObject, firstNameToSet, lastNameToSet, emailToSet,
+                    AttachIfCorresponds(context, userToModify);
+                    SetUserAttributes(userToModify, firstNameToSet, lastNameToSet, emailToSet,
                         birthdateToSet, passwordToSet);
                     context.SaveChanges();
                 }
@@ -83,7 +83,7 @@ namespace Persistence
             using (var context = new BoardContext())
             {
                 ValidateActiveUserHasAdministrationPrivileges();
-                AttachIfCorresponds(userToModify);
+                AttachIfCorresponds(context, userToModify);
                 string result = userToModify.ResetPassword();
                 context.SaveChanges();
                 return result;
@@ -92,6 +92,7 @@ namespace Persistence
 
         new public static void Remove(User elementToRemove)
         {
+            ValidateActiveUserHasAdministrationPrivileges();
             if (IsTheOnlyUserLeft(elementToRemove))
             {
                 throw new RepositoryException(ErrorMessages.CannotRemoveAllAdministrators);
@@ -99,34 +100,17 @@ namespace Persistence
             else
             {
                 ValidateNoWhiteboardHasUserAsCreator(elementToRemove);
-                RemoveUserFromAllTeams(elementToRemove);
                 EntityFrameworkRepository<User>.Remove(elementToRemove);
             }
         }
 
         private static void ValidateNoWhiteboardHasUserAsCreator(User elementToRemove)
         {
-            var allWhiteboards = WhiteboardRepository.GetInstance().Elements;
+            var allWhiteboards = WhiteboardRepository.Elements;
             bool userToRemoveIsCreator = allWhiteboards.Any(w => w.Creator.Equals(elementToRemove));
             if (userToRemoveIsCreator)
             {
                 throw new RepositoryException(ErrorMessages.CannotRemoveWhiteboardCreator);
-            }
-        }
-
-        private static void RemoveUserFromAllTeams(User userToRemove)
-        {
-            var allTeams = TeamRepository.GetInstance().Elements;
-            var teamsThatContainUserToRemove = allTeams.Where(t => t.Members.Contains(userToRemove)).ToList();
-            bool teamsOnlyWithUserToRemoveAsMemberExist =
-                teamsThatContainUserToRemove.Any(t => t.Members.Count == 1);
-            if (teamsOnlyWithUserToRemoveAsMemberExist)
-            {
-                throw new RepositoryException(ErrorMessages.UserIsLoneMemberOfSomeTeam);
-            }
-            else
-            {
-                teamsThatContainUserToRemove.ForEach(t => t.RemoveMember(userToRemove));
             }
         }
 
@@ -136,15 +120,26 @@ namespace Persistence
             return Users.Count == 1 && Users.Single().Equals(elementToRemove);
         }
 
-        private static void InsertOriginalSystemUser()
+        internal static void InsertOriginalSystemAdministrator()
         {
             using (var context = new BoardContext())
             {
-                var elements = context.Set<User>();
-                var baseUser = User.CreateNewAdministrator("The", "Administrator",
-                    "administrator@tf2.com", DateTime.Today, "Victory");
-                elements.Add(baseUser);
-                context.SaveChanges();
+                if (!HasElements())
+                {
+                    var elements = context.Set<User>();
+                    var baseUser = User.CreateNewAdministrator("The", "Administrator",
+                        "administrator@tf2.com", DateTime.Today, "Victory");
+                    elements.Add(baseUser);
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        internal static void RemoveAllUsers()
+        {
+            using (var context = new BoardContext())
+            {
+                context.RemoveAllUsers();
             }
         }
     }

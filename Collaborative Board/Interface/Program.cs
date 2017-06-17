@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Persistence;
+using System.Data;
 
 namespace GraphicInterface
 {
@@ -9,10 +10,19 @@ namespace GraphicInterface
         [STAThread]
         static void Main()
         {
-            /*Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LogOn());*/
-            UserRepository.AddNewAdministrator("a", "a", "a@a.com", DateTime.Now, "aaa121a2a");
+            try
+            {
+                /*Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new LogOn());*/
+                UserRepository.AddNewAdministrator("a", "a", "a@a.com", DateTime.Now, "aaa121a2a");
+            }
+            catch (DataException)
+            {
+                InterfaceUtilities.ShowError("Ha ocurrido un error al intentar realizar una acción " +
+                    "en la base de datos. La aplicación se cerrará.", "Error fatal");
+
+            }
         }
     }
 }

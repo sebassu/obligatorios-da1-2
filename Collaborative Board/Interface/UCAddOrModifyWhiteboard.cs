@@ -48,9 +48,8 @@ namespace GraphicInterface
 
         private void LoadTeamComboboxWithActiveUsersTeams()
         {
-            var globalTeams = TeamRepository.GetInstance();
             var activeUser = Session.ActiveUser();
-            var teamsToShow = globalTeams.Elements.Where(t => t.Members.Contains(activeUser));
+            var teamsToShow = TeamRepository.Elements.Where(t => t.Members.Contains(activeUser));
             cmbOwnerTeam.Items.AddRange(teamsToShow.ToArray());
         }
 
@@ -61,19 +60,18 @@ namespace GraphicInterface
 
         private void PerformChangeAction()
         {
-            WhiteboardRepository globalWhiteboards = WhiteboardRepository.GetInstance();
             int widthToSet = (int)numWidth.Value;
             int heightToSet = (int)numHeight.Value;
             bool isForModification = Utilities.IsNotNull(whiteboardToModify);
             if (isForModification)
             {
-                globalWhiteboards.ModifyWhiteboard(whiteboardToModify, txtName.Text,
+                WhiteboardRepository.ModifyWhiteboard(whiteboardToModify, txtName.Text,
                     rtbDescription.Text, widthToSet, heightToSet);
             }
             else
             {
                 Team teamToSet = cmbOwnerTeam.SelectedItem as Team;
-                globalWhiteboards.AddNewWhiteboard(txtName.Text,
+                WhiteboardRepository.AddNewWhiteboard(txtName.Text,
                     rtbDescription.Text, teamToSet, widthToSet, heightToSet);
             }
             InterfaceUtilities.UCWhiteboardsToPanel(systemPanel);

@@ -33,7 +33,19 @@ namespace Persistence
             {
                 using (BoardContext context = new BoardContext())
                 {
-                    return context.Set<T>().ToList();
+                    var elements = context.Set<T>();
+                    return elements.ToList();
+                }
+            }
+        }
+
+        public static DbSet<T> DbElements
+        {
+            get
+            {
+                using (BoardContext context = new BoardContext())
+                {
+                    return context.Set<T>();
                 }
             }
         }
@@ -42,8 +54,7 @@ namespace Persistence
         {
             using (BoardContext context = new BoardContext())
             {
-                var elements = context.Set<T>();
-                return !elements.Any();
+                return !context.Set<T>().Any();
             }
         }
 
@@ -52,21 +63,17 @@ namespace Persistence
             using (BoardContext context = new BoardContext())
             {
                 var elements = context.Set<T>();
-                AttachIfCorresponds(elementToRemove);
                 elements.Remove(elementToRemove);
                 context.SaveChanges();
             }
         }
 
-        protected static void AttachIfCorresponds(T element)
+        protected static void AttachIfCorresponds(BoardContext context, T element)
         {
-            using (BoardContext context = new BoardContext())
+            var elements = context.Set<T>();
+            if (context.Entry(element).State == EntityState.Detached)
             {
-                var elements = context.Set<T>();
-                if (context.Entry(element).State == EntityState.Detached)
-                {
-                    elements.Attach(element);
-                }
+                elements.Attach(element);
             }
         }
 

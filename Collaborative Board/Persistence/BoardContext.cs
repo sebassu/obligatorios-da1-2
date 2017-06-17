@@ -31,5 +31,20 @@ namespace Persistence
             modelBuilder.Entity<ImageWhiteboard>().Ignore(i => i.ActualImage);
             modelBuilder.Entity<TextBoxWhiteboard>().Ignore(t => t.TextFont);
         }
+
+        internal void RemoveAllUsers()
+        {
+            Database.ExecuteSqlCommand("delete from Users");
+        }
+
+        internal void RemoveAllTeams()
+        {
+            Database.ExecuteSqlCommand("delete from Teams");
+        }
+
+        internal void RemoveAllWhiteboards()
+        {
+            Database.ExecuteSqlCommand("delete from Whiteboards");
+        }
     }
 }

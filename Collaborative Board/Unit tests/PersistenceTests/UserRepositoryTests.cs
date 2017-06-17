@@ -15,7 +15,19 @@ namespace UnitTests.PersistenceTests
         [TestInitialize]
         public void TestSetup()
         {
+            if (!UserRepository.HasElements())
+            {
+                UserRepository.InsertOriginalSystemAdministrator();
+                UserRepository.AddNewAdministrator("Mario", "Santos", "santos@simuladores.com",
+                    new DateTime(4, 10, 1966), "DisculpeFuegoTiene");
+            }
             ChangeActiveUser("santos@simuladores.com", "DisculpeFuegoTiene");
+        }
+
+        [TestCleanup]
+        public void TestTeardown()
+        {
+            UserRepository.RemoveAllUsers();
         }
 
         private static void ChangeActiveUser(string email, string password)

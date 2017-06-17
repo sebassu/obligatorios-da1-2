@@ -51,19 +51,16 @@
   <ItemGroup>
     <Compile Include="BoardContext.cs" />
     <Compile Include="EntityFrameworkRepository.cs" />
-    <Compile Include="RepositoryInMemory.cs" />
+    <Compile Include="TeamRepository.cs" />
+    <Compile Include="WhiteboardRepository.cs" />
     <Compile Include="ErrorMessages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ErrorMessages.resx</DependentUpon>
     </Compile>
     <Compile Include="Session.cs" />
-    <Compile Include="Team Repository\TeamRepository.cs" />
-    <Compile Include="Team Repository\TeamRepositoryInMemory.cs" />
     <Compile Include="UserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WhiteboardRepository\WhiteboardRepository.cs" />
-    <Compile Include="WhiteboardRepository\WhiteboardRepositoryInMemory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj">
