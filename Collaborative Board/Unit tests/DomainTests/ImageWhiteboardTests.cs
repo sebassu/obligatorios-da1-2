@@ -66,17 +66,17 @@ namespace UnitTests.DomainTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ElementException))]
         public void ImageSetInvalidMinimumWidthZeroTest()
         {
             testingImage.Width = 0;
+            Assert.AreEqual(0, testingImage.Width);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ElementException))]
         public void ImageSetInvalidNegativeWidthTest()
         {
             testingImage.Width = -10;
+            Assert.AreEqual(-10, testingImage.Width);
         }
 
         [TestMethod]
@@ -96,17 +96,17 @@ namespace UnitTests.DomainTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ElementException))]
         public void ImageSetInvalidMinimumHeightZeroTest()
         {
             testingImage.Height = 0;
+            Assert.AreEqual(0, testingImage.Height);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ElementException))]
         public void ImageSetInvalidNegativeHeightTest()
         {
-            testingImage.Width = -10;
+            testingImage.Height = -10;
+            Assert.AreEqual(-10, testingImage.Height);
         }
 
 
@@ -200,11 +200,11 @@ namespace UnitTests.DomainTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ElementException))]
         public void ImageSetWidthConsideringContainerInvalidTest()
         {
             GenerateNonGenericTestSituation();
             testingImage.Width = 1000;
+            Assert.AreEqual(1000, testingImage.Width);
         }
 
         [TestMethod]
@@ -217,11 +217,11 @@ namespace UnitTests.DomainTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ElementException))]
         public void ImageSetHeightConsideringContainerInvalidTest()
         {
             GenerateNonGenericTestSituation();
             testingImage.Height = 3000;
+            Assert.AreEqual(3000, testingImage.Height);
         }
 
         [TestMethod]

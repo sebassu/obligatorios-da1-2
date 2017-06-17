@@ -168,6 +168,7 @@ namespace Domain
             firstName = "Usuario";
             lastName = "inválido.";
             email = "mailInvalido@usuarioInvalido";
+            password = "Contraseña inválida.";
         }
 
         internal static User CreateNewAdministrator(string firstName, string lastName,

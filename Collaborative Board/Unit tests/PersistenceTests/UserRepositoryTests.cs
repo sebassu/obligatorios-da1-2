@@ -5,7 +5,6 @@ using System.Linq;
 using Persistence;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Threading;
 
 namespace UnitTests.PersistenceTests
 {
@@ -13,15 +12,31 @@ namespace UnitTests.PersistenceTests
     [ExcludeFromCodeCoverage]
     public class UserDirectoryInMemoryTests
     {
-        private static User secondAdministrator;
+        [AssemblyInitialize]
+        public static void AssemblySetup(TestContext context)
+        {
+            DeleteAllDatabaseData();
+        }
+
+        [AssemblyCleanup]
+        public static void AssemblySetup()
+        {
+            DeleteAllDatabaseData();
+        }
+
+        private static void DeleteAllDatabaseData()
+        {
+            using (var context = new BoardContext())
+            {
+                context.DeleteAllData();
+            }
+        }
 
         [ClassInitialize]
         public static void ClassSetup(TestContext context)
         {
             UserRepository.InsertOriginalSystemAdministrator();
             ChangeActiveUser("administrator@tf2.com", "Victory");
-            secondAdministrator = UserRepository.AddNewAdministrator("Mario",
-                "Santos", "santos@simuladores.com", DateTime.Today, "DisculpeFuegoTiene");
             UserRepository.AddNewUser("Emilio", "Ravenna", "ravenna@simuladores.com",
                  DateTime.Today, "HablarUnasPalabritas");
         }
@@ -35,7 +50,7 @@ namespace UnitTests.PersistenceTests
         [TestInitialize]
         public void TestSetup()
         {
-            ChangeActiveUser("santos@simuladores.com", "DisculpeFuegoTiene");
+            ChangeActiveUser("administrator@tf2.com", "Victory");
         }
 
         [TestMethod]
@@ -171,7 +186,6 @@ namespace UnitTests.PersistenceTests
         {
             UserRepository.AddNewAdministrator("Pablo", "Lamponne",
                 "decimolamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
-            Thread.Sleep(200);
             UserRepository.AddNewAdministrator("Pablo", "Lamponne",
                 "decimolamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
         }
@@ -262,28 +276,41 @@ namespace UnitTests.PersistenceTests
         }
 
         [TestMethod]
-        public void URepositoryRemoveAdministratorLeavingOnlyOneLeftTest()
+        public void URepositoryRemoveAdministratorsLeavingOnlyOneLeftTest()
         {
-            UserRepository.Remove(secondAdministrator);
+            User secondAdministrator = UserRepository.AddNewAdministrator("Mario",
+                "Santos", "santos@simuladores.com", DateTime.Today, "DisculpeFuegoTiene");
+            var originalAdministrator = User.CreateNewAdministrator("The", "Administrator",
+                "administrator@tf2.com", DateTime.Today, "Victory");
+            var administrators = UserRepository.Elements.Where(u => u.HasAdministrationPrivileges).ToList();
+            administrators.Remove(originalAdministrator);
+            foreach (var administrator in administrators)
+            {
+                UserRepository.Remove(administrator);
+            }
             CollectionAssert.DoesNotContain(UserRepository.Elements, secondAdministrator);
-            UserRepository.AddNewAdministrator("Mario", "Santos",
-                "santos@simuladores.com", DateTime.Today, "DisculpeFuegoTiene");
         }
 
         [TestMethod]
         [ExpectedException(typeof(RepositoryException))]
         public void URepositoryTryToRemoveAllAdministratorsTest()
         {
-            var users = UserRepository.Elements;
-            UserRepository.Remove(users.Last());
-            UserRepository.AddNewAdministrator("Mario", "Santos",
-                "santos@simuladores.com", DateTime.Today, "DisculpeFuegoTiene");
+            var originalAdministrator = User.CreateNewAdministrator("The", "Administrator",
+                "administrator@tf2.com", DateTime.Today, "Victory");
+            var administrators = UserRepository.Elements.Where(u => u.HasAdministrationPrivileges).ToList();
+            administrators.Remove(originalAdministrator);
+            foreach (var administrator in administrators)
+            {
+                UserRepository.Remove(administrator);
+            }
+            UserRepository.Remove(originalAdministrator);
         }
 
         [TestMethod]
         public void URepositoryModifyUserValidTest()
         {
-            User userToVerify = UserRepository.Elements.First();
+            User userToVerify = UserRepository.AddNewAdministrator("Algún tipo", "X",
+                "tipo@vuelvelaX.com", DateTime.Now, "aaa123");
             UserRepository.ModifyUser(userToVerify, "Gabriel David", "Medina",
              "algunmail@simuladores.com", new DateTime(1990, 11, 25), "MúsicaSuperDivertida");
             Assert.AreEqual("Gabriel David", userToVerify.FirstName);
