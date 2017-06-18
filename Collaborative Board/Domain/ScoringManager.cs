@@ -14,7 +14,7 @@ namespace Domain
 
         private int createWhiteboardScore;
 
-        public int CreateWhiteboardScore
+        public virtual int CreateWhiteboardScore
         {
             get { return createWhiteboardScore; }
             set
@@ -39,7 +39,7 @@ namespace Domain
 
         private int deleteWhiteboardScore;
 
-        public int DeleteWhiteboardScore
+        public virtual int DeleteWhiteboardScore
         {
             get { return deleteWhiteboardScore; }
             set
@@ -59,7 +59,7 @@ namespace Domain
 
         private int addElementScore;
 
-        public int AddElementScore
+        public virtual int AddElementScore
         {
             get { return addElementScore; }
             set
@@ -79,7 +79,7 @@ namespace Domain
 
         private int addCommentScore;
 
-        public int AddCommentScore
+        public virtual int AddCommentScore
         {
             get { return addCommentScore; }
             set
@@ -99,7 +99,7 @@ namespace Domain
 
         private int setCommentAsSolvedScore;
 
-        public int SetCommentAsSolvedScore
+        public virtual int SetCommentAsSolvedScore
         {
             get { return setCommentAsSolvedScore; }
             set
@@ -122,7 +122,7 @@ namespace Domain
             return new ScoringManager();
         }
 
-        private ScoringManager()
+        public ScoringManager()
         {
             createWhiteboardScore = 1;
             deleteWhiteboardScore = 1;
@@ -131,13 +131,13 @@ namespace Domain
             setCommentAsSolvedScore = 1;
         }
 
-        internal static ScoringManager AllScores(int addWhiteboard, int deleteWhiteboard,
+        public static ScoringManager AllScores(int addWhiteboard, int deleteWhiteboard,
             int addElement, int addComment, int setCommentAsSolved)
         {
             return new ScoringManager(addWhiteboard, deleteWhiteboard, addElement, addComment, setCommentAsSolved);
         }
 
-        private ScoringManager(int addWhiteboard, int deleteWhiteboard, 
+        public ScoringManager(int addWhiteboard, int deleteWhiteboard, 
             int addElement, int addComment, int setCommentAsSolved)
         {
             createWhiteboardScore = addWhiteboard;
