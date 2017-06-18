@@ -8,6 +8,8 @@ namespace Domain
 {
     class ScoringManager
     {
+        private const byte absoluteMinimumScore = 1;
+
         private int createWhiteboardScore;
 
         public int CreateWhiteboardScore
@@ -15,11 +17,16 @@ namespace Domain
             get { return createWhiteboardScore; }
             set
             {
-                if (value > 1)
+                if (IsAllowedScore(value))
                 {
                     createWhiteboardScore = value;
                 }
             }
+        }
+
+        private bool IsAllowedScore(int value)
+        {
+            return (value > absoluteMinimumScore);
         }
 
         private int deleteWhiteboardScore;
@@ -29,7 +36,7 @@ namespace Domain
             get { return deleteWhiteboardScore; }
             set
             {
-                if (value > 1)
+                if  (IsAllowedScore(value))
                 {
                     deleteWhiteboardScore = value;
                 }
@@ -43,7 +50,7 @@ namespace Domain
             get { return addElementScore; }
             set
             {
-                if (value > 1)
+                if (IsAllowedScore(value))
                 {
                     addElementScore = value;
                 }
@@ -57,7 +64,7 @@ namespace Domain
             get { return addCommentScore; }
             set
             {
-                if (value > 1)
+                if (IsAllowedScore(value))
                 {
                     addCommentScore = value;
                 }
@@ -71,7 +78,7 @@ namespace Domain
             get { return setCommentAsSolvedScore; }
             set
             {
-                if (value > 1)
+                if (IsAllowedScore(value))
                 {
                     setCommentAsSolvedScore = value;
                 }
