@@ -23,7 +23,7 @@ namespace UnitTests.DomainTests
         }
 
         [TestMethod]
-        public void TeamForTestingPurposesTest()
+        public void ScoringManageForTestingPurposesTest()
         {
             Assert.AreEqual(1, testingScoringManager.CreateWhiteboardScore);
             Assert.AreEqual(1, testingScoringManager.DeleteWhiteboardScore);
@@ -33,35 +33,35 @@ namespace UnitTests.DomainTests
         }
 
         [TestMethod]
-        public void TeamSetValidCreateWhiteboardScore()
+        public void ScoringManageSetValidCreateWhiteboardScore()
         {
             testingScoringManager.CreateWhiteboardScore = 10;
             Assert.AreEqual(10, testingScoringManager.CreateWhiteboardScore);
         }
 
         [TestMethod]
-        public void TeamSetValidDeleteWhiteboardScore()
+        public void ScoringManageSetValidDeleteWhiteboardScore()
         {
             testingScoringManager.DeleteWhiteboardScore = 50;
             Assert.AreEqual(50, testingScoringManager.DeleteWhiteboardScore);
         }
 
         [TestMethod]
-        public void TeamSetValidAddElementScore()
+        public void ScoringManageSetValidAddElementScore()
         {
             testingScoringManager.AddElementScore = 1;
             Assert.AreEqual(1, testingScoringManager.AddElementScore);
         }
 
         [TestMethod]
-        public void TeamSetValidAddCommentScore()
+        public void ScoringManageSetValidAddCommentScore()
         {
             testingScoringManager.AddCommentScore = 100;
             Assert.AreEqual(100, testingScoringManager.AddCommentScore);
         }
 
         [TestMethod]
-        public void TeamSetValidSetCommentAsSolvedScore()
+        public void ScoringManageSetValidSetCommentAsSolvedScore()
         {
             testingScoringManager.SetCommentAsSolvedScore = 20;
             Assert.AreEqual(20, testingScoringManager.SetCommentAsSolvedScore);
@@ -69,37 +69,49 @@ namespace UnitTests.DomainTests
 
         [TestMethod]
         [ExpectedException(typeof(ScoringManagerException))]
-        public void TeamSetInvalidCreateWhiteboardScore()
+        public void ScoringManageSetInvalidCreateWhiteboardScore()
         {
             testingScoringManager.CreateWhiteboardScore = 0;
         }
 
         [TestMethod]
         [ExpectedException(typeof(ScoringManagerException))]
-        public void TeamSetInvalidDeleteWhiteboardScore()
+        public void ScoringManageSetInvalidDeleteWhiteboardScore()
         {
             testingScoringManager.DeleteWhiteboardScore = -1;
         }
 
         [TestMethod]
         [ExpectedException(typeof(ScoringManagerException))]
-        public void TeamSetInvalidAddElementcore()
+        public void ScoringManagerSetInvalidAddElementcore()
         {
             testingScoringManager.AddElementScore = -10;
         }
 
         [TestMethod]
         [ExpectedException(typeof(ScoringManagerException))]
-        public void TeamSetInvalidAddCommentScore()
+        public void ScoringManagerSetInvalidAddCommentScore()
         {
             testingScoringManager.AddCommentScore = -20;
         }
 
         [TestMethod]
         [ExpectedException(typeof(ScoringManagerException))]
-        public void TeamSetInvalidSetCommentAsSolvedScore()
+        public void ScoringManagerSetInvalidSetCommentAsSolvedScore()
         {
             testingScoringManager.SetCommentAsSolvedScore = -5;
+        }
+
+        [TestMethod]
+        public void ScoringManageResetTest()
+        {
+            testingScoringManager = ScoringManager.AllScores(20, 30, 40, 50, 60);
+            testingScoringManager = ScoringManager.ResetScores();
+            Assert.AreEqual(1, testingScoringManager.CreateWhiteboardScore);
+            Assert.AreEqual(1, testingScoringManager.DeleteWhiteboardScore);
+            Assert.AreEqual(1, testingScoringManager.AddElementScore);
+            Assert.AreEqual(1, testingScoringManager.AddCommentScore);
+            Assert.AreEqual(1, testingScoringManager.SetCommentAsSolvedScore);
         }
     }
 }
