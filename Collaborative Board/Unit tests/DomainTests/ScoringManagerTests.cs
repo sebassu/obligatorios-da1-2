@@ -106,7 +106,7 @@ namespace UnitTests.DomainTests
         public void ScoringManageResetTest()
         {
             testingScoringManager = ScoringManager.AllScores(20, 30, 40, 50, 60);
-            testingScoringManager = ScoringManager.ResetScores();
+            testingScoringManager.ResetScores();
             Assert.AreEqual(1, testingScoringManager.CreateWhiteboardScore);
             Assert.AreEqual(1, testingScoringManager.DeleteWhiteboardScore);
             Assert.AreEqual(1, testingScoringManager.AddElementScore);

@@ -147,5 +147,13 @@ namespace Domain
             setCommentAsSolvedScore = setCommentAsSolved;
         }
 
+        public void ResetScores()
+        {
+            createWhiteboardScore = absoluteMinimumScore;
+            deleteWhiteboardScore = absoluteMinimumScore;
+            addElementScore = absoluteMinimumScore;
+            addCommentScore = absoluteMinimumScore;
+            setCommentAsSolvedScore = absoluteMinimumScore;
+        }
     }
 }
