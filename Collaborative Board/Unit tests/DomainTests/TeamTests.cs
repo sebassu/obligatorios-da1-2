@@ -22,11 +22,10 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void TeamForTestingPurposesTest()
         {
-            Assert.AreEqual("Equipo inválido.", testingTeam.Name);
+            Assert.AreEqual("Equipo inválido", testingTeam.Name);
             Assert.AreEqual("Descripción inválida.", testingTeam.Description);
             Assert.AreEqual(int.MaxValue, testingTeam.MaximumMembers);
-            CollectionAssert.Contains(testingTeam.Members.ToList(),
-                User.InstanceForTestingPurposes());
+            Assert.IsTrue(testingTeam.Members.Count == 0);
         }
 
         [TestMethod]
@@ -167,7 +166,7 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void TeamToStringTest1()
         {
-            Assert.AreEqual("Equipo inválido.", testingTeam.ToString());
+            Assert.AreEqual("Equipo inválido", testingTeam.ToString());
         }
 
         [TestMethod]

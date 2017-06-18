@@ -255,7 +255,7 @@ namespace UnitTests.DomainTests
             User creator = User.InstanceForTestingPurposes();
             testingComment = Comment.CreatorElementText(creator,
                 testingElement, someText);
-            Thread.Sleep(50);
+            Thread.Sleep(500);
             Comment otherTestingComment = Comment.CreatorElementText(creator,
                 testingElement, someText);
             Assert.AreNotEqual(testingComment, otherTestingComment);

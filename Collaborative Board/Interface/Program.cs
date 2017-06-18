@@ -12,6 +12,7 @@ namespace GraphicInterface
         {
             try
             {
+                UserRepository.InsertOriginalSystemAdministrator();
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new LogOn());
@@ -20,7 +21,7 @@ namespace GraphicInterface
             {
                 InterfaceUtilities.ShowError("Ha ocurrido un error al intentar realizar una acción " +
                     "en la base de datos. La aplicación se cerrará.", "Error fatal");
-
+                Application.Exit();
             }
         }
     }

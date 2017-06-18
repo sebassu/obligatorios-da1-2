@@ -170,7 +170,7 @@ namespace Domain
             return new Whiteboard();
         }
 
-        public Whiteboard()
+        protected Whiteboard()
         {
             Creator = User.InstanceForTestingPurposes();
             OwnerTeam = Team.InstanceForTestingPurposes();

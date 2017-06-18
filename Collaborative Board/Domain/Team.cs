@@ -11,6 +11,8 @@ namespace Domain
     {
         private const byte absoluteMinimumMembers = 1;
 
+        public int Id { get; set; }
+
         private string name;
         public virtual string Name
         {
@@ -87,7 +89,7 @@ namespace Domain
             return errorMessage;
         }
 
-        public virtual List<User> Members { get; set; }
+        public virtual ICollection<User> Members { get; set; }
             = new List<User>();
 
         public virtual List<Whiteboard> CreatedWhiteboards { get; set; }
@@ -99,6 +101,7 @@ namespace Domain
             if (canBeMember)
             {
                 Members.Add(userToAdd);
+                userToAdd.AssociatedTeams.Add(this);
             }
             else
             {
@@ -116,6 +119,10 @@ namespace Domain
             if (!WasRemoved(userToRemove))
             {
                 throw new TeamException(ErrorMessages.CannotRemoveUser);
+            }
+            else
+            {
+                userToRemove.AssociatedTeams.Remove(this);
             }
         }
 
@@ -163,13 +170,11 @@ namespace Domain
             return new Team();
         }
 
-        public Team()
+        protected Team()
         {
-            User defaultCreator = User.InstanceForTestingPurposes();
-            name = "Equipo inválido.";
+            name = "Equipo inválido";
             description = "Descripción inválida.";
             maximumMembers = int.MaxValue;
-            Members.Add(defaultCreator);
         }
 
         internal static Team CreatorNameDescriptionMaximumMembers(User creator, string name,

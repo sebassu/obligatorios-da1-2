@@ -1,12 +1,25 @@
 ﻿using Domain;
 using Exceptions;
-using System.Data.Entity.Infrastructure;
+using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 
 namespace Persistence
 {
     public abstract class TeamRepository : EntityFrameworkRepository<Team>
     {
+        public static List<Team> Elements
+        {
+            get
+            {
+                using (BoardContext context = new BoardContext())
+                {
+                    var elements = context.Teams;
+                    return elements.ToList();
+                }
+            }
+        }
+
         public static Team AddNewTeam(string name, string description, int maximumMembers)
         {
             using (var context = new BoardContext())
@@ -15,7 +28,7 @@ namespace Persistence
                 if (ThereIsNoTeamWithName(name))
                 {
                     User creator = Session.ActiveUser();
-                    EntityFrameworkRepository<User>.AttachIfCorresponds(context, creator);
+                    EntityFrameworkRepository<User>.AttachIfIsValid(context, creator);
                     Team teamToAdd = Team.CreatorNameDescriptionMaximumMembers(creator,
                         name, description, maximumMembers);
                     Add(context, teamToAdd);
@@ -37,9 +50,10 @@ namespace Persistence
                 AttemptToSetTeamAttributes(teamToModify, nameToSet, descriptionToSet,
                     maximumMembersToSet);
             }
-            catch (DbUpdateException)
+            catch (DataException exception)
             {
-                throw new RepositoryException(ErrorMessages.ElementDoesNotExist);
+                throw new RepositoryException("Error en base de datos. Detalles: "
+                    + exception.Message);
             }
         }
 
@@ -48,9 +62,9 @@ namespace Persistence
         {
             using (var context = new BoardContext())
             {
+                AttachIfIsValid(context, teamToModify);
                 if (ChangeDoesNotCauseRepeatedTeamNames(teamToModify, nameToSet))
                 {
-                    AttachIfCorresponds(context, teamToModify);
                     SetTeamAttributes(teamToModify, nameToSet, descriptionToSet,
                         maximumMembersToSet);
                     context.SaveChanges();
@@ -111,31 +125,67 @@ namespace Persistence
         {
             using (var context = new BoardContext())
             {
-                ValidateActiveUserHasAdministrationPrivileges();
-                AttachIfCorresponds(context, teamToAddTo);
-                EntityFrameworkRepository<User>.AttachIfCorresponds(context, userToAdd);
-                teamToAddTo.AddMember(userToAdd);
-                context.SaveChanges();
+                try
+                {
+                    AttemptToAddMemberToTeam(teamToAddTo, userToAdd, context);
+                }
+                catch (DataException exception)
+                {
+                    throw new RepositoryException("Error en base de datos. Detalles: "
+                        + exception.Message);
+                }
             }
+        }
+
+        private static void AttemptToAddMemberToTeam(Team teamToAddTo, User userToAdd,
+            BoardContext context)
+        {
+            ValidateActiveUserHasAdministrationPrivileges();
+            AttachIfIsValid(context, teamToAddTo);
+            teamToAddTo.AddMember(userToAdd);
+            context.SaveChanges();
         }
 
         public static void RemoveMemberFromTeam(Team teamToRemoveFrom, User userToRemove)
         {
             using (var context = new BoardContext())
             {
-                ValidateActiveUserHasAdministrationPrivileges();
-                AttachIfCorresponds(context, teamToRemoveFrom);
-                EntityFrameworkRepository<User>.AttachIfCorresponds(context, userToRemove);
-                teamToRemoveFrom.RemoveMember(userToRemove);
-                context.SaveChanges();
+                try
+                {
+                    AttemptToRemoveMemberFromTeam(teamToRemoveFrom, userToRemove, context);
+                }
+                catch (DataException exception)
+                {
+                    throw new RepositoryException("Error en base de datos. Detalles: "
+                        + exception.Message);
+                }
             }
         }
 
-        internal static void RemoveAllTeams()
+        private static void AttemptToRemoveMemberFromTeam(Team teamToRemoveFrom, User
+            userToRemove, BoardContext context)
+        {
+            ValidateActiveUserHasAdministrationPrivileges();
+            AttachIfIsValid(context, teamToRemoveFrom);
+            teamToRemoveFrom.RemoveMember(userToRemove);
+            context.SaveChanges();
+        }
+
+        public static void LoadMembers(Team someTeam)
         {
             using (var context = new BoardContext())
             {
-                context.RemoveAllTeams();
+                AttachIfIsValid(context, someTeam);
+                context.Entry(someTeam).Collection(t => t.Members).Load();
+            }
+        }
+
+        public static void LoadCreatedWhiteboards(Team someTeam)
+        {
+            using (var context = new BoardContext())
+            {
+                AttachIfIsValid(context, someTeam);
+                context.Entry(someTeam).Collection(t => t.CreatedWhiteboards).Load();
             }
         }
     }

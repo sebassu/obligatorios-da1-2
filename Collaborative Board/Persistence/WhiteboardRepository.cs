@@ -1,5 +1,7 @@
 ﻿using Domain;
 using Exceptions;
+using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 
@@ -7,15 +9,27 @@ namespace Persistence
 {
     public abstract class WhiteboardRepository : EntityFrameworkRepository<Whiteboard>
     {
+        public static List<Whiteboard> Elements
+        {
+            get
+            {
+                using (BoardContext context = new BoardContext())
+                {
+                    return context.Whiteboards.Include("Creator")
+                        .Include("OwnerTeam").ToList();
+                }
+            }
+        }
+
         public static Whiteboard AddNewWhiteboard(string name, string description,
             Team ownerTeam, int width, int height)
         {
             using (var context = new BoardContext())
             {
                 User creator = Session.ActiveUser();
+                TeamRepository.LoadCreatedWhiteboards(ownerTeam);
                 Whiteboard whiteboardToAdd = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
                     name, description, ownerTeam, width, height);
-                EntityFrameworkRepository<Team>.AttachIfCorresponds(context, ownerTeam);
                 Add(context, whiteboardToAdd);
                 return whiteboardToAdd;
             }
@@ -24,15 +38,39 @@ namespace Persistence
         public static void ModifyWhiteboard(Whiteboard whiteboardToModify,
             string nameToSet, string descriptionToSet, int widthToSet, int heightToSet)
         {
-            User activeUser = Session.ActiveUser();
-            if (whiteboardToModify.UserCanModify(activeUser))
+            if (Utilities.IsNotNull(whiteboardToModify))
+            {
+                try
+                {
+                    AttemptToModifyWhiteboard(whiteboardToModify, nameToSet,
+                        descriptionToSet, widthToSet, heightToSet);
+                }
+                catch (DataException exception)
+                {
+                    throw new RepositoryException("Error en base de datos. Detalles: "
+                        + exception.Message);
+                }
+            }
+            else
+            {
+                throw new RepositoryException(ErrorMessages.ElementDoesNotExist);
+            }
+        }
+
+        private static void AttemptToModifyWhiteboard(Whiteboard whiteboardToModify, string nameToSet,
+            string descriptionToSet, int widthToSet, int heightToSet)
+        {
+            if (ChangeDoesNotCauseSameWhiteboardNameAndTeam(whiteboardToModify, nameToSet))
             {
                 AttemptToSetWhiteboardAttributes(whiteboardToModify, nameToSet, descriptionToSet,
                     widthToSet, heightToSet);
             }
             else
             {
-                throw new RepositoryException(ErrorMessages.UserCannotModifyWhiteboard);
+                string ownerTeamName = whiteboardToModify.OwnerTeam.Name;
+                string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                    ErrorMessages.WhiteboardNameTeamMustBeUnique, ownerTeamName, nameToSet);
+                throw new RepositoryException(errorMessage);
             }
         }
 
@@ -41,19 +79,18 @@ namespace Persistence
         {
             using (var context = new BoardContext())
             {
-                if (ChangeDoesNotCauseSameWhiteboardNameAndTeam(whiteboardToModify, nameToSet))
+                User activeUser = Session.ActiveUser();
+                TeamRepository.LoadMembers(whiteboardToModify.OwnerTeam);
+                if (whiteboardToModify.UserCanModify(activeUser))
                 {
-                    AttachIfCorresponds(context, whiteboardToModify);
+                    AttachIfIsValid(context, whiteboardToModify);
                     SetWhiteboardAttributes(whiteboardToModify, nameToSet, descriptionToSet,
                         widthToSet, heightToSet);
                     context.SaveChanges();
                 }
                 else
                 {
-                    string ownerTeamName = whiteboardToModify.OwnerTeam.Name;
-                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
-                        ErrorMessages.WhiteboardNameTeamMustBeUnique, ownerTeamName, nameToSet);
-                    throw new RepositoryException(errorMessage);
+                    throw new RepositoryException(ErrorMessages.UserCannotModifyWhiteboard);
                 }
             }
         }
@@ -80,15 +117,9 @@ namespace Persistence
             using (BoardContext context = new BoardContext())
             {
                 var elements = context.Whiteboards;
-                return !elements.Any(w => OwnerTeamAndNameEqual(ownerTeam, nameToSet, w));
+                return !elements.Any(w => ownerTeam.Id == (w.OwnerTeam.Id)
+                    && w.Name == nameToSet);
             }
-        }
-
-        private static bool OwnerTeamAndNameEqual(Team ownerTeam, string nameToSet,
-            Whiteboard otherWhiteboard)
-        {
-            return ownerTeam.Equals(otherWhiteboard.OwnerTeam) &&
-                otherWhiteboard.Name == nameToSet;
         }
 
         new public static void Remove(Whiteboard elementToRemove)
@@ -118,14 +149,6 @@ namespace Persistence
         internal static void RemoveDueToTeamDeletion(Whiteboard whiteboardToRemove)
         {
             PerformRemove(whiteboardToRemove);
-        }
-
-        internal static void RemoveAllWhiteboards()
-        {
-            using (var context = new BoardContext())
-            {
-                context.RemoveAllWhiteboards();
-            }
         }
     }
 }

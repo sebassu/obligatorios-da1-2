@@ -3,13 +3,26 @@ using System;
 using Exceptions;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Data.Entity.Infrastructure;
+using System.Collections.Generic;
+using System.Data;
 
 [assembly: InternalsVisibleTo("UnitTests")]
 namespace Persistence
 {
     public abstract class UserRepository : EntityFrameworkRepository<User>
     {
+        public static List<User> Elements
+        {
+            get
+            {
+                using (BoardContext context = new BoardContext())
+                {
+                    var elements = context.Users;
+                    return elements.ToList();
+                }
+            }
+        }
+
         public static User AddNewUser(string firstName, string lastName,
             string email, DateTime birthdate, string password)
         {
@@ -39,7 +52,7 @@ namespace Persistence
                 if (ThereIsNoUserWithEmail(email))
                 {
                     User administratorToAdd = User.CreateNewAdministrator(firstName,
-                    lastName, email, birthdate, password);
+                        lastName, email, birthdate, password);
                     Add(context, administratorToAdd);
                     return administratorToAdd;
                 }
@@ -59,7 +72,7 @@ namespace Persistence
                 AttemptToSetUserAttributes(userToModify, firstNameToSet, lastNameToSet,
                     emailToSet, birthdateToSet, passwordToSet);
             }
-            catch (DbUpdateException)
+            catch (DataException)
             {
                 throw new RepositoryException(ErrorMessages.ElementDoesNotExist);
             }
@@ -70,7 +83,7 @@ namespace Persistence
         {
             using (var context = new BoardContext())
             {
-                AttachIfCorresponds(context, userToModify);
+                AttachIfIsValid(context, userToModify);
                 if (ChangeDoesNotCauseRepeatedUserEmails(userToModify, emailToSet))
                 {
                     SetUserAttributes(userToModify, firstNameToSet, lastNameToSet, emailToSet,
@@ -113,7 +126,7 @@ namespace Persistence
             using (var context = new BoardContext())
             {
                 ValidateActiveUserHasAdministrationPrivileges();
-                AttachIfCorresponds(context, userToModify);
+                AttachIfIsValid(context, userToModify);
                 string result = userToModify.ResetPassword();
                 context.SaveChanges();
                 return result;
@@ -129,8 +142,18 @@ namespace Persistence
             }
             else
             {
+                RemoveUserFromAllTeams(elementToRemove);
                 ValidateNoWhiteboardHasUserAsCreator(elementToRemove);
                 EntityFrameworkRepository<User>.Remove(elementToRemove);
+            }
+        }
+
+        private static bool IsTheOnlyAdministratorLeft(User elementToRemove)
+        {
+            using (var context = new BoardContext())
+            {
+                var administrators = context.Users.Where(u => u.HasAdministrationPrivileges).ToList();
+                return administrators.Count == 1 && administrators.Single().Equals(elementToRemove);
             }
         }
 
@@ -144,16 +167,25 @@ namespace Persistence
             }
         }
 
-        private static bool IsTheOnlyAdministratorLeft(User elementToRemove)
+        private static void RemoveUserFromAllTeams(User userToRemove)
         {
-            using (var context = new BoardContext())
+            LoadAssociatedTeams(userToRemove);
+            var teamsThatContainUserToRemove = userToRemove.AssociatedTeams.ToList();
+            teamsThatContainUserToRemove.ForEach(t => TeamRepository.LoadMembers(t));
+            bool teamsOnlyWithUserToRemoveAsMemberExist =
+              teamsThatContainUserToRemove.Any(t => t.Members.Count == 1);
+            if (teamsOnlyWithUserToRemoveAsMemberExist)
             {
-                var administrators = context.Users.Where(u => u.HasAdministrationPrivileges).ToList();
-                return administrators.Count == 1 && administrators.Single().Equals(elementToRemove);
+                throw new RepositoryException(ErrorMessages.UserIsLoneMemberOfSomeTeam);
+            }
+            else
+            {
+                teamsThatContainUserToRemove.ForEach(t =>
+                    TeamRepository.RemoveMemberFromTeam(t, userToRemove));
             }
         }
 
-        internal static void InsertOriginalSystemAdministrator()
+        public static void InsertOriginalSystemAdministrator()
         {
             using (var context = new BoardContext())
             {
@@ -168,11 +200,12 @@ namespace Persistence
             }
         }
 
-        internal static void RemoveAllUsers()
+        public static void LoadAssociatedTeams(User someUser)
         {
             using (var context = new BoardContext())
             {
-                context.RemoveAllUsers();
+                AttachIfIsValid(context, someUser);
+                context.Entry(someUser).Collection(t => t.AssociatedTeams).Load();
             }
         }
     }

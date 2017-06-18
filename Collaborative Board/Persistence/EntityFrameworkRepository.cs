@@ -1,10 +1,8 @@
 ﻿using Domain;
 using Exceptions;
 using System.Resources;
-using System.Linq;
 using System.Data.Entity;
-using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
+using System.Data;
 
 [assembly: NeutralResourcesLanguage("es")]
 namespace Persistence
@@ -14,26 +12,15 @@ namespace Persistence
         protected static void Add(BoardContext context, T elementToAdd)
         {
             var elements = context.Set<T>();
-           /* try
-            {*/
+            try
+            {
                 elements.Add(elementToAdd);
                 context.SaveChanges();
-          /*  }
-            catch (DbUpdateException)
+            }
+            catch (DataException exception)
             {
-                throw new RepositoryException(ErrorMessages.ElementAlreadyExists);
-            }*/
-        }
-
-        public static List<T> Elements
-        {
-            get
-            {
-                using (BoardContext context = new BoardContext())
-                {
-                    var elements = context.Set<T>();
-                    return elements.ToList();
-                }
+                throw new RepositoryException("Error en base de datos. Detalles: "
+                    + exception.Message);
             }
         }
 
@@ -44,26 +31,27 @@ namespace Persistence
                 try
                 {
                     var elements = context.Set<T>();
-                    AttachIfCorresponds(context, elementToRemove);
+                    AttachIfIsValid(context, elementToRemove);
                     elements.Remove(elementToRemove);
                     context.SaveChanges();
                 }
-                catch (DbUpdateException)
+                catch (DataException exception)
                 {
-                    throw new RepositoryException(ErrorMessages.ElementDoesNotExist);
+                    throw new RepositoryException("Error en base de datos. Detalles: "
+                        + exception.Message);
                 }
             }
-
         }
 
-        protected static void AttachIfCorresponds(BoardContext context, T element)
+        protected static void AttachIfIsValid(BoardContext context, T element)
         {
             var elements = context.Set<T>();
-            bool IsValidElement = Utilities.IsNotNull(element) &&
-                context.Entry(element).State == EntityState.Detached;
-            if (IsValidElement)
+            if (Utilities.IsNotNull(element))
             {
-                elements.Attach(element);
+                if (context.Entry(element).State == EntityState.Detached)
+                {
+                    elements.Attach(element);
+                }
             }
             else
             {

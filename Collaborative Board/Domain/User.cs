@@ -128,11 +128,14 @@ namespace Domain
             return newPassword;
         }
 
-        public virtual List<Comment> CommentsCreated { get; set; }
+        public virtual ICollection<Comment> CommentsCreated { get; set; }
             = new List<Comment>();
 
-        public virtual List<Comment> CommentsResolved { get; set; }
+        public virtual ICollection<Comment> CommentsResolved { get; set; }
             = new List<Comment>();
+
+        public virtual ICollection<Team> AssociatedTeams { get; set; }
+            = new List<Team>();
 
         internal void AddCreatedComment(Comment someComment)
         {
@@ -163,7 +166,7 @@ namespace Domain
             return new User();
         }
 
-        public User()
+        protected User()
         {
             firstName = "Usuario";
             lastName = "inválido.";
