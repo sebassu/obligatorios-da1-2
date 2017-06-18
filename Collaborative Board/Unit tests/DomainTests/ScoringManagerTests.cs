@@ -96,17 +96,5 @@ namespace UnitTests.DomainTests
         {
             testingScoringManager.SetCommentAsSolvedScore = -5;
         }
-
-        [TestMethod]
-        public void ScoringManagerResetTest()
-        {
-            testingScoringManager = ScoringManager.AllScores(20, 30, 40, 50, 60);
-            testingScoringManager.ResetScores();
-            Assert.AreEqual(1, testingScoringManager.CreateWhiteboardScore);
-            Assert.AreEqual(1, testingScoringManager.DeleteWhiteboardScore);
-            Assert.AreEqual(1, testingScoringManager.AddElementScore);
-            Assert.AreEqual(1, testingScoringManager.AddCommentScore);
-            Assert.AreEqual(1, testingScoringManager.SetCommentAsSolvedScore);
-        }
     }
 }

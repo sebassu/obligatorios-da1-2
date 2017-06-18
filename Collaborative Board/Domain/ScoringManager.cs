@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace Domain
 {
-    class ScoringManager
+    public class ScoringManager
     {
         private const byte absoluteMinimumScore = 1;
 
@@ -142,15 +142,6 @@ namespace Domain
             addElementScore = addElement;
             addCommentScore = addComment;
             setCommentAsSolvedScore = setCommentAsSolved;
-        }
-
-        public void ResetScores()
-        {
-            createWhiteboardScore = absoluteMinimumScore;
-            deleteWhiteboardScore = absoluteMinimumScore;
-            addElementScore = absoluteMinimumScore;
-            addCommentScore = absoluteMinimumScore;
-            setCommentAsSolvedScore = absoluteMinimumScore;
         }
     }
 }

@@ -24,7 +24,7 @@ namespace UnitTests.DomainTests
                testingMemberScoring.Member);
             Assert.AreEqual(Team.InstanceForTestingPurposes(),
                 testingMemberScoring.MembersTeam);
-            Assert.AreEqual(int.MaxValue, testingMemberScoring.TotalScore);
+            Assert.AreEqual(int.MaxValue, testingMemberScoring.MembersTotalScore);
         }
     }
 }
