@@ -1,16 +1,13 @@
 ﻿using Exceptions;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain
 {
     class ScoringManager
     {
         private const byte absoluteMinimumScore = 1;
+
+        public virtual int Id { get; set; }
 
         private int createWhiteboardScore;
 

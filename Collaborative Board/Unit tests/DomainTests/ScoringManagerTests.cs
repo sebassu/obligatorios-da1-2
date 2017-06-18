@@ -1,11 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Domain;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Exceptions;
 
 namespace UnitTests.DomainTests
@@ -23,7 +18,7 @@ namespace UnitTests.DomainTests
         }
 
         [TestMethod]
-        public void ScoringManageForTestingPurposesTest()
+        public void ScoringManagerForTestingPurposesTest()
         {
             Assert.AreEqual(1, testingScoringManager.CreateWhiteboardScore);
             Assert.AreEqual(1, testingScoringManager.DeleteWhiteboardScore);
@@ -33,35 +28,35 @@ namespace UnitTests.DomainTests
         }
 
         [TestMethod]
-        public void ScoringManageSetValidCreateWhiteboardScore()
+        public void ScoringManagerSetValidCreateWhiteboardScore()
         {
             testingScoringManager.CreateWhiteboardScore = 10;
             Assert.AreEqual(10, testingScoringManager.CreateWhiteboardScore);
         }
 
         [TestMethod]
-        public void ScoringManageSetValidDeleteWhiteboardScore()
+        public void ScoringManagerSetValidDeleteWhiteboardScore()
         {
             testingScoringManager.DeleteWhiteboardScore = 50;
             Assert.AreEqual(50, testingScoringManager.DeleteWhiteboardScore);
         }
 
         [TestMethod]
-        public void ScoringManageSetValidAddElementScore()
+        public void ScoringManagerSetValidAddElementScore()
         {
             testingScoringManager.AddElementScore = 1;
             Assert.AreEqual(1, testingScoringManager.AddElementScore);
         }
 
         [TestMethod]
-        public void ScoringManageSetValidAddCommentScore()
+        public void ScoringManagerSetValidAddCommentScore()
         {
             testingScoringManager.AddCommentScore = 100;
             Assert.AreEqual(100, testingScoringManager.AddCommentScore);
         }
 
         [TestMethod]
-        public void ScoringManageSetValidSetCommentAsSolvedScore()
+        public void ScoringManagerSetValidSetCommentAsSolvedScore()
         {
             testingScoringManager.SetCommentAsSolvedScore = 20;
             Assert.AreEqual(20, testingScoringManager.SetCommentAsSolvedScore);
@@ -69,14 +64,14 @@ namespace UnitTests.DomainTests
 
         [TestMethod]
         [ExpectedException(typeof(ScoringManagerException))]
-        public void ScoringManageSetInvalidCreateWhiteboardScore()
+        public void ScoringManagerSetInvalidCreateWhiteboardScore()
         {
             testingScoringManager.CreateWhiteboardScore = 0;
         }
 
         [TestMethod]
         [ExpectedException(typeof(ScoringManagerException))]
-        public void ScoringManageSetInvalidDeleteWhiteboardScore()
+        public void ScoringManagerSetInvalidDeleteWhiteboardScore()
         {
             testingScoringManager.DeleteWhiteboardScore = -1;
         }
@@ -103,7 +98,7 @@ namespace UnitTests.DomainTests
         }
 
         [TestMethod]
-        public void ScoringManageResetTest()
+        public void ScoringManagerResetTest()
         {
             testingScoringManager = ScoringManager.AllScores(20, 30, 40, 50, 60);
             testingScoringManager.ResetScores();
