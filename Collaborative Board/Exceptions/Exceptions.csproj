@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="BoardException.cs" />
     <Compile Include="CommentException.cs" />
+    <Compile Include="MemberScoringException.cs" />
     <Compile Include="RepositoryException.cs" />
     <Compile Include="ElementException.cs" />
     <Compile Include="PasswordException.cs" />

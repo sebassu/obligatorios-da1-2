@@ -60,12 +60,21 @@ namespace UnitTests.DomainTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(MemberScoringxception))]
+        [ExpectedException(typeof(MemberScoringException))]
         public void MemberScoringNullTeamTest()
         {
             User member = User.InstanceForTestingPurposes();
             testingMemberScoring = MemberScoring.MemberMembersTeamMembersTotalScore(member,
                 null, 50);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(MemberScoringException))]
+        public void MemberScoringNullUserTest()
+        {
+            Team membersTeam = Team.InstanceForTestingPurposes();
+            testingMemberScoring = MemberScoring.MemberMembersTeamMembersTotalScore(null,
+                membersTeam, 20);
         }
     }
 }

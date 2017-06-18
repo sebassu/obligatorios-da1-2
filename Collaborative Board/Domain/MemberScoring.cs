@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Exceptions;
 
 namespace Domain
 {
@@ -22,6 +23,12 @@ namespace Domain
                 if (IsValidMembersTotalScore(value))
                 {
                     membersTotalScore = value;
+                }
+                else
+                {
+                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                       ErrorMessages.MembersScoreIsInvalid, value, absoluteMinimumMembersScore);
+                    throw new MemberScoringException(errorMessage);
                 }
             }
         }
@@ -55,10 +62,38 @@ namespace Domain
 
         public MemberScoring(User theMember, Team theMembersTeam, int membersScore)
         {
-            Member = theMember;
-            MembersTeam = theMembersTeam;
-            MembersTotalScore = membersScore;
+            if (UserIsValidMemberOfTeam(theMember, theMembersTeam))
+            {
+                Member = theMember;
+                MembersTeam = theMembersTeam;
+                MembersTotalScore = membersScore;
             }
+            else
+            {
+                string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                   ErrorMessages.MemberIsInvalid, theMember, theMembersTeam);
+                throw new MemberScoringException(errorMessage);
+            }
+        }
+
+        private static bool UserIsValidMemberOfTeam(User aMember, Team aTeam)
+        {
+            if (Utilities.IsNotNull(aMember))
+            {
+                if (Utilities.IsNotNull(aTeam))
+                {
+                    return aTeam.Members.Contains(aMember);
+                }
+                else
+                {
+                    throw new MemberScoringException(ErrorMessages.TeamIsInvalid);
+                }
+            }
+            else
+            {
+                throw new MemberScoringException(ErrorMessages.NullUser);
+            }
+        }
 
 
 

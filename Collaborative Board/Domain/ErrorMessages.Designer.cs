@@ -205,6 +205,24 @@ namespace Domain {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Se ha recibido un usuario inválido para el equipo ingresado: &quot;{0}&quot; no es miembro de &quot;{1}&quot;..
+        /// </summary>
+        internal static string MemberIsInvalid {
+            get {
+                return ResourceManager.GetString("MemberIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Puntaje inválido: {0} (mínimo puntaje permitido es {1})..
+        /// </summary>
+        internal static string MembersScoreIsInvalid {
+            get {
+                return ResourceManager.GetString("MembersScoreIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Nombre inválido: &quot;{0}&quot;. Éste debe contener únicamente caracteres alfanuméricos, o espacios..
         /// </summary>
         internal static string NameIsInvalid {
