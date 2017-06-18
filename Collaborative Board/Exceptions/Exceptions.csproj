@@ -48,6 +48,7 @@
     <Compile Include="ElementException.cs" />
     <Compile Include="PasswordException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScoringManagerException.cs" />
     <Compile Include="SessionException.cs" />
     <Compile Include="UserException.cs" />
     <Compile Include="TeamException.cs" />

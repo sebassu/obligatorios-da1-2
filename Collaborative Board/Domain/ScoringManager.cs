@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Exceptions;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,12 +23,18 @@ namespace Domain
                 {
                     createWhiteboardScore = value;
                 }
+                else
+                {
+                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                        ErrorMessages.ScoreIsInvalid, value, absoluteMinimumScore);
+                    throw new ScoringManagerException(errorMessage);
+                }
             }
         }
 
         private bool IsAllowedScore(int value)
         {
-            return (value > absoluteMinimumScore);
+            return (value >= absoluteMinimumScore);
         }
 
         private int deleteWhiteboardScore;
@@ -39,6 +47,12 @@ namespace Domain
                 if  (IsAllowedScore(value))
                 {
                     deleteWhiteboardScore = value;
+                }
+                else
+                {
+                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                        ErrorMessages.ScoreIsInvalid, value, absoluteMinimumScore);
+                    throw new ScoringManagerException(errorMessage);
                 }
             }
         }
@@ -54,6 +68,12 @@ namespace Domain
                 {
                     addElementScore = value;
                 }
+                else
+                {
+                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                        ErrorMessages.ScoreIsInvalid, value, absoluteMinimumScore);
+                    throw new ScoringManagerException(errorMessage);
+                }
             }
         }
 
@@ -68,6 +88,12 @@ namespace Domain
                 {
                     addCommentScore = value;
                 }
+                else
+                {
+                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                        ErrorMessages.ScoreIsInvalid, value, absoluteMinimumScore);
+                    throw new ScoringManagerException(errorMessage);
+                }
             }
         }
 
@@ -81,6 +107,12 @@ namespace Domain
                 if (IsAllowedScore(value))
                 {
                     setCommentAsSolvedScore = value;
+                }
+                else
+                {
+                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                        ErrorMessages.ScoreIsInvalid, value, absoluteMinimumScore);
+                    throw new ScoringManagerException(errorMessage);
                 }
             }
         }
