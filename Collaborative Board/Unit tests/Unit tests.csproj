@@ -53,6 +53,8 @@
   <ItemGroup>
     <Compile Include="DomainTests\AdministratorTests.cs" />
     <Compile Include="DomainTests\CommentTests.cs" />
+    <Compile Include="DomainTests\MemberScoringTests.cs" />
+    <Compile Include="DomainTests\ScoringManagerTests.cs" />
     <Compile Include="DomainTests\TextBoxWhiteboardTests.cs" />
     <Compile Include="DomainTests\ImageWhiteboardTests.cs" />
     <Compile Include="DomainTests\UserTests.cs" />
