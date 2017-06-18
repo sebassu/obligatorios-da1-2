@@ -163,7 +163,7 @@ namespace GraphicInterface
 
         public static void UCAssignScoreToEventsToPanel(Panel systemPanel)
         {
-            ChangeUserControl(new UCAssignScoreToEvents(systemPanel), systemPanel);
+            ChangeUserControl(new UCAssignScoreToEvents(systemPanel, new ScoringManager()), systemPanel);
         }
 
         public static void GoToHomeRespectiveHome(Panel systemPanel)
