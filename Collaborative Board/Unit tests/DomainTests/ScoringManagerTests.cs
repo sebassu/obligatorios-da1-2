@@ -65,5 +65,40 @@ namespace UnitTests.DomainTests
             testingScoringManager.SetCommentAsSolvedScore = 20;
             Assert.AreEqual(20, testingScoringManager.SetCommentAsSolvedScore);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ScoringManagerException))]
+        public void TeamSetInvalidCreateWhiteboardScore()
+        {
+            testingScoringManager.CreateWhiteboardScore = 0;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ScoringManagerException))]
+        public void TeamSetInvalidDeleteWhiteboardScore()
+        {
+            testingScoringManager.DeleteWhiteboardScore = -1;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ScoringManagerException))]
+        public void TeamSetInvalidAddElementcore()
+        {
+            testingScoringManager.AddElementScore = -10;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ScoringManagerException))]
+        public void TeamSetInvalidAddCommentScore()
+        {
+            testingScoringManager.AddCommentScore = -20;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ScoringManagerException))]
+        public void TeamSetInvalidSetCommentAsSolvedScore()
+        {
+            testingScoringManager.SetCommentAsSolvedScore = -5;
+        }
     }
 }
