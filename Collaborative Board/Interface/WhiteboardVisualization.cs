@@ -23,6 +23,7 @@ namespace GraphicInterface
 
         private void LoadWhiteboardComponentsOnInteface()
         {
+            WhiteboardRepository.LoadContents(whiteboardShown);
             foreach (var element in whiteboardShown.Contents)
             {
                 if (element is ImageWhiteboard imageToAdd)

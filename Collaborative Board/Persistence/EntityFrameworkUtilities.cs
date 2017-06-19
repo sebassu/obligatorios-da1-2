@@ -50,9 +50,9 @@ namespace Persistence
             {
                 PerformAttachIfCorresponds(context, element, elements);
             }
-            catch (SystemException)
+            catch (SystemException e)
             {
-                throw new RepositoryException(ErrorMessages.InvalidElementRecieved);
+                throw new RepositoryException(e.Message);
             }
         }
 
