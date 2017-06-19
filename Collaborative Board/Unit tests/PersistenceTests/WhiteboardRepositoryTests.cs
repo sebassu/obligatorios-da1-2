@@ -294,12 +294,11 @@ namespace UnitTests.PersistenceTests
         [TestMethod]
         public void WRepositoryModifyWhiteboardDifferentTeamSameNameValidTest()
         {
-            Team anotherOwnerTeam = TeamRepository.Elements.First();
             Whiteboard whiteboardToVerify = WhiteboardRepository.AddNewWhiteboard("Algún otro pizarrón",
-                "La descripción va aquí.", anotherOwnerTeam, 500, 500);
-            WhiteboardRepository.ModifyWhiteboard(whiteboardToVerify, "Indeed, another whiteboard",
+                "La descripción va aquí.", testingOwnerTeam, 500, 500);
+            WhiteboardRepository.ModifyWhiteboard(whiteboardToVerify, "Indeed another whiteboard",
                 "Another valid description.", 121, 323);
-            Assert.AreEqual("Another whiteboard", whiteboardToVerify.Name);
+            Assert.AreEqual("Indeed another whiteboard", whiteboardToVerify.Name);
             Assert.AreEqual("Another valid description.", whiteboardToVerify.Description);
             Assert.AreEqual(121, whiteboardToVerify.Width);
             Assert.AreEqual(323, whiteboardToVerify.Height);

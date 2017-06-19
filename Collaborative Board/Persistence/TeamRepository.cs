@@ -112,9 +112,10 @@ namespace Persistence
             }
         }
 
-        private static void RemoveAllTeamWhiteboardsFromRepository(Team elementToRemove)
+        private static void RemoveAllTeamWhiteboardsFromRepository(Team teamToRemove)
         {
-            var teamWhiteboards = elementToRemove.CreatedWhiteboards.ToList();
+            LoadCreatedWhiteboards(teamToRemove);
+            var teamWhiteboards = teamToRemove.CreatedWhiteboards.ToList();
             foreach (var whiteboard in teamWhiteboards)
             {
                 WhiteboardRepository.RemoveDueToTeamDeletion(whiteboard);

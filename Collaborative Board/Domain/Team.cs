@@ -1,5 +1,6 @@
 ﻿using System;
 using Exceptions;
+using System.Linq;
 using System.Globalization;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -92,7 +93,7 @@ namespace Domain
         public virtual ICollection<User> Members { get; set; }
             = new List<User>();
 
-        public virtual List<Whiteboard> CreatedWhiteboards { get; set; }
+        public virtual ICollection<Whiteboard> CreatedWhiteboards { get; set; }
             = new List<Whiteboard>();
 
         internal void AddMember(User userToAdd)
@@ -145,7 +146,8 @@ namespace Domain
 
         private void AddWhiteboardToCollectionIfPossible(Whiteboard whiteboardToAdd)
         {
-            bool isPossibleToAddWhiteboard = !CreatedWhiteboards.Contains(whiteboardToAdd);
+            bool isPossibleToAddWhiteboard = !CreatedWhiteboards.ToList()
+                .Exists(w => w.Name.Equals(whiteboardToAdd.Name));
             if (isPossibleToAddWhiteboard)
             {
                 CreatedWhiteboards.Add(whiteboardToAdd);

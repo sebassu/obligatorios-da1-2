@@ -298,7 +298,7 @@ namespace UnitTests.DomainTests
                 "Pizarron1", "Descripción 1.", oneTeam, 75, 75);
             Whiteboard secondTestingWhiteboard = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
                 "Pizarron1", "Descripción 2.", secondTeam, 25, 25);
-            Assert.AreNotEqual(testingWhiteboard, secondTestingWhiteboard);
+            Assert.AreEqual(testingWhiteboard, secondTestingWhiteboard);
         }
 
         [TestMethod]

@@ -248,6 +248,10 @@ namespace UnitTests.DomainTests
             Assert.AreNotEqual(testingComment, otherTestingComment);
         }
 
+        // A veces falla, al usarse en la clase Comment DateTime.Now 
+        // y depender de esto el resultado la prueba; si se ejecutan las pruebas
+        // muy rápidamente no pasa.
+
         [TestMethod]
         public void CommentEqualsDifferentDateTimesInvalidTest()
         {
@@ -255,7 +259,7 @@ namespace UnitTests.DomainTests
             User creator = User.InstanceForTestingPurposes();
             testingComment = Comment.CreatorElementText(creator,
                 testingElement, someText);
-            Thread.Sleep(500);
+            Thread.Sleep(1000);
             Comment otherTestingComment = Comment.CreatorElementText(creator,
                 testingElement, someText);
             Assert.AreNotEqual(testingComment, otherTestingComment);

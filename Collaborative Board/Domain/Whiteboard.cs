@@ -248,23 +248,12 @@ namespace Domain
             Whiteboard whiteboardToCompareAgainst = obj as Whiteboard;
             if (Utilities.IsNotNull(whiteboardToCompareAgainst))
             {
-                return HasSameOwnerTeam(whiteboardToCompareAgainst)
-                    && HasSameName(whiteboardToCompareAgainst);
+                return Id == whiteboardToCompareAgainst.Id;
             }
             else
             {
                 return false;
             }
-        }
-
-        private bool HasSameName(Whiteboard someWhiteboard)
-        {
-            return name.Equals(someWhiteboard.name);
-        }
-
-        private bool HasSameOwnerTeam(Whiteboard someWhiteboard)
-        {
-            return OwnerTeam.Equals(someWhiteboard.OwnerTeam);
         }
 
         public override int GetHashCode()
