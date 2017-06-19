@@ -6,7 +6,22 @@ namespace Domain
 {
     public class ImageWhiteboard : ElementWhiteboard
     {
-        public Image ActualImage { get; set; }
+        private Image actualImage;
+        public Image ActualImage
+        {
+            get { return actualImage; }
+            set
+            {
+                if (Utilities.IsNotNull(value))
+                {
+                    actualImage = value;
+                }
+                else
+                {
+                    throw new ElementException(ErrorMessages.ImageIsNull);
+                }
+            }
+        }
 
         public virtual byte[] ImageToSave
         {

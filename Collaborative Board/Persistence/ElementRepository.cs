@@ -1,4 +1,5 @@
 ﻿using Domain;
+using System.Data.Entity.Infrastructure;
 using System.Drawing;
 
 namespace Persistence
@@ -30,7 +31,7 @@ namespace Persistence
             }
         }
 
-        public static TextBoxWhiteboard AddNewTextbox(Whiteboard container)
+        public static TextBoxWhiteboard AddNewTextBox(Whiteboard container)
         {
             using (var context = new BoardContext())
             {
@@ -63,10 +64,47 @@ namespace Persistence
                 elementToModify.Dimensions = newDimensions;
                 elementToModify.Position = newPosition;
                 var entry = context.Entry(elementToModify);
-                entry.Property(e => e.RelativeX).IsModified = true;
-                entry.Property(e => e.RelativeX).IsModified = true;
-                entry.Property(e => e.Width).IsModified = true;
-                entry.Property(e => e.Height).IsModified = true;
+                MarkPositionAndSizePropertiesAsChanged(entry);
+                context.SaveChanges();
+            }
+        }
+
+        private static void MarkPositionAndSizePropertiesAsChanged(DbEntityEntry<ElementWhiteboard> entry)
+        {
+            entry.Property(e => e.RelativeX).IsModified = true;
+            entry.Property(e => e.RelativeX).IsModified = true;
+            entry.Property(e => e.Width).IsModified = true;
+            entry.Property(e => e.Height).IsModified = true;
+        }
+
+        public static void UpdateImage(ImageWhiteboard elementToModify, Image newImage)
+        {
+            using (var context = new BoardContext())
+            {
+                EntityFrameworkUtilities<ElementWhiteboard>.AttachIfIsValid(context, elementToModify);
+                elementToModify.ActualImage = newImage;
+                context.Entry(elementToModify).Property(i => i.ImageToSave).IsModified = true;
+                context.SaveChanges();
+            }
+        }
+
+        public static void UpdateFont(TextBoxWhiteboard elementToModify, Font newFont)
+        {
+            using (var context = new BoardContext())
+            {
+                EntityFrameworkUtilities<ElementWhiteboard>.AttachIfIsValid(context, elementToModify);
+                elementToModify.TextFont = newFont;
+                context.Entry(elementToModify).Property(t => t.FontToSave).IsModified = true;
+                context.SaveChanges();
+            }
+        }
+
+        public static void UpdateText(TextBoxWhiteboard elementToModify, string newText)
+        {
+            using (var context = new BoardContext())
+            {
+                EntityFrameworkUtilities<ElementWhiteboard>.AttachIfIsValid(context, elementToModify);
+                elementToModify.TextContent = newText;
                 context.SaveChanges();
             }
         }
@@ -75,19 +113,5 @@ namespace Persistence
         {
             EntityFrameworkUtilities<ElementWhiteboard>.Remove(elementToRemove);
         }
-
-        /*private static void RemoveElementFromWhiteboard(ElementWhiteboard elementToRemove)
-        {
-            using (var context = new BoardContext())
-            {
-                EntityFrameworkUtilities<ElementWhiteboard>.AttachIfIsValid(context, elementToRemove);
-                context.Entry(elementToRemove).Reference(e => e.Container).Load();
-                Whiteboard container = elementToRemove.Container;
-                context.Entry(container).Collection(w => w.Contents).Load();
-                container.RemoveWhiteboardElement(elementToRemove);
-                context.Elements.Remove(elementToRemove);
-                context.SaveChanges();
-            }
-        }*/
     }
 }
