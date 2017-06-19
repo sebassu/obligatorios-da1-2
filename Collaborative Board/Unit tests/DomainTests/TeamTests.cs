@@ -1,6 +1,5 @@
 ﻿using Domain;
 using System;
-using Exceptions;
 using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

@@ -1,7 +1,6 @@
-using Domain;
-using Exceptions;
-using Persistence;
 using System;
+using Domain;
+using Persistence;
 using System.Windows.Forms;
 
 namespace GraphicInterface

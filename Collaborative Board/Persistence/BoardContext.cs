@@ -19,6 +19,7 @@ namespace Persistence
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            Configuration.LazyLoadingEnabled = false;
             SetUsersConfiguration(modelBuilder);
         }
 

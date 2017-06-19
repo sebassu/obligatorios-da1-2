@@ -50,7 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BoardContext.cs" />
-    <Compile Include="EntityFrameworkRepository.cs" />
+    <Compile Include="ElementRepository.cs" />
+    <Compile Include="EntityFrameworkUtilities.cs" />
     <Compile Include="TeamRepository.cs" />
     <Compile Include="WhiteboardRepository.cs" />
     <Compile Include="ErrorMessages.Designer.cs">
@@ -66,10 +67,6 @@
     <ProjectReference Include="..\Domain\Domain.csproj">
       <Project>{e2d4611c-b91b-4250-bab2-83fa754108d4}</Project>
       <Name>Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Exceptions\Exceptions.csproj">
-      <Project>{3dee1d1c-11b9-4470-8f2b-b2b828fd3ec6}</Project>
-      <Name>Exceptions</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

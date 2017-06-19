@@ -1,5 +1,4 @@
 ﻿using System;
-using Exceptions;
 using System.Net.Mail;
 using System.Resources;
 using System.Globalization;

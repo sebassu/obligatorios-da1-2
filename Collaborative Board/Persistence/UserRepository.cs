@@ -1,15 +1,14 @@
 ﻿using Domain;
 using System;
-using Exceptions;
+using System.Data;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Collections.Generic;
-using System.Data;
 
 [assembly: InternalsVisibleTo("UnitTests")]
 namespace Persistence
 {
-    public abstract class UserRepository : EntityFrameworkRepository<User>
+    public static class UserRepository
     {
         public static List<User> Elements
         {
@@ -28,12 +27,12 @@ namespace Persistence
         {
             using (var context = new BoardContext())
             {
-                ValidateActiveUserHasAdministrationPrivileges();
+                Session.ValidateActiveUserHasAdministrationPrivileges();
                 if (ThereIsNoUserWithEmail(email))
                 {
                     User userToAdd = User.CreateNewCollaborator(firstName, lastName,
                         email, birthdate, password);
-                    Add(context, userToAdd);
+                    EntityFrameworkUtilities<User>.Add(context, userToAdd);
                     return userToAdd;
                 }
                 else
@@ -48,12 +47,12 @@ namespace Persistence
         {
             using (var context = new BoardContext())
             {
-                ValidateActiveUserHasAdministrationPrivileges();
+                Session.ValidateActiveUserHasAdministrationPrivileges();
                 if (ThereIsNoUserWithEmail(email))
                 {
                     User administratorToAdd = User.CreateNewAdministrator(firstName,
                         lastName, email, birthdate, password);
-                    Add(context, administratorToAdd);
+                    EntityFrameworkUtilities<User>.Add(context, administratorToAdd);
                     return administratorToAdd;
                 }
                 else
@@ -68,7 +67,7 @@ namespace Persistence
         {
             try
             {
-                ValidateActiveUserHasAdministrationPrivileges();
+                Session.ValidateActiveUserHasAdministrationPrivileges();
                 AttemptToSetUserAttributes(userToModify, firstNameToSet, lastNameToSet,
                     emailToSet, birthdateToSet, passwordToSet);
             }
@@ -83,7 +82,7 @@ namespace Persistence
         {
             using (var context = new BoardContext())
             {
-                AttachIfIsValid(context, userToModify);
+                EntityFrameworkUtilities<User>.AttachIfIsValid(context, userToModify);
                 if (ChangeDoesNotCauseRepeatedUserEmails(userToModify, emailToSet))
                 {
                     SetUserAttributes(userToModify, firstNameToSet, lastNameToSet, emailToSet,
@@ -125,17 +124,17 @@ namespace Persistence
         {
             using (var context = new BoardContext())
             {
-                ValidateActiveUserHasAdministrationPrivileges();
-                AttachIfIsValid(context, userToModify);
+                Session.ValidateActiveUserHasAdministrationPrivileges();
+                EntityFrameworkUtilities<User>.AttachIfIsValid(context, userToModify);
                 string result = userToModify.ResetPassword();
                 context.SaveChanges();
                 return result;
             }
         }
 
-        new public static void Remove(User elementToRemove)
+        public static void Remove(User elementToRemove)
         {
-            ValidateActiveUserHasAdministrationPrivileges();
+            Session.ValidateActiveUserHasAdministrationPrivileges();
             if (IsTheOnlyAdministratorLeft(elementToRemove))
             {
                 throw new RepositoryException(ErrorMessages.CannotRemoveAllAdministrators);
@@ -144,7 +143,7 @@ namespace Persistence
             {
                 RemoveUserFromAllTeams(elementToRemove);
                 ValidateNoWhiteboardHasUserAsCreator(elementToRemove);
-                EntityFrameworkRepository<User>.Remove(elementToRemove);
+                EntityFrameworkUtilities<User>.Remove(elementToRemove);
             }
         }
 
@@ -190,7 +189,7 @@ namespace Persistence
             using (var context = new BoardContext())
             {
                 var elements = context.Users;
-                if (elements.Count() == 0)
+                if (elements.FirstOrDefault() == null)
                 {
                     var baseUser = User.CreateNewAdministrator("The", "Administrator",
                         "administrator@tf2.com", DateTime.Today, "Victory");
@@ -204,7 +203,7 @@ namespace Persistence
         {
             using (var context = new BoardContext())
             {
-                AttachIfIsValid(context, someUser);
+                EntityFrameworkUtilities<User>.AttachIfIsValid(context, someUser);
                 context.Entry(someUser).Collection(t => t.AssociatedTeams).Load();
             }
         }

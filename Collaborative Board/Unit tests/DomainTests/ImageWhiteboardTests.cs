@@ -1,11 +1,10 @@
 ﻿using System;
 using Domain;
 using System.IO;
-using Exceptions;
+using System.Linq;
 using System.Drawing;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
 
 namespace UnitTests.DomainTests
 {
@@ -14,6 +13,8 @@ namespace UnitTests.DomainTests
     public class ImageWhiteboardTests
     {
         private static ImageWhiteboard testingImage;
+        private static readonly string testImageLocation = Directory.GetParent(
+            Directory.GetCurrentDirectory()).Parent.FullName + "\\..\\Resources\\TestImage.jpg";
 
         [TestInitialize]
         public void TestSetup()
@@ -23,8 +24,6 @@ namespace UnitTests.DomainTests
 
         private static Whiteboard GenerateNonGenericTestSituation()
         {
-            string testImageLocation = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName
-                + "\\..\\Resources\\TestImage.jpg";
             User creator = User.CreateNewCollaborator("Emilio", "Ravenna",
                 "ravenna@simuladores.com", DateTime.Today, "HablarUnasPalabritas");
             Team ownerTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo 3", "Descripción.", 5);
@@ -272,8 +271,6 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void ImageParameterFactoryMethodValidTest()
         {
-            string testImageLocation = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName
-                + "\\..\\Resources\\TestImage.jpg";
             Image testImageObject = Image.FromFile(testImageLocation);
             Whiteboard imageContainer = GenerateNonGenericTestSituation();
             Assert.AreEqual(300, testingImage.Width);
@@ -293,8 +290,6 @@ namespace UnitTests.DomainTests
         [ExpectedException(typeof(ElementException))]
         public void ImageParameterFactoryMethodNullWhiteboardTest()
         {
-            string testImageLocation = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName
-                + "\\..\\Resources\\TestImage.jpg";
             testingImage = ImageWhiteboard.CreateWithContainerSource(null, testImageLocation);
         }
 

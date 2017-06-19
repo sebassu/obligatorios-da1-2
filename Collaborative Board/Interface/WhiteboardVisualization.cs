@@ -1,5 +1,5 @@
 ﻿using Domain;
-using Exceptions;
+using Persistence;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -65,7 +65,7 @@ namespace GraphicInterface
 
         private void CreateNewPictureBoxWithImage(FileDialog fileSelector)
         {
-            ImageWhiteboard imageToAdd = ImageWhiteboard.CreateWithContainerSource(whiteboardShown,
+            ImageWhiteboard imageToAdd = ElementRepository.AddNewImage(whiteboardShown,
                 fileSelector.FileName);
             AddPictureBoxFromWhiteboardImage(imageToAdd);
         }

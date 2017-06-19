@@ -1,15 +1,14 @@
 ﻿using Domain;
-using Exceptions;
+using System.Data;
 using System.Resources;
 using System.Data.Entity;
-using System.Data;
 
 [assembly: NeutralResourcesLanguage("es")]
 namespace Persistence
 {
-    public abstract class EntityFrameworkRepository<T> where T : class
+    internal static class EntityFrameworkUtilities<T> where T : class
     {
-        protected static void Add(BoardContext context, T elementToAdd)
+        internal static void Add(BoardContext context, T elementToAdd)
         {
             var elements = context.Set<T>();
             try
@@ -24,7 +23,7 @@ namespace Persistence
             }
         }
 
-        public static void Remove(T elementToRemove)
+        internal static void Remove(T elementToRemove)
         {
             using (BoardContext context = new BoardContext())
             {
@@ -43,7 +42,7 @@ namespace Persistence
             }
         }
 
-        protected static void AttachIfIsValid(BoardContext context, T element)
+        internal static void AttachIfIsValid(BoardContext context, T element)
         {
             var elements = context.Set<T>();
             if (Utilities.IsNotNull(element))
@@ -56,14 +55,6 @@ namespace Persistence
             else
             {
                 throw new RepositoryException(ErrorMessages.ElementDoesNotExist);
-            }
-        }
-
-        protected static void ValidateActiveUserHasAdministrationPrivileges()
-        {
-            if (!Session.HasAdministrationPrivileges())
-            {
-                throw new RepositoryException(ErrorMessages.NoAdministrationPrivileges);
             }
         }
     }

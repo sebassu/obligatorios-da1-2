@@ -1,6 +1,5 @@
 ﻿using Domain;
 using System;
-using Exceptions;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -65,6 +64,14 @@ namespace Persistence
         public static bool HasAdministrationPrivileges()
         {
             return Utilities.IsNotNull(activeUser) && activeUser.HasAdministrationPrivileges;
+        }
+
+        internal static void ValidateActiveUserHasAdministrationPrivileges()
+        {
+            if (!HasAdministrationPrivileges())
+            {
+                throw new SessionException(ErrorMessages.NoAdministrationPrivileges);
+            }
         }
 
         public static void End()

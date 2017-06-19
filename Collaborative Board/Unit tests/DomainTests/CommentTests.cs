@@ -1,11 +1,10 @@
 ﻿using System;
 using Domain;
-using Exceptions;
 using System.Linq;
-using System.Diagnostics.CodeAnalysis;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading;
 using System.Globalization;
+using System.Diagnostics.CodeAnalysis;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTests.DomainTests
 {
@@ -248,10 +247,9 @@ namespace UnitTests.DomainTests
             Assert.AreNotEqual(testingComment, otherTestingComment);
         }
 
-        // A veces falla, al usarse en la clase Comment DateTime.Now 
-        // y depender de esto el resultado la prueba; si se ejecutan las pruebas
-        // muy rápidamente no pasa.
-
+        // Sometimes fails, as DateTime.Now is used in the Comment class
+        // and this is crucial to the test result; test 
+        // fails if the tests are executed too quickly.
         [TestMethod]
         public void CommentEqualsDifferentDateTimesInvalidTest()
         {

@@ -1,13 +1,12 @@
 ﻿using Domain;
-using Exceptions;
-using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
 using System.Linq;
+using System.Globalization;
+using System.Collections.Generic;
 
 namespace Persistence
 {
-    public abstract class WhiteboardRepository : EntityFrameworkRepository<Whiteboard>
+    public static class WhiteboardRepository
     {
         public static List<Whiteboard> Elements
         {
@@ -26,14 +25,29 @@ namespace Persistence
         {
             using (var context = new BoardContext())
             {
-                User creator = Session.ActiveUser();
-                TeamRepository.LoadMembers(ownerTeam);
-                TeamRepository.LoadCreatedWhiteboards(ownerTeam);
-                Whiteboard whiteboardToAdd = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
-                    name, description, ownerTeam, width, height);
-                Add(context, whiteboardToAdd);
-                return whiteboardToAdd;
+                if (ThereIsNoWhiteboardWithNameAndTeam(ownerTeam, name))
+                {
+                    return InsertNewWhiteboard(name, description, ownerTeam,
+                        width, height, context);
+                }
+                else
+                {
+                    throw new RepositoryException(ErrorMessages.WhiteboardNameTeamMustBeUnique);
+                }
             }
+        }
+
+        private static Whiteboard InsertNewWhiteboard(string name, string description, Team ownerTeam,
+            int width, int height, BoardContext context)
+        {
+            User creator = Session.ActiveUser();
+            TeamRepository.LoadMembers(ownerTeam);
+            TeamRepository.LoadCreatedWhiteboards(ownerTeam);
+            EntityFrameworkUtilities<Team>.AttachIfIsValid(context, ownerTeam);
+            Whiteboard whiteboardToAdd = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
+                name, description, ownerTeam, width, height);
+            EntityFrameworkUtilities<Whiteboard>.Add(context, whiteboardToAdd);
+            return whiteboardToAdd;
         }
 
         public static void ModifyWhiteboard(Whiteboard whiteboardToModify,
@@ -84,7 +98,7 @@ namespace Persistence
                 TeamRepository.LoadMembers(whiteboardToModify.OwnerTeam);
                 if (whiteboardToModify.UserCanModify(activeUser))
                 {
-                    AttachIfIsValid(context, whiteboardToModify);
+                    EntityFrameworkUtilities<Whiteboard>.AttachIfIsValid(context, whiteboardToModify);
                     SetWhiteboardAttributes(whiteboardToModify, nameToSet, descriptionToSet,
                         widthToSet, heightToSet);
                     context.SaveChanges();
@@ -123,7 +137,7 @@ namespace Persistence
             }
         }
 
-        new public static void Remove(Whiteboard elementToRemove)
+        public static void Remove(Whiteboard elementToRemove)
         {
             ValidateUserCanRemoveWhiteboard(elementToRemove);
             PerformRemove(elementToRemove);
@@ -144,7 +158,7 @@ namespace Persistence
         {
             Team whiteboardsOwnerTeam = elementToRemove.OwnerTeam;
             whiteboardsOwnerTeam.RemoveWhiteboard(elementToRemove);
-            EntityFrameworkRepository<Whiteboard>.Remove(elementToRemove);
+            EntityFrameworkUtilities<Whiteboard>.Remove(elementToRemove);
         }
 
         internal static void RemoveDueToTeamDeletion(Whiteboard whiteboardToRemove)

@@ -1,6 +1,5 @@
 ﻿using Domain;
 using System;
-using Exceptions;
 using Persistence;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

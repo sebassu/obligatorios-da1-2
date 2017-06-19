@@ -1,10 +1,9 @@
 ﻿using System;
 using Domain;
-using Exceptions;
+using System.Linq;
 using System.Threading;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
 
 namespace UnitTests.DomainTests
 {

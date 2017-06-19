@@ -1,6 +1,5 @@
 ﻿using Domain;
 using System;
-using Exceptions;
 using System.Linq;
 using Persistence;
 using System.Diagnostics.CodeAnalysis;
@@ -10,7 +9,7 @@ namespace UnitTests.PersistenceTests
 {
     [TestClass]
     [ExcludeFromCodeCoverage]
-    public class UserDirectoryInMemoryTests
+    public class UserRepositoryTests
     {
         [AssemblyInitialize]
         public static void AssemblySetup(TestContext context)
@@ -72,7 +71,7 @@ namespace UnitTests.PersistenceTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(RepositoryException))]
+        [ExpectedException(typeof(SessionException))]
         public void URepositoryAddNewUserNotEnoughPrivilegesInvalidTest()
         {
             ChangeActiveUser("ravenna@simuladores.com", "HablarUnasPalabritas");
@@ -428,7 +427,7 @@ namespace UnitTests.PersistenceTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(RepositoryException))]
+        [ExpectedException(typeof(SessionException))]
         public void URepositoryResetUsersPasswordWithoutPrivilegesInvalidTest()
         {
             ChangeActiveUser("ravenna@simuladores.com", "HablarUnasPalabritas");

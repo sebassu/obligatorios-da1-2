@@ -1,6 +1,5 @@
 ﻿using System;
 using Domain;
-using Exceptions;
 using System.Linq;
 using Persistence;
 using System.Diagnostics.CodeAnalysis;
@@ -70,7 +69,7 @@ namespace UnitTests.PersistenceTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(RepositoryException))]
+        [ExpectedException(typeof(SessionException))]
         public void TRepositoryAddNewTeamNotEnoughPrivilegesInvalidTest()
         {
             ChangeActiveUser("rabinovich@lesluthiers.com.ar", "achicoria");

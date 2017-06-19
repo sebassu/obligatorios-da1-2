@@ -1,6 +1,5 @@
 ﻿using System;
 using Domain;
-using Exceptions;
 using System.Linq;
 using Persistence;
 using System.Diagnostics.CodeAnalysis;
@@ -277,10 +276,12 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(RepositoryException))]
         public void WRepositoryModifyWhiteboardCausesSameNameAndTeamInvalidTest()
         {
+            WhiteboardRepository.AddNewWhiteboard("Me voy al campo",
+                "Una descripción válida.", testingOwnerTeam, 390, 789);
             Whiteboard whiteboardToVerify = WhiteboardRepository.AddNewWhiteboard("Nombre único",
                 "Una descripción válida.", testingOwnerTeam, 500, 700);
-            WhiteboardRepository.ModifyWhiteboard(whiteboardToVerify, "Whiteboard",
-                "Otra descripción.", 1200, 2400);
+            WhiteboardRepository.ModifyWhiteboard(whiteboardToVerify, "Me voy al campo",
+                "Descripción distinta.", 1200, 2400);
         }
 
         [TestMethod]
