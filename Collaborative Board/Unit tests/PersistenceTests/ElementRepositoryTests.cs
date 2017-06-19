@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Persistence;
 using System;
+using System.Drawing;
 using System.IO;
 
 namespace UnitTests.PersistenceTests
@@ -98,6 +99,68 @@ namespace UnitTests.PersistenceTests
         public void ERepositoryRemoveElementNullInvalidTest()
         {
             ElementRepository.Remove(null);
+        }
+
+        [TestMethod]
+        public void ERepositoryModifyElementPositionAndSizeImageValidTest()
+        {
+            Point newPosition = new Point(280, 350);
+            Size newDimensions = new Size(100, 100);
+            ElementWhiteboard addedElement = ElementRepository.AddNewImage(testingContainer,
+                testImageLocation);
+            Assert.AreNotEqual(newPosition, addedElement.Position);
+            Assert.AreNotEqual(newDimensions, addedElement.Dimensions);
+            ElementRepository.UpdateElementPositionAndSize(addedElement,
+                newDimensions, newPosition);
+            Assert.AreEqual(newPosition, addedElement.Position);
+            Assert.AreEqual(newDimensions, addedElement.Dimensions);
+        }
+
+        [TestMethod]
+        public void ERepositoryModifyElementPositionAndSizeTextboxValidTest()
+        {
+            Point newPosition = new Point(150, 150);
+            Size newDimensions = new Size(370, 219);
+            ElementWhiteboard addedElement = ElementRepository.AddNewTextbox(testingContainer);
+            Assert.AreNotEqual(newPosition, addedElement.Position);
+            Assert.AreNotEqual(newDimensions, addedElement.Dimensions);
+            ElementRepository.UpdateElementPositionAndSize(addedElement,
+                newDimensions, newPosition);
+            Assert.AreEqual(newPosition, addedElement.Position);
+            Assert.AreEqual(newDimensions, addedElement.Dimensions);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(RepositoryException))]
+        public void ERepositoryModifyElementPositionAndSizeNullElementInvalidTest()
+        {
+            Point newPosition = new Point(200, 156);
+            Size newDimensions = new Size(651, 200);
+            ElementRepository.UpdateElementPositionAndSize(null,
+                newDimensions, newPosition);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ElementException))]
+        public void ERepositoryModifyElementPositionAndSizeInvalidPositionTest()
+        {
+            Point newPosition = new Point(0, -333);
+            Size newDimensions = new Size(651, 200);
+            ElementWhiteboard addedElement = ElementRepository.AddNewTextbox(testingContainer);
+            ElementRepository.UpdateElementPositionAndSize(addedElement, newDimensions,
+                newPosition);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ElementException))]
+        public void ERepositoryModifyElementPositionAndSizeInvalidDimensionsTest()
+        {
+            Point newPosition = new Point(200, 156);
+            Size newDimensions = new Size(-121, 0);
+            ElementWhiteboard addedElement = ElementRepository.AddNewImage(testingContainer,
+                testImageLocation);
+            ElementRepository.UpdateElementPositionAndSize(addedElement, newDimensions,
+                newPosition);
         }
     }
 }
