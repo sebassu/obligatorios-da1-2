@@ -1,4 +1,5 @@
 ﻿using Domain;
+using System.Drawing;
 
 namespace Persistence
 {
@@ -48,6 +49,23 @@ namespace Persistence
                 {
                     throw new WhiteboardException(ErrorMessages.UserCannotModifyWhiteboard);
                 }
+            }
+        }
+
+        public static void UpdateElementPositionAndSize(ElementWhiteboard elementToModify, Size newDimensions,
+            Point newPosition)
+        {
+            using (var context = new BoardContext())
+            {
+                EntityFrameworkUtilities<ElementWhiteboard>.AttachIfIsValid(context, elementToModify);
+                elementToModify.Dimensions = newDimensions;
+                elementToModify.Position = newPosition;
+                var entry = context.Entry(elementToModify);
+                entry.Property(e => e.RelativeX).IsModified = true;
+                entry.Property(e => e.RelativeX).IsModified = true;
+                entry.Property(e => e.Width).IsModified = true;
+                entry.Property(e => e.Height).IsModified = true;
+                context.SaveChanges();
             }
         }
 
