@@ -3,6 +3,7 @@ using System.Data;
 using System.Linq;
 using System.Globalization;
 using System.Collections.Generic;
+using System.Data.Entity;
 
 namespace Persistence
 {
@@ -27,14 +28,17 @@ namespace Persistence
             {
                 if (ThereIsNoWhiteboardWithNameAndTeam(ownerTeam, name))
                 {
-					User creator = Session.ActiveUser();
-					TeamRepository.LoadMembers(ownerTeam);
-					TeamRepository.LoadCreatedWhiteboards(ownerTeam);
-					TeamRepository.AttachIfIsValid(context, ownerTeam);
-					Whiteboard whiteboardToAdd = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
-						name, description, ownerTeam, width, height);
-					Add(context, whiteboardToAdd);
-					return whiteboardToAdd;
+                    User creator = Session.ActiveUser();
+                    context.Teams.Attach(ownerTeam);
+                    context.Entry(ownerTeam).Collection(t => t.Members).Load();
+                    context.Entry(ownerTeam).Collection(t => t.CreatedWhiteboards).Load();
+                    context.Users.Attach(creator);
+                    context.Entry(creator).Collection(u => u.AssociatedTeams).Load();
+                    Whiteboard whiteboardToAdd = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
+                        name, description, ownerTeam, width, height);
+                    context.Whiteboards.Add(whiteboardToAdd);
+                    context.SaveChanges();
+                    return whiteboardToAdd;
                 }
                 else
                 {
@@ -153,9 +157,10 @@ namespace Persistence
             {
                 Team whiteboardsOwnerTeam = elementToRemove.OwnerTeam;
                 context.Teams.Attach(whiteboardsOwnerTeam);
+                context.Entry(whiteboardsOwnerTeam).Collection(t => t.CreatedWhiteboards).Load();
                 context.Whiteboards.Attach(elementToRemove);
                 whiteboardsOwnerTeam.RemoveWhiteboard(elementToRemove);
-                context.SaveChanges();
+                context.Entry(whiteboardsOwnerTeam).State = EntityState.Modified;
                 context.Whiteboards.Remove(elementToRemove);
                 context.SaveChanges();
             }

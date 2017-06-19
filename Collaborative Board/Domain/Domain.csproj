@@ -54,7 +54,9 @@
     <Compile Include="Exceptions\BoardException.cs" />
     <Compile Include="Exceptions\CommentException.cs" />
     <Compile Include="Exceptions\ElementException.cs" />
+    <Compile Include="Exceptions\MemberScoringException.cs" />
     <Compile Include="Exceptions\RepositoryException.cs" />
+    <Compile Include="Exceptions\ScoringManagerException.cs" />
     <Compile Include="Exceptions\SessionException.cs" />
     <Compile Include="Exceptions\TeamException.cs" />
     <Compile Include="Exceptions\UserException.cs" />

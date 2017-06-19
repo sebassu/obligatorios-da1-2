@@ -127,7 +127,7 @@ namespace Persistence
             {
                 try
                 {
-                    ValidateActiveUserHasAdministrationPrivileges();
+                    Session.ValidateActiveUserHasAdministrationPrivileges();
                     context.Users.Attach(userToAdd);
                     context.Entry(userToAdd).Collection(u => u.AssociatedTeams).Load();
                     context.Teams.Attach(teamToAddTo);
@@ -149,7 +149,7 @@ namespace Persistence
             {
                 try
                 {
-                    ValidateActiveUserHasAdministrationPrivileges();
+                    Session.ValidateActiveUserHasAdministrationPrivileges();
                     context.Users.Attach(userToRemove);
                     context.Entry(userToRemove).Collection(u => u.AssociatedTeams).Load();
                     context.Teams.Attach(teamToRemoveFrom);

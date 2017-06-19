@@ -189,7 +189,7 @@ namespace Domain
             Name = nameToSet;
             Description = descriptionToSet;
             MaximumMembers = maximumMembersToSet;
-            Members.Add(creator);
+            AddMember(creator);
         }
 
         public override bool Equals(object obj)
