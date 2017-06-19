@@ -27,27 +27,20 @@ namespace Persistence
             {
                 if (ThereIsNoWhiteboardWithNameAndTeam(ownerTeam, name))
                 {
-                    return InsertNewWhiteboard(name, description, ownerTeam,
-                        width, height, context);
+					User creator = Session.ActiveUser();
+					TeamRepository.LoadMembers(ownerTeam);
+					TeamRepository.LoadCreatedWhiteboards(ownerTeam);
+					TeamRepository.AttachIfIsValid(context, ownerTeam);
+					Whiteboard whiteboardToAdd = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
+						name, description, ownerTeam, width, height);
+					Add(context, whiteboardToAdd);
+					return whiteboardToAdd;
                 }
                 else
                 {
                     throw new RepositoryException(ErrorMessages.WhiteboardNameTeamMustBeUnique);
                 }
             }
-        }
-
-        private static Whiteboard InsertNewWhiteboard(string name, string description, Team ownerTeam,
-            int width, int height, BoardContext context)
-        {
-            User creator = Session.ActiveUser();
-            TeamRepository.LoadMembers(ownerTeam);
-            TeamRepository.LoadCreatedWhiteboards(ownerTeam);
-            EntityFrameworkUtilities<Team>.AttachIfIsValid(context, ownerTeam);
-            Whiteboard whiteboardToAdd = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
-                name, description, ownerTeam, width, height);
-            EntityFrameworkUtilities<Whiteboard>.Add(context, whiteboardToAdd);
-            return whiteboardToAdd;
         }
 
         public static void ModifyWhiteboard(Whiteboard whiteboardToModify,
@@ -156,9 +149,16 @@ namespace Persistence
 
         private static void PerformRemove(Whiteboard elementToRemove)
         {
-            Team whiteboardsOwnerTeam = elementToRemove.OwnerTeam;
-            whiteboardsOwnerTeam.RemoveWhiteboard(elementToRemove);
-            EntityFrameworkUtilities<Whiteboard>.Remove(elementToRemove);
+            using (BoardContext context = new BoardContext())
+            {
+                Team whiteboardsOwnerTeam = elementToRemove.OwnerTeam;
+                context.Teams.Attach(whiteboardsOwnerTeam);
+                context.Whiteboards.Attach(elementToRemove);
+                whiteboardsOwnerTeam.RemoveWhiteboard(elementToRemove);
+                context.SaveChanges();
+                context.Whiteboards.Remove(elementToRemove);
+                context.SaveChanges();
+            }
         }
 
         internal static void RemoveDueToTeamDeletion(Whiteboard whiteboardToRemove)

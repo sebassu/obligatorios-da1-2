@@ -61,7 +61,9 @@
     <Compile Include="Exceptions\WhiteboardException.cs" />
     <Compile Include="ImageWhiteboard.cs" />
     <Compile Include="PasswordUtilities.cs" />
+    <Compile Include="MemberScoring.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScoringManager.cs" />
     <Compile Include="TextBoxWhiteboard.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Team.cs" />
@@ -73,6 +75,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ErrorMessages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Exceptions\Exceptions.csproj">
+      <Project>{3dee1d1c-11b9-4470-8f2b-b2b828fd3ec6}</Project>
+      <Name>Exceptions</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

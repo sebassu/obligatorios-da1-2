@@ -49,7 +49,8 @@ namespace GraphicInterface
         private void LoadTeamComboboxWithActiveUsersTeams()
         {
             var activeUser = Session.ActiveUser();
-            var teamsToShow = TeamRepository.Elements.Where(t => t.Members.Contains(activeUser));
+            UserRepository.LoadAssociatedTeams(activeUser);
+            var teamsToShow = activeUser.AssociatedTeams;
             cmbOwnerTeam.Items.AddRange(teamsToShow.ToArray());
         }
 

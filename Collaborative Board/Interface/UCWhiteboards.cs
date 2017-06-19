@@ -20,7 +20,8 @@ namespace GraphicInterface
         private static bool ActiveUserBelongsToAnyTeam()
         {
             User activeUser = Session.ActiveUser();
-            return TeamRepository.Elements.Any(t => t.Members.Contains(activeUser));
+            UserRepository.LoadAssociatedTeams(activeUser);
+            return activeUser.AssociatedTeams.Any();
         }
 
         private void BtnAdd_MouseEnter(object sender, EventArgs e)
@@ -124,6 +125,7 @@ namespace GraphicInterface
 
         private static bool ValidateWhiteboardIsToBeShown(Whiteboard oneWhiteboard)
         {
+            TeamRepository.LoadMembers(oneWhiteboard.OwnerTeam);
             bool whiteboardTeamHasLoggedInUser = oneWhiteboard.OwnerTeam.Members.Contains(Session.ActiveUser());
             return whiteboardTeamHasLoggedInUser || Session.HasAdministrationPrivileges();
         }
@@ -176,6 +178,7 @@ namespace GraphicInterface
 
         private void DeleteWhiteboard(Whiteboard whiteboardToDelete)
         {
+            TeamRepository.LoadCreatedWhiteboards(whiteboardToDelete.OwnerTeam);
             WhiteboardRepository.Remove(whiteboardToDelete);
             LoadRegisteredWhiteboards();
             InterfaceUtilities.SuccessfulOperation();
