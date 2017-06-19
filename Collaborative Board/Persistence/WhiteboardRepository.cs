@@ -143,9 +143,16 @@ namespace Persistence
 
         private static void PerformRemove(Whiteboard elementToRemove)
         {
-            Team whiteboardsOwnerTeam = elementToRemove.OwnerTeam;
-            whiteboardsOwnerTeam.RemoveWhiteboard(elementToRemove);
-            EntityFrameworkRepository<Whiteboard>.Remove(elementToRemove);
+            using (BoardContext context = new BoardContext())
+            {
+                Team whiteboardsOwnerTeam = elementToRemove.OwnerTeam;
+                context.Teams.Attach(whiteboardsOwnerTeam);
+                context.Whiteboards.Attach(elementToRemove);
+                whiteboardsOwnerTeam.RemoveWhiteboard(elementToRemove);
+                context.SaveChanges();
+                context.Whiteboards.Remove(elementToRemove);
+                context.SaveChanges();
+            }
         }
 
         internal static void RemoveDueToTeamDeletion(Whiteboard whiteboardToRemove)
