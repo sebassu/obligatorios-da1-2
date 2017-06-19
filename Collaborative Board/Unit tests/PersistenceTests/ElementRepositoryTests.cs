@@ -75,5 +75,29 @@ namespace UnitTests.PersistenceTests
         {
             ElementWhiteboard addedElement = ElementRepository.AddNewTextbox(null);
         }
+
+        [TestMethod]
+        public void ERepositoryRemoveElementImageValidTest()
+        {
+            ElementWhiteboard addedElement = ElementRepository.AddNewImage(testingContainer,
+                testImageLocation);
+            ElementRepository.Remove(addedElement);
+            CollectionAssert.DoesNotContain(testingContainer.Contents, addedElement);
+        }
+
+        [TestMethod]
+        public void ERepositoryRemoveElementTextboxValidTest()
+        {
+            ElementWhiteboard addedElement = ElementRepository.AddNewTextbox(testingContainer);
+            ElementRepository.Remove(addedElement);
+            CollectionAssert.DoesNotContain(testingContainer.Contents, addedElement);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(RepositoryException))]
+        public void ERepositoryRemoveElementNullInvalidTest()
+        {
+            ElementRepository.Remove(null);
+        }
     }
 }

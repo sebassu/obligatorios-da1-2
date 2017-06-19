@@ -256,14 +256,14 @@ namespace UnitTests.PersistenceTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(TeamException))]
+        [ExpectedException(typeof(RepositoryException))]
         public void TRepositoryAddRepeatedMemberTest()
         {
             TeamRepository.AddMemberToTeam(lesLuthiers, mundstock);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(TeamException))]
+        [ExpectedException(typeof(RepositoryException))]
         public void TRepositoryAddNullMemberTest()
         {
             Team teamToAddTo = TeamRepository.Elements.First();
