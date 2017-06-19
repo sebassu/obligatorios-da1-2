@@ -16,6 +16,8 @@ namespace UnitTests.PersistenceTests
         private static User maronna;
         private static User rabinovich;
 
+        private static Team lesLuthiers;
+
         [ClassInitialize]
         public static void ClassSetup(TestContext context)
         {
@@ -43,7 +45,7 @@ namespace UnitTests.PersistenceTests
         {
             ChangeActiveUser("mundstock@lesluthiers.com.ar", "versiculoLIX");
             string descriptionToSet = "Grupo de seguidores de Johann Sebastian Mastropiero.";
-            TeamRepository.AddNewTeam("Les Luthiers", descriptionToSet, 19);
+            lesLuthiers = TeamRepository.AddNewTeam("Les Luthiers", descriptionToSet, 19);
         }
 
         private static void ChangeActiveUser(string email, string password)
@@ -61,10 +63,8 @@ namespace UnitTests.PersistenceTests
         [TestMethod]
         public void TRepositoryAddNewTeamValidTest()
         {
-            User aUser = Session.ActiveUser();
-            Team teamToVerify = Team.CreatorNameDescriptionMaximumMembers(aUser, "Equipo 1",
-                 "Descripción de equipo.", 20);
-            TeamRepository.AddNewTeam("Equipo 1", "Descripción de equipo.", 20);
+            User someUser = Session.ActiveUser();
+            Team teamToVerify = TeamRepository.AddNewTeam("Equipo 1", "Descripción de equipo.", 20);
             CollectionAssert.Contains(TeamRepository.Elements.ToList(), teamToVerify);
         }
 
@@ -259,8 +259,7 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(TeamException))]
         public void TRepositoryAddRepeatedMemberTest()
         {
-            Team teamToAddTo = TeamRepository.Elements.First();
-            TeamRepository.AddMemberToTeam(teamToAddTo, mundstock);
+            TeamRepository.AddMemberToTeam(lesLuthiers, mundstock);
         }
 
         [TestMethod]

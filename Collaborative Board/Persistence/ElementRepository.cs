@@ -9,10 +9,10 @@ namespace Persistence
             using (var context = new BoardContext())
             {
                 User activeUser = Session.ActiveUser();
-                context.Users.Attach(activeUser);
-                context.Whiteboards.Attach(container);
+                EntityFrameworkUtilities<User>.AttachIfIsValid(context, activeUser);
+                EntityFrameworkUtilities<Whiteboard>.AttachIfIsValid(context, container);
                 Team ownerTeam = container.OwnerTeam;
-                context.Teams.Attach(ownerTeam);
+                EntityFrameworkUtilities<Team>.AttachIfIsValid(context, ownerTeam);
                 context.Entry(ownerTeam).Collection(t => t.Members);
                 if (container.UserCanModify(activeUser))
                 {
@@ -34,10 +34,10 @@ namespace Persistence
             using (var context = new BoardContext())
             {
                 User activeUser = Session.ActiveUser();
-                context.Users.Attach(activeUser);
-                context.Whiteboards.Attach(container);
+                EntityFrameworkUtilities<User>.AttachIfIsValid(context, activeUser);
+                EntityFrameworkUtilities<Whiteboard>.AttachIfIsValid(context, container);
                 Team ownerTeam = container.OwnerTeam;
-                context.Teams.Attach(ownerTeam);
+                EntityFrameworkUtilities<Team>.AttachIfIsValid(context, ownerTeam);
                 context.Entry(ownerTeam).Collection(t => t.Members);
                 if (container.UserCanModify(activeUser))
                 {

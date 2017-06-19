@@ -127,13 +127,7 @@ namespace Persistence
             {
                 try
                 {
-                    Session.ValidateActiveUserHasAdministrationPrivileges();
-                    context.Users.Attach(userToAdd);
-                    context.Entry(userToAdd).Collection(u => u.AssociatedTeams).Load();
-                    context.Teams.Attach(teamToAddTo);
-                    context.Entry(teamToAddTo).Collection(t => t.Members).Load();
-                    teamToAddTo.AddMember(userToAdd);
-                    context.SaveChanges();
+                    AttemptToAddMemberToTeam(teamToAddTo, userToAdd, context);
                 }
                 catch (DataException exception)
                 {
@@ -143,19 +137,22 @@ namespace Persistence
             }
         }
 
+        private static void AttemptToAddMemberToTeam(Team teamToAddTo, User userToAdd,
+            BoardContext context)
+        {
+            Session.ValidateActiveUserHasAdministrationPrivileges();
+            EntityFrameworkUtilities<Team>.AttachIfIsValid(context, teamToAddTo);
+            teamToAddTo.AddMember(userToAdd);
+            context.SaveChanges();
+        }
+
         public static void RemoveMemberFromTeam(Team teamToRemoveFrom, User userToRemove)
         {
             using (var context = new BoardContext())
             {
                 try
                 {
-                    Session.ValidateActiveUserHasAdministrationPrivileges();
-                    context.Users.Attach(userToRemove);
-                    context.Entry(userToRemove).Collection(u => u.AssociatedTeams).Load();
-                    context.Teams.Attach(teamToRemoveFrom);
-                    context.Entry(teamToRemoveFrom).Collection(t => t.Members).Load();
-                    teamToRemoveFrom.RemoveMember(userToRemove);
-                    context.SaveChanges();
+                    AttemptToRemoveMemberFromTeam(teamToRemoveFrom, userToRemove, context);
                 }
                 catch (DataException exception)
                 {
@@ -163,6 +160,15 @@ namespace Persistence
                         + exception.Message);
                 }
             }
+        }
+
+        private static void AttemptToRemoveMemberFromTeam(Team teamToRemoveFrom, User
+            userToRemove, BoardContext context)
+        {
+            Session.ValidateActiveUserHasAdministrationPrivileges();
+            EntityFrameworkUtilities<Team>.AttachIfIsValid(context, teamToRemoveFrom);
+            teamToRemoveFrom.RemoveMember(userToRemove);
+            context.SaveChanges();
         }
 
         public static void LoadMembers(Team someTeam)
