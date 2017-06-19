@@ -29,7 +29,7 @@ namespace Persistence
             }
         }
 
-        public static TextBoxWhiteboard AddNewTextboard(Whiteboard container, string fileName)
+        public static TextBoxWhiteboard AddNewTextbox(Whiteboard container)
         {
             using (var context = new BoardContext())
             {

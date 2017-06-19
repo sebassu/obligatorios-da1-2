@@ -169,7 +169,7 @@ namespace GraphicInterface
 
         private void BtnAddText_Click(object sender, EventArgs e)
         {
-            TextBoxWhiteboard textBoxToAdd = TextBoxWhiteboard.CreateWithContainer(whiteboardShown);
+            TextBoxWhiteboard textBoxToAdd = ElementRepository.AddNewTextbox(whiteboardShown);
             AddRichTextBoxFromDomainTextBoxWhiteboard(textBoxToAdd);
         }
 
