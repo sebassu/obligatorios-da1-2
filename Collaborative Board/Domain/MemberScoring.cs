@@ -10,7 +10,7 @@ namespace Domain
 {
     public class MemberScoring
     {
-        private const byte absoluteMinimumMembersScore = 1;
+        private const byte absoluteMinimumMembersScore = 0;
         public virtual int Id { get; set; }
 
         private int membersTotalScore;
