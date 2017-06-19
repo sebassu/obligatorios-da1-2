@@ -143,6 +143,8 @@ namespace Persistence
         {
             ValidateActiveUserHasAdministrationPrivileges();
             AttachIfIsValid(context, teamToAddTo);
+            UserRepository.LoadAssociatedTeams(userToAdd);
+            LoadMembers(teamToAddTo);
             teamToAddTo.AddMember(userToAdd);
             context.SaveChanges();
         }

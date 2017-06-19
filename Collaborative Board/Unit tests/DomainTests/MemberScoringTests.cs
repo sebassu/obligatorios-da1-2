@@ -52,7 +52,7 @@ namespace UnitTests.DomainTests
         [ExpectedException(typeof(MemberScoringException))]
         public void MemberScoringUserNotInTeamTest()
         {
-            User member = User.NamesEmailBirthdatePassword("No", "Pertenece",
+            User member = User.CreateNewCollaborator("No", "Pertenece",
                 "mail@nopertenece.com", DateTime.Today, "contraseñaVálida123");
             Team membersTeam = Team.InstanceForTestingPurposes();
             testingMemberScoring = MemberScoring.MemberMembersTeamMembersTotalScore(member,

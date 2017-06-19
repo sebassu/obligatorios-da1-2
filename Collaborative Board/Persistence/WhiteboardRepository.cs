@@ -29,6 +29,7 @@ namespace Persistence
                 User creator = Session.ActiveUser();
                 TeamRepository.LoadMembers(ownerTeam);
                 TeamRepository.LoadCreatedWhiteboards(ownerTeam);
+                TeamRepository.AttachIfIsValid(context, ownerTeam);
                 Whiteboard whiteboardToAdd = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
                     name, description, ownerTeam, width, height);
                 Add(context, whiteboardToAdd);
