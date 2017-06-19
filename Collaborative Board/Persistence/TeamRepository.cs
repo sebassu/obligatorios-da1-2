@@ -141,7 +141,9 @@ namespace Persistence
             BoardContext context)
         {
             Session.ValidateActiveUserHasAdministrationPrivileges();
+            EntityFrameworkUtilities<User>.AttachIfIsValid(context, userToAdd);
             EntityFrameworkUtilities<Team>.AttachIfIsValid(context, teamToAddTo);
+            context.Entry(userToAdd).Collection(u => u.AssociatedTeams).Load();
             teamToAddTo.AddMember(userToAdd);
             context.SaveChanges();
         }

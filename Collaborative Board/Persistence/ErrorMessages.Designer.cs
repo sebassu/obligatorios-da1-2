@@ -115,6 +115,15 @@ namespace Persistence {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Se recibió un elemento inválido..
+        /// </summary>
+        internal static string InvalidElementRecieved {
+            get {
+                return ResourceManager.GetString("InvalidElementRecieved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to El usuario actual no tiene los permisos de administración requeridos para completar esta acción..
         /// </summary>
         internal static string NoAdministrationPrivileges {

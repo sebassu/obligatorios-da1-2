@@ -135,6 +135,9 @@
   <data name="EmailPasswordMismatch" xml:space="preserve">
     <value>Los datos de inicio de sesión ingresados no están asociados a ningún usuario, reintente.</value>
   </data>
+  <data name="InvalidElementRecieved" xml:space="preserve">
+    <value>Se recibió un elemento inválido.</value>
+  </data>
   <data name="NoAdministrationPrivileges" xml:space="preserve">
     <value>El usuario actual no tiene los permisos de administración requeridos para completar esta acción.</value>
   </data>

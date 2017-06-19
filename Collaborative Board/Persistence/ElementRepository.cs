@@ -52,5 +52,24 @@ namespace Persistence
                 }
             }
         }
+
+        public static void Remove(ElementWhiteboard elementToRemove)
+        {
+            EntityFrameworkUtilities<ElementWhiteboard>.Remove(elementToRemove);
+        }
+
+        /*private static void RemoveElementFromWhiteboard(ElementWhiteboard elementToRemove)
+        {
+            using (var context = new BoardContext())
+            {
+                EntityFrameworkUtilities<ElementWhiteboard>.AttachIfIsValid(context, elementToRemove);
+                context.Entry(elementToRemove).Reference(e => e.Container).Load();
+                Whiteboard container = elementToRemove.Container;
+                context.Entry(container).Collection(w => w.Contents).Load();
+                container.RemoveWhiteboardElement(elementToRemove);
+                context.Elements.Remove(elementToRemove);
+                context.SaveChanges();
+            }
+        }*/
     }
 }

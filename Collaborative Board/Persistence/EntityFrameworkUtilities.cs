@@ -2,6 +2,7 @@
 using System.Data;
 using System.Resources;
 using System.Data.Entity;
+using System;
 
 [assembly: NeutralResourcesLanguage("es")]
 namespace Persistence
@@ -45,16 +46,21 @@ namespace Persistence
         internal static void AttachIfIsValid(BoardContext context, T element)
         {
             var elements = context.Set<T>();
-            if (Utilities.IsNotNull(element))
+            try
             {
-                if (context.Entry(element).State == EntityState.Detached)
-                {
-                    elements.Attach(element);
-                }
+                PerformAttachIfCorresponds(context, element, elements);
             }
-            else
+            catch (SystemException)
             {
-                throw new RepositoryException(ErrorMessages.ElementDoesNotExist);
+                throw new RepositoryException(ErrorMessages.InvalidElementRecieved);
+            }
+        }
+
+        private static void PerformAttachIfCorresponds(BoardContext context, T element, DbSet<T> elements)
+        {
+            if (context.Entry(element).State == EntityState.Detached)
+            {
+                elements.Attach(element);
             }
         }
     }
