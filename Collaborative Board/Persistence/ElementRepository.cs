@@ -9,7 +9,6 @@ namespace Persistence
             using (var context = new BoardContext())
             {
                 User activeUser = Session.ActiveUser();
-                EntityFrameworkUtilities<User>.AttachIfIsValid(context, activeUser);
                 EntityFrameworkUtilities<Whiteboard>.AttachIfIsValid(context, container);
                 Team ownerTeam = container.OwnerTeam;
                 EntityFrameworkUtilities<Team>.AttachIfIsValid(context, ownerTeam);
@@ -34,7 +33,6 @@ namespace Persistence
             using (var context = new BoardContext())
             {
                 User activeUser = Session.ActiveUser();
-                EntityFrameworkUtilities<User>.AttachIfIsValid(context, activeUser);
                 EntityFrameworkUtilities<Whiteboard>.AttachIfIsValid(context, container);
                 Team ownerTeam = container.OwnerTeam;
                 EntityFrameworkUtilities<Team>.AttachIfIsValid(context, ownerTeam);

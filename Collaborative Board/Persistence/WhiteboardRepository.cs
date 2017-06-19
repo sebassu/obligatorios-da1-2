@@ -165,5 +165,14 @@ namespace Persistence
         {
             PerformRemove(whiteboardToRemove);
         }
+
+        public static void LoadContents(Whiteboard someWhiteboard)
+        {
+            using (var context = new BoardContext())
+            {
+                EntityFrameworkUtilities<Whiteboard>.AttachIfIsValid(context, someWhiteboard);
+                context.Entry(someWhiteboard).Collection(e => e.Contents).Load();
+            }
+        }
     }
 }
