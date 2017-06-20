@@ -6,7 +6,22 @@ namespace Domain
     {
         public virtual string TextContent { get; set; }
 
-        public Font TextFont { get; set; }
+        private Font textFont;
+        public Font TextFont
+        {
+            get { return textFont; }
+            set
+            {
+                if (Utilities.IsNotNull(value))
+                {
+                    textFont = value;
+                }
+                else
+                {
+                    throw new ElementException(ErrorMessages.FontIsNull);
+                }
+            }
+        }
 
         public virtual string FontToSave
         {
