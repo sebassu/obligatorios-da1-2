@@ -1,9 +1,9 @@
 ﻿using Domain;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Persistence;
 using System;
-using System.Drawing;
 using System.IO;
+using Persistence;
+using System.Drawing;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTests.PersistenceTests
 {
@@ -24,15 +24,19 @@ namespace UnitTests.PersistenceTests
 
         private static void AddTestingContainer()
         {
-            UserRepository.AddNewAdministrator("Graham", "Chapman",
+            User chapman = UserRepository.AddNewUser("Graham", "Chapman",
                 "chapman@python.com", DateTime.Today, "LemonCurry");
-            User cleese = UserRepository.AddNewAdministrator("John", "Cleese",
+            User cleese = UserRepository.AddNewUser("John", "Cleese",
                 "cleese@python.com", DateTime.Today, "SillyWalks");
+            UserRepository.AddNewUser("King", "Arthur",
+                "arthur@britons.com", DateTime.Today, "HolyHand");
             Team montypython = TeamRepository.AddNewTeam("Monty Pythons Flying Circus",
                 "Silly, silly.", 19);
+            TeamRepository.AddMemberToTeam(montypython, chapman);
             TeamRepository.AddMemberToTeam(montypython, cleese);
+            ChangeActiveUser("chapman@python.com", "LemonCurry");
             testingContainer = WhiteboardRepository.AddNewWhiteboard("Holy grail",
-                "Hate it when people rubble.", montypython, 1250, 1250);
+                "Hate it when people grovel.", montypython, 1250, 1250);
         }
 
         private static void ChangeActiveUser(string email, string password)
@@ -56,8 +60,44 @@ namespace UnitTests.PersistenceTests
         }
 
         [TestMethod]
+        public void ERepositoryAddNewImageAsNonCreatorValidTest()
+        {
+            ChangeActiveUser("cleese@python.com", "SillyWalks");
+            ElementWhiteboard addedElement = ElementRepository.AddNewImage(testingContainer,
+                testImageLocation + "TestImage.jpg");
+            CollectionAssert.Contains(testingContainer.Contents, addedElement);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(WhiteboardException))]
+        public void ERepositoryAddNewImageAsRandomUserInvalidTest()
+        {
+            ChangeActiveUser("arthur@britons.com", "HolyHand");
+            ElementWhiteboard addedElement = ElementRepository.AddNewImage(testingContainer,
+                testImageLocation + "TestImage.jpg");
+            CollectionAssert.Contains(testingContainer.Contents, addedElement);
+        }
+
+        [TestMethod]
         public void ERepositoryAddNewTextBoxValidTest()
         {
+            ElementWhiteboard addedElement = ElementRepository.AddNewTextBox(testingContainer);
+            CollectionAssert.Contains(testingContainer.Contents, addedElement);
+        }
+
+        [TestMethod]
+        public void ERepositoryAddNewTextBoxAsNonCreatorValidTest()
+        {
+            ChangeActiveUser("cleese@python.com", "SillyWalks");
+            ElementWhiteboard addedElement = ElementRepository.AddNewTextBox(testingContainer);
+            CollectionAssert.Contains(testingContainer.Contents, addedElement);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(WhiteboardException))]
+        public void ERepositoryAddNewTextBoxAsRandomUserInvalidTest()
+        {
+            ChangeActiveUser("arthur@britons.com", "HolyHand");
             ElementWhiteboard addedElement = ElementRepository.AddNewTextBox(testingContainer);
             CollectionAssert.Contains(testingContainer.Contents, addedElement);
         }
@@ -87,8 +127,48 @@ namespace UnitTests.PersistenceTests
         }
 
         [TestMethod]
+        public void ERepositoryRemoveElementImageAsNonCreatorValidTest()
+        {
+            ChangeActiveUser("cleese@python.com", "SillyWalks");
+            ElementWhiteboard addedElement = ElementRepository.AddNewImage(testingContainer,
+                testImageLocation + "TestImage.jpg");
+            ElementRepository.Remove(addedElement);
+            CollectionAssert.DoesNotContain(testingContainer.Contents, addedElement);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(WhiteboardException))]
+        public void ERepositoryRemoveElementImageAsRandomUserInvalidTest()
+        {
+            ChangeActiveUser("arthur@britons.com", "HolyHand");
+            ElementWhiteboard addedElement = ElementRepository.AddNewImage(testingContainer,
+                testImageLocation + "TestImage.jpg");
+            ElementRepository.Remove(addedElement);
+            CollectionAssert.DoesNotContain(testingContainer.Contents, addedElement);
+        }
+
+        [TestMethod]
         public void ERepositoryRemoveElementTextBoxValidTest()
         {
+            ElementWhiteboard addedElement = ElementRepository.AddNewTextBox(testingContainer);
+            ElementRepository.Remove(addedElement);
+            CollectionAssert.DoesNotContain(testingContainer.Contents, addedElement);
+        }
+
+        [TestMethod]
+        public void ERepositoryRemoveElementTextBoxAsNonCreatorValidTest()
+        {
+            ChangeActiveUser("cleese@python.com", "SillyWalks");
+            ElementWhiteboard addedElement = ElementRepository.AddNewTextBox(testingContainer);
+            ElementRepository.Remove(addedElement);
+            CollectionAssert.DoesNotContain(testingContainer.Contents, addedElement);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(WhiteboardException))]
+        public void ERepositoryRemoveElementTextBoxAsRandomUserInvalidTest()
+        {
+            ChangeActiveUser("arthur@britons.com", "HolyHand");
             ElementWhiteboard addedElement = ElementRepository.AddNewTextBox(testingContainer);
             ElementRepository.Remove(addedElement);
             CollectionAssert.DoesNotContain(testingContainer.Contents, addedElement);
@@ -117,6 +197,35 @@ namespace UnitTests.PersistenceTests
         }
 
         [TestMethod]
+        public void ERepositoryModifyElementPositionAndSizeAsNonCreatorImageValidTest()
+        {
+            ChangeActiveUser("cleese@python.com", "SillyWalks");
+            Point newPosition = new Point(280, 350);
+            Size newDimensions = new Size(100, 100);
+            ElementWhiteboard addedElement = ElementRepository.AddNewImage(testingContainer,
+                testImageLocation + "TestImage.jpg");
+            Assert.AreNotEqual(newPosition, addedElement.Position);
+            Assert.AreNotEqual(newDimensions, addedElement.Dimensions);
+            ElementRepository.UpdateElementPositionAndSize(addedElement,
+                newDimensions, newPosition);
+            Assert.AreEqual(newPosition, addedElement.Position);
+            Assert.AreEqual(newDimensions, addedElement.Dimensions);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(WhiteboardException))]
+        public void ERepositoryModifyElementPositionAndSizeAsRandomUserImageInvalidTest()
+        {
+            ChangeActiveUser("arthur@britons.com", "HolyHand");
+            Point newPosition = new Point(280, 350);
+            Size newDimensions = new Size(100, 100);
+            ElementWhiteboard addedElement = ElementRepository.AddNewImage(testingContainer,
+                testImageLocation + "TestImage.jpg");
+            ElementRepository.UpdateElementPositionAndSize(addedElement,
+                newDimensions, newPosition);
+        }
+
+        [TestMethod]
         public void ERepositoryModifyElementPositionAndSizeTextBoxValidTest()
         {
             Point newPosition = new Point(150, 150);
@@ -128,6 +237,33 @@ namespace UnitTests.PersistenceTests
                 newDimensions, newPosition);
             Assert.AreEqual(newPosition, addedElement.Position);
             Assert.AreEqual(newDimensions, addedElement.Dimensions);
+        }
+
+        [TestMethod]
+        public void ERepositoryModifyElementPositionAndSizeTextBoxAsNonCreatorValidTest()
+        {
+            ChangeActiveUser("cleese@python.com", "SillyWalks");
+            Point newPosition = new Point(150, 150);
+            Size newDimensions = new Size(370, 219);
+            ElementWhiteboard addedElement = ElementRepository.AddNewTextBox(testingContainer);
+            Assert.AreNotEqual(newPosition, addedElement.Position);
+            Assert.AreNotEqual(newDimensions, addedElement.Dimensions);
+            ElementRepository.UpdateElementPositionAndSize(addedElement,
+                newDimensions, newPosition);
+            Assert.AreEqual(newPosition, addedElement.Position);
+            Assert.AreEqual(newDimensions, addedElement.Dimensions);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(WhiteboardException))]
+        public void ERepositoryModifyElementPositionAndSizeTextBoxAsRandomUserInvalidTest()
+        {
+            ChangeActiveUser("arthur@britons.com", "HolyHand");
+            Point newPosition = new Point(150, 150);
+            Size newDimensions = new Size(370, 219);
+            ElementWhiteboard addedElement = ElementRepository.AddNewTextBox(testingContainer);
+            ElementRepository.UpdateElementPositionAndSize(addedElement,
+                newDimensions, newPosition);
         }
 
         [TestMethod]
@@ -163,7 +299,7 @@ namespace UnitTests.PersistenceTests
                 newPosition);
         }
 
-        /*[TestMethod]
+        [TestMethod]
         public void ERepositoryModifyImageValidTest()
         {
             ImageConverter converter = new ImageConverter();
@@ -176,7 +312,34 @@ namespace UnitTests.PersistenceTests
             byte[] newImageToCompare = converter.ConvertTo(newImage, typeof(byte[])) as byte[];
             ElementRepository.UpdateImage(addedElement, newImage);
             CollectionAssert.AreEqual(newImageToCompare, addedElement.ImageToSave);
-        }*/
+        }
+
+        [TestMethod]
+        public void ERepositoryModifyImageAsNonCreatorValidTest()
+        {
+            ImageConverter converter = new ImageConverter();
+            Image oldImage = Image.FromFile(testImageLocation + "TestImage.jpg");
+            byte[] oldImageToCompare = converter.ConvertTo(oldImage, typeof(byte[])) as byte[];
+            ImageWhiteboard addedElement = ElementRepository.AddNewImage(testingContainer,
+                testImageLocation + "TestImage.jpg");
+            CollectionAssert.AreEqual(oldImageToCompare, addedElement.ImageToSave);
+            Image newImage = Image.FromFile(testImageLocation + "Portal.jpg");
+            byte[] newImageToCompare = converter.ConvertTo(newImage, typeof(byte[])) as byte[];
+            ElementRepository.UpdateImage(addedElement, newImage);
+            CollectionAssert.AreEqual(newImageToCompare, addedElement.ImageToSave);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(WhiteboardException))]
+        public void ERepositoryModifyImageAsRandomUserInvalidTest()
+        {
+            ChangeActiveUser("arthur@britons.com", "HolyHand");
+            Image oldImage = Image.FromFile(testImageLocation + "TestImage.jpg");
+            ImageWhiteboard addedElement = ElementRepository.AddNewImage(testingContainer,
+                testImageLocation + "TestImage.jpg");
+            Image newImage = Image.FromFile(testImageLocation + "Portal.jpg");
+            ElementRepository.UpdateImage(addedElement, newImage);
+        }
 
         [TestMethod]
         [ExpectedException(typeof(RepositoryException))]
@@ -201,8 +364,29 @@ namespace UnitTests.PersistenceTests
             Font fontToSet = new Font(FontFamily.GenericSansSerif, 12.0F, FontStyle.Bold);
             TextBoxWhiteboard addedElement = ElementRepository.AddNewTextBox(testingContainer);
             Assert.AreNotEqual(fontToSet, addedElement.TextFont);
-            ElementRepository.UpdateFont(addedElement, fontToSet);
+            ElementRepository.ChangeFont(addedElement, fontToSet);
             Assert.AreEqual(fontToSet, addedElement.TextFont);
+        }
+
+        [TestMethod]
+        public void ERepositoryModifyFontAsNonCreatorValidTest()
+        {
+            ChangeActiveUser("cleese@python.com", "SillyWalks");
+            Font fontToSet = new Font(FontFamily.GenericSansSerif, 12.0F, FontStyle.Bold);
+            TextBoxWhiteboard addedElement = ElementRepository.AddNewTextBox(testingContainer);
+            Assert.AreNotEqual(fontToSet, addedElement.TextFont);
+            ElementRepository.ChangeFont(addedElement, fontToSet);
+            Assert.AreEqual(fontToSet, addedElement.TextFont);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(WhiteboardException))]
+        public void ERepositoryModifyFontAsRandomUserInvalidTest()
+        {
+            ChangeActiveUser("arthur@britons.com", "HolyHand");
+            Font fontToSet = new Font(FontFamily.GenericSansSerif, 12.0F, FontStyle.Bold);
+            TextBoxWhiteboard addedElement = ElementRepository.AddNewTextBox(testingContainer);
+            ElementRepository.ChangeFont(addedElement, fontToSet);
         }
 
         [TestMethod]
@@ -210,7 +394,7 @@ namespace UnitTests.PersistenceTests
         public void ERepositoryModifyFontNullElementValidTest()
         {
             Font fontToSet = new Font(FontFamily.GenericSansSerif, 12.0F, FontStyle.Bold);
-            ElementRepository.UpdateFont(null, fontToSet);
+            ElementRepository.ChangeFont(null, fontToSet);
         }
 
         [TestMethod]
@@ -218,7 +402,7 @@ namespace UnitTests.PersistenceTests
         public void ERepositoryModifyNullFontValidTest()
         {
             TextBoxWhiteboard addedElement = ElementRepository.AddNewTextBox(testingContainer);
-            ElementRepository.UpdateFont(addedElement, null);
+            ElementRepository.ChangeFont(addedElement, null);
         }
 
         [TestMethod]
@@ -227,8 +411,29 @@ namespace UnitTests.PersistenceTests
             string textToSet = "En el habitual espacio lírico";
             TextBoxWhiteboard addedElement = ElementRepository.AddNewTextBox(testingContainer);
             Assert.AreNotEqual(textToSet, addedElement.TextContent);
-            ElementRepository.UpdateText(addedElement, textToSet);
+            ElementRepository.ChangeText(addedElement, textToSet);
             Assert.AreEqual(textToSet, addedElement.TextContent);
+        }
+
+        [TestMethod]
+        public void ERepositoryModifyTextAsNonCreatorValidTest()
+        {
+            ChangeActiveUser("cleese@python.com", "SillyWalks");
+            string textToSet = "En el habitual espacio lírico";
+            TextBoxWhiteboard addedElement = ElementRepository.AddNewTextBox(testingContainer);
+            Assert.AreNotEqual(textToSet, addedElement.TextContent);
+            ElementRepository.ChangeText(addedElement, textToSet);
+            Assert.AreEqual(textToSet, addedElement.TextContent);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(WhiteboardException))]
+        public void ERepositoryModifyTextAsRandomUserInvalidTest()
+        {
+            ChangeActiveUser("arthur@britons.com", "HolyHand");
+            string textToSet = "En el habitual espacio lírico";
+            TextBoxWhiteboard addedElement = ElementRepository.AddNewTextBox(testingContainer);
+            ElementRepository.ChangeText(addedElement, textToSet);
         }
 
         [TestMethod]
@@ -236,7 +441,7 @@ namespace UnitTests.PersistenceTests
         public void ERepositoryModifyTextNullElementValidTest()
         {
             string textToSet = "En el habitual espacio lírico";
-            ElementRepository.UpdateText(null, textToSet);
+            ElementRepository.ChangeText(null, textToSet);
         }
     }
 }

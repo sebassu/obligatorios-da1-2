@@ -36,7 +36,7 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void CommentParameterFactoryMethodValidTest1()
         {
-            string someText = "Falta resolver el issue 12-3.";
+            string someText = "Falta resolver el issue 1812.";
             User creator = User.InstanceForTestingPurposes();
             testingComment = Comment.CreatorElementText(creator,
                 testingElement, someText);
@@ -51,7 +51,7 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void CommentParameterFactoryMethodValidTest2()
         {
-            string someText = "Falta resolver el issue 12-3.";
+            string someText = "Falta resolver el issue 2112.";
             User creator = User.CreateNewCollaborator("Emilio", "Ravenna",
                 "ravenna@simuladores.com", DateTime.Today, "contraseñaVálida123");
             testingComment = Comment.CreatorElementText(creator,
@@ -223,7 +223,7 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void CommentEqualsDifferentCreatorsInvalidTest()
         {
-            string someText = "Falta resolver el issue 12-3.";
+            string someText = "Falta resolver el issue 12-34.";
             User creator = User.InstanceForTestingPurposes();
             User anotherCreator = User.CreateNewCollaborator("Mario", "Santos",
                 "santos@simuladores.com", DateTime.Today, "contraseñaVálida123");
@@ -231,13 +231,14 @@ namespace UnitTests.DomainTests
                 testingElement, someText);
             Comment otherTestingComment = Comment.CreatorElementText(anotherCreator,
                 testingElement, someText);
+            testingComment.Equals(otherTestingComment);
             Assert.AreNotEqual(testingComment, otherTestingComment);
         }
 
         [TestMethod]
         public void CommentEqualsDifferentTextInvalidTest()
         {
-            string someText = "Falta resolver el issue 12-3.";
+            string someText = "Wolololo.";
             string someOtherText = "En el habitual espacio lírico";
             User creator = User.InstanceForTestingPurposes();
             testingComment = Comment.CreatorElementText(creator,
@@ -253,7 +254,7 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void CommentEqualsDifferentDateTimesInvalidTest()
         {
-            string someText = "Falta resolver el issue 12-3.";
+            string someText = "Bromato de Armonio.";
             User creator = User.InstanceForTestingPurposes();
             testingComment = Comment.CreatorElementText(creator,
                 testingElement, someText);
@@ -266,13 +267,13 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void CommentToStringTest()
         {
-            string someText = "Falta resolver el issue 12-3.";
+            string someText = "Falta resolver el issue 12-355.";
             User creator = User.CreateNewCollaborator("Mario", "Santos",
                 "santos@simuladores.com", DateTime.Today, "contraseñaVálida123");
             testingComment = Comment.CreatorElementText(creator,
                 testingElement, someText);
             string dateShown = DateTime.Now.ToString("d/M/yyyy, h:mm tt", CultureInfo.CurrentCulture);
-            Assert.AreEqual("Falta resolver el issue 12-3. <" + dateShown + "> <santos@simuladores.com>",
+            Assert.AreEqual("Falta resolver el issue 12-355. <" + dateShown + "> <santos@simuladores.com>",
                 testingComment.ToString());
         }
 
