@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BoardContext.cs" />
+    <Compile Include="CommentRepository.cs" />
     <Compile Include="ElementRepository.cs" />
     <Compile Include="EntityFrameworkUtilities.cs" />
     <Compile Include="TeamRepository.cs" />

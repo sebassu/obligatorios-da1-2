@@ -118,6 +118,7 @@
             this.pnlWhiteboard.Name = "pnlWhiteboard";
             this.pnlWhiteboard.Size = new System.Drawing.Size(1785, 1445);
             this.pnlWhiteboard.TabIndex = 1;
+            this.pnlWhiteboard.Paint += new System.Windows.Forms.PaintEventHandler(this.PnlWhiteboard_Paint);
             // 
             // WhiteboardVisualization
             // 

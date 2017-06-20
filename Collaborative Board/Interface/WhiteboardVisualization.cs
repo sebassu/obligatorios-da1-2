@@ -259,5 +259,10 @@ namespace GraphicInterface
             strategyToUse.ExportImage();
             InterfaceUtilities.SuccessfulOperation();
         }
+
+        private void PnlWhiteboard_Paint(object sender, PaintEventArgs e)
+        {
+            // Implementación va aquí.
+        }
     }
 }

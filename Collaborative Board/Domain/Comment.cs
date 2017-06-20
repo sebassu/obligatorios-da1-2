@@ -87,7 +87,7 @@ namespace Domain
             return new Comment();
         }
 
-        public Comment()
+        protected Comment()
         {
             text = "Comentario inválido.";
             Creator = User.InstanceForTestingPurposes();
