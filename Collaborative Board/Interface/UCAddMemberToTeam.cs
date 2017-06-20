@@ -29,7 +29,7 @@ namespace GraphicInterface
         {
             var globalUsers = UserRepository.Elements;
             TeamRepository.LoadMembers(teamToWorkWith);
-            var notMembersOfTeam = globalUsers.Where(u => !teamToWorkWith.Members.Contains(u)).ToList();
+            var notMembersOfTeam = globalUsers.Where(u => !u.AssociatedTeams.Contains(teamToWorkWith)).ToList();
             if (Utilities.IsEmpty(notMembersOfTeam))
             {
                 lstUsers.Items.Add(new ListViewItem("No existen usuarios no miembros del equipo."));

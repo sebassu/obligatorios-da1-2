@@ -86,7 +86,14 @@ namespace Domain
         {
             if (Utilities.IsNotNull(aMember))
             {
-                return aTeam.Members.Contains(aMember);
+                if (Utilities.IsNotNull(aTeam))
+                {
+                    return aMember.AssociatedTeams.Contains(aTeam);
+                }
+                else
+                {
+                    throw new MemberScoringException(ErrorMessages.TeamIsInvalid);
+                }
             }
             else
             {
