@@ -15,7 +15,7 @@ namespace GraphicInterface
             }
             else
             {
-                pnlSystem.Controls.Add(new UCWhiteboards(pnlSystem));
+                pnlSystem.Controls.Add(new UCUserHome(pnlSystem));
             }
             
 

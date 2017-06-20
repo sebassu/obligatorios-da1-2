@@ -62,6 +62,18 @@ namespace GraphicInterface
             btnUsers.Font = new Font(btnUsers.Font.Name, 18, FontStyle.Bold);
         }
 
+        private void btnScore_MouseEnter(object sender, EventArgs e)
+        {
+            btnScore.BackColor = Color.DimGray;
+            btnScore.Font = new Font(btnScore.Font.Name, 19, FontStyle.Bold);
+        }
+
+        private void btnScore_MouseLeave(object sender, EventArgs e)
+        {
+            btnScore.BackColor = Color.Gray;
+            btnScore.Font = new Font(btnScore.Font.Name, 18, FontStyle.Bold);
+        }
+
         private void btnExit_Click(object sender, EventArgs e)
         {
             InterfaceUtilities.AskLogOff();
@@ -86,6 +98,11 @@ namespace GraphicInterface
         {
             new SelectReport(systemPanel).Show();
             systemPanel.Enabled = false;
+        }
+
+        private void btnScore_Click(object sender, EventArgs e)
+        {
+            InterfaceUtilities.UCScoreMenuToPanel(systemPanel);
         }
     }
 }

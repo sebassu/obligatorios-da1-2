@@ -136,7 +136,7 @@ namespace GraphicInterface
             FileDialog fileSelector)
         {
             Image imageToSet = Image.FromFile(fileSelector.FileName);
-            domainImage.ActualImage = imageToSet;
+            ElementRepository.UpdateImage(domainImage, imageToSet);
             container.Image = imageToSet;
             container.Update();
         }
@@ -207,7 +207,7 @@ namespace GraphicInterface
 
         private static void UpdateElementText(RichTextBox interfaceContainer, TextBoxWhiteboard domainTextBox)
         {
-            domainTextBox.TextContent = interfaceContainer.Text;
+            ElementRepository.UpdateText(domainTextBox, interfaceContainer.Text);
         }
 
         private static void AddModifyFontDomainTextBox(RichTextBox interfaceContainer,
@@ -225,7 +225,7 @@ namespace GraphicInterface
             {
                 Font chosenFont = fontChooser.Font;
                 interfaceContainer.Font = chosenFont;
-                domainTextBox.TextFont = chosenFont;
+                ElementRepository.UpdateFont(domainTextBox, chosenFont);
             }
         }
 
