@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Persistence;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -205,8 +206,7 @@ namespace GraphicInterface
             ElementWhiteboard boardElement = interfaceObject.Tag as ElementWhiteboard;
             try
             {
-                boardElement.Position = interfaceObject.Location;
-                boardElement.Dimensions = interfaceObject.Size;
+                ElementRepository.UpdateElementPositionAndSize(boardElement, interfaceObject.Size, interfaceObject.Location);
             }
             catch (BoardException exception)
             {

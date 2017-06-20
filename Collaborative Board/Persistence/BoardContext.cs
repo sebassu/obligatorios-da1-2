@@ -9,6 +9,7 @@ namespace Persistence
         public DbSet<Team> Teams { get; set; }
         public DbSet<Whiteboard> Whiteboards { get; set; }
         public DbSet<ElementWhiteboard> Elements { get; set; }
+        public DbSet<ScoringManager> Scores { get; set; }
 
         public BoardContext() : base()
         {

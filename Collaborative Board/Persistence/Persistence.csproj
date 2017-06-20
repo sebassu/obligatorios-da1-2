@@ -53,6 +53,7 @@
     <Compile Include="CommentRepository.cs" />
     <Compile Include="ElementRepository.cs" />
     <Compile Include="EntityFrameworkUtilities.cs" />
+    <Compile Include="ScoringManagerRepository.cs" />
     <Compile Include="TeamRepository.cs" />
     <Compile Include="WhiteboardRepository.cs" />
     <Compile Include="ErrorMessages.Designer.cs">

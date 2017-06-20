@@ -65,6 +65,7 @@
     <Compile Include="DomainTests\ImageWhiteboardTests.cs" />
     <Compile Include="DomainTests\UserTests.cs" />
     <Compile Include="DomainTests\TeamTests.cs" />
+    <Compile Include="PersistenceTests\ScoringManagerRepositoryTests.cs" />
     <Compile Include="PersistenceTests\SessionTests.cs" />
     <Compile Include="PersistenceTests\ElementRepositoryTests.cs" />
     <Compile Include="PersistenceTests\UserRepositoryTests.cs" />

@@ -13,6 +13,7 @@ namespace GraphicInterface
             try
             {
                 UserRepository.InsertOriginalSystemAdministrator();
+                ScoringManagerRepository.InsertDefaultScores();
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new LogOn());

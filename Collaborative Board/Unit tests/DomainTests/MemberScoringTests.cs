@@ -28,13 +28,30 @@ namespace UnitTests.DomainTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(MemberScoringException))]
-        public void MemberScoringInvalidZeroTotalScoreTest()
+        public void MemberScoringValidZeroTotalScoreTest()
         {
             User member = User.InstanceForTestingPurposes();
             Team membersTeam = Team.InstanceForTestingPurposes();
             testingMemberScoring = MemberScoring.MemberMembersTeamMembersTotalScore(member, 
                 membersTeam, 0);
+        }
+
+        [TestMethod]
+        public void MemberScoringValidOneTotalScoreTest()
+        {
+            User member = User.InstanceForTestingPurposes();
+            Team membersTeam = Team.InstanceForTestingPurposes();
+            testingMemberScoring = MemberScoring.MemberMembersTeamMembersTotalScore(member,
+                membersTeam, 1);
+        }
+
+        [TestMethod]
+        public void MemberScoringValidTenTotalScoreTest()
+        {
+            User member = User.InstanceForTestingPurposes();
+            Team membersTeam = Team.InstanceForTestingPurposes();
+            testingMemberScoring = MemberScoring.MemberMembersTeamMembersTotalScore(member,
+                membersTeam, 10);
         }
 
         [TestMethod]
