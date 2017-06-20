@@ -163,7 +163,7 @@ namespace GraphicInterface
 
         private void ActualDelete(Control interfaceContainer, ElementWhiteboard domainElement)
         {
-            whiteboardShown.RemoveWhiteboardElement(domainElement);
+            ElementRepository.Remove(domainElement);
             pnlWhiteboard.Controls.Remove(interfaceContainer);
             pnlWhiteboard.Update();
         }
