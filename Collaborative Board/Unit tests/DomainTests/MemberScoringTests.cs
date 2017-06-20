@@ -32,6 +32,7 @@ namespace UnitTests.DomainTests
         {
             User member = User.InstanceForTestingPurposes();
             Team membersTeam = Team.InstanceForTestingPurposes();
+            membersTeam.AddMember(member);
             testingMemberScoring = MemberScoring.MemberMembersTeamMembersTotalScore(member, 
                 membersTeam, 0);
         }
@@ -41,6 +42,7 @@ namespace UnitTests.DomainTests
         {
             User member = User.InstanceForTestingPurposes();
             Team membersTeam = Team.InstanceForTestingPurposes();
+            membersTeam.AddMember(member);
             testingMemberScoring = MemberScoring.MemberMembersTeamMembersTotalScore(member,
                 membersTeam, 1);
         }
@@ -50,6 +52,7 @@ namespace UnitTests.DomainTests
         {
             User member = User.InstanceForTestingPurposes();
             Team membersTeam = Team.InstanceForTestingPurposes();
+            membersTeam.AddMember(member);
             testingMemberScoring = MemberScoring.MemberMembersTeamMembersTotalScore(member,
                 membersTeam, 10);
         }

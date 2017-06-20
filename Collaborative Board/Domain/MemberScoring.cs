@@ -76,7 +76,7 @@ namespace Domain
             {
                 if (Utilities.IsNotNull(aTeam))
                 {
-                    return aTeam.Members.Contains(aMember);
+                    return aMember.AssociatedTeams.Contains(aTeam);
                 }
                 else
                 {
