@@ -38,7 +38,7 @@ namespace Persistence
             using (var context = new BoardContext())
             {
                 var score = context.Scores.Single();
-                score.ModifyAllScores(createWhiteBoardScore, deleteWhiteboardScore, 
+                score.ModifyAllScores(createWhiteBoardScore, deleteWhiteboardScore,
                     addElement, addComment, setCommentAsSolved);
                 context.Entry(score).State = EntityState.Modified;
                 context.SaveChanges();
@@ -47,7 +47,7 @@ namespace Persistence
 
         public static ScoringManager GetScores()
         {
-           using(var context = new BoardContext())
+            using (var context = new BoardContext())
             {
                 var score = context.Scores.Single();
                 return score;

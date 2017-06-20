@@ -15,6 +15,11 @@ namespace Domain
 
         public virtual Whiteboard Container { get; set; }
 
+        internal virtual bool CanModifyElement(User someUser)
+        {
+            return Container.UserCanModify(someUser);
+        }
+
         private Point position = new Point();
         public Point Position
         {
@@ -120,7 +125,7 @@ namespace Domain
             return size.Height + RelativeY;
         }
 
-        public virtual List<Comment> Comments { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
             = new List<Comment>();
 
         public void AddComment(Comment someComment)

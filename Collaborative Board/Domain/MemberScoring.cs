@@ -72,27 +72,26 @@ namespace Domain
 
         private static bool UserIsValidMemberOfTeam(User aMember, Team aTeam)
         {
+            if (Utilities.IsNotNull(aTeam))
+            {
+                return SetMembersScore(aMember, aTeam);
+            }
+            else
+            {
+                throw new MemberScoringException(ErrorMessages.TeamIsInvalid);
+            }
+        }
+
+        private static bool SetMembersScore(User aMember, Team aTeam)
+        {
             if (Utilities.IsNotNull(aMember))
             {
-                if (Utilities.IsNotNull(aTeam))
-                {
-                    return aTeam.Members.Contains(aMember);
-                }
-                else
-                {
-                    throw new MemberScoringException(ErrorMessages.TeamIsInvalid);
-                }
+                return aTeam.Members.Contains(aMember);
             }
             else
             {
                 throw new MemberScoringException(ErrorMessages.NullUser);
             }
         }
-
-
-
-
-
     }
-
 }

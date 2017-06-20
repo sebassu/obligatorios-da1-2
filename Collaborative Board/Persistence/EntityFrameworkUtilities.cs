@@ -50,13 +50,15 @@ namespace Persistence
             {
                 PerformAttachIfCorresponds(context, element, elements);
             }
-            catch (SystemException e)
+            catch (SystemException exception)
             {
-                throw new RepositoryException(e.Message);
+                throw new RepositoryException("Error en base de datos. Detalles: "
+                    + exception.Message);
             }
         }
 
-        private static void PerformAttachIfCorresponds(BoardContext context, T element, DbSet<T> elements)
+        private static void PerformAttachIfCorresponds(BoardContext context, T element,
+            DbSet<T> elements)
         {
             if (context.Entry(element).State == EntityState.Detached)
             {

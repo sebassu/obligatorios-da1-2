@@ -207,7 +207,7 @@ namespace GraphicInterface
 
         private static void UpdateElementText(RichTextBox interfaceContainer, TextBoxWhiteboard domainTextBox)
         {
-            ElementRepository.UpdateText(domainTextBox, interfaceContainer.Text);
+            ElementRepository.ChangeText(domainTextBox, interfaceContainer.Text);
         }
 
         private static void AddModifyFontDomainTextBox(RichTextBox interfaceContainer,
@@ -225,7 +225,7 @@ namespace GraphicInterface
             {
                 Font chosenFont = fontChooser.Font;
                 interfaceContainer.Font = chosenFont;
-                ElementRepository.UpdateFont(domainTextBox, chosenFont);
+                ElementRepository.ChangeFont(domainTextBox, chosenFont);
             }
         }
 

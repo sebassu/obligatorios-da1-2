@@ -34,8 +34,8 @@ namespace Domain
             get { return AssociatedElement.Container; }
         }
 
-        public virtual DateTime ResolutionDate { get; set; }
-
+        // Minimum value for database DateTime.
+        public virtual DateTime ResolutionDate { get; set; } = new DateTime(1753, 1, 1);
 
         public virtual User Resolver { get; set; }
 
@@ -70,14 +70,14 @@ namespace Domain
             ResolutionDate = DateTime.Now;
         }
 
-        // Valid since resolutionDate will never be set to DateTime.MinValue, which represents 
+        // Valid since resolutionDate will never be set to the mentioned date, which represents 
         // a date that already passed. Usage of DateTime? (System.Nullable<DateTime>) was considered
         // but decided against due to the boxing/unboxing overhead as well as the previous alternative.
         public bool IsResolved
         {
             get
             {
-                bool resolutionDateWasSet = ResolutionDate != DateTime.MinValue;
+                bool resolutionDateWasSet = ResolutionDate != new DateTime(1753, 1, 1);
                 return resolutionDateWasSet;
             }
         }
@@ -119,8 +119,8 @@ namespace Domain
 
         private void UpdateReferencesComments(ElementWhiteboard someElement)
         {
-            Creator.AddCreatedComment(this);
             someElement.AddComment(this);
+            Creator.AddCreatedComment(this);
         }
 
         public override bool Equals(object obj)

@@ -1,6 +1,6 @@
 ﻿using Domain;
-using System.Data.Entity.Infrastructure;
 using System.Drawing;
+using System.Data.Entity.Infrastructure;
 
 namespace Persistence
 {
@@ -8,9 +8,9 @@ namespace Persistence
     {
         public static ImageWhiteboard AddNewImage(Whiteboard container, string fileName)
         {
+            User activeUser = Session.ActiveUser();
             using (var context = new BoardContext())
             {
-                User activeUser = Session.ActiveUser();
                 EntityFrameworkUtilities<Whiteboard>.AttachIfIsValid(context, container);
                 Team ownerTeam = container.OwnerTeam;
                 EntityFrameworkUtilities<Team>.AttachIfIsValid(context, ownerTeam);
@@ -32,9 +32,9 @@ namespace Persistence
 
         public static TextBoxWhiteboard AddNewTextBox(Whiteboard container)
         {
+            User activeUser = Session.ActiveUser();
             using (var context = new BoardContext())
             {
-                User activeUser = Session.ActiveUser();
                 EntityFrameworkUtilities<Whiteboard>.AttachIfIsValid(context, container);
                 Team ownerTeam = container.OwnerTeam;
                 EntityFrameworkUtilities<Team>.AttachIfIsValid(context, ownerTeam);
@@ -56,18 +56,32 @@ namespace Persistence
         public static void UpdateElementPositionAndSize(ElementWhiteboard elementToModify, Size newDimensions,
             Point newPosition)
         {
+            User activeUser = Session.ActiveUser();
             using (var context = new BoardContext())
             {
                 EntityFrameworkUtilities<ElementWhiteboard>.AttachIfIsValid(context, elementToModify);
-                elementToModify.Dimensions = newDimensions;
-                elementToModify.Position = newPosition;
-                var entry = context.Entry(elementToModify);
-                MarkPositionAndSizePropertiesAsChanged(entry);
-                context.SaveChanges();
+                if (elementToModify.CanModifyElement(activeUser))
+                {
+                    PerformDimensionsAndPositionModification(elementToModify, newDimensions, newPosition, context);
+                }
+                else
+                {
+                    throw new RepositoryException(ErrorMessages.UserCannotModifyWhiteboard);
+                }
             }
         }
 
-        private static void MarkPositionAndSizePropertiesAsChanged(DbEntityEntry<ElementWhiteboard> entry)
+        private static void PerformDimensionsAndPositionModification(ElementWhiteboard elementToModify,
+            Size newDimensions, Point newPosition, BoardContext context)
+        {
+            elementToModify.Dimensions = newDimensions;
+            elementToModify.Position = newPosition;
+            var entry = context.Entry(elementToModify);
+            MarkDimensionsAndPositionPropertiesAsChanged(entry);
+            context.SaveChanges();
+        }
+
+        private static void MarkDimensionsAndPositionPropertiesAsChanged(DbEntityEntry<ElementWhiteboard> entry)
         {
             entry.Property(e => e.RelativeX).IsModified = true;
             entry.Property(e => e.RelativeX).IsModified = true;
@@ -77,34 +91,73 @@ namespace Persistence
 
         public static void UpdateImage(ImageWhiteboard elementToModify, Image newImage)
         {
+            User activeUser = Session.ActiveUser();
             using (var context = new BoardContext())
             {
                 EntityFrameworkUtilities<ElementWhiteboard>.AttachIfIsValid(context, elementToModify);
-                elementToModify.ActualImage = newImage;
-                context.Entry(elementToModify).Property(i => i.ImageToSave).IsModified = true;
-                context.SaveChanges();
+                if (elementToModify.CanModifyElement(activeUser))
+                {
+                    PerformImageChange(elementToModify, newImage, context);
+                }
+                else
+                {
+                    throw new RepositoryException(ErrorMessages.UserCannotModifyWhiteboard);
+                }
             }
         }
 
-        public static void UpdateFont(TextBoxWhiteboard elementToModify, Font newFont)
+        private static void PerformImageChange(ImageWhiteboard elementToModify, Image newImage, BoardContext context)
         {
+            elementToModify.ActualImage = newImage;
+            context.Entry(elementToModify).Property(i => i.ImageToSave).IsModified = true;
+            context.SaveChanges();
+        }
+
+        public static void ChangeFont(TextBoxWhiteboard elementToModify, Font newFont)
+        {
+            User activeUser = Session.ActiveUser();
             using (var context = new BoardContext())
             {
                 EntityFrameworkUtilities<ElementWhiteboard>.AttachIfIsValid(context, elementToModify);
-                elementToModify.TextFont = newFont;
-                context.Entry(elementToModify).Property(t => t.FontToSave).IsModified = true;
-                context.SaveChanges();
+                if (elementToModify.CanModifyElement(activeUser))
+                {
+                    PerformFontChange(elementToModify, newFont, context);
+                }
+                else
+                {
+                    throw new RepositoryException(ErrorMessages.UserCannotModifyWhiteboard);
+                }
             }
         }
 
-        public static void UpdateText(TextBoxWhiteboard elementToModify, string newText)
+        private static void PerformFontChange(TextBoxWhiteboard elementToModify, Font newFont, BoardContext context)
         {
+            elementToModify.TextFont = newFont;
+            context.Entry(elementToModify).Property(t => t.FontToSave).IsModified = true;
+            context.SaveChanges();
+        }
+
+        public static void ChangeText(TextBoxWhiteboard elementToModify, string newText)
+        {
+            User activeUser = Session.ActiveUser();
             using (var context = new BoardContext())
             {
                 EntityFrameworkUtilities<ElementWhiteboard>.AttachIfIsValid(context, elementToModify);
-                elementToModify.TextContent = newText;
-                context.SaveChanges();
+                if (elementToModify.CanModifyElement(activeUser))
+                {
+                    PerformTextChange(elementToModify, newText, context);
+                }
+                else
+                {
+                    throw new RepositoryException(ErrorMessages.UserCannotModifyWhiteboard);
+                }
             }
+        }
+
+        private static void PerformTextChange(TextBoxWhiteboard elementToModify, string newText, BoardContext context)
+        {
+            elementToModify.TextContent = newText;
+            context.SaveChanges();
         }
 
         public static void Remove(ElementWhiteboard elementToRemove)

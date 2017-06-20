@@ -61,6 +61,15 @@ namespace Persistence {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Es necesario poder modificar al pizarrón para poder crear un comentario en este elemento..
+        /// </summary>
+        internal static string CannotCreateComment {
+            get {
+                return ResourceManager.GetString("CannotCreateComment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No es posible instanciar un repositorio genérico..
         /// </summary>
         internal static string CannotInstantiateRepository {
