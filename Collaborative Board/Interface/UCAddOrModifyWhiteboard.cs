@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Windows.Forms;
 using Persistence;
 using Domain;
+using System.Collections.Generic;
 
 namespace GraphicInterface
 {
@@ -49,9 +49,16 @@ namespace GraphicInterface
         private void LoadTeamComboboxWithActiveUsersTeams()
         {
             var activeUser = Session.ActiveUser();
+            List<Team> teams = TeamRepository.Elements;
             UserRepository.LoadAssociatedTeams(activeUser);
-            var teamsToShow = activeUser.AssociatedTeams;
-            cmbOwnerTeam.Items.AddRange(teamsToShow.ToArray());
+            foreach (Team teamToShow in activeUser.AssociatedTeams)
+            {
+                if (teams.Contains(teamToShow))
+                {
+                    cmbOwnerTeam.Items.Add(teamToShow);
+                }
+           
+            }
         }
 
         private void BtnAccept_Click(object sender, EventArgs e)

@@ -32,7 +32,7 @@ namespace Domain
             return score >= absoluteMinimumMembersScore;
         }
 
-        public virtual string MemberId { get; set; }
+        public virtual int MemberId { get; set; }
 
         public virtual int MembersTeamId { get; set; }
 
@@ -41,12 +41,12 @@ namespace Domain
             membersTotalScore = int.MaxValue;
         }
 
-        public static MemberScoring MemberTeam(string userId, int teamId)
+        public static MemberScoring MemberTeam(int userId, int teamId)
         {
             return new MemberScoring(userId, teamId);
         }
 
-        public MemberScoring(string someUserId, int someTeamId)
+        public MemberScoring(int someUserId, int someTeamId)
         {
             MemberId = someUserId;
             MembersTeamId = someTeamId;

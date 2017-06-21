@@ -9,7 +9,7 @@ namespace Persistence
     {
         public static void UpdateUserScoreInTeam(int teamId, int scoreIncrement)
         {
-            string userId = Session.ActiveUser().Email;
+            int userId = Session.ActiveUser().Id;
             using (var context = new BoardContext())
             {
                 try
@@ -23,9 +23,9 @@ namespace Persistence
             }
         }
 
-        private static void SetScore(int teamId, int scoreIncrement, string userId, BoardContext context)
+        private static void SetScore(int teamId, int scoreIncrement, int userId, BoardContext context)
         {
-            MemberScoring score = context.Scores.Single(s => s.MemberId.Equals(userId)
+            MemberScoring score = context.Scores.Single(s => s.MemberId == (userId)
                 && s.MembersTeamId == teamId);
             score.MembersTotalScore += scoreIncrement;
             context.SaveChanges();
@@ -67,6 +67,19 @@ namespace Persistence
                 foreach (var score in scoresToDelete)
                 {
                     score.MembersTotalScore = 0;
+                }
+                context.SaveChanges();
+            }
+        }
+
+        public static void RemoveAllDataOfTeam(int teamId)
+        {
+            using (var context = new BoardContext())
+            {
+                var scoresToDelete = context.Scores.Where(t => t.MembersTeamId == teamId);
+                foreach (var score in scoresToDelete)
+                {
+                    context.Scores.Remove(score);
                 }
                 context.SaveChanges();
             }

@@ -32,7 +32,7 @@ namespace Persistence
                     Team teamToAdd = Team.CreatorNameDescriptionMaximumMembers(creator,
                         name, description, maximumMembers);
                     EntityFrameworkUtilities<Team>.Add(context, teamToAdd);
-                    MemberScoring scoringToAdd = MemberScoring.MemberTeam(creator.Email, teamToAdd.Id);
+                    MemberScoring scoringToAdd = MemberScoring.MemberTeam(creator.Id, teamToAdd.Id);
                     context.Scores.Add(scoringToAdd);
                     context.SaveChanges();
                     return teamToAdd;
@@ -106,22 +106,12 @@ namespace Persistence
             Session.ValidateActiveUserHasAdministrationPrivileges();
             if (Utilities.IsNotNull(elementToRemove))
             {
-                RemoveAllTeamWhiteboardsFromRepository(elementToRemove);
+                UserScoresRepository.RemoveAllDataOfTeam(elementToRemove.Id);
                 EntityFrameworkUtilities<Team>.Remove(elementToRemove);
             }
             else
             {
                 throw new RepositoryException(ErrorMessages.ElementDoesNotExist);
-            }
-        }
-
-        private static void RemoveAllTeamWhiteboardsFromRepository(Team teamToRemove)
-        {
-            LoadCreatedWhiteboards(teamToRemove);
-            var teamWhiteboards = teamToRemove.CreatedWhiteboards.ToList();
-            foreach (var whiteboard in teamWhiteboards)
-            {
-                WhiteboardRepository.RemoveDueToTeamDeletion(whiteboard);
             }
         }
 
@@ -149,7 +139,7 @@ namespace Persistence
             EntityFrameworkUtilities<Team>.AttachIfIsValid(context, teamToAddTo);
             context.Entry(userToAdd).Collection(u => u.AssociatedTeams).Load();
             teamToAddTo.AddMember(userToAdd);
-            MemberScoring scoringToAdd = MemberScoring.MemberTeam(userToAdd.Email, teamToAddTo.Id);
+            MemberScoring scoringToAdd = MemberScoring.MemberTeam(userToAdd.Id, teamToAddTo.Id);
             context.Scores.Add(scoringToAdd);
             context.SaveChanges();
         }
@@ -179,11 +169,11 @@ namespace Persistence
                 EntityFrameworkUtilities<Team>.AttachIfIsValid(context, teamToRemoveFrom);
                 teamToRemoveFrom.RemoveMember(userToRemove);
                 MemberScoring scoringToRemove = context.Scores.Single(s =>
-                    userToRemove.Email == s.MemberId);
+                    userToRemove.Id == s.MemberId && s.MembersTeamId == teamToRemoveFrom.Id);
                 context.Scores.Remove(scoringToRemove);
                 context.SaveChanges();
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException e)
             {
                 throw new RepositoryException(ErrorMessages.InvalidElementRecieved);
             }

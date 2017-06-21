@@ -112,7 +112,6 @@ namespace GraphicInterface
             {
                 InterfaceUtilities.NotElementSelectedMessageBox();
             }
-
         }
 
         private void BtnDelete_Click(object sender, EventArgs e)

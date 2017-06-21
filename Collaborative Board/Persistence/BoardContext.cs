@@ -30,7 +30,6 @@ namespace Persistence
         private static void SetUsersConfiguration(DbModelBuilder modelBuilder)
         {
             IgnoresForEntities(modelBuilder);
-            modelBuilder.Entity<User>().HasKey(u => u.Email);
             modelBuilder.Entity<Team>().HasMany(t => t.Members).WithMany(u => u.AssociatedTeams);
             modelBuilder.Entity<Whiteboard>().HasRequired(w => w.OwnerTeam).WithMany(t => t.CreatedWhiteboards);
             modelBuilder.Entity<Whiteboard>().HasMany(w => w.Contents).WithRequired(e => e.Container);
