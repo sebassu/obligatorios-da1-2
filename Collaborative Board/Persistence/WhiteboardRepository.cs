@@ -14,8 +14,7 @@ namespace Persistence
             {
                 using (BoardContext context = new BoardContext())
                 {
-                    return context.Whiteboards.Include("Creator")
-                        .Include("OwnerTeam").ToList();
+                    return context.Whiteboards.Include("OwnerTeam").ToList();
                 }
             }
         }
@@ -43,6 +42,7 @@ namespace Persistence
             User creator = Session.ActiveUser();
             TeamRepository.LoadMembers(ownerTeam);
             TeamRepository.LoadCreatedWhiteboards(ownerTeam);
+            EntityFrameworkUtilities<User>.AttachIfIsValid(context, creator);
             EntityFrameworkUtilities<Team>.AttachIfIsValid(context, ownerTeam);
             Whiteboard whiteboardToAdd = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
                 name, description, ownerTeam, width, height);

@@ -18,9 +18,13 @@ namespace GraphicInterface
         private static readonly Cursor[] rightCursors = { Cursors.SizeNESW, Cursors.SizeNWSE,
             Cursors.SizeWE };
 
-        private static Point cursorStartPoint;
+        internal static Point cursorStartPoint;
         private static Point controlInitialLocation;
         private static Size controlInitialSize;
+
+        internal static Control interfaceObject;
+        internal static Point controlCurrentLocation;
+        internal static Size controlCurrentSize;
 
         private static bool isMoving;
         private static bool isResizing;
@@ -31,15 +35,7 @@ namespace GraphicInterface
         private static bool MouseIsInTopEdge { get; set; }
         private static bool MouseIsInBottomEdge { get; set; }
 
-        internal static void MakeDragAndDroppable(Control interfaceObject)
-        {
-            cursorStartPoint = Point.Empty;
-            interfaceObject.MouseDown += new MouseEventHandler(StartMovingOrResizing);
-            interfaceObject.MouseMove += new MouseEventHandler(MoveControl);
-            interfaceObject.MouseUp += new MouseEventHandler(StopDragOrResizing);
-        }
-
-        private static void UpdateMouseCursor(Control interfaceObject)
+        internal static void UpdateMouseCursor(Control interfaceObject)
         {
             if (MouseIsInLeftEdge)
             {
@@ -88,9 +84,10 @@ namespace GraphicInterface
             }
         }
 
-        private static void StartMovingOrResizing(object sender, MouseEventArgs e)
+        internal static void StartMovingOrResizing(object sender, MouseEventArgs e)
         {
-            Control interfaceObject = sender as Control;
+            interfaceObject = sender as Control;
+            ElementWhiteboard element = interfaceObject.Tag as ElementWhiteboard;
             bool mouseDownRequiresAnAction = !isMoving && !isResizing;
             if (mouseDownRequiresAnAction)
             {
@@ -122,13 +119,14 @@ namespace GraphicInterface
             controlInitialLocation = interfaceObject.Location;
         }
 
-        private static void MoveControl(object sender, MouseEventArgs e)
+        internal static bool MoveControl(object sender, MouseEventArgs e)
         {
             Control interfaceObject = sender as Control;
             if (!isResizing && !isMoving)
             {
                 UpdateMouseEdgeProperties(interfaceObject, e.Location);
                 UpdateMouseCursor(interfaceObject);
+                return false;
             }
             if (isResizing)
             {
@@ -143,7 +141,9 @@ namespace GraphicInterface
                     int y = (e.Y - cursorStartPoint.Y) + interfaceObject.Top;
                     interfaceObject.Location = new Point(x, y);
                 }
+                controlCurrentLocation = interfaceObject.Location;
             }
+            return true;
         }
 
         private static void PerformResizing(Control interfaceObject, MouseEventArgs e)
@@ -167,6 +167,7 @@ namespace GraphicInterface
             {
                 BottomResizing(interfaceObject, e);
             }
+            controlCurrentSize = interfaceObject.Size;
         }
 
         private static void PerformCornerResizing(Control interfaceObject, MouseEventArgs e)
@@ -200,7 +201,7 @@ namespace GraphicInterface
             MouseIsInBottomEdge = Math.Abs(mouseLocationInControl.Y - control.Height) <= edgePrecision;
         }
 
-        private static void StopDragOrResizing(object sender, MouseEventArgs e)
+        internal static void StopDragOrResizing(object sender, MouseEventArgs e)
         {
             Control interfaceObject = sender as Control;
             ElementWhiteboard boardElement = interfaceObject.Tag as ElementWhiteboard;

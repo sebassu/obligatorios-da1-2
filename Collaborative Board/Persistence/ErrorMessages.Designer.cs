@@ -61,6 +61,24 @@ namespace Persistence {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Los elementos recibidos ya se encuentran asociados en el sentido indicado..
+        /// </summary>
+        internal static string AssociationAlreadyExists {
+            get {
+                return ResourceManager.GetString("AssociationAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Los elementos recibidos no se encuentran asociados..
+        /// </summary>
+        internal static string AssociationDoesNotExist {
+            get {
+                return ResourceManager.GetString("AssociationDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Es necesario poder modificar al pizarrón para poder crear un comentario en este elemento..
         /// </summary>
         internal static string CannotCreateComment {

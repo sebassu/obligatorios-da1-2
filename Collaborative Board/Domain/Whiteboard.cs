@@ -86,7 +86,7 @@ namespace Domain
         private bool IsValidWidth(int value)
         {
             return value >= minimumWidth &&
-                (Utilities.IsEmpty(Contents) || value >= GetMaximumWidthNeededOfComponents());
+                (Contents.Count == 0 || value >= GetMaximumWidthNeededOfComponents());
         }
 
         private double GetMaximumWidthNeededOfComponents()
@@ -115,7 +115,7 @@ namespace Domain
         private bool IsValidHeight(int value)
         {
             return value >= minimumWidth &&
-                (Utilities.IsEmpty(Contents) || value >= GetMaximumHeightNeededOfComponents());
+                (Contents.Count == 0 || value >= GetMaximumHeightNeededOfComponents());
         }
 
         private double GetMaximumHeightNeededOfComponents()
@@ -123,11 +123,11 @@ namespace Domain
             return Contents.Max(c => c.HeightContainerNeeded());
         }
 
-        public virtual User Creator { get; set; }
+        public virtual string CreatorId { get; set; }
 
         public virtual Team OwnerTeam { get; set; }
 
-        public List<ElementWhiteboard> Contents { get; set; }
+        public ICollection<ElementWhiteboard> Contents { get; set; }
             = new List<ElementWhiteboard>();
 
         internal void AddWhiteboardElement(ElementWhiteboard elementToAdd)
@@ -161,7 +161,7 @@ namespace Domain
         internal bool UserCanRemove(User someUser)
         {
             return Utilities.HasAdministrationPrivileges(someUser)
-                || Creator.Equals(someUser);
+                || CreatorId.Equals(someUser.Email);
         }
 
         internal static Whiteboard InstanceForTestingPurposes()
@@ -171,7 +171,7 @@ namespace Domain
 
         protected Whiteboard()
         {
-            Creator = User.InstanceForTestingPurposes();
+            CreatorId = User.InstanceForTestingPurposes().Email;
             OwnerTeam = Team.InstanceForTestingPurposes();
             SetAttributesForTesting();
             UpdateModificationDate();
@@ -197,7 +197,7 @@ namespace Domain
         {
             if (CreatorIsValidMemberOfTeam(aCreator, anOwnerTeam))
             {
-                Creator = aCreator;
+                CreatorId = aCreator.Email;
                 OwnerTeam = anOwnerTeam;
                 SetModifiableAttributes(aName, aDescription, aWidth, aHeight);
                 UpdateModificationDate();

@@ -156,10 +156,10 @@ namespace Persistence
             }
         }
 
-        private static void ValidateNoWhiteboardHasUserAsCreator(User elementToRemove)
+        private static void ValidateNoWhiteboardHasUserAsCreator(User userToRemove)
         {
             var allWhiteboards = WhiteboardRepository.Elements;
-            bool userToRemoveIsCreator = allWhiteboards.Any(w => w.Creator.Equals(elementToRemove));
+            bool userToRemoveIsCreator = allWhiteboards.Any(w => w.CreatorId.Equals(userToRemove.Email));
             if (userToRemoveIsCreator)
             {
                 throw new RepositoryException(ErrorMessages.CannotRemoveWhiteboardCreator);

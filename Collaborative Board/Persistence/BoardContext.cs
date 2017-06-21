@@ -12,6 +12,7 @@ namespace Persistence
         public DbSet<ScoringManager> GlobalScores { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<MemberScoring> Scores { get; set; }
+        public DbSet<Association> Associations { get; set; }
 
         public BoardContext() : base()
         {
@@ -29,9 +30,9 @@ namespace Persistence
         private static void SetUsersConfiguration(DbModelBuilder modelBuilder)
         {
             IgnoresForEntities(modelBuilder);
+            modelBuilder.Entity<User>().HasKey(u => u.Email);
             modelBuilder.Entity<Team>().HasMany(t => t.Members).WithMany(u => u.AssociatedTeams);
             modelBuilder.Entity<Whiteboard>().HasRequired(w => w.OwnerTeam).WithMany(t => t.CreatedWhiteboards);
-            modelBuilder.Entity<Whiteboard>().HasRequired(w => w.Creator);
             modelBuilder.Entity<Whiteboard>().HasMany(w => w.Contents).WithRequired(e => e.Container);
             modelBuilder.Entity<Comment>().HasOptional(c => c.Creator).WithMany(u => u.CommentsCreated);
             modelBuilder.Entity<Comment>().HasOptional(c => c.Resolver).WithMany(u => u.CommentsResolved);

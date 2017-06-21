@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AssociationAlreadyExists" xml:space="preserve">
+    <value>Los elementos recibidos ya se encuentran asociados en el sentido indicado.</value>
+  </data>
+  <data name="AssociationDoesNotExist" xml:space="preserve">
+    <value>Los elementos recibidos no se encuentran asociados.</value>
+  </data>
   <data name="CannotCreateComment" xml:space="preserve">
     <value>Es necesario poder modificar al pizarrón para poder crear un comentario en este elemento.</value>
   </data>

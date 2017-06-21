@@ -17,8 +17,8 @@ namespace UnitTests.DomainTests
             User member = User.InstanceForTestingPurposes();
             Team membersTeam = Team.InstanceForTestingPurposes();
             membersTeam.AddMember(member);
-            testingMemberScoring = MemberScoring.MemberTeam(member.Id, membersTeam.Id);
-            Assert.AreEqual(member.Id, testingMemberScoring.MemberId);
+            testingMemberScoring = MemberScoring.MemberTeam(member.Email, membersTeam.Id);
+            Assert.AreEqual(member.Email, testingMemberScoring.MemberId);
             Assert.AreEqual(membersTeam.Id, testingMemberScoring.MembersTeamId);
         }
 

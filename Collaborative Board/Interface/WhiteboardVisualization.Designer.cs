@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.pnlOptions = new System.Windows.Forms.Panel();
+            this.removeAssociationButton = new System.Windows.Forms.Button();
+            this.addAssociationButton = new System.Windows.Forms.Button();
             this.btnPrintPng = new System.Windows.Forms.Button();
             this.btnPrintPDF = new System.Windows.Forms.Button();
             this.btnAddText = new System.Windows.Forms.Button();
@@ -40,6 +42,8 @@
             // pnlOptions
             // 
             this.pnlOptions.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.pnlOptions.Controls.Add(this.removeAssociationButton);
+            this.pnlOptions.Controls.Add(this.addAssociationButton);
             this.pnlOptions.Controls.Add(this.btnPrintPng);
             this.pnlOptions.Controls.Add(this.btnPrintPDF);
             this.pnlOptions.Controls.Add(this.btnAddText);
@@ -50,13 +54,43 @@
             this.pnlOptions.Size = new System.Drawing.Size(552, 1445);
             this.pnlOptions.TabIndex = 0;
             // 
+            // removeAssociationButton
+            // 
+            this.removeAssociationButton.BackColor = System.Drawing.Color.Navy;
+            this.removeAssociationButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.removeAssociationButton.Font = new System.Drawing.Font("Tahoma", 15F, System.Drawing.FontStyle.Bold);
+            this.removeAssociationButton.ForeColor = System.Drawing.Color.White;
+            this.removeAssociationButton.Location = new System.Drawing.Point(8, 1212);
+            this.removeAssociationButton.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.removeAssociationButton.Name = "removeAssociationButton";
+            this.removeAssociationButton.Size = new System.Drawing.Size(528, 219);
+            this.removeAssociationButton.TabIndex = 4;
+            this.removeAssociationButton.Text = "Eliminar asociación";
+            this.removeAssociationButton.UseVisualStyleBackColor = false;
+            this.removeAssociationButton.Click += new System.EventHandler(this.RemoveAssociationButton_Click);
+            // 
+            // addAssociationButton
+            // 
+            this.addAssociationButton.BackColor = System.Drawing.Color.Navy;
+            this.addAssociationButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.addAssociationButton.Font = new System.Drawing.Font("Tahoma", 14.75F, System.Drawing.FontStyle.Bold);
+            this.addAssociationButton.ForeColor = System.Drawing.Color.White;
+            this.addAssociationButton.Location = new System.Drawing.Point(8, 979);
+            this.addAssociationButton.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.addAssociationButton.Name = "addAssociationButton";
+            this.addAssociationButton.Size = new System.Drawing.Size(528, 219);
+            this.addAssociationButton.TabIndex = 3;
+            this.addAssociationButton.Text = "Agregar asociación";
+            this.addAssociationButton.UseVisualStyleBackColor = false;
+            this.addAssociationButton.Click += new System.EventHandler(this.AddAssociationButton_Click);
+            // 
             // btnPrintPng
             // 
             this.btnPrintPng.BackColor = System.Drawing.Color.Navy;
             this.btnPrintPng.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnPrintPng.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnPrintPng.ForeColor = System.Drawing.Color.White;
-            this.btnPrintPng.Location = new System.Drawing.Point(8, 802);
+            this.btnPrintPng.Location = new System.Drawing.Point(8, 487);
             this.btnPrintPng.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.btnPrintPng.Name = "btnPrintPng";
             this.btnPrintPng.Size = new System.Drawing.Size(528, 219);
@@ -71,7 +105,7 @@
             this.btnPrintPDF.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnPrintPDF.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnPrintPDF.ForeColor = System.Drawing.Color.White;
-            this.btnPrintPDF.Location = new System.Drawing.Point(8, 1165);
+            this.btnPrintPDF.Location = new System.Drawing.Point(8, 737);
             this.btnPrintPDF.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.btnPrintPDF.Name = "btnPrintPDF";
             this.btnPrintPDF.Size = new System.Drawing.Size(528, 219);
@@ -86,7 +120,7 @@
             this.btnAddText.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAddText.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddText.ForeColor = System.Drawing.Color.White;
-            this.btnAddText.Location = new System.Drawing.Point(8, 436);
+            this.btnAddText.Location = new System.Drawing.Point(8, 254);
             this.btnAddText.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.btnAddText.Name = "btnAddText";
             this.btnAddText.Size = new System.Drawing.Size(528, 219);
@@ -101,7 +135,7 @@
             this.btnAddImage.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAddImage.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddImage.ForeColor = System.Drawing.Color.White;
-            this.btnAddImage.Location = new System.Drawing.Point(8, 55);
+            this.btnAddImage.Location = new System.Drawing.Point(8, 21);
             this.btnAddImage.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.btnAddImage.Name = "btnAddImage";
             this.btnAddImage.Size = new System.Drawing.Size(528, 219);
@@ -151,6 +185,8 @@
         private System.Windows.Forms.Button btnAddImage;
         private System.Windows.Forms.Button btnAddText;
         private System.Windows.Forms.Panel pnlWhiteboard;
+        private System.Windows.Forms.Button removeAssociationButton;
+        private System.Windows.Forms.Button addAssociationButton;
     }
 }
 

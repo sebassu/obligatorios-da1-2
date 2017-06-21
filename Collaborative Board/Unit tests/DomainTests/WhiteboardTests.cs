@@ -11,6 +11,7 @@ namespace UnitTests.DomainTests
     [ExcludeFromCodeCoverage]
     public class WhiteboardTests
     {
+        private static User creator;
         private static Whiteboard testingWhiteboard;
 
         [TestInitialize]
@@ -23,7 +24,7 @@ namespace UnitTests.DomainTests
         {
             string testImageLocation = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName
                 + "\\..\\Resources\\TestImage.jpg";
-            User creator = User.CreateNewCollaborator("Emilio", "Ravenna",
+            creator = User.CreateNewCollaborator("Emilio", "Ravenna",
                 "ravenna@simuladores.com", DateTime.Today, "HablarUnasPalabritas");
             Team ownerTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo 3",
                 "Descripción.", 5);
@@ -42,8 +43,8 @@ namespace UnitTests.DomainTests
             Assert.AreEqual("Descripción inválida.", testingWhiteboard.Description);
             Assert.AreEqual(int.MaxValue, testingWhiteboard.Width);
             Assert.AreEqual(int.MaxValue, testingWhiteboard.Height);
-            Assert.AreEqual(User.InstanceForTestingPurposes(),
-                testingWhiteboard.Creator);
+            Assert.AreEqual(User.InstanceForTestingPurposes().Email,
+                testingWhiteboard.CreatorId);
             Assert.AreEqual(Team.InstanceForTestingPurposes(),
                 testingWhiteboard.OwnerTeam);
             Assert.AreEqual(testingWhiteboard.CreationDate, DateTime.Today);
@@ -173,7 +174,7 @@ namespace UnitTests.DomainTests
                 "Pizarron1", "Descripción de pizarrón", ownerTeam, 500, 500);
             Assert.AreEqual("Pizarron1", testingWhiteboard.Name);
             Assert.AreEqual("Descripción de pizarrón", testingWhiteboard.Description);
-            Assert.AreEqual(creator, testingWhiteboard.Creator);
+            Assert.AreEqual(creator, testingWhiteboard.CreatorId);
             Assert.AreEqual(ownerTeam, testingWhiteboard.OwnerTeam);
             Assert.AreEqual(500, testingWhiteboard.Width);
             Assert.AreEqual(500, testingWhiteboard.Height);
@@ -418,7 +419,7 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void WhiteboardUserCanRemoveTest()
         {
-            Assert.IsTrue(testingWhiteboard.UserCanRemove(testingWhiteboard.Creator));
+            Assert.IsTrue(testingWhiteboard.UserCanRemove(creator));
         }
 
         [TestMethod]
@@ -426,7 +427,7 @@ namespace UnitTests.DomainTests
         {
             User someAdministrator = User.CreateNewAdministrator("Mario",
                 "Santos", "santos@simuladores.com", DateTime.Today, "DisculpeFuegoTiene");
-            Assert.AreNotEqual(someAdministrator, testingWhiteboard.Creator);
+            Assert.AreNotEqual(someAdministrator.Email, testingWhiteboard.CreatorId);
             Assert.IsTrue(testingWhiteboard.UserCanRemove(someAdministrator));
         }
 

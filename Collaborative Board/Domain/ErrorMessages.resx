@@ -222,4 +222,7 @@
   <data name="ImageIsNull" xml:space="preserve">
     <value>La imagen a mostrar es inválida (nula).</value>
   </data>
+  <data name="AssociationElementIsInvalid" xml:space="preserve">
+    <value>El elemento es inválido para la asociación (no se permiten asociaciones cíclicas).</value>
+  </data>
 </root>

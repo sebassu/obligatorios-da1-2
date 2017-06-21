@@ -13,8 +13,7 @@ namespace Persistence
             {
                 EntityFrameworkUtilities<Whiteboard>.AttachIfIsValid(context, container);
                 Team ownerTeam = container.OwnerTeam;
-                EntityFrameworkUtilities<Team>.AttachIfIsValid(context, ownerTeam);
-                context.Entry(ownerTeam).Collection(t => t.Members);
+                context.Entry(ownerTeam).Collection(t => t.Members).Load();
                 if (container.UserCanModify(activeUser))
                 {
                     ImageWhiteboard elementToAdd = ImageWhiteboard.CreateWithContainerSource(container,
@@ -39,7 +38,7 @@ namespace Persistence
                 EntityFrameworkUtilities<Whiteboard>.AttachIfIsValid(context, container);
                 Team ownerTeam = container.OwnerTeam;
                 EntityFrameworkUtilities<Team>.AttachIfIsValid(context, ownerTeam);
-                context.Entry(ownerTeam).Collection(t => t.Members);
+                context.Entry(ownerTeam).Collection(t => t.Members).Load();
                 if (container.UserCanModify(activeUser))
                 {
                     TextBoxWhiteboard elementToAdd = TextBoxWhiteboard.CreateWithContainer(container);

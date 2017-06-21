@@ -167,5 +167,23 @@ namespace Domain
             position = new Point(xForCentering, yForCentering);
             size = new Size(xForCentering, yForCentering);
         }
+
+        public override bool Equals(object obj)
+        {
+            ElementWhiteboard elementToCompareAgainst = obj as ElementWhiteboard;
+            if (Utilities.IsNotNull(elementToCompareAgainst))
+            {
+                return Id == elementToCompareAgainst.Id;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

@@ -70,6 +70,15 @@ namespace Domain {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to El elemento es inválido para la asociación (no se permiten asociaciones cíclicas)..
+        /// </summary>
+        internal static string AssociationElementIsInvalid {
+            get {
+                return ResourceManager.GetString("AssociationElementIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fecha de nacimiento inválida recibida: &quot;{0}&quot;..
         /// </summary>
         internal static string BirthdateIsInvalid {

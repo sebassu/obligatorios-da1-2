@@ -9,7 +9,7 @@ namespace Persistence
     {
         public static void UpdateUserScoreInTeam(int teamId, int scoreIncrement)
         {
-            int userId = Session.ActiveUser().Id;
+            string userId = Session.ActiveUser().Email;
             using (var context = new BoardContext())
             {
                 try
@@ -23,9 +23,9 @@ namespace Persistence
             }
         }
 
-        private static void SetScore(int teamId, int scoreIncrement, int userId, BoardContext context)
+        private static void SetScore(int teamId, int scoreIncrement, string userId, BoardContext context)
         {
-            MemberScoring score = context.Scores.Single(s => s.MemberId == userId
+            MemberScoring score = context.Scores.Single(s => s.MemberId.Equals(userId)
                 && s.MembersTeamId == teamId);
             score.MembersTotalScore += scoreIncrement;
             context.SaveChanges();

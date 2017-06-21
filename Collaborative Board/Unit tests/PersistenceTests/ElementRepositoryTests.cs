@@ -4,6 +4,7 @@ using System.IO;
 using Persistence;
 using System.Drawing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace UnitTests.PersistenceTests
 {
@@ -56,7 +57,7 @@ namespace UnitTests.PersistenceTests
         {
             ElementWhiteboard addedElement = ElementRepository.AddNewImage(testingContainer,
                 testImageLocation + "TestImage.jpg");
-            CollectionAssert.Contains(testingContainer.Contents, addedElement);
+            CollectionAssert.Contains(testingContainer.Contents.ToList(), addedElement);
         }
 
         [TestMethod]
@@ -65,7 +66,7 @@ namespace UnitTests.PersistenceTests
             ChangeActiveUser("cleese@python.com", "SillyWalks");
             ElementWhiteboard addedElement = ElementRepository.AddNewImage(testingContainer,
                 testImageLocation + "TestImage.jpg");
-            CollectionAssert.Contains(testingContainer.Contents, addedElement);
+            CollectionAssert.Contains(testingContainer.Contents.ToList(), addedElement);
         }
 
         [TestMethod]
@@ -75,14 +76,14 @@ namespace UnitTests.PersistenceTests
             ChangeActiveUser("arthur@britons.com", "HolyHand");
             ElementWhiteboard addedElement = ElementRepository.AddNewImage(testingContainer,
                 testImageLocation + "TestImage.jpg");
-            CollectionAssert.Contains(testingContainer.Contents, addedElement);
+            CollectionAssert.Contains(testingContainer.Contents.ToList(), addedElement);
         }
 
         [TestMethod]
         public void ERepositoryAddNewTextBoxValidTest()
         {
             ElementWhiteboard addedElement = ElementRepository.AddNewTextBox(testingContainer);
-            CollectionAssert.Contains(testingContainer.Contents, addedElement);
+            CollectionAssert.Contains(testingContainer.Contents.ToList(), addedElement);
         }
 
         [TestMethod]
@@ -90,7 +91,7 @@ namespace UnitTests.PersistenceTests
         {
             ChangeActiveUser("cleese@python.com", "SillyWalks");
             ElementWhiteboard addedElement = ElementRepository.AddNewTextBox(testingContainer);
-            CollectionAssert.Contains(testingContainer.Contents, addedElement);
+            CollectionAssert.Contains(testingContainer.Contents.ToList(), addedElement);
         }
 
         [TestMethod]
@@ -99,7 +100,7 @@ namespace UnitTests.PersistenceTests
         {
             ChangeActiveUser("arthur@britons.com", "HolyHand");
             ElementWhiteboard addedElement = ElementRepository.AddNewTextBox(testingContainer);
-            CollectionAssert.Contains(testingContainer.Contents, addedElement);
+            CollectionAssert.Contains(testingContainer.Contents.ToList(), addedElement);
         }
 
         [TestMethod]
@@ -123,7 +124,7 @@ namespace UnitTests.PersistenceTests
             ElementWhiteboard addedElement = ElementRepository.AddNewImage(testingContainer,
                 testImageLocation + "TestImage.jpg");
             ElementRepository.Remove(addedElement);
-            CollectionAssert.DoesNotContain(testingContainer.Contents, addedElement);
+            CollectionAssert.DoesNotContain(testingContainer.Contents.ToList(), addedElement);
         }
 
         [TestMethod]
@@ -133,7 +134,7 @@ namespace UnitTests.PersistenceTests
             ElementWhiteboard addedElement = ElementRepository.AddNewImage(testingContainer,
                 testImageLocation + "TestImage.jpg");
             ElementRepository.Remove(addedElement);
-            CollectionAssert.DoesNotContain(testingContainer.Contents, addedElement);
+            CollectionAssert.DoesNotContain(testingContainer.Contents.ToList(), addedElement);
         }
 
         [TestMethod]
@@ -144,7 +145,7 @@ namespace UnitTests.PersistenceTests
             ElementWhiteboard addedElement = ElementRepository.AddNewImage(testingContainer,
                 testImageLocation + "TestImage.jpg");
             ElementRepository.Remove(addedElement);
-            CollectionAssert.DoesNotContain(testingContainer.Contents, addedElement);
+            CollectionAssert.DoesNotContain(testingContainer.Contents.ToList(), addedElement);
         }
 
         [TestMethod]
@@ -152,7 +153,7 @@ namespace UnitTests.PersistenceTests
         {
             ElementWhiteboard addedElement = ElementRepository.AddNewTextBox(testingContainer);
             ElementRepository.Remove(addedElement);
-            CollectionAssert.DoesNotContain(testingContainer.Contents, addedElement);
+            CollectionAssert.DoesNotContain(testingContainer.Contents.ToList(), addedElement);
         }
 
         [TestMethod]
@@ -161,7 +162,7 @@ namespace UnitTests.PersistenceTests
             ChangeActiveUser("cleese@python.com", "SillyWalks");
             ElementWhiteboard addedElement = ElementRepository.AddNewTextBox(testingContainer);
             ElementRepository.Remove(addedElement);
-            CollectionAssert.DoesNotContain(testingContainer.Contents, addedElement);
+            CollectionAssert.DoesNotContain(testingContainer.Contents.ToList(), addedElement);
         }
 
         [TestMethod]
@@ -171,7 +172,7 @@ namespace UnitTests.PersistenceTests
             ChangeActiveUser("arthur@britons.com", "HolyHand");
             ElementWhiteboard addedElement = ElementRepository.AddNewTextBox(testingContainer);
             ElementRepository.Remove(addedElement);
-            CollectionAssert.DoesNotContain(testingContainer.Contents, addedElement);
+            CollectionAssert.DoesNotContain(testingContainer.Contents.ToList(), addedElement);
         }
 
         [TestMethod]

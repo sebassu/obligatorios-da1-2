@@ -32,7 +32,7 @@ namespace Persistence
                     Team teamToAdd = Team.CreatorNameDescriptionMaximumMembers(creator,
                         name, description, maximumMembers);
                     EntityFrameworkUtilities<Team>.Add(context, teamToAdd);
-                    MemberScoring scoringToAdd = MemberScoring.MemberTeam(creator.Id, teamToAdd.Id);
+                    MemberScoring scoringToAdd = MemberScoring.MemberTeam(creator.Email, teamToAdd.Id);
                     context.Scores.Add(scoringToAdd);
                     context.SaveChanges();
                     return teamToAdd;
@@ -149,7 +149,7 @@ namespace Persistence
             EntityFrameworkUtilities<Team>.AttachIfIsValid(context, teamToAddTo);
             context.Entry(userToAdd).Collection(u => u.AssociatedTeams).Load();
             teamToAddTo.AddMember(userToAdd);
-            MemberScoring scoringToAdd = MemberScoring.MemberTeam(userToAdd.Id, teamToAddTo.Id);
+            MemberScoring scoringToAdd = MemberScoring.MemberTeam(userToAdd.Email, teamToAddTo.Id);
             context.Scores.Add(scoringToAdd);
             context.SaveChanges();
         }
@@ -179,7 +179,7 @@ namespace Persistence
                 EntityFrameworkUtilities<Team>.AttachIfIsValid(context, teamToRemoveFrom);
                 teamToRemoveFrom.RemoveMember(userToRemove);
                 MemberScoring scoringToRemove = context.Scores.Single(s =>
-                    userToRemove.Id == s.MemberId);
+                    userToRemove.Email == s.MemberId);
                 context.Scores.Remove(scoringToRemove);
                 context.SaveChanges();
             }

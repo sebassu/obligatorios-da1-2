@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssociationRepository.cs" />
     <Compile Include="BoardContext.cs" />
     <Compile Include="CommentRepository.cs" />
     <Compile Include="ElementRepository.cs" />

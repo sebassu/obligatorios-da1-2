@@ -25,7 +25,7 @@ namespace Persistence
         private static Comment PerformCommentAddition(ElementWhiteboard associatedElement,
             string text, User creator, BoardContext context)
         {
-            creator = context.Users.Find(creator.Id);
+            creator = context.Users.Find(creator.Email);
             context.Entry(creator).Collection(u => u.CommentsCreated).Load();
             Comment commentToAdd = Comment.CreatorElementText(creator, associatedElement, text);
             EntityFrameworkUtilities<Comment>.Add(context, commentToAdd);
@@ -55,7 +55,7 @@ namespace Persistence
         private static void PerformCommentResolution(Comment commentToResolve, User resolver,
             BoardContext context)
         {
-            resolver = context.Users.Find(resolver.Id);
+            resolver = context.Users.Find(resolver.Email);
             context.Entry(resolver).Collection(e => e.CommentsResolved).Load();
             commentToResolve.Resolve(resolver);
             int scoreToAdd = ScoringManagerRepository.GetScores().SetCommentAsSolvedScore;
