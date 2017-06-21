@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using Persistence;
 using Domain;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace GraphicInterface
 {
@@ -98,6 +99,8 @@ namespace GraphicInterface
             if (Utilities.IsEmpty(teamAndTotalScore))
             {
                 dgvScoringBoard.Rows.Add("Sin datos", "a mostrar.");
+                btnTeamRanking.Enabled = false;
+                btnResetTeamScore.Enabled = false;
             }
             else
             {
@@ -105,8 +108,12 @@ namespace GraphicInterface
                 {
                     var teamName = teamScore.Item1.ToString();
                     var teamPoints = teamScore.Item2;
-                    dgvScoringBoard.Rows.Add(teamName, teamPoints);
+                    var index = dgvScoringBoard.Rows.Add();
+                    dgvScoringBoard.Rows[index].Cells[0].Value = teamName;
+                    dgvScoringBoard.Rows[index].Cells[1].Value = teamPoints;
+                    dgvScoringBoard.Rows[index].Tag = teamScore.Item1;
                 }
+                this.dgvScoringBoard.Sort(this.dgvScoringBoard.Columns[1], ListSortDirection.Descending);
             }
         }
 
@@ -130,20 +137,41 @@ namespace GraphicInterface
             ResetTeamScore();
         }
 
-        private static void ResetTeamScore()
+        private void ResetTeamScore()
         {
-            DialogResult result = MessageBox.Show("¿Está seguro que desea resetear el puntaje del equipo seleccionado? " +
-                " La operación es irreversible.", "Confirmación", MessageBoxButtons.YesNo,
-                 MessageBoxIcon.Warning);
-            if (result == DialogResult.Yes)
+            if (Session.ActiveUser().HasAdministrationPrivileges)
             {
-                //HACER RESET DE RANKING DEL EQUIPO
+                if (dgvScoringBoard.SelectedRows.Count > 0)
+                {
+                    DialogResult result = MessageBox.Show("¿Está seguro que desea resetear el puntaje del equipo seleccionado? " +
+                  " La operación es irreversible.", "Confirmación", MessageBoxButtons.YesNo,
+                   MessageBoxIcon.Warning);
+                    if (result == DialogResult.Yes)
+                    {
+                        Team teamScore = dgvScoringBoard.SelectedRows[0].Tag as Team;
+                        //UserScoresRepository.GetScoresForTeam(teamScore.Item1.Id);
+                        UserScoresRepository.ResetTeamScore(teamScore.Id);
+                        LoadTeamsWithTotalScores();
+                    }
+                }
+                else
+                {
+                    InterfaceUtilities.NotElementSelectedMessageBox();
+                }
             }
         }
 
-        private void UCAdministratorCommentsSolvedByUser_Load(object sender, EventArgs e)
+        private void btnTeamRanking_Click(object sender, EventArgs e)
         {
-
+            if (dgvScoringBoard.SelectedRows.Count > 0)
+            {
+                Team teamScore = dgvScoringBoard.SelectedRows[0].Tag as Team;
+                InterfaceUtilities.UCTeamRankingToPanel(systemPanel, teamScore);
+            }
+            else
+            {
+                InterfaceUtilities.NotElementSelectedMessageBox();
+            }
         }
     }
 }

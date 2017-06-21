@@ -177,5 +177,10 @@ namespace GraphicInterface
                 ChangeUserControl(new UCUserHome(systemPanel), systemPanel);
             }            
         }
+
+        public static void UCTeamRankingToPanel(Panel systemPanel, Team oneTeam = null)
+        {
+            ChangeUserControl(new UCTeamRanking(systemPanel, oneTeam), systemPanel);
+        }
     }
 }
