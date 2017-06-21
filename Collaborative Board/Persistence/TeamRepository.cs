@@ -106,22 +106,12 @@ namespace Persistence
             Session.ValidateActiveUserHasAdministrationPrivileges();
             if (Utilities.IsNotNull(elementToRemove))
             {
-                RemoveAllTeamWhiteboardsFromRepository(elementToRemove);
+                UserScoresRepository.RemoveAllDataOfTeam(elementToRemove.Id);
                 EntityFrameworkUtilities<Team>.Remove(elementToRemove);
             }
             else
             {
                 throw new RepositoryException(ErrorMessages.ElementDoesNotExist);
-            }
-        }
-
-        private static void RemoveAllTeamWhiteboardsFromRepository(Team teamToRemove)
-        {
-            LoadCreatedWhiteboards(teamToRemove);
-            var teamWhiteboards = teamToRemove.CreatedWhiteboards.ToList();
-            foreach (var whiteboard in teamWhiteboards)
-            {
-                WhiteboardRepository.RemoveDueToTeamDeletion(whiteboard);
             }
         }
 
@@ -179,11 +169,11 @@ namespace Persistence
                 EntityFrameworkUtilities<Team>.AttachIfIsValid(context, teamToRemoveFrom);
                 teamToRemoveFrom.RemoveMember(userToRemove);
                 MemberScoring scoringToRemove = context.Scores.Single(s =>
-                    userToRemove.Id == s.MemberId);
+                    userToRemove.Id == s.MemberId && s.MembersTeamId == teamToRemoveFrom.Id);
                 context.Scores.Remove(scoringToRemove);
                 context.SaveChanges();
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException e)
             {
                 throw new RepositoryException(ErrorMessages.InvalidElementRecieved);
             }

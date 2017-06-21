@@ -71,5 +71,18 @@ namespace Persistence
                 context.SaveChanges();
             }
         }
+
+        public static void RemoveAllDataOfTeam(int teamId)
+        {
+            using (var context = new BoardContext())
+            {
+                var scoresToDelete = context.Scores.Where(t => t.MembersTeamId == teamId);
+                foreach (var score in scoresToDelete)
+                {
+                    context.Scores.Remove(score);
+                }
+                context.SaveChanges();
+            }
+        }
     }
 }
