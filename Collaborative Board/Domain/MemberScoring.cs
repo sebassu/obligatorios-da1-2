@@ -5,10 +5,10 @@ namespace Domain
     public class MemberScoring
     {
         private const byte absoluteMinimumMembersScore = 0;
+
         public virtual int Id { get; set; }
 
         private int membersTotalScore;
-
         public virtual int MembersTotalScore
         {
             get { return membersTotalScore; }
@@ -36,36 +36,30 @@ namespace Domain
 
         public virtual Team MembersTeam { get; set; }
 
-        internal static MemberScoring InstanceForTestingPurposes()
-        {
-            return new MemberScoring();
-        }
-
-        public MemberScoring()
+        protected MemberScoring()
         {
             Member = User.InstanceForTestingPurposes();
             MembersTeam = Team.InstanceForTestingPurposes();
             membersTotalScore = int.MaxValue;
         }
 
-        public static MemberScoring MemberMembersTeamMembersTotalScore(User theMember,
-            Team theMembersTeam, int membersScore)
+        public static MemberScoring MemberTeam(User someUser,
+            Team someTeam)
         {
-            return new MemberScoring(theMember, theMembersTeam, membersScore);
+            return new MemberScoring(someUser, someTeam);
         }
 
-        public MemberScoring(User theMember, Team theMembersTeam, int membersScore)
+        public MemberScoring(User member, Team someTeam)
         {
-            if (UserIsValidMemberOfTeam(theMember, theMembersTeam))
+            if (UserIsValidMemberOfTeam(member, someTeam))
             {
-                Member = theMember;
-                MembersTeam = theMembersTeam;
-                MembersTotalScore = membersScore;
+                Member = member;
+                MembersTeam = someTeam;
             }
             else
             {
                 string errorMessage = string.Format(CultureInfo.CurrentCulture,
-                   ErrorMessages.MemberIsInvalid, theMember, theMembersTeam);
+                   ErrorMessages.MemberIsInvalid, member, someTeam);
                 throw new MemberScoringException(errorMessage);
             }
         }
@@ -74,7 +68,7 @@ namespace Domain
         {
             if (Utilities.IsNotNull(aTeam))
             {
-                return SetMembersScore(aMember, aTeam);
+                return UserBelongsToTeam(aMember, aTeam);
             }
             else
             {
@@ -82,7 +76,7 @@ namespace Domain
             }
         }
 
-        private static bool SetMembersScore(User aMember, Team aTeam)
+        private static bool UserBelongsToTeam(User aMember, Team aTeam)
         {
             if (Utilities.IsNotNull(aMember))
             {
