@@ -17,55 +17,9 @@ namespace UnitTests.DomainTests
             User member = User.InstanceForTestingPurposes();
             Team membersTeam = Team.InstanceForTestingPurposes();
             membersTeam.AddMember(member);
-<<<<<<< HEAD
-            testingMemberScoring = MemberScoring.MemberTeam(member, membersTeam);
-            Assert.AreEqual(member, testingMemberScoring.Member);
-            Assert.AreEqual(membersTeam, testingMemberScoring.MembersTeam);
-=======
-            testingMemberScoring = MemberScoring.MemberMembersTeamMembersTotalScore(member, 
-                membersTeam, 0);
->>>>>>> a4c011ec48d87b6851b5092af23f0c4f2e148567
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MemberScoringException))]
-        public void MemberScoringUserNotInTeamTest()
-        {
-            User member = User.CreateNewCollaborator("No", "Pertenece",
-                "mail@nopertenece.com", DateTime.Today, "contraseñaVálida123");
-            Team membersTeam = Team.InstanceForTestingPurposes();
-<<<<<<< HEAD
-            testingMemberScoring = MemberScoring.MemberTeam(member, membersTeam);
-            Assert.AreEqual(member, testingMemberScoring.Member);
-            Assert.AreEqual(membersTeam, testingMemberScoring.MembersTeam);
-=======
-            membersTeam.AddMember(member);
-            testingMemberScoring = MemberScoring.MemberMembersTeamMembersTotalScore(member,
-                membersTeam, 1);
->>>>>>> a4c011ec48d87b6851b5092af23f0c4f2e148567
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MemberScoringException))]
-        public void MemberScoringNullTeamTest()
-        {
-            User member = User.InstanceForTestingPurposes();
-<<<<<<< HEAD
-            testingMemberScoring = MemberScoring.MemberTeam(member, null);
-=======
-            Team membersTeam = Team.InstanceForTestingPurposes();
-            membersTeam.AddMember(member);
-            testingMemberScoring = MemberScoring.MemberMembersTeamMembersTotalScore(member,
-                membersTeam, 10);
->>>>>>> a4c011ec48d87b6851b5092af23f0c4f2e148567
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MemberScoringException))]
-        public void MemberScoringNullUserTest()
-        {
-            Team membersTeam = Team.InstanceForTestingPurposes();
-            testingMemberScoring = MemberScoring.MemberTeam(null, membersTeam);
+            testingMemberScoring = MemberScoring.MemberTeam(member.Id, membersTeam.Id);
+            Assert.AreEqual(member.Id, testingMemberScoring.MemberId);
+            Assert.AreEqual(membersTeam.Id, testingMemberScoring.MembersTeamId);
         }
 
         [TestMethod]
