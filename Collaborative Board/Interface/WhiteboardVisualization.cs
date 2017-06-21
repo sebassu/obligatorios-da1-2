@@ -10,7 +10,7 @@ namespace GraphicInterface
 {
     public partial class WhiteboardVisualization : Form
     {
-        internal static List<Association> globalAssociations;
+        internal static List<Domain.Association> globalAssociations;
 
         private Whiteboard whiteboardShown;
         private int addAssociationItemsRemaining;
