@@ -153,9 +153,8 @@ namespace Domain
 
         internal bool UserCanModify(User someUser)
         {
-            var teamMembers = OwnerTeam.Members.ToList();
             return Utilities.HasAdministrationPrivileges(someUser)
-                || teamMembers.Contains(someUser);
+                || OwnerTeam.Scores.Any(m => someUser.Equals(m.Member));
         }
 
         internal bool UserCanRemove(User someUser)
@@ -229,7 +228,7 @@ namespace Domain
         {
             if (Utilities.IsNotNull(ownerTeam))
             {
-                return ownerTeam.Members.Contains(creator);
+                return ownerTeam.Scores.Any(m => creator.Equals(m.Member));
             }
             else
             {
