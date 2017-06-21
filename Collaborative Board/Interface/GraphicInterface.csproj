@@ -67,6 +67,12 @@
     <Compile Include="Exporting strategies\ExportingStrategy.cs" />
     <Compile Include="Exporting strategies\PDFConcreteExportingStrategy.cs" />
     <Compile Include="Exporting strategies\PngConcreteExportingStrategy.cs" />
+    <Compile Include="Association.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Association.Designer.cs">
+      <DependentUpon>Association.cs</DependentUpon>
+    </Compile>
     <Compile Include="SelectReport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -183,6 +189,9 @@
     <Compile Include="UCAdministrateTeam.Designer.cs">
       <DependentUpon>UCAdministrateTeam.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Association.resx">
+      <DependentUpon>Association.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ElementComments.resx">
       <DependentUpon>ElementComments.cs</DependentUpon>
       <SubType>Designer</SubType>
