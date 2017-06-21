@@ -239,8 +239,8 @@ namespace GraphicInterface
             }
             else if (addAssociationItemsRemaining == 1)
             {
-                Association associationToAdd = AssociationRepository.AddNewAssociation(origin,
-                    someElement);
+                Association associationToAdd = AssociationRepository.AddNewAssociation("Wololo", "Wololo",
+                    origin, someElement, 0);
                 globalAssociations.Add(associationToAdd);
                 addAssociationItemsRemaining = 0;
                 pnlWhiteboard.Invalidate();
@@ -332,12 +332,12 @@ namespace GraphicInterface
 
         public void PnlWhiteboard_Paint(object sender, PaintEventArgs e)
         {
-            int width = (pnlWhiteboard.Width + pnlWhiteboard.Height) / 300;
+            int width = (pnlWhiteboard.Width + pnlWhiteboard.Height) / 500;
             e.Graphics.Clear(Color.LightGray);
             Pen line = new Pen(Color.Black, width);
             Pen arrow = new Pen(Color.Black, width)
             {
-                StartCap = LineCap.ArrowAnchor,
+                EndCap = LineCap.ArrowAnchor
             };
             foreach (var association in globalAssociations)
             {
@@ -351,8 +351,8 @@ namespace GraphicInterface
             }
         }
 
-        private static void SetLinesOriginAndEndingPoints(ElementWhiteboard origin, ElementWhiteboard destination, out int startingX,
-            out int startingY, out int endingX, out int endingY)
+        private static void SetLinesOriginAndEndingPoints(ElementWhiteboard origin,
+            ElementWhiteboard destination, out int startingX, out int startingY, out int endingX, out int endingY)
         {
             startingX = origin.RelativeX + (origin.Width / 2);
             startingY = origin.RelativeY + (origin.Height / 2);

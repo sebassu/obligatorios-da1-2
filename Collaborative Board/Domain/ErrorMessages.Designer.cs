@@ -205,6 +205,15 @@ namespace Domain {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to La direccionalidad recibida para la conexión no fue reconocida..
+        /// </summary>
+        internal static string InvalidDirection {
+            get {
+                return ResourceManager.GetString("InvalidDirection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Máxima cantidad de miembros inválida: {0} (contiene actualmente {1})..
         /// </summary>
         internal static string InvalidMaximumMembers {

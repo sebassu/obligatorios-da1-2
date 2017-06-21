@@ -225,4 +225,7 @@
   <data name="AssociationElementIsInvalid" xml:space="preserve">
     <value>El elemento es inválido para la asociación (no se permiten asociaciones cíclicas).</value>
   </data>
+  <data name="InvalidDirection" xml:space="preserve">
+    <value>La direccionalidad recibida para la conexión no fue reconocida.</value>
+  </data>
 </root>
