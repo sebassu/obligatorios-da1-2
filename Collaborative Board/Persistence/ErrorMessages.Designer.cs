@@ -205,6 +205,24 @@ namespace Persistence {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No se encontró registro para el usuario en el equipo recibido..
+        /// </summary>
+        internal static string UserIsNotMemberOfTeam {
+            get {
+                return ResourceManager.GetString("UserIsNotMemberOfTeam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El usuario no es válido: no se encuentra registrado en el sistema..
+        /// </summary>
+        internal static string UserIsNotRegistered {
+            get {
+                return ResourceManager.GetString("UserIsNotRegistered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to El equipo &quot;{0}&quot; ya posee un pizarrón con el nombre &quot;{1}&quot;..
         /// </summary>
         internal static string WhiteboardNameTeamMustBeUnique {

@@ -2,6 +2,7 @@
 using System.Data;
 using System.Linq;
 using System.Collections.Generic;
+using System;
 
 namespace Persistence
 {
@@ -31,6 +32,9 @@ namespace Persistence
                     Team teamToAdd = Team.CreatorNameDescriptionMaximumMembers(creator,
                         name, description, maximumMembers);
                     EntityFrameworkUtilities<Team>.Add(context, teamToAdd);
+                    MemberScoring scoringToAdd = MemberScoring.MemberTeam(creator.Id, teamToAdd.Id);
+                    context.Scores.Add(scoringToAdd);
+                    context.SaveChanges();
                     return teamToAdd;
                 }
                 else
@@ -145,6 +149,8 @@ namespace Persistence
             EntityFrameworkUtilities<Team>.AttachIfIsValid(context, teamToAddTo);
             context.Entry(userToAdd).Collection(u => u.AssociatedTeams).Load();
             teamToAddTo.AddMember(userToAdd);
+            MemberScoring scoringToAdd = MemberScoring.MemberTeam(userToAdd.Id, teamToAddTo.Id);
+            context.Scores.Add(scoringToAdd);
             context.SaveChanges();
         }
 
@@ -167,10 +173,20 @@ namespace Persistence
         private static void AttemptToRemoveMemberFromTeam(Team teamToRemoveFrom, User
             userToRemove, BoardContext context)
         {
-            Session.ValidateActiveUserHasAdministrationPrivileges();
-            EntityFrameworkUtilities<Team>.AttachIfIsValid(context, teamToRemoveFrom);
-            teamToRemoveFrom.RemoveMember(userToRemove);
-            context.SaveChanges();
+            try
+            {
+                Session.ValidateActiveUserHasAdministrationPrivileges();
+                EntityFrameworkUtilities<Team>.AttachIfIsValid(context, teamToRemoveFrom);
+                teamToRemoveFrom.RemoveMember(userToRemove);
+                MemberScoring scoringToRemove = context.Scores.Single(s =>
+                    userToRemove.Id == s.MemberId);
+                context.Scores.Remove(scoringToRemove);
+                context.SaveChanges();
+            }
+            catch (InvalidOperationException)
+            {
+                throw new RepositoryException(ErrorMessages.InvalidElementRecieved);
+            }
         }
 
         public static void LoadMembers(Team someTeam)

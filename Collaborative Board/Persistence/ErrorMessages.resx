@@ -165,6 +165,12 @@
   <data name="UserIsLoneMemberOfSomeTeam" xml:space="preserve">
     <value>No es posible eliminar al usuario: es el único miembro de un equipo.</value>
   </data>
+  <data name="UserIsNotMemberOfTeam" xml:space="preserve">
+    <value>No se encontró registro para el usuario en el equipo recibido.</value>
+  </data>
+  <data name="UserIsNotRegistered" xml:space="preserve">
+    <value>El usuario no es válido: no se encuentra registrado en el sistema.</value>
+  </data>
   <data name="WhiteboardNameTeamMustBeUnique" xml:space="preserve">
     <value>El equipo "{0}" ya posee un pizarrón con el nombre "{1}".</value>
   </data>

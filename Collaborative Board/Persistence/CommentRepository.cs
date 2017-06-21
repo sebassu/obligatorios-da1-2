@@ -29,6 +29,8 @@ namespace Persistence
             context.Entry(creator).Collection(u => u.CommentsCreated).Load();
             Comment commentToAdd = Comment.CreatorElementText(creator, associatedElement, text);
             EntityFrameworkUtilities<Comment>.Add(context, commentToAdd);
+            int scoreToAdd = ScoringManagerRepository.GetScores().AddCommentScore;
+            UserScoresRepository.UpdateUserScoreInTeam(associatedElement.Container.OwnerTeam.Id, scoreToAdd);
             return commentToAdd;
         }
 
@@ -56,6 +58,8 @@ namespace Persistence
             resolver = context.Users.Find(resolver.Id);
             context.Entry(resolver).Collection(e => e.CommentsResolved).Load();
             commentToResolve.Resolve(resolver);
+            int scoreToAdd = ScoringManagerRepository.GetScores().SetCommentAsSolvedScore;
+            UserScoresRepository.UpdateUserScoreInTeam(commentToResolve.AssociatedWhiteboard.OwnerTeam.Id, scoreToAdd);
             context.SaveChanges();
         }
     }

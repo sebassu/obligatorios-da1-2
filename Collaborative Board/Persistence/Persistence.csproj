@@ -55,6 +55,7 @@
     <Compile Include="EntityFrameworkUtilities.cs" />
     <Compile Include="ScoringManagerRepository.cs" />
     <Compile Include="TeamRepository.cs" />
+    <Compile Include="UserScoresRepository.cs" />
     <Compile Include="WhiteboardRepository.cs" />
     <Compile Include="ErrorMessages.Designer.cs">
       <AutoGen>True</AutoGen>

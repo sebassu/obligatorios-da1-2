@@ -122,7 +122,7 @@ namespace GraphicInterface
         private static bool ValidateWhiteboardIsToBeShown(Whiteboard oneWhiteboard)
         {
             TeamRepository.LoadMembers(oneWhiteboard.OwnerTeam);
-            bool whiteboardTeamHasLoggedInUser = Session.ActiveUser().AssociatedTeams.Contains(oneWhiteboard.OwnerTeam);
+            bool whiteboardTeamHasLoggedInUser = oneWhiteboard.OwnerTeam.Members.Contains(Session.ActiveUser());
             return whiteboardTeamHasLoggedInUser || Session.HasAdministrationPrivileges();
         }
 

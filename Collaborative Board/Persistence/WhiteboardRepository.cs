@@ -47,6 +47,8 @@ namespace Persistence
             Whiteboard whiteboardToAdd = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
                 name, description, ownerTeam, width, height);
             EntityFrameworkUtilities<Whiteboard>.Add(context, whiteboardToAdd);
+            int scoreToAdd = ScoringManagerRepository.GetScores().CreateWhiteboardScore;
+            UserScoresRepository.UpdateUserScoreInTeam(ownerTeam.Id, scoreToAdd);
             return whiteboardToAdd;
         }
 
@@ -156,9 +158,16 @@ namespace Persistence
 
         private static void PerformRemove(Whiteboard elementToRemove)
         {
-            Team whiteboardsOwnerTeam = elementToRemove.OwnerTeam;
-            whiteboardsOwnerTeam.RemoveWhiteboard(elementToRemove);
-            EntityFrameworkUtilities<Whiteboard>.Remove(elementToRemove);
+            using (var context = new BoardContext())
+            {
+                Team whiteboardsOwnerTeam = elementToRemove.OwnerTeam;
+                whiteboardsOwnerTeam.RemoveWhiteboard(elementToRemove);
+                int scoreToAdd = ScoringManagerRepository.GetScores().DeleteWhiteboardScore;
+                UserScoresRepository.UpdateUserScoreInTeam(whiteboardsOwnerTeam.Id, scoreToAdd);
+                EntityFrameworkUtilities<Whiteboard>.AttachIfIsValid(context, elementToRemove);
+                context.Whiteboards.Remove(elementToRemove);
+                context.SaveChanges();
+            }
         }
 
         internal static void RemoveDueToTeamDeletion(Whiteboard whiteboardToRemove)

@@ -21,6 +21,7 @@ namespace Persistence
                         fileName);
                     context.Elements.Add(elementToAdd);
                     context.SaveChanges();
+                    AddCorrespondingScoreToTeam(container);
                     return elementToAdd;
                 }
                 else
@@ -44,6 +45,7 @@ namespace Persistence
                     TextBoxWhiteboard elementToAdd = TextBoxWhiteboard.CreateWithContainer(container);
                     context.Elements.Add(elementToAdd);
                     context.SaveChanges();
+                    AddCorrespondingScoreToTeam(container);
                     return elementToAdd;
                 }
                 else
@@ -51,6 +53,12 @@ namespace Persistence
                     throw new WhiteboardException(ErrorMessages.UserCannotModifyWhiteboard);
                 }
             }
+        }
+
+        private static void AddCorrespondingScoreToTeam(Whiteboard container)
+        {
+            int scoreToAdd = ScoringManagerRepository.GetScores().AddElementScore;
+            UserScoresRepository.UpdateUserScoreInTeam(container.OwnerTeam.Id, scoreToAdd);
         }
 
         public static void UpdateElementPositionAndSize(ElementWhiteboard elementToModify, Size newDimensions,

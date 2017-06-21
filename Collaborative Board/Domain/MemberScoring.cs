@@ -32,67 +32,24 @@ namespace Domain
             return score >= absoluteMinimumMembersScore;
         }
 
-        public virtual User Member { get; set; }
+        public virtual int MemberId { get; set; }
 
-        public virtual Team MembersTeam { get; set; }
+        public virtual int MembersTeamId { get; set; }
 
         protected MemberScoring()
         {
-            Member = User.InstanceForTestingPurposes();
-            MembersTeam = Team.InstanceForTestingPurposes();
             membersTotalScore = int.MaxValue;
         }
 
-        public static MemberScoring MemberTeam(User someUser,
-            Team someTeam)
+        public static MemberScoring MemberTeam(int userId, int teamId)
         {
-            return new MemberScoring(someUser, someTeam);
+            return new MemberScoring(userId, teamId);
         }
 
-        public MemberScoring(User member, Team someTeam)
+        public MemberScoring(int someUserId, int someTeamId)
         {
-            if (UserIsValidMemberOfTeam(member, someTeam))
-            {
-                Member = member;
-                MembersTeam = someTeam;
-            }
-            else
-            {
-                string errorMessage = string.Format(CultureInfo.CurrentCulture,
-                   ErrorMessages.MemberIsInvalid, member, someTeam);
-                throw new MemberScoringException(errorMessage);
-            }
-        }
-
-        private static bool UserIsValidMemberOfTeam(User aMember, Team aTeam)
-        {
-            if (Utilities.IsNotNull(aTeam))
-            {
-                return UserBelongsToTeam(aMember, aTeam);
-            }
-            else
-            {
-                throw new MemberScoringException(ErrorMessages.TeamIsInvalid);
-            }
-        }
-
-        private static bool UserBelongsToTeam(User aMember, Team aTeam)
-        {
-            if (Utilities.IsNotNull(aMember))
-            {
-                if (Utilities.IsNotNull(aTeam))
-                {
-                    return aMember.AssociatedTeams.Contains(aTeam);
-                }
-                else
-                {
-                    throw new MemberScoringException(ErrorMessages.TeamIsInvalid);
-                }
-            }
-            else
-            {
-                throw new MemberScoringException(ErrorMessages.NullUser);
-            }
+            MemberId = someUserId;
+            MembersTeamId = someTeamId;
         }
     }
 }

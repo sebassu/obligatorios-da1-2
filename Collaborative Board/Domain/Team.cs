@@ -89,21 +89,8 @@ namespace Domain
             return errorMessage;
         }
 
-        public virtual ICollection<MemberScoring> Scores { get; set; }
-            = new List<MemberScoring>();
-
-        public virtual ICollection<User> Members
-        {
-            get
-            {
-                List<User> result = new List<User>();
-                foreach (var scoreElement in Scores)
-                {
-                    result.Add(scoreElement.Member);
-                }
-                return result;
-            }
-        }
+        public virtual ICollection<User> Members { get; set; }
+            = new List<User>();
 
         public virtual ICollection<Whiteboard> CreatedWhiteboards { get; set; }
             = new List<Whiteboard>();
@@ -113,7 +100,7 @@ namespace Domain
             bool canBeMember = Utilities.IsNotNull(userToAdd) && IsPossibleToAdd(userToAdd);
             if (canBeMember)
             {
-                MemberScoring.MemberMembersTeamMembersTotalScore(userToAdd, this, 0);
+                Members.Add(userToAdd);
                 userToAdd.AssociatedTeams.Add(this);
             }
             else
@@ -124,7 +111,7 @@ namespace Domain
 
         private bool IsPossibleToAdd(User someUser)
         {
-            return Members.Count < maximumMembers && !Scores.Any(m => someUser.Equals(m.Member));
+            return Members.Count < maximumMembers && !Members.Contains(someUser);
         }
 
         internal void RemoveMember(User userToRemove)
@@ -141,9 +128,7 @@ namespace Domain
 
         private bool WasRemoved(User userToRemove)
         {
-            MemberScoring memberScoringToRemove = Scores.Single(m => userToRemove.Equals(m.Member));
-            return Members.Count > absoluteMinimumMembers && Scores.Remove(memberScoringToRemove);
-
+            return Members.Count > absoluteMinimumMembers && Members.Remove(userToRemove);
         }
 
         internal void AddWhiteboard(Whiteboard whiteboardToAdd)

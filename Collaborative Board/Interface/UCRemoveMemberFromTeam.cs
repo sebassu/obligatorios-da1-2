@@ -29,7 +29,6 @@ namespace GraphicInterface
         {
             if (teamToWorkWith.Members.Count() > 0)
             {
-                
                 foreach (User oneUser in teamToWorkWith.Members)
                 {
                     ListViewItem itemToAdd = new ListViewItem(oneUser.ToString()) { Tag = oneUser };

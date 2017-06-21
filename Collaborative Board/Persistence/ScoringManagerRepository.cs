@@ -1,10 +1,6 @@
 ﻿using Domain;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Persistence
 {
@@ -14,7 +10,7 @@ namespace Persistence
         {
             using (var context = new BoardContext())
             {
-                var elements = context.Scores;
+                var elements = context.GlobalScores;
                 if (elements.FirstOrDefault() == null)
                 {
                     ScoringManager scoringManagerToAdd = new ScoringManager();
@@ -37,7 +33,7 @@ namespace Persistence
         {
             using (var context = new BoardContext())
             {
-                var score = context.Scores.Single();
+                var score = context.GlobalScores.Single();
                 score.ModifyAllScores(createWhiteBoardScore, deleteWhiteboardScore,
                     addElement, addComment, setCommentAsSolved);
                 context.Entry(score).State = EntityState.Modified;
@@ -49,7 +45,7 @@ namespace Persistence
         {
             using (var context = new BoardContext())
             {
-                var score = context.Scores.Single();
+                var score = context.GlobalScores.Single();
                 return score;
             }
         }
