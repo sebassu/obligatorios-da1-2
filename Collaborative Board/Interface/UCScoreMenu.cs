@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.Windows.Forms;
 using Persistence;
+using Domain;
+using System.Collections.Generic;
 
 namespace GraphicInterface
 {
@@ -67,7 +69,47 @@ namespace GraphicInterface
                 btnAssignScoreToEvents.Visible = false;
                 btnResetTeamScore.Visible = false;
             }
+            LoadTeamsWithTotalScores();
         }
+
+        private void LoadTeamsWithTotalScores()
+        {
+            List<Tuple<Team, int>> auxTuple = new List<Tuple<Team, int>>();
+            foreach (var team in TeamRepository.Elements)
+            {
+                TeamRepository.LoadMembers(team);
+                if ((Session.ActiveUser().HasAdministrationPrivileges) || team.Members.Contains(Session.ActiveUser()))
+                {
+                    int teamTotalScore = 0;
+                    List<Tuple<User, int>> scoresByUser = UserScoresRepository.GetScoresForTeam(team.Id);
+                    foreach (var userScore in scoresByUser)
+                    {
+                        teamTotalScore = teamTotalScore + userScore.Item2;
+                    }
+                    auxTuple.Add(new Tuple<Team, int>(team, teamTotalScore));
+                }
+            }
+            LoadGridViewWithTeamScores(auxTuple);
+        }
+
+        private void LoadGridViewWithTeamScores(List<Tuple<Team, int>> teamAndTotalScore)
+        {
+            dgvScoringBoard.Rows.Clear();
+            if (Utilities.IsEmpty(teamAndTotalScore))
+            {
+                dgvScoringBoard.Rows.Add("Sin datos", "a mostrar.");
+            }
+            else
+            {
+                foreach (var teamScore in teamAndTotalScore)
+                {
+                    var teamName = teamScore.Item1.ToString();
+                    var teamPoints = teamScore.Item2;
+                    dgvScoringBoard.Rows.Add(teamName, teamPoints);
+                }
+            }
+        }
+
         private void btnHome_Click(object sender, EventArgs e)
         {
             InterfaceUtilities.GoToHomeRespectiveHome(systemPanel);
@@ -97,6 +139,11 @@ namespace GraphicInterface
             {
                 //HACER RESET DE RANKING DEL EQUIPO
             }
+        }
+
+        private void UCAdministratorCommentsSolvedByUser_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
