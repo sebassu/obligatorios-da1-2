@@ -5,10 +5,12 @@ using Persistence;
 using System.Drawing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 
 namespace UnitTests.PersistenceTests
 {
     [TestClass]
+    [ExcludeFromCodeCoverage]
     public class ElementRepositoryTests
     {
         private static Whiteboard testingContainer;

@@ -68,7 +68,7 @@ namespace Domain
             }
             else
             {
-                throw new ConnectionException(ErrorMessages.AssociationElementIsInvalid);
+                throw new ConnectionException(ErrorMessages.ConnectionElementIsInvalid);
             }
         }
 

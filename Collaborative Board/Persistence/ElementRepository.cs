@@ -169,6 +169,7 @@ namespace Persistence
 
         public static void Remove(ElementWhiteboard elementToRemove)
         {
+            ConnectionRepository.RemoveAllConectionsWith(elementToRemove);
             EntityFrameworkUtilities<ElementWhiteboard>.Remove(elementToRemove);
         }
 

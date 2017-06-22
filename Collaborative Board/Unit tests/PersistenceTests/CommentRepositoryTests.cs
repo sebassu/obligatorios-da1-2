@@ -2,11 +2,13 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Persistence;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace UnitTests.PersistenceTests
 {
     [TestClass]
+    [ExcludeFromCodeCoverage]
     public class CommentRepositoryTests
     {
         [TestClass]

@@ -1,10 +1,12 @@
 ﻿using Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Persistence;
+using System.Diagnostics.CodeAnalysis;
 
 namespace UnitTests.PersistenceTests
 {
     [TestClass]
+    [ExcludeFromCodeCoverage]
     public class ScoringManagerRepositoryTests
     {
         [ClassInitialize]
