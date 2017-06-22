@@ -52,7 +52,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ErrorMessages.resx</DependentUpon>
     </Compile>
-    <Compile Include="Exceptions\AssociationException.cs" />
+    <Compile Include="Exceptions\ConnectionException.cs" />
     <Compile Include="Exceptions\BoardException.cs" />
     <Compile Include="Exceptions\CommentException.cs" />
     <Compile Include="Exceptions\ElementException.cs" />

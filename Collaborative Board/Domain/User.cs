@@ -126,38 +126,8 @@ namespace Domain
             return newPassword;
         }
 
-        public virtual ICollection<Comment> CommentsCreated { get; set; }
-            = new List<Comment>();
-
-        public virtual ICollection<Comment> CommentsResolved { get; set; }
-            = new List<Comment>();
-
         public virtual ICollection<Team> AssociatedTeams { get; set; }
             = new List<Team>();
-
-        internal void AddCreatedComment(Comment someComment)
-        {
-            if (!CommentsCreated.Contains(someComment))
-            {
-                CommentsCreated.Add(someComment);
-            }
-            else
-            {
-                throw new UserException(ErrorMessages.CommentAlreadyAdded);
-            }
-        }
-
-        internal void AddResolvedComment(Comment someComment)
-        {
-            if (!CommentsResolved.Contains(someComment))
-            {
-                CommentsResolved.Add(someComment);
-            }
-            else
-            {
-                throw new UserException(ErrorMessages.CommentAlreadyAdded);
-            }
-        }
 
         internal static User InstanceForTestingPurposes()
         {

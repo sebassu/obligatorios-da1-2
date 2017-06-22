@@ -1,10 +1,24 @@
 ﻿using System;
 using Domain;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Persistence
 {
     public class CommentRepository
     {
+        public static List<Comment> Elements
+        {
+            get
+            {
+                using (BoardContext context = new BoardContext())
+                {
+                    var elements = context.Comments;
+                    return elements.ToList();
+                }
+            }
+        }
+
         public static Comment AddNewComment(ElementWhiteboard associatedElement, string text)
         {
             User creator = Session.ActiveUser();
@@ -25,8 +39,7 @@ namespace Persistence
         private static Comment PerformCommentAddition(ElementWhiteboard associatedElement,
             string text, User creator, BoardContext context)
         {
-            creator = context.Users.Find(creator.Email);
-            context.Entry(creator).Collection(u => u.CommentsCreated).Load();
+            creator = context.Users.Find(creator.Id);
             Comment commentToAdd = Comment.CreatorElementText(creator, associatedElement, text);
             EntityFrameworkUtilities<Comment>.Add(context, commentToAdd);
             int scoreToAdd = ScoringManagerRepository.GetScores().AddCommentScore;
@@ -55,8 +68,7 @@ namespace Persistence
         private static void PerformCommentResolution(Comment commentToResolve, User resolver,
             BoardContext context)
         {
-            resolver = context.Users.Find(resolver.Email);
-            context.Entry(resolver).Collection(e => e.CommentsResolved).Load();
+            resolver = context.Users.Find(resolver.Id);
             commentToResolve.Resolve(resolver);
             int scoreToAdd = ScoringManagerRepository.GetScores().SetCommentAsSolvedScore;
             UserScoresRepository.UpdateUserScoreInTeam(commentToResolve.AssociatedWhiteboard.OwnerTeam.Id, scoreToAdd);

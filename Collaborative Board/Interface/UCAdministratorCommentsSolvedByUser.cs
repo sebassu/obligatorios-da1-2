@@ -11,7 +11,7 @@ namespace GraphicInterface
     public partial class UCAdministratorCommentsSolvedByUser : UserControl
     {
         private Panel systemPanel;
-        private readonly List<Comment> allComments = new List<Comment>();
+        private List<Comment> allComments;
 
         public UCAdministratorCommentsSolvedByUser(Panel systemPanel)
         {
@@ -42,11 +42,7 @@ namespace GraphicInterface
 
         private void UCAdministratorCommentsSolvedByUser_Load(object sender, EventArgs e)
         {
-            foreach (var user in UserRepository.Elements)
-            {
-                var aux = user.CommentsCreated.Where(c => c.IsResolved).ToList();
-                allComments.AddRange(aux);
-            }
+            allComments = CommentRepository.Elements;
             LoadGridViewWithCommentsFilteringBy(allComments, (_ => true));
         }
 
@@ -64,8 +60,8 @@ namespace GraphicInterface
                 {
                     var creationDateToShow = Utilities.GetDateToShow(comment.CreationDate);
                     var resolutionDateToShow = Utilities.GetDateToShow(comment.ResolutionDate);
-                    var creatorToShow = comment.Creator.Email;
-                    var resolverToShow = comment.Resolver.Email;
+                    var creatorToShow = comment.CreatorEmail;
+                    var resolverToShow = comment.ResolverEmail;
                     var whiteboardToShow = comment.AssociatedWhiteboard.ToString();
                     dgvCommentsSolvedByUser.Rows.Add(comment.Text, creationDateToShow, creatorToShow,
                         resolverToShow, whiteboardToShow, resolutionDateToShow);
@@ -90,9 +86,7 @@ namespace GraphicInterface
 
         private void BtnApplyFilters_Click(object sender, EventArgs e)
         {
-            User selectedResolver = cmbSolverUser.SelectedItem as User;
-            var resolvedComments = selectedResolver.CommentsResolved.ToList();
-            LoadGridViewWithCommentsFilteringBy(resolvedComments,
+            LoadGridViewWithCommentsFilteringBy(allComments,
                 (c => FilterByCreatorResolverAndDates(c)));
         }
 
@@ -105,8 +99,8 @@ namespace GraphicInterface
         {
             User selectedCreator = cmbCreatorUser.SelectedItem as User;
             User selectedResolver = cmbSolverUser.SelectedItem as User;
-            return selectedCreator.Equals(c.Creator) &&
-                selectedResolver.Equals(c.Resolver);
+            return selectedCreator.Equals(c.CreatorEmail) &&
+                selectedResolver.Equals(c.ResolverEmail);
         }
 
         private bool FallsBetweenDates(Comment c)

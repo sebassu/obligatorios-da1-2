@@ -13,7 +13,7 @@ namespace GraphicInterface
             {
                 actionToExecute.Invoke();
             }
-            catch (BoardException exception)
+            catch (SystemException exception)
             {
                 ShowError(exception.Message, "Error");
             }

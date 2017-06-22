@@ -123,7 +123,7 @@ namespace Domain
             return Contents.Max(c => c.HeightContainerNeeded());
         }
 
-        public virtual string CreatorId { get; set; }
+        public virtual int CreatorId { get; set; }
 
         public virtual Team OwnerTeam { get; set; }
 
@@ -161,7 +161,7 @@ namespace Domain
         internal bool UserCanRemove(User someUser)
         {
             return Utilities.HasAdministrationPrivileges(someUser)
-                || CreatorId.Equals(someUser.Email);
+                || CreatorId.Equals(someUser.Id);
         }
 
         internal static Whiteboard InstanceForTestingPurposes()
@@ -171,7 +171,7 @@ namespace Domain
 
         protected Whiteboard()
         {
-            CreatorId = User.InstanceForTestingPurposes().Email;
+            CreatorId = User.InstanceForTestingPurposes().Id;
             OwnerTeam = Team.InstanceForTestingPurposes();
             SetAttributesForTesting();
             UpdateModificationDate();
@@ -197,7 +197,7 @@ namespace Domain
         {
             if (CreatorIsValidMemberOfTeam(aCreator, anOwnerTeam))
             {
-                CreatorId = aCreator.Email;
+                CreatorId = aCreator.Id;
                 OwnerTeam = anOwnerTeam;
                 SetModifiableAttributes(aName, aDescription, aWidth, aHeight);
                 UpdateModificationDate();

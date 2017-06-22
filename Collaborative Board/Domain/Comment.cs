@@ -25,7 +25,7 @@ namespace Domain
 
         public virtual DateTime CreationDate { get; set; } = DateTime.Now;
 
-        public virtual User Creator { get; set; }
+        public virtual string CreatorEmail { get; set; }
 
         public virtual ElementWhiteboard AssociatedElement { get; set; }
 
@@ -37,9 +37,9 @@ namespace Domain
         // Minimum value for database DateTime.
         public virtual DateTime ResolutionDate { get; set; } = new DateTime(1753, 1, 1);
 
-        public virtual User Resolver { get; set; }
+        public virtual string ResolverEmail { get; set; }
 
-        public void Resolve(User someResolver)
+        public void Resolve(User resolver)
         {
             if (IsResolved)
             {
@@ -47,15 +47,15 @@ namespace Domain
             }
             else
             {
-                ProcessResolutionIfPossible(someResolver);
+                ProcessResolutionIfPossible(resolver);
             }
         }
 
-        private void ProcessResolutionIfPossible(User someResolver)
+        private void ProcessResolutionIfPossible(User resolver)
         {
-            if (Utilities.IsNotNull(someResolver))
+            if (Utilities.IsNotNull(resolver))
             {
-                SetResolutionAttributes(someResolver);
+                SetResolutionAttributes(resolver);
             }
             else
             {
@@ -63,10 +63,9 @@ namespace Domain
             }
         }
 
-        private void SetResolutionAttributes(User someResolver)
+        private void SetResolutionAttributes(User resolver)
         {
-            Resolver = someResolver;
-            someResolver.AddResolvedComment(this);
+            ResolverEmail = resolver.Email;
             ResolutionDate = DateTime.Now;
         }
 
@@ -84,15 +83,15 @@ namespace Domain
 
         public static Comment InstanceForTestingPurposes()
         {
-            return new Comment();
+            return new Comment()
+            {
+                text = "Comentario inválido.",
+                CreatorEmail = User.InstanceForTestingPurposes().Email,
+                AssociatedElement = TextBoxWhiteboard.InstanceForTestingPurposes()
+            };
         }
 
-        protected Comment()
-        {
-            text = "Comentario inválido.";
-            Creator = User.InstanceForTestingPurposes();
-            AssociatedElement = TextBoxWhiteboard.InstanceForTestingPurposes();
-        }
+        protected Comment() { }
 
         public static Comment CreatorElementText(User someCreator,
             ElementWhiteboard someElement, string someText)
@@ -106,10 +105,7 @@ namespace Domain
                 && Utilities.IsNotNull(someElement);
             if (creationParametersAreValid)
             {
-                Creator = someCreator;
-                AssociatedElement = someElement;
-                Text = someText;
-                UpdateReferencesComments(someElement);
+                SetInicializationAttributes(someCreator, someElement, someText);
             }
             else
             {
@@ -117,10 +113,13 @@ namespace Domain
             }
         }
 
-        private void UpdateReferencesComments(ElementWhiteboard someElement)
+        private void SetInicializationAttributes(User someCreator,
+            ElementWhiteboard someElement, string someText)
         {
+            CreatorEmail = someCreator.Email;
+            AssociatedElement = someElement;
+            Text = someText;
             someElement.AddComment(this);
-            Creator.AddCreatedComment(this);
         }
 
         public override bool Equals(object obj)
@@ -138,7 +137,7 @@ namespace Domain
 
         private bool CreatorDateAndTextAreEqual(Comment commentToCompareAgainst)
         {
-            return Creator.Equals(commentToCompareAgainst.Creator) &&
+            return CreatorEmail.Equals(commentToCompareAgainst.CreatorEmail) &&
                 text.Equals(commentToCompareAgainst.text) &&
                 CreationDate.Equals(commentToCompareAgainst.CreationDate);
         }
@@ -151,7 +150,7 @@ namespace Domain
         public override string ToString()
         {
             return Text + " <" + Utilities.GetDateToShow(CreationDate) + ">"
-                + " <" + Creator.Email + ">";
+                + " <" + CreatorEmail + ">";
         }
     }
 }

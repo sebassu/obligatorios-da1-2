@@ -91,7 +91,7 @@ namespace Persistence
         private static void MarkDimensionsAndPositionPropertiesAsChanged(DbEntityEntry<ElementWhiteboard> entry)
         {
             entry.Property(e => e.RelativeX).IsModified = true;
-            entry.Property(e => e.RelativeX).IsModified = true;
+            entry.Property(e => e.RelativeY).IsModified = true;
             entry.Property(e => e.Width).IsModified = true;
             entry.Property(e => e.Height).IsModified = true;
         }
@@ -170,6 +170,15 @@ namespace Persistence
         public static void Remove(ElementWhiteboard elementToRemove)
         {
             EntityFrameworkUtilities<ElementWhiteboard>.Remove(elementToRemove);
+        }
+
+        public static void LoadComments(ElementWhiteboard someElement)
+        {
+            using (var context = new BoardContext())
+            {
+                EntityFrameworkUtilities<ElementWhiteboard>.AttachIfIsValid(context, someElement);
+                context.Entry(someElement).Collection(e => e.Comments).Load();
+            }
         }
     }
 }

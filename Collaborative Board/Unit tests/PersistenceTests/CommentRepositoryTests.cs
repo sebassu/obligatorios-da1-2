@@ -69,9 +69,8 @@ namespace UnitTests.PersistenceTests
             public void CRepositoryAddNewCommentValidTest()
             {
                 Comment addedComment = CommentRepository.AddNewComment(testingElement, "Evil there");
-                Assert.AreEqual(aragorn, addedComment.Creator);
+                Assert.AreEqual(aragorn.Email, addedComment.CreatorEmail);
                 CollectionAssert.Contains(testingElement.Comments.ToList(), addedComment);
-                CollectionAssert.Contains(aragorn.CommentsCreated.ToList(), addedComment);
             }
 
             [TestMethod]
@@ -79,20 +78,17 @@ namespace UnitTests.PersistenceTests
             {
                 ChangeActiveUser("gimli@fellowship.com", "AndMyAxe");
                 Comment addedComment = CommentRepository.AddNewComment(testingElement, "that");
-                Assert.AreEqual(gimli, addedComment.Creator);
+                Assert.AreEqual(gimli.Email, addedComment.CreatorEmail);
                 CollectionAssert.Contains(testingElement.Comments.ToList(), addedComment);
-                CollectionAssert.Contains(gimli.CommentsCreated.ToList(), addedComment);
             }
 
-            //Problema.
             [TestMethod]
             public void CRepositoryAddNewCommentAsRandomUserValidTest()
             {
                 ChangeActiveUser("gandalf@istari.com", "YouShallNotPass");
                 Comment addedComment = CommentRepository.AddNewComment(testingElement, "does not sleep.");
-                Assert.AreEqual(gandalf, addedComment.Creator);
+                Assert.AreEqual(gandalf.Email, addedComment.CreatorEmail);
                 CollectionAssert.Contains(testingElement.Comments.ToList(), addedComment);
-                CollectionAssert.Contains(addedComment.Creator.CommentsCreated.ToList(), addedComment);
             }
 
             [TestMethod]
@@ -100,8 +96,7 @@ namespace UnitTests.PersistenceTests
             {
                 Comment addedComment = CommentRepository.AddNewComment(testingElement, "They are taking");
                 CommentRepository.ResolveComment(addedComment);
-                Assert.AreEqual(aragorn, addedComment.Resolver);
-                CollectionAssert.Contains(aragorn.CommentsResolved.ToList(), addedComment);
+                Assert.AreEqual(aragorn.Email, addedComment.ResolverEmail);
             }
 
             [TestMethod]
@@ -110,19 +105,16 @@ namespace UnitTests.PersistenceTests
                 ChangeActiveUser("gimli@fellowship.com", "AndMyAxe");
                 Comment addedComment = CommentRepository.AddNewComment(testingElement, "the hobbits");
                 CommentRepository.ResolveComment(addedComment);
-                Assert.AreEqual(gimli, addedComment.Resolver);
-                CollectionAssert.Contains(gimli.CommentsResolved.ToList(), addedComment);
+                Assert.AreEqual(gimli.Email, addedComment.ResolverEmail);
             }
 
-            //Problema.
             [TestMethod]
             public void CRepositoryResolveCommentAsRandomUserValidTest()
             {
                 ChangeActiveUser("gandalf@istari.com", "YouShallNotPass");
                 Comment addedComment = CommentRepository.AddNewComment(testingElement, "to Isengard!");
                 CommentRepository.ResolveComment(addedComment);
-                Assert.AreEqual(gandalf, addedComment.Resolver);
-                CollectionAssert.Contains(addedComment.Resolver.CommentsResolved.ToList(), addedComment);
+                Assert.AreEqual(gandalf.Email, addedComment.ResolverEmail);
             }
         }
     }

@@ -406,7 +406,7 @@ namespace GraphicInterface
             return new Pen(Color.Black, width);
         }
 
-        private static void SetLinesOriginAndEndingPoints(ElementWhiteboard origin,
+        private void SetLinesOriginAndEndingPoints(ElementWhiteboard origin,
             ElementWhiteboard destination, out int startingX, out int startingY, out int endingX, out int endingY)
         {
             startingX = origin.RelativeX + (origin.Width / 2);
@@ -414,15 +414,20 @@ namespace GraphicInterface
             endingX = destination.RelativeX + (destination.Width / 2);
             endingY = destination.RelativeY + (destination.Height / 2);
             Control draggedObject = ControlMovingOrResizingHandler.interfaceObject;
-            if (origin.Equals(draggedObject.Tag))
+            bool mustVerifyAdditionalConditions = Utilities.IsNotNull(draggedObject) &&
+                Utilities.IsNotNull(draggedObject.Tag);
+            if (mustVerifyAdditionalConditions)
             {
-                startingX = draggedObject.Location.X + (draggedObject.Width / 2);
-                startingY = draggedObject.Location.Y + (draggedObject.Height / 2);
-            }
-            else if (destination.Equals(draggedObject.Tag))
-            {
-                endingX = draggedObject.Location.X + (draggedObject.Width / 2);
-                endingY = draggedObject.Location.Y + (draggedObject.Height / 2);
+                if (origin.Equals(draggedObject.Tag))
+                {
+                    startingX = draggedObject.Location.X + (draggedObject.Width / 2);
+                    startingY = draggedObject.Location.Y + (draggedObject.Height / 2);
+                }
+                else if (destination.Equals(draggedObject.Tag))
+                {
+                    endingX = draggedObject.Location.X + (draggedObject.Width / 2);
+                    endingY = draggedObject.Location.Y + (draggedObject.Height / 2);
+                }
             }
         }
 

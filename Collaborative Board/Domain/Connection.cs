@@ -23,14 +23,14 @@ namespace Domain
                 {
                     string errorMessage = string.Format(CultureInfo.CurrentCulture,
                         ErrorMessages.NameIsInvalid, value);
-                    throw new AssociationException(errorMessage);
+                    throw new ConnectionException(errorMessage);
                 }
             }
         }
 
         private bool IsValidAssociationName(string value)
         {
-            return Utilities.ContainsLettersOrSpacesOnly(value);
+            return Utilities.ContainsLettersDigitsOrSpacesOnly(value);
         }
 
         public virtual string Description { get; set; }
@@ -68,7 +68,7 @@ namespace Domain
             }
             else
             {
-                throw new AssociationException(ErrorMessages.AssociationElementIsInvalid);
+                throw new ConnectionException(ErrorMessages.AssociationElementIsInvalid);
             }
         }
 

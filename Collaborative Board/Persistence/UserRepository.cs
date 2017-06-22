@@ -207,14 +207,5 @@ namespace Persistence
                 context.Entry(someUser).Collection(u => u.AssociatedTeams).Load();
             }
         }
-
-        internal static void LoadCreatedComments(User someUser)
-        {
-            using (var context = new BoardContext())
-            {
-                EntityFrameworkUtilities<User>.AttachIfIsValid(context, someUser);
-                context.Entry(someUser).Collection(t => t.CommentsCreated).Load();
-            }
-        }
     }
 }

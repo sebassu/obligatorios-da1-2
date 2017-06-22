@@ -25,11 +25,11 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void CommentForTestingPurposesTest()
         {
-            Assert.AreEqual(User.InstanceForTestingPurposes(),
-                testingComment.Creator);
+            Assert.AreEqual(User.InstanceForTestingPurposes().Email,
+                testingComment.CreatorEmail);
             Assert.AreEqual("Comentario inválido.", testingComment.Text);
             Assert.IsFalse(testingComment.IsResolved);
-            Assert.IsNull(testingComment.Resolver);
+            Assert.IsNull(testingComment.ResolverEmail);
             Assert.IsNotNull(testingComment.AssociatedElement);
         }
 
@@ -40,7 +40,7 @@ namespace UnitTests.DomainTests
             User creator = User.InstanceForTestingPurposes();
             testingComment = Comment.CreatorElementText(creator,
                 testingElement, someText);
-            Assert.AreEqual(creator, testingComment.Creator);
+            Assert.AreEqual(creator.Email, testingComment.CreatorEmail);
             Assert.AreEqual(someText, testingComment.Text);
             Assert.AreEqual(testingElement, testingComment.AssociatedElement);
             Assert.AreEqual(testingElement.Container,
@@ -56,7 +56,7 @@ namespace UnitTests.DomainTests
                 "ravenna@simuladores.com", DateTime.Today, "contraseñaVálida123");
             testingComment = Comment.CreatorElementText(creator,
                 testingElement, someText);
-            Assert.AreEqual(creator, testingComment.Creator);
+            Assert.AreEqual(creator.Email, testingComment.CreatorEmail);
             Assert.AreEqual(someText, testingComment.Text);
             Assert.AreEqual(testingElement.Container,
                 testingComment.AssociatedWhiteboard);
@@ -148,8 +148,7 @@ namespace UnitTests.DomainTests
             testingComment.Resolve(aUser);
             Assert.IsTrue(testingComment.IsResolved);
             Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate.Date);
-            Assert.AreEqual(testingComment.Resolver, aUser);
-            CollectionAssert.Contains(aUser.CommentsResolved.ToList(), testingComment);
+            Assert.AreEqual(aUser.Email, testingComment.ResolverEmail);
         }
 
         [TestMethod]
@@ -160,8 +159,7 @@ namespace UnitTests.DomainTests
             testingComment.Resolve(aUser);
             Assert.IsTrue(testingComment.IsResolved);
             Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate.Date);
-            Assert.AreEqual(testingComment.Resolver, aUser);
-            CollectionAssert.Contains(aUser.CommentsResolved.ToList(), testingComment);
+            Assert.AreEqual(aUser.Email, testingComment.ResolverEmail);
         }
 
         [TestMethod]
@@ -179,8 +177,7 @@ namespace UnitTests.DomainTests
             testingComment.Resolve(aUser);
             Assert.IsTrue(testingComment.IsResolved);
             Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate.Date);
-            Assert.AreEqual(testingComment.Resolver, aUser);
-            CollectionAssert.Contains(aUser.CommentsResolved.ToList(), testingComment);
+            Assert.AreEqual(aUser.Email, testingComment.ResolverEmail);
             testingComment.Resolve(aUser);
         }
 
@@ -192,8 +189,7 @@ namespace UnitTests.DomainTests
             testingComment.Resolve(aUser);
             Assert.IsTrue(testingComment.IsResolved);
             Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate.Date);
-            Assert.AreEqual(testingComment.Resolver, aUser);
-            CollectionAssert.Contains(aUser.CommentsResolved.ToList(), testingComment);
+            Assert.AreEqual(aUser.Email, testingComment.ResolverEmail);
             User differentUser = User.CreateNewCollaborator("Mario", "Santos",
                 "santos@simuladores.com", DateTime.Today, "contraseñaVálida123");
             testingComment.Resolve(differentUser);

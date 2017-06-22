@@ -140,10 +140,7 @@ namespace Domain
             }
         }
 
-        public ElementWhiteboard()
-        {
-            Container = Whiteboard.InstanceForTestingPurposes();
-        }
+        protected ElementWhiteboard() { }
 
         protected ElementWhiteboard(Whiteboard container)
         {

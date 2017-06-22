@@ -39,10 +39,13 @@ namespace Domain
 
         internal static TextBoxWhiteboard InstanceForTestingPurposes()
         {
-            return new TextBoxWhiteboard();
+            return new TextBoxWhiteboard()
+            {
+                Container = Whiteboard.InstanceForTestingPurposes()
+            };
         }
 
-        public TextBoxWhiteboard() : base() { }
+        protected TextBoxWhiteboard() : base() { }
 
         public static TextBoxWhiteboard CreateWithContainer(Whiteboard container)
         {

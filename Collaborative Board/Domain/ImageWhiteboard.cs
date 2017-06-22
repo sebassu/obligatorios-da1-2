@@ -40,10 +40,13 @@ namespace Domain
 
         internal static ImageWhiteboard InstanceForTestingPurposes()
         {
-            return new ImageWhiteboard();
+            return new ImageWhiteboard()
+            {
+                Container = Whiteboard.InstanceForTestingPurposes()
+            };
         }
 
-        public ImageWhiteboard() : base() { }
+        protected ImageWhiteboard() : base() { }
 
         public static ImageWhiteboard CreateWithContainerSource(Whiteboard container,
             string imageLocation)

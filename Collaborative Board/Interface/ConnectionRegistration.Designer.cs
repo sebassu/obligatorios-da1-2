@@ -176,13 +176,13 @@
             this.rbnInverse.Text = "Inversa";
             this.rbnInverse.UseVisualStyleBackColor = true;
             // 
-            // AssociationRegistration
+            // ConnectionRegistration
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1803, 1066);
+            this.ClientSize = new System.Drawing.Size(1821, 1196);
             this.Controls.Add(this.gbxRadioButtons);
             this.Controls.Add(this.rtbDescription);
             this.Controls.Add(this.lblDescription);
@@ -192,8 +192,7 @@
             this.Controls.Add(this.lblAssociation);
             this.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(1835, 1154);
-            this.Name = "AssociationRegistration";
+            this.Name = "ConnectionRegistration";
             this.Text = "Agregar conexión";
             this.TopMost = true;
             this.gbxRadioButtons.ResumeLayout(false);

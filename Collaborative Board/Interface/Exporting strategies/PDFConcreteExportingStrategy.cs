@@ -4,6 +4,7 @@ using iTextSharp.text.pdf;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
 using System;
+using Domain;
 
 namespace GraphicInterface
 {
@@ -16,7 +17,8 @@ namespace GraphicInterface
         {
             try
             {
-                AttemptToGenerateDocument();
+                AttemptToGenerateDocument(".pdf",
+                "Archivos de texto|*.pdf|Todos los archivos|*.*", SavePDF);
             }
             catch (Exception exceptionCaught)
             {
@@ -24,10 +26,10 @@ namespace GraphicInterface
             }
         }
 
-        private void AttemptToGenerateDocument()
+        private void SavePDF(string fileName)
         {
             Document pdfDocument = new Document(PageSize.A4);
-            PdfWriter.GetInstance(pdfDocument, new FileStream(GeneratePathToSave() + ".pdf",
+            PdfWriter.GetInstance(pdfDocument, new FileStream(fileName,
                 FileMode.Create));
             pdfDocument.Open();
             Image imageToSave = GenerateImageForPDF(pdfDocument);
