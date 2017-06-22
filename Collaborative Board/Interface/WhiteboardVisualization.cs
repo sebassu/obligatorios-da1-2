@@ -243,7 +243,7 @@ namespace GraphicInterface
             {
                 if (!origin.Equals(someElement))
                 {
-					new ConnectionRegistration(origin, someElement, pnlWhiteboard).Show();
+					new ConnectionRegistration(origin, someElement, pnlWhiteboard).ShowDialog();
 					addAssociationItemsRemaining = 0;
                 }
                 else
