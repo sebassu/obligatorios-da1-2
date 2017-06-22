@@ -45,8 +45,7 @@ namespace UnitTests.DomainTests
             Assert.AreEqual("Descripción inválida.", testingWhiteboard.Description);
             Assert.AreEqual(int.MaxValue, testingWhiteboard.Width);
             Assert.AreEqual(int.MaxValue, testingWhiteboard.Height);
-            Assert.AreEqual(User.InstanceForTestingPurposes().Id,
-                testingWhiteboard.CreatorId);
+            Assert.AreEqual(1, testingWhiteboard.CreatorId);
             Assert.AreEqual(Team.InstanceForTestingPurposes(),
                 testingWhiteboard.OwnerTeam);
             Assert.AreEqual(testingWhiteboard.CreationDate, DateTime.Today);
@@ -442,9 +441,10 @@ namespace UnitTests.DomainTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(WhiteboardException))]
         public void WhiteboardUserCanRemoveNullUserTest()
         {
-            Assert.IsFalse(testingWhiteboard.UserCanRemove(null));
+            testingWhiteboard.UserCanRemove(null);
         }
     }
 }

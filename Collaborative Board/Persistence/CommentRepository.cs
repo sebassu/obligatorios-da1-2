@@ -14,7 +14,7 @@ namespace Persistence
                 using (BoardContext context = new BoardContext())
                 {
                     var elements = context.Comments;
-                    return elements.ToList();
+                    return elements.Include("AssociatedElement.Container").ToList();
                 }
             }
         }

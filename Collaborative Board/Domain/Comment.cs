@@ -4,6 +4,8 @@ namespace Domain
 {
     public class Comment
     {
+        public static readonly DateTime DefaultUnresolvedDate = new DateTime(1753, 1, 1);
+
         public virtual int Id { get; set; }
 
         private string text;
@@ -35,7 +37,7 @@ namespace Domain
         }
 
         // Minimum value for database DateTime.
-        public virtual DateTime ResolutionDate { get; set; } = new DateTime(1753, 1, 1);
+        public virtual DateTime ResolutionDate { get; set; } = DefaultUnresolvedDate;
 
         public virtual string ResolverEmail { get; set; }
 
@@ -76,7 +78,7 @@ namespace Domain
         {
             get
             {
-                bool resolutionDateWasSet = ResolutionDate != new DateTime(1753, 1, 1);
+                bool resolutionDateWasSet = ResolutionDate != DefaultUnresolvedDate;
                 return resolutionDateWasSet;
             }
         }

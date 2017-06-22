@@ -85,12 +85,11 @@ namespace UnitTests.PersistenceTests
             }
 
             [TestMethod]
+            [ExpectedException(typeof(RepositoryException))]
             public void CRepositoryAddNewCommentAsRandomUserValidTest()
             {
                 ChangeActiveUser("gandalf@istari.com", "YouShallNotPass");
                 Comment addedComment = CommentRepository.AddNewComment(testingElement, "does not sleep.");
-                Assert.AreEqual(gandalf.Email, addedComment.CreatorEmail);
-                CollectionAssert.Contains(testingElement.Comments.ToList(), addedComment);
             }
 
             [TestMethod]
@@ -111,12 +110,12 @@ namespace UnitTests.PersistenceTests
             }
 
             [TestMethod]
-            public void CRepositoryResolveCommentAsRandomUserValidTest()
+            [ExpectedException(typeof(RepositoryException))]
+            public void CRepositoryResolveCommentAsRandomUserInvalidTest()
             {
                 ChangeActiveUser("gandalf@istari.com", "YouShallNotPass");
                 Comment addedComment = CommentRepository.AddNewComment(testingElement, "to Isengard!");
                 CommentRepository.ResolveComment(addedComment);
-                Assert.AreEqual(gandalf.Email, addedComment.ResolverEmail);
             }
         }
     }

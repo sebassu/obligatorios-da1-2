@@ -160,8 +160,15 @@ namespace Domain
 
         internal bool UserCanRemove(User someUser)
         {
-            return Utilities.HasAdministrationPrivileges(someUser)
-                || CreatorId.Equals(someUser.Id);
+            if (Utilities.IsNotNull(someUser))
+            {
+                return Utilities.HasAdministrationPrivileges(someUser)
+                    || CreatorId == (someUser.Id);
+            }
+            else
+            {
+                throw new WhiteboardException(ErrorMessages.NullUser);
+            }
         }
 
         internal static Whiteboard InstanceForTestingPurposes()

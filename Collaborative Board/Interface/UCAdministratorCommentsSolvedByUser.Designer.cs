@@ -73,7 +73,7 @@
             this.btnHome.Size = new System.Drawing.Size(80, 62);
             this.btnHome.TabIndex = 0;
             this.btnHome.UseVisualStyleBackColor = true;
-            this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
+            this.btnHome.Click += new System.EventHandler(this.BtnHome_Click);
             this.btnHome.MouseEnter += new System.EventHandler(this.BtnHome_MouseEnter);
             this.btnHome.MouseLeave += new System.EventHandler(this.BtnHome_MouseLeave);
             // 

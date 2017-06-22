@@ -34,7 +34,7 @@ namespace GraphicInterface
             string nameToSet = txtName.Text;
             string descriptionToSet = rtbDescription.Text;
             int direction = GetDirectionFromRadioButtons();
-            ConnectionRepository.AddNewAssociation(nameToSet, descriptionToSet,
+            ConnectionRepository.AddNewConnection(nameToSet, descriptionToSet,
                 origin, destination, direction);
         }
 

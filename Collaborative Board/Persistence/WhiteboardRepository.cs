@@ -3,6 +3,7 @@ using System.Data;
 using System.Linq;
 using System.Globalization;
 using System.Collections.Generic;
+using System;
 
 namespace Persistence
 {
@@ -36,13 +37,12 @@ namespace Persistence
             }
         }
 
-        private static Whiteboard InsertNewWhiteboard(string name, string description, Team ownerTeam,
-            int width, int height, BoardContext context)
+        private static Whiteboard InsertNewWhiteboard(string name, string description, Team ownerTeam, int width, int height, BoardContext context)
         {
             User creator = Session.ActiveUser();
             TeamRepository.LoadMembers(ownerTeam);
             TeamRepository.LoadCreatedWhiteboards(ownerTeam);
-            EntityFrameworkUtilities<User>.AttachIfIsValid(context, creator);
+            //EntityFrameworkUtilities<User>.AttachIfIsValid(context, creator);
             EntityFrameworkUtilities<Team>.AttachIfIsValid(context, ownerTeam);
             Whiteboard whiteboardToAdd = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
                 name, description, ownerTeam, width, height);

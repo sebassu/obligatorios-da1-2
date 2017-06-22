@@ -23,6 +23,7 @@ namespace GraphicInterface
 
         private void LoadUserComboboxes()
         {
+
             foreach (var user in UserRepository.Elements)
             {
                 cmbCreatorUser.Items.Add(user);
@@ -59,7 +60,9 @@ namespace GraphicInterface
                 foreach (var comment in commentsToShow)
                 {
                     var creationDateToShow = Utilities.GetDateToShow(comment.CreationDate);
-                    var resolutionDateToShow = Utilities.GetDateToShow(comment.ResolutionDate);
+                    var resolutionDate = comment.ResolutionDate;
+                    var resolutionDateToShow = resolutionDate == Comment.DefaultUnresolvedDate ? "N/A" :
+                        Utilities.GetDateToShow(resolutionDate);
                     var creatorToShow = comment.CreatorEmail;
                     var resolverToShow = comment.ResolverEmail;
                     var whiteboardToShow = comment.AssociatedWhiteboard.ToString();
@@ -99,8 +102,8 @@ namespace GraphicInterface
         {
             User selectedCreator = cmbCreatorUser.SelectedItem as User;
             User selectedResolver = cmbSolverUser.SelectedItem as User;
-            return selectedCreator.Equals(c.CreatorEmail) &&
-                selectedResolver.Equals(c.ResolverEmail);
+            return selectedCreator.Email.Equals(c.CreatorEmail) &&
+                selectedResolver.Email.Equals(c.ResolverEmail);
         }
 
         private bool FallsBetweenDates(Comment c)
@@ -111,7 +114,7 @@ namespace GraphicInterface
                 c.ResolutionDate.Date <= dtpCommentsSolvedUntil.Value.Date;
         }
 
-        private void btnHome_Click(object sender, EventArgs e)
+        private void BtnHome_Click(object sender, EventArgs e)
         {
             InterfaceUtilities.GoToHome(systemPanel);
         }
