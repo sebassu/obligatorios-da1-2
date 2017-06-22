@@ -5,13 +5,13 @@ using System;
 
 namespace GraphicInterface
 {
-    public partial class AssociationRegistration : Form
+    public partial class ConnectionRegistration : Form
     {
         private ElementWhiteboard origin;
         private ElementWhiteboard destination;
         private Panel whiteboardPanel;
 
-        public AssociationRegistration(ElementWhiteboard someOrigin,
+        public ConnectionRegistration(ElementWhiteboard someOrigin,
             ElementWhiteboard someDestination, Panel somePanel)
         {
             InitializeComponent();

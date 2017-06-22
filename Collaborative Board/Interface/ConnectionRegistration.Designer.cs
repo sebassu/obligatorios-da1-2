@@ -1,6 +1,6 @@
 ﻿namespace GraphicInterface
 {
-    partial class AssociationRegistration
+    partial class ConnectionRegistration
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AssociationRegistration));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConnectionRegistration));
             this.lblAssociation = new System.Windows.Forms.Label();
             this.btnFinalize = new System.Windows.Forms.Button();
             this.lblFirstName = new System.Windows.Forms.Label();
