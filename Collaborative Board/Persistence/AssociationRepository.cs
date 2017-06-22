@@ -20,8 +20,8 @@ namespace Persistence
             }
         }
 
-        public static Association AddNewAssociation(ElementWhiteboard origin,
-            ElementWhiteboard destination)
+        public static Association AddNewAssociation(string name, string description, ElementWhiteboard origin,
+            ElementWhiteboard destination, int direction)
         {
             using (var context = new BoardContext())
             {
@@ -33,7 +33,8 @@ namespace Persistence
                 }
                 else
                 {
-                    Association associationToAdd = Association.OriginDestination(origin, destination);
+                    Association associationToAdd = Association.NameDescriptionOriginDestinationDirection(name,
+                        description, origin, destination, direction);
                     EntityFrameworkUtilities<ElementWhiteboard>.AttachIfIsValid(context, origin);
                     EntityFrameworkUtilities<ElementWhiteboard>.AttachIfIsValid(context, destination);
                     context.Associations.Add(associationToAdd);
