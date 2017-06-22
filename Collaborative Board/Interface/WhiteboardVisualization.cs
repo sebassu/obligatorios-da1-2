@@ -10,7 +10,8 @@ namespace GraphicInterface
 {
     public partial class WhiteboardVisualization : Form
     {
-        internal static List<Domain.Association> globalAssociations;
+        private const int lineWidthCoeficient = 300;
+        internal static List<Domain.Connection> globalAssociations;
 
         private Whiteboard whiteboardShown;
         private int addAssociationItemsRemaining;
@@ -30,12 +31,13 @@ namespace GraphicInterface
             bool mustRepaint = ControlMovingOrResizingHandler.MoveControl(sender, e);
             if (mustRepaint)
             {
-                RepaintWhiteboard(pnlWhiteboard);
+                pnlWhiteboard.Invalidate();
             }
         }
 
-        private void RepaintWhiteboard(Panel whiteboardPanel)
+        public static void DeepRepaint(Panel whiteboardPanel)
         {
+            globalAssociations = ConnectionRepository.Elements;
             whiteboardPanel.Invalidate();
         }
 
@@ -46,7 +48,7 @@ namespace GraphicInterface
             pnlWhiteboard.Width = someWhiteboard.Width;
             pnlWhiteboard.Height = someWhiteboard.Height;
             Text = "Pizarrón: " + someWhiteboard.ToString();
-            globalAssociations = AssociationRepository.Elements;
+            globalAssociations = ConnectionRepository.Elements;
             InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(LoadWhiteboardComponentsOnInteface);
         }
 
@@ -239,11 +241,8 @@ namespace GraphicInterface
             }
             else if (addAssociationItemsRemaining == 1)
             {
-                Association associationToAdd = AssociationRepository.AddNewAssociation("Wololo", "Wololo",
-                    origin, someElement, 0);
-                globalAssociations.Add(associationToAdd);
+                new AssociationRegistration(origin, someElement, pnlWhiteboard).Show();
                 addAssociationItemsRemaining = 0;
-                pnlWhiteboard.Invalidate();
             }
         }
 
@@ -252,14 +251,16 @@ namespace GraphicInterface
             if (removeAssociationItemsRemaining == 2)
             {
                 origin = someElement;
-                addAssociationItemsRemaining -= 1;
+                removeAssociationItemsRemaining -= 1;
             }
             else if (removeAssociationItemsRemaining == 1)
             {
-                AssociationRepository.RemoveAssociation(origin, someElement);
-                globalAssociations = AssociationRepository.Elements;
-                addAssociationItemsRemaining = 0;
-                MessageBox.Show("Wololo");
+                Action deleteAction = delegate { ConnectionRepository.RemoveAssociation(origin, someElement); };
+                Action inCaseOfErrors = delegate { InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(deleteAction); };
+                InterfaceUtilities.AskForDeletionConfirmationAndExecute(inCaseOfErrors);
+                globalAssociations = ConnectionRepository.Elements;
+                removeAssociationItemsRemaining = 0;
+                pnlWhiteboard.Invalidate();
             }
         }
 
@@ -332,15 +333,12 @@ namespace GraphicInterface
 
         public void PnlWhiteboard_Paint(object sender, PaintEventArgs e)
         {
-            int width = (pnlWhiteboard.Width + pnlWhiteboard.Height) / 500;
+            int width = (pnlWhiteboard.Width + pnlWhiteboard.Height) / lineWidthCoeficient;
             e.Graphics.Clear(Color.LightGray);
             Pen line = new Pen(Color.Black, width);
-            Pen arrow = new Pen(Color.Black, width)
-            {
-                EndCap = LineCap.ArrowAnchor
-            };
             foreach (var association in globalAssociations)
             {
+                Pen arrow = GetCorrespondingPenForArrow(association, width);
                 ElementWhiteboard origin = association.Origin;
                 ElementWhiteboard destination = association.Destination;
                 SetLinesOriginAndEndingPoints(origin, destination, out int startingX,
@@ -349,6 +347,29 @@ namespace GraphicInterface
                 e.Graphics.DrawLine(line, startingX, startingY, endingX, endingY);
                 e.Graphics.Flush();
             }
+        }
+
+        private static Pen GetCorrespondingPenForArrow(Connection anAssociation, int width)
+        {
+            switch (anAssociation.ConectionDirection)
+            {
+                case 0:
+                    return new Pen(Color.Black, width)
+                    {
+                        EndCap = LineCap.ArrowAnchor
+                    };
+                case 1:
+                    return new Pen(Color.Black, width)
+                    {
+                        StartCap = LineCap.ArrowAnchor
+                    };
+                case 2:
+                    return new Pen(Color.Black, width)
+                    {
+                        EndCap = LineCap.DiamondAnchor
+                    };
+            }
+            return new Pen(Color.Black, width);
         }
 
         private static void SetLinesOriginAndEndingPoints(ElementWhiteboard origin,
