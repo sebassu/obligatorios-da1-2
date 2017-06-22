@@ -18,7 +18,7 @@ namespace GraphicInterface
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new LogOn());
             }
-            catch (DataException exception)
+            catch (SystemException exception)
             {
                 InterfaceUtilities.ShowError("Ha ocurrido un error al intentar realizar una acción " +
                     "en la base de datos. La aplicación se cerrará. Detalles: " + exception.Message,
