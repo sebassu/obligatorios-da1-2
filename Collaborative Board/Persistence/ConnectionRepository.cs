@@ -5,10 +5,10 @@ using System.Collections.Generic;
 
 namespace Persistence
 {
-    public class AssociationRepository
+    public class ConnectionRepository
     {
 
-        public static List<Association> Elements
+        public static List<Connection> Elements
         {
             get
             {
@@ -20,20 +20,21 @@ namespace Persistence
             }
         }
 
-        public static Association AddNewAssociation(string name, string description, ElementWhiteboard origin,
+        public static Connection AddNewAssociation(string name, string description, ElementWhiteboard origin,
             ElementWhiteboard destination, int direction)
         {
             using (var context = new BoardContext())
             {
-                bool associationAlreadyExists = context.Associations.Any(a => a.Origin.Id == origin.Id
-                    && a.Destination.Id == destination.Id);
+                bool associationAlreadyExists = context.Associations.Any(a => (a.Origin.Id == origin.Id
+                    && a.Destination.Id == destination.Id) || (a.Destination.Id == origin.Id
+                    && a.Origin.Id == destination.Id));
                 if (associationAlreadyExists)
                 {
                     throw new RepositoryException(ErrorMessages.AssociationAlreadyExists);
                 }
                 else
                 {
-                    Association associationToAdd = Association.NameDescriptionOriginDestinationDirection(name,
+                    Connection associationToAdd = Connection.NameDescriptionOriginDestinationDirection(name,
                         description, origin, destination, direction);
                     EntityFrameworkUtilities<ElementWhiteboard>.AttachIfIsValid(context, origin);
                     EntityFrameworkUtilities<ElementWhiteboard>.AttachIfIsValid(context, destination);
@@ -62,8 +63,9 @@ namespace Persistence
 
         private static void PerformRemove(ElementWhiteboard origin, ElementWhiteboard destination, BoardContext context)
         {
-            Association associationToRemove = context.Associations.Single(a => a.Origin.Id == origin.Id
-                && a.Destination.Id == destination.Id);
+            Connection associationToRemove = context.Associations.Single(a => (a.Origin.Id == origin.Id
+                    && a.Destination.Id == destination.Id) || (a.Destination.Id == origin.Id
+                    && a.Origin.Id == destination.Id));
             context.Associations.Remove(associationToRemove);
             context.SaveChanges();
         }

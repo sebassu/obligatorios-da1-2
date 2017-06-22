@@ -3,9 +3,9 @@ using System.Globalization;
 
 namespace Domain
 {
-    public class Association
+    public class Connection
     {
-        public enum Directions { DIRECT, INVERSE, BIDIRECTIONAL, NO_DIRECTION };
+        public enum Direction { DIRECT, INVERSE, BIDIRECTIONAL, NO_DIRECTION };
 
         public virtual int Id { get; set; }
 
@@ -30,55 +30,36 @@ namespace Domain
 
         private bool IsValidAssociationName(string value)
         {
-            throw new NotImplementedException();
+            return Utilities.ContainsLettersOrSpacesOnly(value);
         }
 
-        private string description;
-        public virtual string Description
-        {
-            get { return description; }
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    throw new AssociationException(ErrorMessages.EmptyDescription);
-                }
-                else
-                {
-                    description = value;
-                }
-            }
-        }
+        public virtual string Description { get; set; }
 
         public virtual ElementWhiteboard Origin { get; set; }
         public virtual ElementWhiteboard Destination { get; set; }
 
-        private int direction;
-        public virtual int Direction
+        private int connectionDirection;
+        public virtual int ConectionDirection
         {
-            get { return direction; }
+            get { return connectionDirection; }
             set
             {
-                if (Enum.IsDefined(typeof(Directions), value))
+                if (Enum.IsDefined(typeof(Direction), value))
                 {
-                    direction = value;
-                }
-                else
-                {
-                    throw new AssociationException(ErrorMessages.InvalidDirection);
+                    connectionDirection = value;
                 }
             }
         }
 
-        protected Association() { }
+        protected Connection() { }
 
-        public static Association NameDescriptionOriginDestinationDirection(string name, string description,
+        public static Connection NameDescriptionOriginDestinationDirection(string name, string description,
             ElementWhiteboard origin, ElementWhiteboard destination, int direction)
         {
-            return new Association(name, description, origin, destination, direction);
+            return new Connection(name, description, origin, destination, direction);
         }
 
-        protected Association(string aName, string aDscription, ElementWhiteboard origin,
+        protected Connection(string aName, string aDscription, ElementWhiteboard origin,
             ElementWhiteboard destination, int someDirection)
         {
             if (ElementsAreValidAsociationMembers(origin, destination))
@@ -98,6 +79,7 @@ namespace Domain
             Destination = destination;
             Name = aName;
             Description = aDscription;
+            ConectionDirection = someDirection;
         }
 
         private bool ElementsAreValidAsociationMembers(ElementWhiteboard origin, ElementWhiteboard destination)
