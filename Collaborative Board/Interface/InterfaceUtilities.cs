@@ -1,7 +1,6 @@
-using Domain;
-using Exceptions;
-using Persistence;
 using System;
+using Domain;
+using Persistence;
 using System.Windows.Forms;
 
 namespace GraphicInterface
@@ -14,7 +13,7 @@ namespace GraphicInterface
             {
                 actionToExecute.Invoke();
             }
-            catch (BoardException exception)
+            catch (SystemException exception)
             {
                 ShowError(exception.Message, "Error");
             }
@@ -154,6 +153,34 @@ namespace GraphicInterface
             {
                 NotElementSelectedMessageBox();
             }
+        }
+
+        public static void UCScoreMenuToPanel(Panel systemPanel)
+        {
+            ChangeUserControl(new UCScoreMenu(systemPanel), systemPanel);
+        }
+
+        public static void UCAssignScoreToEventsToPanel(Panel systemPanel)
+        {
+            ScoringManager manager = ScoringManagerRepository.GetScores();
+            ChangeUserControl(new UCAssignScoreToEvents(systemPanel, manager), systemPanel);
+        }
+
+        public static void GoToHomeRespectiveHome(Panel systemPanel)
+        {
+            if (Session.HasAdministrationPrivileges())
+            {
+                ChangeUserControl(new UCAdministratorHome(systemPanel), systemPanel);
+            }
+            else
+            {
+                ChangeUserControl(new UCUserHome(systemPanel), systemPanel);
+            }
+        }
+
+        public static void UCTeamRankingToPanel(Panel systemPanel, Team oneTeam = null)
+        {
+            ChangeUserControl(new UCTeamRanking(systemPanel, oneTeam), systemPanel);
         }
     }
 }

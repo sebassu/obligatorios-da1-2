@@ -1,6 +1,5 @@
 ﻿using System;
 using Domain;
-using Exceptions;
 using System.Linq;
 using Persistence;
 using System.Diagnostics.CodeAnalysis;
@@ -12,96 +11,82 @@ namespace UnitTests.PersistenceTests
     [ExcludeFromCodeCoverage]
     public class WhiteboardRepositoryTests
     {
-        private static TeamRepository globalTeams;
-        private static WhiteboardRepository globalWhiteboards;
         private static Team testingOwnerTeam;
+        private static Team otherTeam;
+        private static User colpocorto;
 
         [ClassInitialize]
         public static void ClassSetup(TestContext context)
         {
-            ChangeActiveUser("santos@simuladores.com", "DisculpeFuegoTiene");
-            globalTeams = TeamRepository.GetInstance();
-            globalTeams.AddNewTeam("Brigada B",
-                "Para casos menores, más sencillos.", 4);
-        }
-
-        [TestInitialize]
-        public void TestSetup()
-        {
-            AttemptToResetTestingOwnerTeam();
+            UserRepository.InsertOriginalSystemAdministrator();
+            ChangeActiveUser("administrator@tf2.com", "Victory");
+            AddUserDataTest();
+            AddTeamDataTest();
             AddTestingWhiteboardsAsRegularUser();
-            ChangeActiveUser("santos@simuladores.com", "DisculpeFuegoTiene");
         }
 
-        private static void AttemptToResetTestingOwnerTeam()
+        private static void AddUserDataTest()
         {
-            ResetTestingOwnerTeam();
+            UserRepository.AddNewAdministrator("Johann Sebastian", "Mastropiero",
+                "mastropiero@lesluthiers.com", DateTime.Today, "Condesa");
+            colpocorto = UserRepository.AddNewUser("Giovanni", "Colpocorto",
+                "colpocorto@lesluthiers.com", DateTime.Today, "TrepoTemoTiemblo");
+            UserRepository.AddNewUser("Warren", "Sánchez",
+                "sanchez@sendero.com", DateTime.Today, "YoQueSe");
         }
 
-        private static void ResetTestingOwnerTeam()
+        public static void AddTeamDataTest()
         {
-            if (Utilities.IsNotNull(testingOwnerTeam))
-            {
-                RemoveAndUnsetTestingOwnerTeam();
-            }
-            AddNewInstanceOfRemovedTeam();
+            ChangeActiveUser("mastropiero@lesluthiers.com", "Condesa");
+            AddNewTestingOwnerTeamInstance();
+            otherTeam = TeamRepository.AddNewTeam("Compositores",
+                "Gente con alta inspiración musical.", 5);
         }
 
-        private static void RemoveAndUnsetTestingOwnerTeam()
+        private static void AddNewTestingOwnerTeamInstance()
         {
-            globalTeams.Remove(testingOwnerTeam);
-            testingOwnerTeam = null;
-        }
-
-        private static void AddNewInstanceOfRemovedTeam()
-        {
-            ChangeActiveUser("santos@simuladores.com", "DisculpeFuegoTiene");
-            User userToAdd = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
-                "ravenna@simuladores.com", DateTime.Today, "HablarUnasPalabritas");
-            string descriptionToSet = "Un grupo de personas que resuelve todo tipo de problemas.";
-            testingOwnerTeam = globalTeams.AddNewTeam("Los Simuladores", descriptionToSet, 4);
-            globalTeams.AddMemberToTeam(testingOwnerTeam, userToAdd);
+            string descriptionToSet = "Grupo de seguidores de Johann Sebastian Mastropiero.";
+            testingOwnerTeam = TeamRepository.AddNewTeam("Les Freres Luthiers", descriptionToSet, 5);
+            TeamRepository.AddMemberToTeam(testingOwnerTeam, colpocorto);
         }
 
         private static void AddTestingWhiteboardsAsRegularUser()
         {
-            ChangeActiveUser("ravenna@simuladores.com", "HablarUnasPalabritas");
-            globalWhiteboards = WhiteboardRepository.GetInstance();
-            globalWhiteboards.AddNewWhiteboard("Whiteboard",
+            ChangeActiveUser("colpocorto@lesluthiers.com", "TrepoTemoTiemblo");
+            WhiteboardRepository.AddNewWhiteboard("Whiteboard",
                 "Valid description.", testingOwnerTeam, 240, 240);
-            globalWhiteboards.AddNewWhiteboard("Another whiteboard",
+            WhiteboardRepository.AddNewWhiteboard("Another whiteboard",
                 "Another valid description.", testingOwnerTeam, 121, 323);
         }
+
         private static void ChangeActiveUser(string email, string password)
         {
             Session.End();
             Session.Start(email, password);
         }
 
-        [TestMethod]
-        public void URepositoryGetInstanceTest()
+        [TestInitialize]
+        public void TestSetup()
         {
-            globalWhiteboards = WhiteboardRepository.GetInstance();
-            WhiteboardRepository anotherWhiteboardRepository = WhiteboardRepository.GetInstance();
-            Assert.AreSame(globalWhiteboards, anotherWhiteboardRepository);
+            ChangeActiveUser("mastropiero@lesluthiers.com", "Condesa");
         }
 
         [TestMethod]
         public void WRepositoryAddNewWhiteboardValidTest()
         {
-            Whiteboard addedWhiteboard = globalWhiteboards.AddNewWhiteboard("Pizarrón",
+            Whiteboard addedWhiteboard = WhiteboardRepository.AddNewWhiteboard("Pizarrón 1",
                 "Una descripción válida.", testingOwnerTeam, 240, 240);
-            CollectionAssert.Contains(globalWhiteboards.Elements.ToList(),
+            CollectionAssert.Contains(WhiteboardRepository.Elements.ToList(),
                 addedWhiteboard);
         }
 
         [TestMethod]
         public void WRepositoryAddNewWhiteboardNonAdministratorValidTest()
         {
-            ChangeActiveUser("ravenna@simuladores.com", "HablarUnasPalabritas");
-            Whiteboard addedWhiteboard = globalWhiteboards.AddNewWhiteboard("Some whiteboard",
+            ChangeActiveUser("colpocorto@lesluthiers.com", "TrepoTemoTiemblo");
+            Whiteboard addedWhiteboard = WhiteboardRepository.AddNewWhiteboard("Some whiteboard",
                 "Some valid description", testingOwnerTeam, 240, 240);
-            CollectionAssert.Contains(globalWhiteboards.Elements.ToList(),
+            CollectionAssert.Contains(WhiteboardRepository.Elements.ToList(),
                 addedWhiteboard);
         }
 
@@ -109,7 +94,7 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(WhiteboardException))]
         public void WRepositoryAddNewWhiteboardInvalidNameTest()
         {
-            globalWhiteboards.AddNewWhiteboard("84%!^#^ ! /*/*^#",
+            WhiteboardRepository.AddNewWhiteboard("84%!^#^ ! /*//*^#",
                 "Una descripción válida.", testingOwnerTeam, 240, 240);
         }
 
@@ -117,7 +102,7 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(WhiteboardException))]
         public void WRepositoryAddNewWhiteboardInvalidDescriptionTest()
         {
-            globalWhiteboards.AddNewWhiteboard("Pizarrón", "  \n \t\t\n ",
+            WhiteboardRepository.AddNewWhiteboard("Pizarrón", "  \n \t\t\n ",
                 testingOwnerTeam, 240, 240);
         }
 
@@ -125,7 +110,7 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(WhiteboardException))]
         public void WRepositoryAddNewWhiteboardInvalidWidthTest()
         {
-            globalWhiteboards.AddNewWhiteboard("Pizarrón", "Una descripción válida.",
+            WhiteboardRepository.AddNewWhiteboard("Pizarrón", "Una descripción válida.",
                 testingOwnerTeam, -2112, 240);
         }
 
@@ -133,7 +118,7 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(WhiteboardException))]
         public void WRepositoryAddNewWhiteboardInvalidHeightTest()
         {
-            globalWhiteboards.AddNewWhiteboard("Pizarrón", "Una descripción válida.",
+            WhiteboardRepository.AddNewWhiteboard("Pizarrón", "Una descripción válida.",
                 testingOwnerTeam, 240, -300);
         }
 
@@ -142,17 +127,17 @@ namespace UnitTests.PersistenceTests
         public void WRepositoryAddNewWhiteboardPrivilegedCreatorNotInTeamInvalidTest()
         {
             ChangeActiveUser("administrator@tf2.com", "Victory");
-            globalWhiteboards.AddNewWhiteboard("Pizarrón",
+            WhiteboardRepository.AddNewWhiteboard("Pizarrón",
                 "Una descripción válida.", testingOwnerTeam, 240, 240);
         }
 
         [TestMethod]
         public void WRepositoryRemoveWhiteboardValidTest()
         {
-            Whiteboard whiteboardToVerify = globalWhiteboards.AddNewWhiteboard("Pizarrón",
+            Whiteboard whiteboardToVerify = WhiteboardRepository.AddNewWhiteboard("Pizarrón 42",
                 "Una descripción válida.", testingOwnerTeam, 240, 240);
-            globalWhiteboards.Remove(whiteboardToVerify);
-            CollectionAssert.DoesNotContain(globalWhiteboards.Elements.ToList(),
+            WhiteboardRepository.Remove(whiteboardToVerify);
+            CollectionAssert.DoesNotContain(WhiteboardRepository.Elements.ToList(),
                 whiteboardToVerify);
         }
 
@@ -161,32 +146,33 @@ namespace UnitTests.PersistenceTests
         public void WRepositoryRemoveUnregisteredWhiteboardInvalidTest()
         {
             Whiteboard whiteboardToFailRemoving = Whiteboard.InstanceForTestingPurposes();
-            globalWhiteboards.Remove(whiteboardToFailRemoving);
+            WhiteboardRepository.Remove(whiteboardToFailRemoving);
         }
 
         [TestMethod]
         [ExpectedException(typeof(RepositoryException))]
         public void WRepositoryRemoveNullUserInvalidTest()
         {
-            globalWhiteboards.Remove(null);
+            WhiteboardRepository.Remove(null);
         }
 
         [TestMethod]
         [ExpectedException(typeof(RepositoryException))]
         public void URepositoryRemoveUserNotInDirectoryInvalidTest()
         {
-            Whiteboard NotAddedWhiteboard = Whiteboard.InstanceForTestingPurposes();
-            globalWhiteboards.Remove(NotAddedWhiteboard);
+            Whiteboard notAddedWhiteboard = Whiteboard.InstanceForTestingPurposes();
+            WhiteboardRepository.Remove(notAddedWhiteboard);
         }
 
         [TestMethod]
         public void WRepositoryRemoveRemovedFromOwnerTeamTest()
         {
-            Whiteboard whiteboardToVerify = globalWhiteboards.AddNewWhiteboard("Pizarrón",
+            Whiteboard whiteboardToVerify = WhiteboardRepository.AddNewWhiteboard("Pizarra",
                 "Una descripción válida.", testingOwnerTeam, 240, 240);
+            TeamRepository.LoadCreatedWhiteboards(testingOwnerTeam);
             CollectionAssert.Contains(testingOwnerTeam.CreatedWhiteboards.ToList(),
                 whiteboardToVerify);
-            globalWhiteboards.Remove(whiteboardToVerify);
+            WhiteboardRepository.Remove(whiteboardToVerify);
             CollectionAssert.DoesNotContain(testingOwnerTeam.CreatedWhiteboards.ToList(),
                 whiteboardToVerify);
         }
@@ -194,24 +180,24 @@ namespace UnitTests.PersistenceTests
         [TestMethod]
         public void TWRepositoriesRemoveAllCreatedWhiteboardsOnTeamDeletionTest()
         {
-            globalWhiteboards = WhiteboardRepository.GetInstance();
-            Whiteboard whiteboardToVerify = globalWhiteboards.AddNewWhiteboard("Pizarrón",
-                "Una descripción válida.", testingOwnerTeam, 240, 240);
-            CollectionAssert.Contains(globalWhiteboards.Elements.ToList(),
+            Team otherOwnerTeam = TeamRepository.AddNewTeam("New Team",
+                "Ve Make good team", 45);
+            Whiteboard whiteboardToVerify = WhiteboardRepository.AddNewWhiteboard("Pizarra 2112",
+                "Una descripción válida.", otherOwnerTeam, 240, 240);
+            CollectionAssert.Contains(WhiteboardRepository.Elements.ToList(),
                 whiteboardToVerify);
-            RemoveAndUnsetTestingOwnerTeam();
-            CollectionAssert.DoesNotContain(globalWhiteboards.Elements.ToList(),
+            TeamRepository.Remove(otherOwnerTeam);
+            CollectionAssert.DoesNotContain(WhiteboardRepository.Elements.ToList(),
                 whiteboardToVerify);
         }
-
 
         [TestMethod]
         public void WRepositoryModifyWhiteboardValidTest()
         {
-            Whiteboard whiteboardToVerify = globalWhiteboards.Elements.First();
-            globalWhiteboards.ModifyWhiteboard(whiteboardToVerify, "Pizarrón",
+            Whiteboard whiteboardToVerify = WhiteboardRepository.Elements.First();
+            WhiteboardRepository.ModifyWhiteboard(whiteboardToVerify, "Maria Angélica",
                 "Una descripción válida.", 500, 700);
-            Assert.AreEqual("Pizarrón", whiteboardToVerify.Name);
+            Assert.AreEqual("Maria Angélica", whiteboardToVerify.Name);
             Assert.AreEqual("Una descripción válida.", whiteboardToVerify.Description);
             Assert.AreEqual(500, whiteboardToVerify.Width);
             Assert.AreEqual(700, whiteboardToVerify.Height);
@@ -220,12 +206,12 @@ namespace UnitTests.PersistenceTests
         [TestMethod]
         public void WRepositoryModifyWhiteboardSetSameDataValidTest()
         {
-            Whiteboard whiteboardToVerify = globalWhiteboards.Elements.First();
+            Whiteboard whiteboardToVerify = WhiteboardRepository.Elements.First();
             var previousName = whiteboardToVerify.Name;
             var previousDescription = whiteboardToVerify.Description;
             var previousWidth = whiteboardToVerify.Width;
             var previousHeight = whiteboardToVerify.Height;
-            globalWhiteboards.ModifyWhiteboard(whiteboardToVerify, previousName,
+            WhiteboardRepository.ModifyWhiteboard(whiteboardToVerify, previousName,
                 previousDescription, previousWidth, previousHeight);
             Assert.AreEqual(previousName, whiteboardToVerify.Name);
             Assert.AreEqual(previousDescription, whiteboardToVerify.Description);
@@ -238,7 +224,7 @@ namespace UnitTests.PersistenceTests
         public void WRepositoryModifyNotAddedWhiteboardValidTest()
         {
             Whiteboard whiteboardToVerify = Whiteboard.InstanceForTestingPurposes();
-            globalWhiteboards.ModifyWhiteboard(whiteboardToVerify, "Pizarrón",
+            WhiteboardRepository.ModifyWhiteboard(whiteboardToVerify, "Pizarrón",
                 "Una descripción válida.", 500, 700);
         }
 
@@ -246,7 +232,7 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(RepositoryException))]
         public void WRepositoryModifyNullWhiteboardValidTest()
         {
-            globalWhiteboards.ModifyWhiteboard(null, "Pizarrón",
+            WhiteboardRepository.ModifyWhiteboard(null, "Pizarrón",
                 "Una descripción válida.", 500, 700);
         }
 
@@ -254,8 +240,8 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(WhiteboardException))]
         public void WRepositoryModifyWhiteboardInvalidNameTest()
         {
-            Whiteboard whiteboardToVerify = globalWhiteboards.Elements.First();
-            globalWhiteboards.ModifyWhiteboard(whiteboardToVerify, "3- */!!$#&1a@! ,.",
+            Whiteboard whiteboardToVerify = WhiteboardRepository.Elements.First();
+            WhiteboardRepository.ModifyWhiteboard(whiteboardToVerify, "3- *//*!!$#&1a@! ,.",
                 "Una descripción válida.", 500, 700);
         }
 
@@ -263,8 +249,8 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(WhiteboardException))]
         public void WRepositoryModifyWhiteboardInvalidDescriptionTest()
         {
-            Whiteboard whiteboardToVerify = globalWhiteboards.Elements.First();
-            globalWhiteboards.ModifyWhiteboard(whiteboardToVerify, "Pizarrón",
+            Whiteboard whiteboardToVerify = WhiteboardRepository.Elements.First();
+            WhiteboardRepository.ModifyWhiteboard(whiteboardToVerify, "Pizarrón",
                 "   \n\n\n \t   \t    ", 500, 700);
         }
 
@@ -272,8 +258,8 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(WhiteboardException))]
         public void WRepositoryModifyWhiteboardInvalidWidthTest()
         {
-            Whiteboard whiteboardToVerify = globalWhiteboards.Elements.First();
-            globalWhiteboards.ModifyWhiteboard(whiteboardToVerify, "Pizarrón",
+            Whiteboard whiteboardToVerify = WhiteboardRepository.Elements.First();
+            WhiteboardRepository.ModifyWhiteboard(whiteboardToVerify, "Pizarrón",
                 "Una descripción válida.", -2112, 700);
         }
 
@@ -281,8 +267,8 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(WhiteboardException))]
         public void WRepositoryModifyWhiteboardInvalidHeightTest()
         {
-            Whiteboard whiteboardToVerify = globalWhiteboards.Elements.First();
-            globalWhiteboards.ModifyWhiteboard(whiteboardToVerify, "Pizarrón",
+            Whiteboard whiteboardToVerify = WhiteboardRepository.Elements.First();
+            WhiteboardRepository.ModifyWhiteboard(whiteboardToVerify, "Pizarrón",
                 "Una descripción válida.", 500, 0);
         }
 
@@ -290,30 +276,30 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(RepositoryException))]
         public void WRepositoryModifyWhiteboardCausesSameNameAndTeamInvalidTest()
         {
-            Whiteboard whiteboardToVerify = globalWhiteboards.AddNewWhiteboard("Nombre único",
+            WhiteboardRepository.AddNewWhiteboard("Me voy al campo",
+                "Una descripción válida.", testingOwnerTeam, 390, 789);
+            Whiteboard whiteboardToVerify = WhiteboardRepository.AddNewWhiteboard("Nombre único",
                 "Una descripción válida.", testingOwnerTeam, 500, 700);
-            globalWhiteboards.ModifyWhiteboard(whiteboardToVerify, "Whiteboard",
-                "Otra descripción.", 1200, 2400);
+            WhiteboardRepository.ModifyWhiteboard(whiteboardToVerify, "Me voy al campo",
+                "Descripción distinta.", 1200, 2400);
         }
 
         [TestMethod]
         public void WRepositoryAddWhiteboardDifferentTeamSameNameValidTest()
         {
-            Team anotherOwnerTeam = globalTeams.Elements.First();
-            Whiteboard addedWhiteboard = globalWhiteboards.AddNewWhiteboard("Whiteboard",
-                "Valid description.", anotherOwnerTeam, 240, 240);
-            CollectionAssert.Contains(globalWhiteboards.Elements.ToList(), addedWhiteboard);
+            Whiteboard addedWhiteboard = WhiteboardRepository.AddNewWhiteboard("Whiteboard 99",
+                "Valid description.", otherTeam, 240, 240);
+            CollectionAssert.Contains(WhiteboardRepository.Elements.ToList(), addedWhiteboard);
         }
 
         [TestMethod]
         public void WRepositoryModifyWhiteboardDifferentTeamSameNameValidTest()
         {
-            Team anotherOwnerTeam = globalTeams.Elements.First();
-            Whiteboard whiteboardToVerify = globalWhiteboards.AddNewWhiteboard("Algún otro pizarrón",
-                "La descripción va aquí.", anotherOwnerTeam, 500, 500);
-            globalWhiteboards.ModifyWhiteboard(whiteboardToVerify, "Another whiteboard",
+            Whiteboard whiteboardToVerify = WhiteboardRepository.AddNewWhiteboard("Algún otro pizarrón",
+                "La descripción va aquí.", testingOwnerTeam, 500, 500);
+            WhiteboardRepository.ModifyWhiteboard(whiteboardToVerify, "Indeed another whiteboard",
                 "Another valid description.", 121, 323);
-            Assert.AreEqual("Another whiteboard", whiteboardToVerify.Name);
+            Assert.AreEqual("Indeed another whiteboard", whiteboardToVerify.Name);
             Assert.AreEqual("Another valid description.", whiteboardToVerify.Description);
             Assert.AreEqual(121, whiteboardToVerify.Width);
             Assert.AreEqual(323, whiteboardToVerify.Height);
@@ -322,11 +308,12 @@ namespace UnitTests.PersistenceTests
         [TestMethod]
         public void WRepositoryModifyWhiteboardAsCreatorValidTest()
         {
-            ChangeActiveUser("ravenna@simuladores.com", "HablarUnasPalabritas");
-            Whiteboard whiteboardToVerify = globalWhiteboards.Elements.Last();
-            globalWhiteboards.ModifyWhiteboard(whiteboardToVerify, "Pizarrón",
+            ChangeActiveUser("colpocorto@lesluthiers.com", "TrepoTemoTiemblo");
+            Whiteboard whiteboardToVerify = WhiteboardRepository.AddNewWhiteboard("Avant",
+                "La descripción va aquí.", testingOwnerTeam, 500, 500);
+            WhiteboardRepository.ModifyWhiteboard(whiteboardToVerify, "Garde",
                 "Una descripción válida.", 500, 700);
-            Assert.AreEqual("Pizarrón", whiteboardToVerify.Name);
+            Assert.AreEqual("Garde", whiteboardToVerify.Name);
             Assert.AreEqual("Una descripción válida.", whiteboardToVerify.Description);
             Assert.AreEqual(500, whiteboardToVerify.Width);
             Assert.AreEqual(700, whiteboardToVerify.Height);
@@ -336,10 +323,10 @@ namespace UnitTests.PersistenceTests
         public void WRepositoryModifyWhiteboardAsAdministratorNotInTeamValidTest()
         {
             ChangeActiveUser("administrator@tf2.com", "Victory");
-            Whiteboard whiteboardToVerify = globalWhiteboards.Elements.First();
-            globalWhiteboards.ModifyWhiteboard(whiteboardToVerify, "Pizarrón",
+            Whiteboard whiteboardToVerify = WhiteboardRepository.Elements.First();
+            WhiteboardRepository.ModifyWhiteboard(whiteboardToVerify, "Felisa",
                 "Una descripción válida.", 500, 700);
-            Assert.AreEqual("Pizarrón", whiteboardToVerify.Name);
+            Assert.AreEqual("Felisa", whiteboardToVerify.Name);
             Assert.AreEqual("Una descripción válida.", whiteboardToVerify.Description);
             Assert.AreEqual(500, whiteboardToVerify.Width);
             Assert.AreEqual(700, whiteboardToVerify.Height);
@@ -349,9 +336,9 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(RepositoryException))]
         public void WRepositoryModifyWhiteboardAsUserNotInTeamInvalidTest()
         {
-            ChangeActiveUser("vanegas@brigadab.com", "tipoONegativo");
-            Whiteboard whiteboardToVerify = globalWhiteboards.Elements.First();
-            globalWhiteboards.ModifyWhiteboard(whiteboardToVerify, "Pizarrón",
+            ChangeActiveUser("sanchez@sendero.com", "YoQueSe");
+            Whiteboard whiteboardToVerify = WhiteboardRepository.Elements.First();
+            WhiteboardRepository.ModifyWhiteboard(whiteboardToVerify, "Pizarrón",
                 "Una descripción válida.", 500, 700);
         }
 
@@ -359,9 +346,9 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(RepositoryException))]
         public void UWRepositoryAttemptToRemoveWhiteboardCreatorUserInvalidTest()
         {
-            User userToFailRemoving = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
-                "ravenna@simuladores.com", DateTime.Today, "HablarUnasPalabritas");
-            UserRepository.GetInstance().Remove(userToFailRemoving);
+            User userToFailRemoving = User.CreateNewCollaborator("Giovanni", "Colpocorto",
+                "colpocorto@lesluthiers.com", DateTime.Today, "TrepoTemoTiemblo");
+            UserRepository.Remove(userToFailRemoving);
         }
     }
 }

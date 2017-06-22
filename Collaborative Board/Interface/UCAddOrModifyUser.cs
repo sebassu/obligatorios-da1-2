@@ -45,30 +45,29 @@ namespace GraphicInterface
 
         private void PerformChangeAction()
         {
-            UserRepository globalUsers = UserRepository.GetInstance();
             if (Utilities.IsNotNull(userToModify))
             {
-                globalUsers.ModifyUser(userToModify, txtFirstName.Text, txtLastName.Text,
+                UserRepository.ModifyUser(userToModify, txtFirstName.Text, txtLastName.Text,
                     txtEmail.Text, dtpBirthDate.Value, txtPassword.Text);
             }
             else
             {
-                CreateNewUser(globalUsers);
+                CreateNewUser();
             }
             InterfaceUtilities.UCAdministatorUsersToPanel(systemPanel);
             InterfaceUtilities.SuccessfulOperation();
         }
 
-        private void CreateNewUser(UserRepository globalUsers)
+        private void CreateNewUser()
         {
             if (cbxIsAdministrator.Checked)
             {
-                globalUsers.AddNewAdministrator(txtFirstName.Text, txtLastName.Text,
+                UserRepository.AddNewAdministrator(txtFirstName.Text, txtLastName.Text,
                     txtEmail.Text, dtpBirthDate.Value, txtPassword.Text);
             }
             else
             {
-                globalUsers.AddNewUser(txtFirstName.Text, txtLastName.Text,
+                UserRepository.AddNewUser(txtFirstName.Text, txtLastName.Text,
                     txtEmail.Text, dtpBirthDate.Value, txtPassword.Text);
             }
         }
@@ -80,8 +79,7 @@ namespace GraphicInterface
 
         private void ResetUsersPassword()
         {
-            UserRepository globalUsers = UserRepository.GetInstance();
-            String newPassWord = globalUsers.ResetUsersPassword(userToModify);
+            String newPassWord = UserRepository.ResetUsersPassword(userToModify);
             txtPassword.Text = userToModify.Password;
             MessageBox.Show("La nueva contraseña es: " + newPassWord, "Reseteo de contraseña",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);

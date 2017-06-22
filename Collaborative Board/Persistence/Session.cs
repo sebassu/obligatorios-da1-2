@@ -1,6 +1,5 @@
 ﻿using Domain;
 using System;
-using Exceptions;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -36,12 +35,11 @@ namespace Persistence
             {
                 LoginUserWithData(emailEntered, passwordEntered);
             }
-
         }
 
         private static void LoginUserWithData(string emailEntered, string passwordEntered)
         {
-            var users = UserRepository.GetInstance().Elements;
+            var users = UserRepository.Elements;
             try
             {
                 UpdateLoggedUser(emailEntered, passwordEntered, users);
@@ -53,7 +51,7 @@ namespace Persistence
         }
 
         private static void UpdateLoggedUser(string emailEntered, string passwordEntered,
-            IReadOnlyCollection<User> users)
+            ICollection<User> users)
         {
             activeUser = users.First(u => VerifyLoginDataMatches(u, emailEntered, passwordEntered));
         }
@@ -66,6 +64,14 @@ namespace Persistence
         public static bool HasAdministrationPrivileges()
         {
             return Utilities.IsNotNull(activeUser) && activeUser.HasAdministrationPrivileges;
+        }
+
+        internal static void ValidateActiveUserHasAdministrationPrivileges()
+        {
+            if (!HasAdministrationPrivileges())
+            {
+                throw new SessionException(ErrorMessages.NoAdministrationPrivileges);
+            }
         }
 
         public static void End()

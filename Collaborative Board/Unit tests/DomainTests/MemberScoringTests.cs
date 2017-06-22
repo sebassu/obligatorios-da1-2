@@ -1,8 +1,6 @@
 ﻿using Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics.CodeAnalysis;
-using Exceptions;
-using System;
 
 namespace UnitTests.DomainTests
 {
@@ -12,69 +10,36 @@ namespace UnitTests.DomainTests
     {
         private static MemberScoring testingMemberScoring;
 
-        [TestInitialize]
-        public void TestSetup()
-        {
-            testingMemberScoring = MemberScoring.InstanceForTestingPurposes();
-        }
-
         [TestMethod]
-        public void MemberScoringForTestingPurposesTest()
-        {
-            Assert.AreEqual(User.InstanceForTestingPurposes(),
-               testingMemberScoring.Member);
-            Assert.AreEqual(Team.InstanceForTestingPurposes(),
-                testingMemberScoring.MembersTeam);
-            Assert.AreEqual(int.MaxValue, testingMemberScoring.MembersTotalScore);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MemberScoringException))]
-        public void MemberScoringInvalidZeroTotalScoreTest()
+        public void MemberScoringCreationValidTest()
         {
             User member = User.InstanceForTestingPurposes();
             Team membersTeam = Team.InstanceForTestingPurposes();
-            testingMemberScoring = MemberScoring.MemberMembersTeamMembersTotalScore(member, 
-                membersTeam, 0);
+            membersTeam.AddMember(member);
+            testingMemberScoring = MemberScoring.MemberTeam(member.Id, membersTeam.Id);
+            Assert.AreEqual(member.Id, testingMemberScoring.MemberId);
+            Assert.AreEqual(membersTeam.Id, testingMemberScoring.MembersTeamId);
+        }
+
+        [TestMethod]
+        public void MemberScoringSetScorePositiveValidTest()
+        {
+            testingMemberScoring.MembersTotalScore = 139;
+            Assert.AreEqual(139, testingMemberScoring.MembersTotalScore);
+        }
+
+        [TestMethod]
+        public void MemberScoringSetScoreZeroValidTest()
+        {
+            testingMemberScoring.MembersTotalScore = 0;
+            Assert.AreEqual(0, testingMemberScoring.MembersTotalScore);
         }
 
         [TestMethod]
         [ExpectedException(typeof(MemberScoringException))]
-        public void MemberScoringInvalidNegativeTotalScoreTest()
+        public void MemberScoringSetScoreNegativeInvalidTest()
         {
-            User member = User.InstanceForTestingPurposes();
-            Team membersTeam = Team.InstanceForTestingPurposes();
-            testingMemberScoring = MemberScoring.MemberMembersTeamMembersTotalScore(member,
-                membersTeam, -1);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MemberScoringException))]
-        public void MemberScoringUserNotInTeamTest()
-        {
-            User member = User.NamesEmailBirthdatePassword("No", "Pertenece",
-                "mail@nopertenece.com", DateTime.Today, "contraseñaVálida123");
-            Team membersTeam = Team.InstanceForTestingPurposes();
-            testingMemberScoring = MemberScoring.MemberMembersTeamMembersTotalScore(member,
-                membersTeam, 100);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MemberScoringException))]
-        public void MemberScoringNullTeamTest()
-        {
-            User member = User.InstanceForTestingPurposes();
-            testingMemberScoring = MemberScoring.MemberMembersTeamMembersTotalScore(member,
-                null, 50);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(MemberScoringException))]
-        public void MemberScoringNullUserTest()
-        {
-            Team membersTeam = Team.InstanceForTestingPurposes();
-            testingMemberScoring = MemberScoring.MemberMembersTeamMembersTotalScore(null,
-                membersTeam, 20);
+            testingMemberScoring.MembersTotalScore = -2378;
         }
     }
 }

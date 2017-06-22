@@ -10,10 +10,12 @@ namespace GraphicInterface
     public partial class ElementComments : Form
     {
         private ElementWhiteboard selectedElement;
-        public ElementComments(ElementWhiteboard selectedElement)
+
+        public ElementComments(ElementWhiteboard someElement)
         {
             InitializeComponent();
-            this.selectedElement = selectedElement;
+            selectedElement = someElement;
+            ElementRepository.LoadComments(someElement);
         }
 
         private void BtnAddComment_Click(object sender, EventArgs e)
@@ -32,8 +34,8 @@ namespace GraphicInterface
         {
             ListViewItem itemToAdd = new ListViewItem(rtbNewComment.Text)
             {
-                Tag = Comment.CreatorElementText(Session.ActiveUser(),
-                selectedElement, rtbNewComment.Text)
+                Tag = CommentRepository.AddNewComment(selectedElement,
+                rtbNewComment.Text)
             };
             btnSaveComment.Visible = false;
             rtbNewComment.Visible = false;
@@ -54,19 +56,24 @@ namespace GraphicInterface
             var commentsOfElement = selectedElement.Comments.ToList();
             if (commentsOfElement.Count > 0)
             {
-                foreach (Comment comment in commentsOfElement)
-                {
-                    ListViewItem itemToAdd = new ListViewItem(comment.ToString()) { Tag = comment };
-                    lstComments.Items.Add(itemToAdd);
-                    if (comment.IsResolved)
-                    {
-                        itemToAdd.ForeColor = Color.Lime;
-                    }
-                }
+                ProcessComments(commentsOfElement);
             }
             else
             {
                 btnSolve.Enabled = false;
+            }
+        }
+
+        private void ProcessComments(System.Collections.Generic.List<Comment> commentsOfElement)
+        {
+            foreach (Comment comment in commentsOfElement)
+            {
+                ListViewItem itemToAdd = new ListViewItem(comment.ToString()) { Tag = comment };
+                lstComments.Items.Add(itemToAdd);
+                if (comment.IsResolved)
+                {
+                    itemToAdd.ForeColor = Color.Lime;
+                }
             }
         }
 
@@ -84,7 +91,7 @@ namespace GraphicInterface
         {
             ListViewItem selectedItem = lstComments.SelectedItems[0];
             Comment commentToSolve = selectedItem.Tag as Comment;
-            commentToSolve.Resolve(Session.ActiveUser());
+            CommentRepository.ResolveComment(commentToSolve);
             selectedItem.ForeColor = Color.Lime;
         }
     }

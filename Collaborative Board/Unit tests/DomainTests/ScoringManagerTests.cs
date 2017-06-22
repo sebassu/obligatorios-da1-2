@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics.CodeAnalysis;
 using Domain;
-using Exceptions;
 
 namespace UnitTests.DomainTests
 {
@@ -66,28 +65,28 @@ namespace UnitTests.DomainTests
         [ExpectedException(typeof(ScoringManagerException))]
         public void ScoringManagerSetInvalidCreateWhiteboardScore()
         {
-            testingScoringManager.CreateWhiteboardScore = 0;
+            testingScoringManager.CreateWhiteboardScore = -1;
         }
 
         [TestMethod]
         [ExpectedException(typeof(ScoringManagerException))]
         public void ScoringManagerSetInvalidDeleteWhiteboardScore()
         {
-            testingScoringManager.DeleteWhiteboardScore = -1;
+            testingScoringManager.DeleteWhiteboardScore = -10;
         }
 
         [TestMethod]
         [ExpectedException(typeof(ScoringManagerException))]
         public void ScoringManagerSetInvalidAddElementcore()
         {
-            testingScoringManager.AddElementScore = -10;
+            testingScoringManager.AddElementScore = -20;
         }
 
         [TestMethod]
         [ExpectedException(typeof(ScoringManagerException))]
         public void ScoringManagerSetInvalidAddCommentScore()
         {
-            testingScoringManager.AddCommentScore = -20;
+            testingScoringManager.AddCommentScore = -30;
         }
 
         [TestMethod]

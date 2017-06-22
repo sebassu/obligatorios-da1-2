@@ -1,11 +1,10 @@
 ﻿using System;
 using Domain;
-using Exceptions;
 using System.Linq;
-using System.Diagnostics.CodeAnalysis;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading;
 using System.Globalization;
+using System.Diagnostics.CodeAnalysis;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTests.DomainTests
 {
@@ -26,22 +25,22 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void CommentForTestingPurposesTest()
         {
-            Assert.AreEqual(User.InstanceForTestingPurposes(),
-                testingComment.Creator);
+            Assert.AreEqual(User.InstanceForTestingPurposes().Email,
+                testingComment.CreatorEmail);
             Assert.AreEqual("Comentario inválido.", testingComment.Text);
             Assert.IsFalse(testingComment.IsResolved);
-            Assert.IsNull(testingComment.Resolver);
+            Assert.IsNull(testingComment.ResolverEmail);
             Assert.IsNotNull(testingComment.AssociatedElement);
         }
 
         [TestMethod]
         public void CommentParameterFactoryMethodValidTest1()
         {
-            string someText = "Falta resolver el issue 12-3.";
+            string someText = "Falta resolver el issue 1812.";
             User creator = User.InstanceForTestingPurposes();
             testingComment = Comment.CreatorElementText(creator,
                 testingElement, someText);
-            Assert.AreEqual(creator, testingComment.Creator);
+            Assert.AreEqual(creator.Email, testingComment.CreatorEmail);
             Assert.AreEqual(someText, testingComment.Text);
             Assert.AreEqual(testingElement, testingComment.AssociatedElement);
             Assert.AreEqual(testingElement.Container,
@@ -52,12 +51,12 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void CommentParameterFactoryMethodValidTest2()
         {
-            string someText = "Falta resolver el issue 12-3.";
-            User creator = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
+            string someText = "Falta resolver el issue 2112.";
+            User creator = User.CreateNewCollaborator("Emilio", "Ravenna",
                 "ravenna@simuladores.com", DateTime.Today, "contraseñaVálida123");
             testingComment = Comment.CreatorElementText(creator,
                 testingElement, someText);
-            Assert.AreEqual(creator, testingComment.Creator);
+            Assert.AreEqual(creator.Email, testingComment.CreatorEmail);
             Assert.AreEqual(someText, testingComment.Text);
             Assert.AreEqual(testingElement.Container,
                 testingComment.AssociatedWhiteboard);
@@ -148,21 +147,19 @@ namespace UnitTests.DomainTests
             User aUser = User.InstanceForTestingPurposes();
             testingComment.Resolve(aUser);
             Assert.IsTrue(testingComment.IsResolved);
-            Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate().Date);
-            Assert.AreEqual(testingComment.Resolver, aUser);
-            CollectionAssert.Contains(aUser.CommentsResolved.ToList(), testingComment);
+            Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate.Date);
+            Assert.AreEqual(aUser.Email, testingComment.ResolverEmail);
         }
 
         [TestMethod]
         public void CommentResolutionValidTest2()
         {
-            User aUser = User.NamesEmailBirthdatePassword("Mario", "Santos",
+            User aUser = User.CreateNewCollaborator("Mario", "Santos",
                 "santos@simuladores.com", DateTime.Today, "contraseñaVálida123");
             testingComment.Resolve(aUser);
             Assert.IsTrue(testingComment.IsResolved);
-            Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate().Date);
-            Assert.AreEqual(testingComment.Resolver, aUser);
-            CollectionAssert.Contains(aUser.CommentsResolved.ToList(), testingComment);
+            Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate.Date);
+            Assert.AreEqual(aUser.Email, testingComment.ResolverEmail);
         }
 
         [TestMethod]
@@ -174,21 +171,13 @@ namespace UnitTests.DomainTests
 
         [TestMethod]
         [ExpectedException(typeof(CommentException))]
-        public void CommentResolutionDateOfUnresolvedInvalidTest()
-        {
-            testingComment.ResolutionDate();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(CommentException))]
         public void CommentResolveResolvedCommentSameUserInvalidTest()
         {
             User aUser = User.InstanceForTestingPurposes();
             testingComment.Resolve(aUser);
             Assert.IsTrue(testingComment.IsResolved);
-            Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate().Date);
-            Assert.AreEqual(testingComment.Resolver, aUser);
-            CollectionAssert.Contains(aUser.CommentsResolved.ToList(), testingComment);
+            Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate.Date);
+            Assert.AreEqual(aUser.Email, testingComment.ResolverEmail);
             testingComment.Resolve(aUser);
         }
 
@@ -199,10 +188,9 @@ namespace UnitTests.DomainTests
             User aUser = User.InstanceForTestingPurposes();
             testingComment.Resolve(aUser);
             Assert.IsTrue(testingComment.IsResolved);
-            Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate().Date);
-            Assert.AreEqual(testingComment.Resolver, aUser);
-            CollectionAssert.Contains(aUser.CommentsResolved.ToList(), testingComment);
-            User differentUser = User.NamesEmailBirthdatePassword("Mario", "Santos",
+            Assert.AreEqual(DateTime.Today, testingComment.ResolutionDate.Date);
+            Assert.AreEqual(aUser.Email, testingComment.ResolverEmail);
+            User differentUser = User.CreateNewCollaborator("Mario", "Santos",
                 "santos@simuladores.com", DateTime.Today, "contraseñaVálida123");
             testingComment.Resolve(differentUser);
         }
@@ -231,21 +219,22 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void CommentEqualsDifferentCreatorsInvalidTest()
         {
-            string someText = "Falta resolver el issue 12-3.";
+            string someText = "Falta resolver el issue 12-34.";
             User creator = User.InstanceForTestingPurposes();
-            User anotherCreator = User.NamesEmailBirthdatePassword("Mario", "Santos",
+            User anotherCreator = User.CreateNewCollaborator("Mario", "Santos",
                 "santos@simuladores.com", DateTime.Today, "contraseñaVálida123");
             testingComment = Comment.CreatorElementText(creator,
                 testingElement, someText);
             Comment otherTestingComment = Comment.CreatorElementText(anotherCreator,
                 testingElement, someText);
+            testingComment.Equals(otherTestingComment);
             Assert.AreNotEqual(testingComment, otherTestingComment);
         }
 
         [TestMethod]
         public void CommentEqualsDifferentTextInvalidTest()
         {
-            string someText = "Falta resolver el issue 12-3.";
+            string someText = "Wolololo.";
             string someOtherText = "En el habitual espacio lírico";
             User creator = User.InstanceForTestingPurposes();
             testingComment = Comment.CreatorElementText(creator,
@@ -255,14 +244,17 @@ namespace UnitTests.DomainTests
             Assert.AreNotEqual(testingComment, otherTestingComment);
         }
 
+        // Sometimes fails, as DateTime.Now is used in the Comment class
+        // and this is crucial to the test result; test 
+        // fails if the tests are executed too quickly.
         [TestMethod]
         public void CommentEqualsDifferentDateTimesInvalidTest()
         {
-            string someText = "Falta resolver el issue 12-3.";
+            string someText = "Bromato de Armonio.";
             User creator = User.InstanceForTestingPurposes();
             testingComment = Comment.CreatorElementText(creator,
                 testingElement, someText);
-            Thread.Sleep(30);
+            Thread.Sleep(1000);
             Comment otherTestingComment = Comment.CreatorElementText(creator,
                 testingElement, someText);
             Assert.AreNotEqual(testingComment, otherTestingComment);
@@ -271,13 +263,13 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void CommentToStringTest()
         {
-            string someText = "Falta resolver el issue 12-3.";
-            User creator = User.NamesEmailBirthdatePassword("Mario", "Santos",
+            string someText = "Falta resolver el issue 12-355.";
+            User creator = User.CreateNewCollaborator("Mario", "Santos",
                 "santos@simuladores.com", DateTime.Today, "contraseñaVálida123");
             testingComment = Comment.CreatorElementText(creator,
                 testingElement, someText);
             string dateShown = DateTime.Now.ToString("d/M/yyyy, h:mm tt", CultureInfo.CurrentCulture);
-            Assert.AreEqual("Falta resolver el issue 12-3. <" + dateShown + "> <santos@simuladores.com>",
+            Assert.AreEqual("Falta resolver el issue 12-355. <" + dateShown + "> <santos@simuladores.com>",
                 testingComment.ToString());
         }
 

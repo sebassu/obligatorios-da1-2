@@ -1,11 +1,10 @@
-﻿using Exceptions;
-using System.Globalization;
+﻿using System.Globalization;
 
 namespace Domain
 {
     public class ScoringManager
     {
-        private const byte absoluteMinimumScore = 1;
+        private const byte absoluteMinimumScore = 0;
 
         public virtual int Id { get; set; }
 
@@ -121,27 +120,21 @@ namespace Domain
 
         public ScoringManager()
         {
-            createWhiteboardScore = 1;
-            deleteWhiteboardScore = 1;
-            addElementScore = 1;
-            addCommentScore = 1;
-            setCommentAsSolvedScore = 1;
+            CreateWhiteboardScore = 1;
+            DeleteWhiteboardScore = 1;
+            AddElementScore = 1;
+            AddCommentScore = 1;
+            SetCommentAsSolvedScore = 1;
         }
 
-        public static ScoringManager AllScores(int addWhiteboard, int deleteWhiteboard,
+        public void ModifyAllScores(int addWhiteboard, int deleteWhiteboard,
             int addElement, int addComment, int setCommentAsSolved)
         {
-            return new ScoringManager(addWhiteboard, deleteWhiteboard, addElement, addComment, setCommentAsSolved);
-        }
-
-        public ScoringManager(int addWhiteboard, int deleteWhiteboard, 
-            int addElement, int addComment, int setCommentAsSolved)
-        {
-            createWhiteboardScore = addWhiteboard;
-            deleteWhiteboardScore = deleteWhiteboard;
-            addElementScore = addElement;
-            addCommentScore = addComment;
-            setCommentAsSolvedScore = setCommentAsSolved;
+            CreateWhiteboardScore = addWhiteboard;
+            DeleteWhiteboardScore = deleteWhiteboard;
+            AddElementScore = addElement;
+            AddCommentScore = addComment;
+            SetCommentAsSolvedScore = setCommentAsSolved;
         }
     }
 }

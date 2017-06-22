@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
-using System.Runtime.InteropServices;
+using System;
 
 namespace GraphicInterface
 {
@@ -14,18 +14,19 @@ namespace GraphicInterface
         {
             try
             {
-                AttemptToGenerateImage();
+                AttemptToGenerateDocument(".png",
+                "Archivos de imagen|*.png|Todos los archivos|*.*", SaveImage);
             }
-            catch (ExternalException exceptionCaught)
+            catch (Exception exceptionCaught)
             {
                 InterfaceUtilities.ShowError(exceptionCaught.Message, "Error desconocido");
             }
         }
 
-        private void AttemptToGenerateImage()
+        private void SaveImage(string fileName)
         {
             Bitmap imageToSave = GenerateImageOfPanel();
-            imageToSave.Save(GeneratePathToSave() + ".gif", ImageFormat.Png);
+            imageToSave.Save(fileName, ImageFormat.Png);
         }
     }
 }

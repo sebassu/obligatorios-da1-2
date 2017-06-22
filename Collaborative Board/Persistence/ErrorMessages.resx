@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AssociationAlreadyExists" xml:space="preserve">
+    <value>Los elementos recibidos ya se encuentran asociados en el sentido indicado.</value>
+  </data>
+  <data name="AssociationDoesNotExist" xml:space="preserve">
+    <value>Los elementos recibidos no se encuentran asociados.</value>
+  </data>
+  <data name="CannotCreateComment" xml:space="preserve">
+    <value>Es necesario poder modificar al pizarrón para poder crear un comentario en este elemento.</value>
+  </data>
   <data name="CannotInstantiateRepository" xml:space="preserve">
     <value>No es posible instanciar un repositorio genérico.</value>
   </data>
@@ -134,6 +143,9 @@
   </data>
   <data name="EmailPasswordMismatch" xml:space="preserve">
     <value>Los datos de inicio de sesión ingresados no están asociados a ningún usuario, reintente.</value>
+  </data>
+  <data name="InvalidElementRecieved" xml:space="preserve">
+    <value>Se recibió un elemento inválido.</value>
   </data>
   <data name="NoAdministrationPrivileges" xml:space="preserve">
     <value>El usuario actual no tiene los permisos de administración requeridos para completar esta acción.</value>
@@ -158,6 +170,12 @@
   </data>
   <data name="UserIsLoneMemberOfSomeTeam" xml:space="preserve">
     <value>No es posible eliminar al usuario: es el único miembro de un equipo.</value>
+  </data>
+  <data name="UserIsNotMemberOfTeam" xml:space="preserve">
+    <value>No se encontró registro para el usuario en el equipo recibido.</value>
+  </data>
+  <data name="UserIsNotRegistered" xml:space="preserve">
+    <value>El usuario no es válido: no se encuentra registrado en el sistema.</value>
   </data>
   <data name="WhiteboardNameTeamMustBeUnique" xml:space="preserve">
     <value>El equipo "{0}" ya posee un pizarrón con el nombre "{1}".</value>

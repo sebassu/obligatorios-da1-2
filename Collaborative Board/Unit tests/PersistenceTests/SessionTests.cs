@@ -1,6 +1,5 @@
 ﻿using Domain;
 using System;
-using Exceptions;
 using Persistence;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -11,6 +10,23 @@ namespace UnitTests.PersistenceTests
     [ExcludeFromCodeCoverage]
     public class SessionTests
     {
+        [ClassInitialize]
+        public static void ClassSetup(TestContext context)
+        {
+            UserRepository.InsertOriginalSystemAdministrator();
+            ChangeActiveUser("administrator@tf2.com", "Victory");
+            UserRepository.AddNewAdministrator("John Hannibal", "Smith",
+                "smith@theateam.com", DateTime.Today, "APlanWorksOut");
+            UserRepository.AddNewUser("Templeton Face", "Peck",
+                "peck@theateam.com", DateTime.Today, "Faceman");
+        }
+
+        private static void ChangeActiveUser(string email, string password)
+        {
+            Session.End();
+            Session.Start(email, password);
+        }
+
         [TestInitialize]
         public void TestSetup()
         {
@@ -20,9 +36,9 @@ namespace UnitTests.PersistenceTests
         [TestMethod]
         public void SessionStartUserValidTest()
         {
-            User userToVerify = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
-                "ravenna@simuladores.com", DateTime.Today, "HablarUnasPalabritas");
-            Session.Start("ravenna@simuladores.com", "HablarUnasPalabritas");
+            User userToVerify = User.CreateNewCollaborator("Templeton Face", "Peck",
+                "peck@theateam.com", DateTime.Today, "Faceman");
+            Session.Start("peck@theateam.com", "Faceman");
             Assert.AreEqual(userToVerify, Session.ActiveUser());
             Assert.IsFalse(Session.HasAdministrationPrivileges());
         }
@@ -30,9 +46,9 @@ namespace UnitTests.PersistenceTests
         [TestMethod]
         public void SessionStartAdministratorValidTest()
         {
-            Administrator administratorToVerify = Administrator.NamesEmailBirthdatePassword("Mario",
-                "Santos", "santos@simuladores.com", DateTime.Today, "DisculpeFuegoTiene");
-            Session.Start("santos@simuladores.com", "DisculpeFuegoTiene");
+            User administratorToVerify = User.CreateNewAdministrator("John Hannibal", "Smith",
+                "smith@theateam.com", DateTime.Today, "APlanWorksOut");
+            Session.Start("smith@theateam.com", "APlanWorksOut");
             Assert.AreEqual(administratorToVerify, Session.ActiveUser());
             Assert.IsTrue(Session.HasAdministrationPrivileges());
         }
@@ -41,35 +57,35 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(SessionException))]
         public void SessionStartInvalidEmailTest()
         {
-            Session.Start("lamponne@simuladores.com", "HablarUnasPalabritas");
+            Session.Start("wololo@theateam.com", "APlanWorksOut");
         }
 
         [TestMethod]
         [ExpectedException(typeof(SessionException))]
         public void SessionStartInvalidPasswordTest()
         {
-            Session.Start("ravenna@simuladores.com", "passwordIncorrecta");
+            Session.Start("smith@theateam.com", "passwordIncorrecta");
         }
 
         [TestMethod]
         [ExpectedException(typeof(SessionException))]
         public void SessionStartInvalidEmailAndPasswordTest()
         {
-            Session.Start("lamponne@simuladores.com", "passwordIncorrecta");
+            Session.Start("wololo@theateam.com", "passwordIncorrecta");
         }
 
         [TestMethod]
         [ExpectedException(typeof(SessionException))]
         public void SessionStartNullEmailTest()
         {
-            Session.Start(null, "contraseñaVálida123");
+            Session.Start(null, "APlanWorksOut");
         }
 
         [TestMethod]
         [ExpectedException(typeof(SessionException))]
         public void SessionStartNullPasswordTest()
         {
-            Session.Start("santos@simuladores.com", null);
+            Session.Start("smith@theateam.com", null);
         }
 
         [TestMethod]
@@ -83,8 +99,8 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(SessionException))]
         public void SessionStartAlreadyStartedTest()
         {
-            Session.Start("santos@simuladores.com", "DisculpeFuegoTiene");
-            Session.Start("ravenna@simuladores.com", "HablarUnasPalabritas");
+            Session.Start("smith@theateam.com", "APlanWorksOut");
+            Session.Start("peck@theateam.com", "Faceman");
         }
 
         [TestMethod]
@@ -98,7 +114,7 @@ namespace UnitTests.PersistenceTests
         [TestMethod]
         public void SessionFinalizeUserValidTest()
         {
-            Session.Start("ravenna@simuladores.com", "HablarUnasPalabritas");
+            Session.Start("peck@theateam.com", "Faceman");
             Session.End();
             Assert.IsFalse(Session.IsActive());
         }
@@ -106,7 +122,7 @@ namespace UnitTests.PersistenceTests
         [TestMethod]
         public void SessionFinalizeAdministratorValidTest()
         {
-            Session.Start("santos@simuladores.com", "DisculpeFuegoTiene");
+            Session.Start("smith@theateam.com", "APlanWorksOut");
             Session.End();
             Assert.IsFalse(Session.IsActive());
         }

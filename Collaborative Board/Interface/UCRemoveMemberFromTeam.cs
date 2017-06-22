@@ -54,8 +54,7 @@ namespace GraphicInterface
         private void RemoveMember()
         {
             User userToRemove = lstUsers.SelectedItems[0].Tag as User;
-            TeamRepository globalTeams = TeamRepository.GetInstance();
-            globalTeams.RemoveMemberFromTeam(teamToWorkWith, userToRemove);
+            TeamRepository.RemoveMemberFromTeam(teamToWorkWith, userToRemove);
             InterfaceUtilities.SuccessfulOperation();
             InterfaceUtilities.UCAdministrateTeamToPanel(systemPanel, teamToWorkWith);
         }

@@ -1,10 +1,9 @@
 ﻿using System;
 using Domain;
-using Exceptions;
+using System.Linq;
 using System.Threading;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
 
 namespace UnitTests.DomainTests
 {
@@ -246,7 +245,7 @@ namespace UnitTests.DomainTests
         public void UserParameterFactoryMethodValidTest()
         {
             DateTime birthdateToSet = DateTime.Today;
-            testingUser = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
+            testingUser = User.CreateNewCollaborator("Emilio", "Ravenna",
                 "ravenna@simuladores.com", birthdateToSet, "contraseñaVálida123");
             Assert.AreEqual("Emilio", testingUser.FirstName);
             Assert.AreEqual("Ravenna", testingUser.LastName);
@@ -259,7 +258,7 @@ namespace UnitTests.DomainTests
         [ExpectedException(typeof(UserException))]
         public void UserParameterFactoryMethodInvalidFirstNameTest()
         {
-            testingUser = User.NamesEmailBirthdatePassword("1&6 1a2-*!3", "Ravenna",
+            testingUser = User.CreateNewCollaborator("1&6 1a2-*!3", "Ravenna",
                 "ravenna@simuladores.com", DateTime.Now, "contraseñaVálida123");
         }
 
@@ -267,7 +266,7 @@ namespace UnitTests.DomainTests
         [ExpectedException(typeof(UserException))]
         public void UserParameterFactoryMethodInvalidLastNameTest()
         {
-            testingUser = User.NamesEmailBirthdatePassword("Emilio", ";#d1 -($!#",
+            testingUser = User.CreateNewCollaborator("Emilio", ";#d1 -($!#",
                 "ravenna@simuladores.com", DateTime.Now, "contraseñaVálida123");
         }
 
@@ -275,7 +274,7 @@ namespace UnitTests.DomainTests
         [ExpectedException(typeof(UserException))]
         public void UserParameterFactoryMethodInvalidEmailTest()
         {
-            testingUser = User.NamesEmailBirthdatePassword("Emilio", "Ravenna", "12! $^#&",
+            testingUser = User.CreateNewCollaborator("Emilio", "Ravenna", "12! $^#&",
                 DateTime.Now, "contraseñaVálida123");
         }
 
@@ -284,7 +283,7 @@ namespace UnitTests.DomainTests
         public void UserParameterFactoryMethodInvalidBirthdateTest()
         {
             DateTime birthdateToSet = new DateTime(2112, 7, 31);
-            testingUser = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
+            testingUser = User.CreateNewCollaborator("Emilio", "Ravenna",
                 "ravenna@simuladores.com", birthdateToSet, "contraseñaVálida123");
         }
 
@@ -292,7 +291,7 @@ namespace UnitTests.DomainTests
         [ExpectedException(typeof(UserException))]
         public void UserParameterFactoryMethodInvalidPasswordTest()
         {
-            testingUser = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
+            testingUser = User.CreateNewCollaborator("Emilio", "Ravenna",
                 "ravenna@simuladores.com", DateTime.Now, "@%^# 521D(%$");
         }
 
@@ -339,11 +338,11 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void UserEqualsTransitiveTest()
         {
-            testingUser = User.NamesEmailBirthdatePassword("A", "B", "mail@example.com",
+            testingUser = User.CreateNewCollaborator("A", "B", "mail@example.com",
                 DateTime.Now, "Password1");
-            User secondTestingUser = User.NamesEmailBirthdatePassword("D", "E", "mail@example.com",
+            User secondTestingUser = User.CreateNewCollaborator("D", "E", "mail@example.com",
                 DateTime.Now, "Password2");
-            User thirdTestingUser = User.NamesEmailBirthdatePassword("G", "H", "mail@example.com",
+            User thirdTestingUser = User.CreateNewCollaborator("G", "H", "mail@example.com",
                     DateTime.Now, "Password3");
             Assert.AreEqual(testingUser, secondTestingUser);
             Assert.AreEqual(secondTestingUser, thirdTestingUser);
@@ -353,10 +352,10 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void UserEqualsDifferentUsersTest()
         {
-            testingUser = User.NamesEmailBirthdatePassword("Same first name",
+            testingUser = User.CreateNewCollaborator("Same first name",
                 "Same last name", "first@different.com",
                 DateTime.Now, "SamePassword");
-            User secondTestingUser = User.NamesEmailBirthdatePassword("Same first name",
+            User secondTestingUser = User.CreateNewCollaborator("Same first name",
                 "Same last name", "second@different.com",
                 DateTime.Now, "SamePassword");
             Assert.AreNotEqual(testingUser, secondTestingUser);
@@ -391,7 +390,7 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void UserHasAdministratorPrivilegesParametersTest()
         {
-            testingUser = User.NamesEmailBirthdatePassword("Pablo", "Lamponne",
+            testingUser = User.CreateNewCollaborator("Pablo", "Lamponne",
                 "lamponne@simuladores.com", DateTime.Now, "contraseñaVálida123");
             Assert.IsFalse(testingUser.HasAdministrationPrivileges);
         }
@@ -410,40 +409,6 @@ namespace UnitTests.DomainTests
             Thread.Sleep(15);
             string secondResultObtained = testingUser.ResetPassword();
             Assert.AreNotEqual(firstResultObtained, secondResultObtained);
-        }
-
-        [TestMethod]
-        public void UserAddCreatedCommentValidTest()
-        {
-            Comment testingComment = Comment.InstanceForTestingPurposes();
-            testingUser.AddCreatedComment(testingComment);
-            CollectionAssert.Contains(testingUser.CommentsCreated.ToList(), testingComment);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(UserException))]
-        public void UserAddRepeatedCreatedCommentInvalidTest()
-        {
-            Comment testingComment = Comment.InstanceForTestingPurposes();
-            testingUser.AddCreatedComment(testingComment);
-            testingUser.AddCreatedComment(testingComment);
-        }
-
-        [TestMethod]
-        public void UserAddResolvedCommentValidTest()
-        {
-            Comment testingComment = Comment.InstanceForTestingPurposes();
-            testingUser.AddResolvedComment(testingComment);
-            CollectionAssert.Contains(testingUser.CommentsResolved.ToList(), testingComment);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(UserException))]
-        public void UserAddRepeatedResolvedCommentInvalidTest()
-        {
-            Comment testingComment = Comment.InstanceForTestingPurposes();
-            testingUser.AddResolvedComment(testingComment);
-            testingUser.AddResolvedComment(testingComment);
         }
     }
 }

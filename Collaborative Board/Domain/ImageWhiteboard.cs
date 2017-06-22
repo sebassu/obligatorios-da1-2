@@ -1,19 +1,52 @@
 ﻿using System;
-using Exceptions;
 using System.Drawing;
+using System.IO;
 
 namespace Domain
 {
     public class ImageWhiteboard : ElementWhiteboard
     {
-        public Image ActualImage { get; set; }
+        private Image actualImage;
+        public Image ActualImage
+        {
+            get { return actualImage; }
+            set
+            {
+                if (Utilities.IsNotNull(value))
+                {
+                    actualImage = value;
+                }
+                else
+                {
+                    throw new ElementException(ErrorMessages.ImageIsNull);
+                }
+            }
+        }
+
+        public virtual byte[] ImageToSave
+        {
+            get
+            {
+                ImageConverter converter = new ImageConverter();
+                return converter.ConvertTo(ActualImage, typeof(byte[])) as byte[];
+            }
+            set
+            {
+                var memoryStream = new MemoryStream(value);
+                Image imageToSet = Image.FromStream(memoryStream);
+                ActualImage = imageToSet;
+            }
+        }
 
         internal static ImageWhiteboard InstanceForTestingPurposes()
         {
-            return new ImageWhiteboard();
+            return new ImageWhiteboard()
+            {
+                Container = Whiteboard.InstanceForTestingPurposes()
+            };
         }
 
-        private ImageWhiteboard() : base() { }
+        protected ImageWhiteboard() : base() { }
 
         public static ImageWhiteboard CreateWithContainerSource(Whiteboard container,
             string imageLocation)

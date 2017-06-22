@@ -1,6 +1,5 @@
 ﻿using System;
 using Domain;
-using Exceptions;
 using System.Linq;
 using Persistence;
 using System.Diagnostics.CodeAnalysis;
@@ -12,15 +11,41 @@ namespace UnitTests.PersistenceTests
     [ExcludeFromCodeCoverage]
     public class TeamRepositoryTests
     {
-        private static TeamRepository testingTeamRepository;
+        private static User mundstock;
+        private static User cortes;
+        private static User maronna;
+        private static User rabinovich;
 
-        [TestInitialize]
-        public void TestSetup()
+        private static Team lesLuthiers;
+
+        [ClassInitialize]
+        public static void ClassSetup(TestContext context)
         {
-            ChangeActiveUser("santos@simuladores.com", "DisculpeFuegoTiene");
-            testingTeamRepository = new TeamRepositoryInMemory();
-            string descriptionToSet = "Un grupo de personas que resuelve todo tipo de problemas.";
-            testingTeamRepository.AddNewTeam("Los Simuladores", descriptionToSet, 4);
+            AddUserDataTest();
+            AddTeamDataTest();
+        }
+
+        private static void AddUserDataTest()
+        {
+            UserRepository.InsertOriginalSystemAdministrator();
+            ChangeActiveUser("administrator@tf2.com", "Victory");
+            mundstock = UserRepository.AddNewAdministrator("Marcos", "Mundstock",
+                "mundstock@lesluthiers.com.ar", DateTime.Today, "versiculoLIX");
+            maronna = UserRepository.AddNewUser("Jorge Luis", "Maronna",
+                "maronna@lesluthiers.com.ar", DateTime.Today, "laNocheEstabaOscura");
+            cortes = UserRepository.AddNewUser("Carlos Nuñez", "Cortes",
+                "cortes@lesluthiers.com.ar", DateTime.Today, "YoEraUnInfeliz");
+            rabinovich = UserRepository.AddNewUser("Daniel Abraham", "Rabinovich",
+                "rabinovich@lesluthiers.com.ar", DateTime.Today, "achicoria");
+            UserRepository.AddNewUser("Carlos", "Lopez Puccio",
+                "lopezpuccio@lesluthiers.com.ar", DateTime.Today, "horizontal4Letras");
+        }
+
+        public static void AddTeamDataTest()
+        {
+            ChangeActiveUser("mundstock@lesluthiers.com.ar", "versiculoLIX");
+            string descriptionToSet = "Grupo de seguidores de Johann Sebastian Mastropiero.";
+            lesLuthiers = TeamRepository.AddNewTeam("Les Luthiers", descriptionToSet, 19);
         }
 
         private static void ChangeActiveUser(string email, string password)
@@ -29,72 +54,76 @@ namespace UnitTests.PersistenceTests
             Session.Start(email, password);
         }
 
-        [TestMethod]
-        public void TRepositoryAddNewTeamValidTest()
+        [TestInitialize]
+        public void TestSetup()
         {
-            User aUser = Session.ActiveUser();
-            Team teamToVerify = Team.CreatorNameDescriptionMaximumMembers(aUser, "Equipo 1",
-                "Descripción de equipo.", 20);
-            testingTeamRepository.AddNewTeam("Equipo 1", "Descripción de equipo.", 20);
-            CollectionAssert.Contains(testingTeamRepository.Elements.ToList(), teamToVerify);
+            ChangeActiveUser("mundstock@lesluthiers.com.ar", "versiculoLIX");
         }
 
         [TestMethod]
-        [ExpectedException(typeof(RepositoryException))]
+        public void TRepositoryAddNewTeamValidTest()
+        {
+            User someUser = Session.ActiveUser();
+            Team teamToVerify = TeamRepository.AddNewTeam("Equipo 1", "Descripción de equipo.", 20);
+            CollectionAssert.Contains(TeamRepository.Elements.ToList(), teamToVerify);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(SessionException))]
         public void TRepositoryAddNewTeamNotEnoughPrivilegesInvalidTest()
         {
-            ChangeActiveUser("ravenna@simuladores.com", "HablarUnasPalabritas");
-            testingTeamRepository.AddNewTeam("Equipo 1", "Descripción de equipo.", 25);
+            ChangeActiveUser("rabinovich@lesluthiers.com.ar", "achicoria");
+            TeamRepository.AddNewTeam("Equipo 2", "Descripción de equipo.", 25);
         }
 
         [TestMethod]
         [ExpectedException(typeof(RepositoryException))]
         public void TRepositoryAddExistingTeamTest()
         {
-            testingTeamRepository.AddNewTeam("Equipo 1", "Descripción de equipo.", 25);
-            testingTeamRepository.AddNewTeam("Equipo 1", "Descripción de equipo 2.", 30);
+            TeamRepository.AddNewTeam("Equipo 3", "Descripción de equipo.", 25);
+            TeamRepository.AddNewTeam("Equipo 3", "Descripción de equipo 2.", 30);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
         public void TRepositoryInvalidNameTest()
         {
-            testingTeamRepository.AddNewTeam("1#4s!sd?", "Descripción de equipo.", 20);
+            TeamRepository.AddNewTeam("1#4s!sd?", "Descripción de equipo.", 20);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
         public void TRepositoryNullNameTest()
         {
-            testingTeamRepository.AddNewTeam(null, "Descripción de equipo.", 20);
+            TeamRepository.AddNewTeam(null, "Descripción de equipo.", 20);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
         public void TRepositoryEmptyNameTest()
         {
-            testingTeamRepository.AddNewTeam("", "Descripción de equipo.", 20);
+            TeamRepository.AddNewTeam("", "Descripción de equipo.", 20);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
         public void TRepositoryEmptyDescriptionTest()
         {
-            testingTeamRepository.AddNewTeam("Equipo 2", "", 10);
+            TeamRepository.AddNewTeam("Equipo 4", "", 10);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
         public void TRepositoryNullDescriptionTest()
         {
-            testingTeamRepository.AddNewTeam("Equipo 2", null, 10);
+            TeamRepository.AddNewTeam("Equipo 5", null, 10);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
         public void TRepositoryOnlySpacesDescriptionTest()
         {
-            testingTeamRepository.AddNewTeam("Equipo 2", "            ", 10);
+            TeamRepository.AddNewTeam("Equipo 6", "            ", 10);
         }
 
         [TestMethod]
@@ -102,25 +131,22 @@ namespace UnitTests.PersistenceTests
         public void TRepositoryInvalidMembersTest()
         {
 
-            testingTeamRepository.AddNewTeam("Equipo 1", "Descripción de equipo.", 0);
+            TeamRepository.AddNewTeam("Equipo 7", "Descripción de equipo.", 0);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
         public void TRepositoryNegativeMembersTest()
         {
-            testingTeamRepository.AddNewTeam("Equipo 1", "Descripción de equipo.", -1);
+            TeamRepository.AddNewTeam("Equipo 8", "Descripción de equipo.", -1);
         }
 
         [TestMethod]
         public void TRepositoryRemoveTeamValidTest()
         {
-            User aUser = Session.ActiveUser();
-            Team teamToVerify = Team.CreatorNameDescriptionMaximumMembers(aUser,
-                "Equipo 1", "Desc.", 10);
-            testingTeamRepository.AddNewTeam("Equipo 1", "Desc.", 10);
-            testingTeamRepository.Remove(teamToVerify);
-            CollectionAssert.DoesNotContain(testingTeamRepository.Elements.ToList(), teamToVerify);
+            Team teamToVerify = TeamRepository.AddNewTeam("Equipo 9", "Desc.", 12);
+            TeamRepository.Remove(teamToVerify);
+            CollectionAssert.DoesNotContain(TeamRepository.Elements.ToList(), teamToVerify);
         }
 
         [TestMethod]
@@ -128,44 +154,37 @@ namespace UnitTests.PersistenceTests
         public void TRepositoryRemoveNotAddedTeamInvalidTest()
         {
             Team NotAddedTeam = Team.InstanceForTestingPurposes();
-            testingTeamRepository.Remove(NotAddedTeam);
+            TeamRepository.Remove(NotAddedTeam);
         }
 
         [TestMethod]
         [ExpectedException(typeof(RepositoryException))]
         public void TRepositoryRemoveNullTeamInvalidTest()
         {
-            testingTeamRepository.Remove(null);
-        }
-
-        [TestMethod]
-        public void UDirectoryGetInstanceTest()
-        {
-            testingTeamRepository = TeamRepository.GetInstance();
-            TeamRepository anotherTeamRepository = TeamRepository.GetInstance();
-            Assert.AreSame(testingTeamRepository, anotherTeamRepository);
+            TeamRepository.Remove(null);
         }
 
         [TestMethod]
         public void TRepositoryModifyTeamValidTest()
         {
-            Team teamToVerify = testingTeamRepository.Elements.Single();
+            Team teamToVerify = TeamRepository.Elements.First();
+            TeamRepository.LoadMembers(teamToVerify);
             var membersBeforeModification = teamToVerify.Members.ToList();
-            testingTeamRepository.ModifyTeam(teamToVerify, "The A Team", "Crack Commando Unit.", 4);
+            TeamRepository.ModifyTeam(teamToVerify, "The A Team", "Crack Commando Unit.", 8);
             CollectionAssert.AreEqual(membersBeforeModification, teamToVerify.Members.ToList());
             Assert.AreEqual("The A Team", teamToVerify.Name);
             Assert.AreEqual("Crack Commando Unit.", teamToVerify.Description);
-            Assert.AreEqual(4, teamToVerify.MaximumMembers);
+            Assert.AreEqual(8, teamToVerify.MaximumMembers);
         }
 
         [TestMethod]
         public void TRepositoryModifyTeamSetSameDataValidTest()
         {
-            Team teamToVerify = testingTeamRepository.Elements.Single();
+            Team teamToVerify = TeamRepository.Elements.First();
             var previousName = teamToVerify.Name;
             var previousDescription = teamToVerify.Description;
             var previousMaximumMembers = teamToVerify.MaximumMembers;
-            testingTeamRepository.ModifyTeam(teamToVerify, previousName,
+            TeamRepository.ModifyTeam(teamToVerify, previousName,
                 previousDescription, previousMaximumMembers);
             Assert.AreEqual(previousName, teamToVerify.Name);
             Assert.AreEqual(previousDescription, teamToVerify.Description);
@@ -176,107 +195,97 @@ namespace UnitTests.PersistenceTests
         [ExpectedException(typeof(RepositoryException))]
         public void TRepositoryModifyNullTeamInvalidTest()
         {
-            testingTeamRepository.ModifyTeam(null, "The A Team", "Crack Commando Unit.", 4);
+            TeamRepository.ModifyTeam(null, "A Team", "Crack Commando Unit.", 4);
         }
 
         [TestMethod]
         [ExpectedException(typeof(RepositoryException))]
         public void TRepositoryModifyNotAddedTeamInvalidTest()
         {
-            Team NotAddedTeam = Team.InstanceForTestingPurposes();
-            testingTeamRepository.ModifyTeam(NotAddedTeam, "The A Team", "Crack Commando Unit.", 4);
+            Team notAddedTeam = Team.InstanceForTestingPurposes();
+            TeamRepository.ModifyTeam(notAddedTeam, "Ultimate Team", "Crack Commando Unit.", 4);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
         public void TRepositoryModifyTeamInvalidNameTest()
         {
-            Team addedTeam = testingTeamRepository.Elements.Single();
-            testingTeamRepository.ModifyTeam(addedTeam, "#1&*$ 565*a -^$^&", "Crack Commando Unit.", 4);
+            Team addedTeam = TeamRepository.Elements.First();
+            TeamRepository.ModifyTeam(addedTeam, "#1&*$ 565*a -^$^&", "Crack Commando Unit.", 4);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
         public void TRepositoryModifyTeamInvalidDescriptionTest()
         {
-            Team addedTeam = testingTeamRepository.Elements.Single();
-            testingTeamRepository.ModifyTeam(addedTeam, "The A Team", "  \n \t ", 4);
+            Team addedTeam = TeamRepository.Elements.First();
+            TeamRepository.ModifyTeam(addedTeam, "C Team", "  \n \t ", 4);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
         public void TRepositoryModifyTeamInvalidMaximumMembersTest()
         {
-            Team addedTeam = testingTeamRepository.Elements.Single();
-            testingTeamRepository.ModifyTeam(addedTeam, "The A Team", "Crack Commando Unit.", -2112);
+            Team addedTeam = TeamRepository.Elements.First();
+            TeamRepository.ModifyTeam(addedTeam, "D Team", "Crack Commando Unit.", -2112);
         }
 
         [TestMethod]
         [ExpectedException(typeof(RepositoryException))]
         public void TRepositoryModifyTeamCausesRepeatedNameInvalidTest()
         {
-            Team addedTeam = testingTeamRepository.AddNewTeam("The A Team", "Crack Commando Unit.", 4);
-            testingTeamRepository.ModifyTeam(addedTeam, "Los Simuladores", "Otra descripción.", 115);
+            TeamRepository.AddNewTeam("Another Team", "Some description.", 9);
+            Team addedTeam = TeamRepository.AddNewTeam("E Team", "Crack Commando Unit.", 4);
+            TeamRepository.ModifyTeam(addedTeam, "Another Team", "Otra descripción.", 115);
         }
 
         [TestMethod]
         public void TRepositoryAddMemberValidTest()
         {
-            User userToAdd = User.NamesEmailBirthdatePassword("Pablo", "Lamponne",
-                "lamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
-            Team teamToAddTo = testingTeamRepository.Elements.Single();
-            testingTeamRepository.AddMemberToTeam(teamToAddTo, userToAdd);
-            CollectionAssert.Contains(teamToAddTo.Members.ToList(), userToAdd);
+            Team teamToAddTo = TeamRepository.Elements.First();
+            TeamRepository.AddMemberToTeam(teamToAddTo, rabinovich);
+            CollectionAssert.Contains(teamToAddTo.Members.ToList(), rabinovich);
         }
 
         [TestMethod]
         [ExpectedException(typeof(RepositoryException))]
         public void TRepositoryAddMemberToNotAddedTeamTest()
         {
-            User userToAdd = User.NamesEmailBirthdatePassword("Pablo", "Lamponne",
-                "lamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
             Team teamToAddTo = Team.InstanceForTestingPurposes();
-            testingTeamRepository.AddMemberToTeam(teamToAddTo, userToAdd);
+            TeamRepository.AddMemberToTeam(teamToAddTo, cortes);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(TeamException))]
+        [ExpectedException(typeof(RepositoryException))]
         public void TRepositoryAddRepeatedMemberTest()
         {
-            Administrator repeatedUser = Administrator.NamesEmailBirthdatePassword("Mario",
-                "Santos", "santos@simuladores.com", DateTime.Today, "DisculpeFuegoTiene");
-            Team teamToAddTo = testingTeamRepository.Elements.Single();
-            testingTeamRepository.AddMemberToTeam(teamToAddTo, repeatedUser);
+            TeamRepository.AddMemberToTeam(lesLuthiers, mundstock);
         }
 
         [TestMethod]
         [ExpectedException(typeof(RepositoryException))]
         public void TRepositoryAddNullMemberTest()
         {
-            Team teamToAddTo = testingTeamRepository.Elements.Single();
-            testingTeamRepository.AddMemberToTeam(teamToAddTo, null);
+            Team teamToAddTo = TeamRepository.Elements.First();
+            TeamRepository.AddMemberToTeam(teamToAddTo, null);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
         public void TRepositoryAddMoreThanMaximumMembersTest()
         {
-            User userToAdd = User.NamesEmailBirthdatePassword("Pablo", "Lamponne",
-                "lamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
-            Team teamToAddTo = testingTeamRepository.Elements.Single();
-            teamToAddTo.MaximumMembers = 1;
-            testingTeamRepository.AddMemberToTeam(teamToAddTo, userToAdd);
+            Team teamToAddTo = TeamRepository.AddNewTeam("Equipo Rocket",
+                "Meowth", 1);
+            TeamRepository.AddMemberToTeam(teamToAddTo, cortes);
         }
 
         [TestMethod]
         public void TRepositoryRemoveMemberValidTest()
         {
-            User userToRemove = User.NamesEmailBirthdatePassword("Pablo", "Lamponne",
-                "lamponne@simuladores.com", DateTime.Today, "NoHaceFaltaSaleSolo");
-            Team teamToRemoveFrom = testingTeamRepository.Elements.Single();
-            testingTeamRepository.AddMemberToTeam(teamToRemoveFrom, userToRemove);
-            testingTeamRepository.RemoveMemberFromTeam(teamToRemoveFrom, userToRemove);
-            CollectionAssert.DoesNotContain(teamToRemoveFrom.Members.ToList(), userToRemove);
+            Team teamToRemoveFrom = TeamRepository.Elements.First();
+            TeamRepository.AddMemberToTeam(teamToRemoveFrom, cortes);
+            TeamRepository.RemoveMemberFromTeam(teamToRemoveFrom, cortes);
+            CollectionAssert.DoesNotContain(teamToRemoveFrom.Members.ToList(), cortes);
         }
 
         [TestMethod]
@@ -285,7 +294,9 @@ namespace UnitTests.PersistenceTests
         {
             User userToRemove = User.InstanceForTestingPurposes();
             Team teamToRemoveFrom = Team.InstanceForTestingPurposes();
-            testingTeamRepository.RemoveMemberFromTeam(teamToRemoveFrom, userToRemove);
+            teamToRemoveFrom.AddMember(userToRemove);
+            teamToRemoveFrom.AddMember(rabinovich);
+            TeamRepository.RemoveMemberFromTeam(teamToRemoveFrom, userToRemove);
         }
 
         [TestMethod]
@@ -293,52 +304,46 @@ namespace UnitTests.PersistenceTests
         public void TRepositoryRemoveMemberFromNullTeamInvalidTest()
         {
             User userToRemove = User.InstanceForTestingPurposes();
-            testingTeamRepository.RemoveMemberFromTeam(null, userToRemove);
+            TeamRepository.RemoveMemberFromTeam(null, userToRemove);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
         public void TRepositoryRemoveNullMemberInvalidTest()
         {
-            Team teamToRemoveFrom = testingTeamRepository.Elements.Single();
-            testingTeamRepository.RemoveMemberFromTeam(teamToRemoveFrom, null);
+            Team teamToRemoveFrom = TeamRepository.Elements.First();
+            TeamRepository.RemoveMemberFromTeam(teamToRemoveFrom, null);
         }
 
         [TestMethod]
         [ExpectedException(typeof(TeamException))]
         public void TRepositoryRemoveLastMemberInvalidTest()
         {
-            Administrator onlyMember = Administrator.NamesEmailBirthdatePassword("Mario", "Santos",
-                "santos@simuladores.com", DateTime.Today, "contraseñaVálida123");
-            Team teamToRemoveFrom = testingTeamRepository.Elements.Single();
-            testingTeamRepository.RemoveMemberFromTeam(teamToRemoveFrom, onlyMember);
+            Team teamToRemoveFrom = TeamRepository.AddNewTeam("Natascha", "Sandvich", 2);
+            TeamRepository.RemoveMemberFromTeam(teamToRemoveFrom, mundstock);
         }
 
         [TestMethod]
         [ExpectedException(typeof(RepositoryException))]
         public void UTRepositoryRemoveLastMemberWhenRemovingUserInvalidTest()
         {
-            Administrator onlyMember = Administrator.NamesEmailBirthdatePassword("Mario", "Santos",
-                "santos@simuladores.com", DateTime.Today, "contraseñaVálida123");
-            ChangeActiveUser("santos@simuladores.com", "DisculpeFuegoTiene");
-            testingTeamRepository = TeamRepository.GetInstance();
-            string descriptionToSet = "Una estupidez de Videomatch.";
-            testingTeamRepository.AddNewTeam("Los Disimuladores", descriptionToSet, 4);
-            UserRepository.GetInstance().Remove(onlyMember);
+            User onlyMember = UserRepository.AddNewAdministrator("Marcos", "Mundstock",
+                    "tresmundstock@lesluthiers.com.ar", DateTime.Today, "versiculoLIX");
+            ChangeActiveUser("tresmundstock@lesluthiers.com.ar", "versiculoLIX");
+            string descriptionToSet = "Falsos luthiers descripción.";
+            TeamRepository.AddNewTeam("Falsos Luthiers", descriptionToSet, 4);
+            UserRepository.Remove(onlyMember);
         }
 
         [TestMethod]
         public void UTRepositoryRemoveMemberWhenRemovingUserValidTest()
         {
-            ChangeActiveUser("santos@simuladores.com", "DisculpeFuegoTiene");
-            testingTeamRepository = TeamRepository.GetInstance();
-            string descriptionToSet = "Ha sido catalogado con triple X.";
-            Team teamToVerify = testingTeamRepository.AddNewTeam("Equipo X", descriptionToSet, 5);
-            User memberToAddAndRemove = User.NamesEmailBirthdatePassword("José", "Feller",
-                "feller@brigadab.com", DateTime.Today, "puntaPariñas");
-            testingTeamRepository.AddMemberToTeam(teamToVerify, memberToAddAndRemove);
-            UserRepository.GetInstance().Remove(memberToAddAndRemove);
-            CollectionAssert.DoesNotContain(teamToVerify.Members.ToList(), memberToAddAndRemove);
+            ChangeActiveUser("mundstock@lesluthiers.com.ar", "versiculoLIX");
+            string descriptionToSet = "Ha sido catalogado con triple Y.";
+            Team teamToVerify = TeamRepository.AddNewTeam("Equipo Y", descriptionToSet, 5);
+            TeamRepository.AddMemberToTeam(teamToVerify, maronna);
+            UserRepository.Remove(maronna);
+            CollectionAssert.DoesNotContain(teamToVerify.Members.ToList(), maronna);
         }
     }
 }

@@ -40,15 +40,14 @@ namespace GraphicInterface
 
         private void PerformChangeAction()
         {
-            TeamRepository globalTeams = TeamRepository.GetInstance();
             int maxUsers = Convert.ToInt32(Math.Round(numMaximumAmmountUsers.Value, 0));
             if (Utilities.IsNotNull(teamToModify))
             {
-                globalTeams.ModifyTeam(teamToModify, txtName.Text, rtbDescription.Text, maxUsers);
+                TeamRepository.ModifyTeam(teamToModify, txtName.Text, rtbDescription.Text, maxUsers);
             }
             else
             {
-                globalTeams.AddNewTeam(txtName.Text, rtbDescription.Text, maxUsers);
+                TeamRepository.AddNewTeam(txtName.Text, rtbDescription.Text, maxUsers);
             }
             InterfaceUtilities.UCAdministratorTeamsToPanel(systemPanel);
             InterfaceUtilities.SuccessfulOperation();

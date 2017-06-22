@@ -1,5 +1,4 @@
 ﻿using System;
-using Exceptions;
 using System.Net.Mail;
 using System.Resources;
 using System.Globalization;
@@ -12,11 +11,13 @@ namespace Domain
 {
     public class User
     {
+        public virtual int Id { get; set; }
+
         private string firstName;
-        public string FirstName
+        public virtual string FirstName
         {
             get { return firstName; }
-            internal set
+            set
             {
                 if (IsValidName(value))
                 {
@@ -32,10 +33,10 @@ namespace Domain
         }
 
         private string lastName;
-        public string LastName
+        public virtual string LastName
         {
             get { return lastName; }
-            internal set
+            set
             {
                 if (IsValidName(value))
                 {
@@ -55,15 +56,16 @@ namespace Domain
             return Utilities.ContainsLettersOrSpacesOnly(value);
         }
 
-        private MailAddress email;
-        public string Email
+        public string email;
+        public virtual string Email
         {
-            get { return email.ToString(); }
-            internal set
+            get { return email; }
+            set
             {
                 try
                 {
-                    email = new MailAddress(value);
+                    MailAddress emailToSet = new MailAddress(value);
+                    email = emailToSet.ToString();
                 }
                 catch (SystemException)
                 {
@@ -75,10 +77,10 @@ namespace Domain
         }
 
         private DateTime birthdate;
-        public DateTime Birthdate
+        public virtual DateTime Birthdate
         {
             get { return birthdate; }
-            internal set
+            set
             {
                 var dateToSet = value.Date;
                 if (Utilities.IsTodayOrBefore(dateToSet))
@@ -95,59 +97,37 @@ namespace Domain
             }
         }
 
-        private readonly IPassword password = new Password();
-        public string Password
+        private string password;
+        public virtual string Password
         {
-            get { return password.PasswordValue; }
-            internal set
+            get { return password; }
+            set
             {
-                try
+                if (PasswordUtilities.IsValidPassword(value))
                 {
-                    password.PasswordValue = value;
+                    password = value;
                 }
-                catch (PasswordException exceptionCaught)
+                else
                 {
-                    throw new UserException(exceptionCaught.Message);
+                    string errorMessage = string.Format(CultureInfo.CurrentCulture,
+                        ErrorMessages.PasswordIsInvalid, value, PasswordUtilities.minimumLength,
+                        PasswordUtilities.maximumLength);
+                    throw new UserException(errorMessage);
                 }
             }
         }
 
-        public virtual bool HasAdministrationPrivileges => false;
+        public virtual bool HasAdministrationPrivileges { get; set; }
 
         internal string ResetPassword()
         {
-            return password.Reset();
+            string newPassword = PasswordUtilities.GenerateNewPassword();
+            password = newPassword;
+            return newPassword;
         }
 
-        private readonly List<Comment> commentsCreated = new List<Comment>();
-        public IReadOnlyCollection<Comment> CommentsCreated => commentsCreated.AsReadOnly();
-
-        private readonly List<Comment> commentsResolved = new List<Comment>();
-        public IReadOnlyCollection<Comment> CommentsResolved => commentsResolved.AsReadOnly();
-
-        internal void AddCreatedComment(Comment someComment)
-        {
-            if (!commentsCreated.Contains(someComment))
-            {
-                commentsCreated.Add(someComment);
-            }
-            else
-            {
-                throw new UserException(ErrorMessages.CommentAlreadyAdded);
-            }
-        }
-
-        internal void AddResolvedComment(Comment someComment)
-        {
-            if (!commentsResolved.Contains(someComment))
-            {
-                commentsResolved.Add(someComment);
-            }
-            else
-            {
-                throw new UserException(ErrorMessages.CommentAlreadyAdded);
-            }
-        }
+        public virtual ICollection<Team> AssociatedTeams { get; set; }
+            = new List<Team>();
 
         internal static User InstanceForTestingPurposes()
         {
@@ -158,28 +138,37 @@ namespace Domain
         {
             firstName = "Usuario";
             lastName = "inválido.";
-            email = new MailAddress("mailInvalido@usuarioInvalido");
+            email = "mailInvalido@usuarioInvalido";
+            password = "Contraseña inválida.";
         }
 
-        internal static User NamesEmailBirthdatePassword(string firstName, string lastName,
+        internal static User CreateNewAdministrator(string firstName, string lastName,
+            string email, DateTime birthdate, string password)
+        {
+            return new User(firstName, lastName, email, birthdate, password, true);
+        }
+
+        internal static User CreateNewCollaborator(string firstName, string lastName,
             string email, DateTime birthdate, string password)
         {
             return new User(firstName, lastName, email, birthdate, password);
         }
 
-        protected User(string firstNameToSet, string lastNameToSet, string emailToSet,
-            DateTime birthdateToSet, string passwordToSet)
+        private User(string firstNameToSet, string lastNameToSet, string emailToSet,
+            DateTime birthdateToSet, string passwordToSet, bool isAdministrator = false)
         {
             FirstName = firstNameToSet;
             LastName = lastNameToSet;
             Email = emailToSet;
             Birthdate = birthdateToSet;
             Password = passwordToSet;
+            HasAdministrationPrivileges = isAdministrator;
         }
 
         public override bool Equals(object obj)
         {
-            if (obj is User userToCompareAgainst)
+            User userToCompareAgainst = obj as User;
+            if (Utilities.IsNotNull(userToCompareAgainst))
             {
                 return HasSameEmail(userToCompareAgainst);
             }
@@ -191,7 +180,7 @@ namespace Domain
 
         private bool HasSameEmail(User other)
         {
-            return email.Equals(other.email);
+            return Email.Equals(other.Email);
         }
 
         public override int GetHashCode()
@@ -201,7 +190,7 @@ namespace Domain
 
         public override string ToString()
         {
-            return firstName + " " + lastName + " <" + Email + ">";
+            return FirstName + " " + LastName + " <" + Email + ">";
         }
     }
 }
