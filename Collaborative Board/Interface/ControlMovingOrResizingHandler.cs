@@ -6,9 +6,9 @@ using System.Windows.Forms;
 
 namespace GraphicInterface
 {
-
     /**
-    * Code adapted from http://stackoverflow.com/questions/2308987/resizing-controls-at-runtime
+    * Code adapted from 
+    * http://stackoverflow.com/questions/2308987/resizing-controls-at-runtime
     */
     internal static class ControlMovingOrResizingHandler
     {
@@ -207,13 +207,15 @@ namespace GraphicInterface
             ElementWhiteboard boardElement = interfaceObject.Tag as ElementWhiteboard;
             try
             {
-                ElementRepository.UpdateElementPositionAndSize(boardElement, interfaceObject.Size, interfaceObject.Location);
+                ElementRepository.UpdateElementPositionAndSize(boardElement, interfaceObject.Size,
+                    interfaceObject.Location);
+                WhiteboardVisualization.globalAssociations = ConnectionRepository.Elements;
             }
             catch (BoardException exception)
             {
+                InterfaceUtilities.ShowError(exception.Message, "Movimiento inválido");
                 interfaceObject.Location = controlInitialLocation;
                 interfaceObject.Size = controlInitialSize;
-                InterfaceUtilities.ShowError(exception.Message, "Movimiento inválido");
             }
             finally
             {
