@@ -56,9 +56,9 @@
             this.btnResetTeamScore.TabIndex = 9;
             this.btnResetTeamScore.Text = "REINICIAR PUNTAJE EQUIPO";
             this.btnResetTeamScore.UseVisualStyleBackColor = false;
-            this.btnResetTeamScore.Click += new System.EventHandler(this.btnResetTeamScore_Click);
-            this.btnResetTeamScore.MouseEnter += new System.EventHandler(this.btnResetTeamScore_MouseEnter);
-            this.btnResetTeamScore.MouseLeave += new System.EventHandler(this.btnResetTeamScore_MouseLeave);
+            this.btnResetTeamScore.Click += new System.EventHandler(this.BtnResetTeamScore_Click);
+            this.btnResetTeamScore.MouseEnter += new System.EventHandler(this.BtnResetTeamScore_MouseEnter);
+            this.btnResetTeamScore.MouseLeave += new System.EventHandler(this.BtnResetTeamScore_MouseLeave);
             // 
             // btnAssignScoreToEvents
             // 
@@ -71,9 +71,9 @@
             this.btnAssignScoreToEvents.TabIndex = 10;
             this.btnAssignScoreToEvents.Text = "ASIGNAR PUNTAJE A EVENTOS";
             this.btnAssignScoreToEvents.UseVisualStyleBackColor = false;
-            this.btnAssignScoreToEvents.Click += new System.EventHandler(this.btnAssignScoreToEvents_Click);
-            this.btnAssignScoreToEvents.MouseEnter += new System.EventHandler(this.btnAssignScoreToEvents_MouseEnter);
-            this.btnAssignScoreToEvents.MouseLeave += new System.EventHandler(this.btnAssignScoreToEvents_MouseLeave);
+            this.btnAssignScoreToEvents.Click += new System.EventHandler(this.BtnAssignScoreToEvents_Click);
+            this.btnAssignScoreToEvents.MouseEnter += new System.EventHandler(this.BtnAssignScoreToEvents_MouseEnter);
+            this.btnAssignScoreToEvents.MouseLeave += new System.EventHandler(this.BtnAssignScoreToEvents_MouseLeave);
             // 
             // btnTeamRanking
             // 
@@ -86,9 +86,9 @@
             this.btnTeamRanking.TabIndex = 11;
             this.btnTeamRanking.Text = "VER RANKING EQUIPO";
             this.btnTeamRanking.UseVisualStyleBackColor = false;
-            this.btnTeamRanking.Click += new System.EventHandler(this.btnTeamRanking_Click);
-            this.btnTeamRanking.MouseEnter += new System.EventHandler(this.btnTeamRanking_MouseEnter);
-            this.btnTeamRanking.MouseLeave += new System.EventHandler(this.btnTeamRanking_MouseLeave);
+            this.btnTeamRanking.Click += new System.EventHandler(this.BtnTeamRanking_Click);
+            this.btnTeamRanking.MouseEnter += new System.EventHandler(this.BtnTeamRanking_MouseEnter);
+            this.btnTeamRanking.MouseLeave += new System.EventHandler(this.BtnTeamRanking_MouseLeave);
             // 
             // lblScore
             // 
@@ -110,9 +110,9 @@
             this.btnHome.Size = new System.Drawing.Size(80, 62);
             this.btnHome.TabIndex = 13;
             this.btnHome.UseVisualStyleBackColor = true;
-            this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
-            this.btnHome.MouseEnter += new System.EventHandler(this.btnHome_MouseEnter);
-            this.btnHome.MouseLeave += new System.EventHandler(this.btnHome_MouseLeave);
+            this.btnHome.Click += new System.EventHandler(this.BtnHome_Click);
+            this.btnHome.MouseEnter += new System.EventHandler(this.BtnHome_MouseEnter);
+            this.btnHome.MouseLeave += new System.EventHandler(this.BtnHome_MouseLeave);
             // 
             // btnExit
             // 
@@ -123,7 +123,7 @@
             this.btnExit.Size = new System.Drawing.Size(80, 62);
             this.btnExit.TabIndex = 14;
             this.btnExit.UseVisualStyleBackColor = true;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            this.btnExit.Click += new System.EventHandler(this.BtnExit_Click);
             // 
             // dgvScoringBoard
             // 

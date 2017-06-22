@@ -17,48 +17,48 @@ namespace GraphicInterface
             systemPanel = somePanel;
         }
 
-        private void btnTeamRanking_MouseEnter(object sender, EventArgs e)
+        private void BtnTeamRanking_MouseEnter(object sender, EventArgs e)
         {
             btnTeamRanking.BackColor = Color.DimGray;
             btnTeamRanking.Font = new Font(btnTeamRanking.Font.Name, 16, FontStyle.Bold);
         }
 
-        private void btnTeamRanking_MouseLeave(object sender, EventArgs e)
+        private void BtnTeamRanking_MouseLeave(object sender, EventArgs e)
         {
             btnTeamRanking.BackColor = Color.Gray;
             btnTeamRanking.Font = new Font(btnTeamRanking.Font.Name, 14, FontStyle.Bold);
         }
 
-        private void btnAssignScoreToEvents_MouseEnter(object sender, EventArgs e)
+        private void BtnAssignScoreToEvents_MouseEnter(object sender, EventArgs e)
         {
             btnAssignScoreToEvents.BackColor = Color.DimGray;
             btnAssignScoreToEvents.Font = new Font(btnAssignScoreToEvents.Font.Name, 16, FontStyle.Bold);
         }
 
-        private void btnAssignScoreToEvents_MouseLeave(object sender, EventArgs e)
+        private void BtnAssignScoreToEvents_MouseLeave(object sender, EventArgs e)
         {
             btnAssignScoreToEvents.BackColor = Color.Gray;
             btnAssignScoreToEvents.Font = new Font(btnAssignScoreToEvents.Font.Name, 14, FontStyle.Bold);
         }
 
-        private void btnResetTeamScore_MouseEnter(object sender, EventArgs e)
+        private void BtnResetTeamScore_MouseEnter(object sender, EventArgs e)
         {
             btnResetTeamScore.BackColor = Color.DimGray;
             btnResetTeamScore.Font = new Font(btnResetTeamScore.Font.Name, 16, FontStyle.Bold);
         }
 
-        private void btnResetTeamScore_MouseLeave(object sender, EventArgs e)
+        private void BtnResetTeamScore_MouseLeave(object sender, EventArgs e)
         {
             btnResetTeamScore.BackColor = Color.Gray;
             btnResetTeamScore.Font = new Font(btnResetTeamScore.Font.Name, 14, FontStyle.Bold);
         }
 
-        private void btnAssignScoreToEvents_Click(object sender, EventArgs e)
+        private void BtnAssignScoreToEvents_Click(object sender, EventArgs e)
         {
             InterfaceUtilities.UCAssignScoreToEventsToPanel(systemPanel);
         }
 
-        private void btnExit_Click(object sender, EventArgs e)
+        private void BtnExit_Click(object sender, EventArgs e)
         {
             InterfaceUtilities.AskLogOff();
         }
@@ -117,29 +117,29 @@ namespace GraphicInterface
             }
         }
 
-        private void btnHome_Click(object sender, EventArgs e)
+        private void BtnHome_Click(object sender, EventArgs e)
         {
             InterfaceUtilities.GoToHomeRespectiveHome(systemPanel);
         }
 
-        private void btnHome_MouseEnter(object sender, EventArgs e)
+        private void BtnHome_MouseEnter(object sender, EventArgs e)
         {
             btnHome.Size = new Size(87, 67);
         }
 
-        private void btnHome_MouseLeave(object sender, EventArgs e)
+        private void BtnHome_MouseLeave(object sender, EventArgs e)
         {
             btnHome.Size = new Size(80, 62);
         }
 
-        private void btnResetTeamScore_Click(object sender, EventArgs e)
+        private void BtnResetTeamScore_Click(object sender, EventArgs e)
         {
             ResetTeamScore();
         }
 
         private void ResetTeamScore()
         {
-            if (Session.ActiveUser().HasAdministrationPrivileges)
+            if (Session.HasAdministrationPrivileges())
             {
                 if (dgvScoringBoard.SelectedRows.Count > 0)
                 {
@@ -149,7 +149,6 @@ namespace GraphicInterface
                     if (result == DialogResult.Yes)
                     {
                         Team teamScore = dgvScoringBoard.SelectedRows[0].Tag as Team;
-                        //UserScoresRepository.GetScoresForTeam(teamScore.Item1.Id);
                         UserScoresRepository.ResetTeamScore(teamScore.Id);
                         LoadTeamsWithTotalScores();
                     }
@@ -161,7 +160,7 @@ namespace GraphicInterface
             }
         }
 
-        private void btnTeamRanking_Click(object sender, EventArgs e)
+        private void BtnTeamRanking_Click(object sender, EventArgs e)
         {
             if (dgvScoringBoard.SelectedRows.Count > 0)
             {

@@ -12,7 +12,7 @@ namespace Persistence
         public DbSet<ScoringManager> GlobalScores { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<MemberScoring> Scores { get; set; }
-        public DbSet<Connection> Associations { get; set; }
+        public DbSet<Connection> Connections { get; set; }
 
         public BoardContext() : base()
         {

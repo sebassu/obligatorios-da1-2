@@ -14,7 +14,7 @@ namespace Persistence
             {
                 using (BoardContext context = new BoardContext())
                 {
-                    var elements = context.Associations.Include("Origin").Include("Destination");
+                    var elements = context.Connections.Include("Origin").Include("Destination");
                     return elements.ToList();
                 }
             }
@@ -25,7 +25,7 @@ namespace Persistence
         {
             using (var context = new BoardContext())
             {
-                bool associationAlreadyExists = context.Associations.Any(a => (a.Origin.Id == origin.Id
+                bool associationAlreadyExists = context.Connections.Any(a => (a.Origin.Id == origin.Id
                     && a.Destination.Id == destination.Id) || (a.Destination.Id == origin.Id
                     && a.Origin.Id == destination.Id));
                 if (associationAlreadyExists)
@@ -38,7 +38,7 @@ namespace Persistence
                         description, origin, destination, direction);
                     EntityFrameworkUtilities<ElementWhiteboard>.AttachIfIsValid(context, origin);
                     EntityFrameworkUtilities<ElementWhiteboard>.AttachIfIsValid(context, destination);
-                    context.Associations.Add(associationToAdd);
+                    context.Connections.Add(associationToAdd);
                     context.SaveChanges();
                     return associationToAdd;
                 }
@@ -63,10 +63,10 @@ namespace Persistence
 
         private static void PerformRemove(ElementWhiteboard origin, ElementWhiteboard destination, BoardContext context)
         {
-            Connection associationToRemove = context.Associations.Single(a => (a.Origin.Id == origin.Id
+            Connection associationToRemove = context.Connections.Single(a => (a.Origin.Id == origin.Id
                     && a.Destination.Id == destination.Id) || (a.Destination.Id == origin.Id
                     && a.Origin.Id == destination.Id));
-            context.Associations.Remove(associationToRemove);
+            context.Connections.Remove(associationToRemove);
             context.SaveChanges();
         }
     }
