@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Domain;
+using Persistence;
 
 namespace GraphicInterface
 {
@@ -21,6 +15,7 @@ namespace GraphicInterface
             this.systemPanel = systemPanel;
             this.teamToWorkWith = oneTeam;
             lblTeamSelected.Text = oneTeam.Name;
+            TeamRepository.LoadMembers(oneTeam);
             if (oneTeam.Members.Count == 1)
             {
                 btnRemoveUser.Enabled = false;

@@ -207,4 +207,25 @@
   <data name="InvalidWhiteboardDimensions" xml:space="preserve">
     <value>Dimensiones inválidas para el elemento recibido: escapan al pizarrón contenedor.</value>
   </data>
+  <data name="MemberIsInvalid" xml:space="preserve">
+    <value>Se ha recibido un usuario inválido para el equipo ingresado: "{0}" no es miembro de "{1}".</value>
+  </data>
+  <data name="MembersScoreIsInvalid" xml:space="preserve">
+    <value>Puntaje inválido: {0} (mínimo puntaje permitido es {1}).</value>
+  </data>
+  <data name="ScoreIsInvalid" xml:space="preserve">
+    <value>Puntaje inválido para el evento: {0} (mínimo puntaje permitido es {1}).</value>
+  </data>
+  <data name="FontIsNull" xml:space="preserve">
+    <value>La fuente de texto recibida es inválida (nula).</value>
+  </data>
+  <data name="ImageIsNull" xml:space="preserve">
+    <value>La imagen a mostrar es inválida (nula).</value>
+  </data>
+  <data name="AssociationElementIsInvalid" xml:space="preserve">
+    <value>El elemento es inválido para la asociación (no se permiten asociaciones cíclicas).</value>
+  </data>
+  <data name="InvalidDirection" xml:space="preserve">
+    <value>La direccionalidad recibida para la conexión no fue reconocida.</value>
+  </data>
 </root>

@@ -61,6 +61,33 @@ namespace Persistence {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Los elementos recibidos ya se encuentran asociados en el sentido indicado..
+        /// </summary>
+        internal static string AssociationAlreadyExists {
+            get {
+                return ResourceManager.GetString("AssociationAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Los elementos recibidos no se encuentran asociados..
+        /// </summary>
+        internal static string AssociationDoesNotExist {
+            get {
+                return ResourceManager.GetString("AssociationDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Es necesario poder modificar al pizarrón para poder crear un comentario en este elemento..
+        /// </summary>
+        internal static string CannotCreateComment {
+            get {
+                return ResourceManager.GetString("CannotCreateComment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No es posible instanciar un repositorio genérico..
         /// </summary>
         internal static string CannotInstantiateRepository {
@@ -111,6 +138,15 @@ namespace Persistence {
         internal static string EmailPasswordMismatch {
             get {
                 return ResourceManager.GetString("EmailPasswordMismatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Se recibió un elemento inválido..
+        /// </summary>
+        internal static string InvalidElementRecieved {
+            get {
+                return ResourceManager.GetString("InvalidElementRecieved", resourceCulture);
             }
         }
         
@@ -183,6 +219,24 @@ namespace Persistence {
         internal static string UserIsLoneMemberOfSomeTeam {
             get {
                 return ResourceManager.GetString("UserIsLoneMemberOfSomeTeam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No se encontró registro para el usuario en el equipo recibido..
+        /// </summary>
+        internal static string UserIsNotMemberOfTeam {
+            get {
+                return ResourceManager.GetString("UserIsNotMemberOfTeam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El usuario no es válido: no se encuentra registrado en el sistema..
+        /// </summary>
+        internal static string UserIsNotRegistered {
+            get {
+                return ResourceManager.GetString("UserIsNotRegistered", resourceCulture);
             }
         }
         

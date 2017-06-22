@@ -1,10 +1,10 @@
 ﻿using System;
 using Domain;
-using Exceptions;
+using System.Linq;
 using System.Drawing;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
+
 
 namespace UnitTests.DomainTests
 {
@@ -22,7 +22,7 @@ namespace UnitTests.DomainTests
 
         private static Whiteboard GenerateNonGenericTestSituation()
         {
-            User creator = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
+            User creator = User.CreateNewCollaborator("Emilio", "Ravenna",
                 "ravenna@simuladores.com", DateTime.Today, "HablarUnasPalabritas");
             Team ownerTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo 3",
                 "Descripción.", 5);
@@ -64,17 +64,17 @@ namespace UnitTests.DomainTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ElementException))]
         public void TextBoxSetInvalidMinimumWidthZeroTest()
         {
             testingTextBox.Width = 0;
+            Assert.AreEqual(0, testingTextBox.Width);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ElementException))]
         public void TextBoxSetInvalidNegativeWidthTest()
         {
             testingTextBox.Width = -10;
+            Assert.AreEqual(-10, testingTextBox.Width);
         }
 
         [TestMethod]
@@ -94,19 +94,18 @@ namespace UnitTests.DomainTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ElementException))]
         public void TextBoxSetInvalidMinimumHeightZeroTest()
         {
             testingTextBox.Height = 0;
+            Assert.AreEqual(0, testingTextBox.Height);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ElementException))]
         public void TextBoxSetInvalidNegativeHeightTest()
         {
             testingTextBox.Width = -10;
+            Assert.AreEqual(-10, testingTextBox.Width);
         }
-
 
         [TestMethod]
         public void TextBoxSetValidOriginPointTest()
@@ -158,11 +157,11 @@ namespace UnitTests.DomainTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ElementException))]
         public void TextBoxSetWidthConsideringContainerInvalidTest()
         {
             GenerateNonGenericTestSituation();
             testingTextBox.Width = 1000;
+            Assert.AreEqual(1000, testingTextBox.Width);
         }
 
         [TestMethod]
@@ -175,11 +174,11 @@ namespace UnitTests.DomainTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ElementException))]
         public void TextBoxSetHeightConsideringContainerInvalidTest()
         {
             GenerateNonGenericTestSituation();
             testingTextBox.Height = 3000;
+            Assert.AreEqual(3000, testingTextBox.Height);
         }
 
         [TestMethod]

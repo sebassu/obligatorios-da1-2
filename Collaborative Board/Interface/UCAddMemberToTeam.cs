@@ -27,7 +27,8 @@ namespace GraphicInterface
 
         private void LoadNotMembersOfTeam()
         {
-            var globalUsers = UserRepository.GetInstance().Elements;
+            var globalUsers = UserRepository.Elements;
+            TeamRepository.LoadMembers(teamToWorkWith);
             var notMembersOfTeam = globalUsers.Where(u => !teamToWorkWith.Members.Contains(u)).ToList();
             if (Utilities.IsEmpty(notMembersOfTeam))
             {
@@ -58,8 +59,7 @@ namespace GraphicInterface
         private void PerfomAddAction()
         {
             User userToAdd = lstUsers.SelectedItems[0].Tag as User;
-            TeamRepository globalTeams = TeamRepository.GetInstance();
-            globalTeams.AddMemberToTeam(teamToWorkWith, userToAdd);
+            TeamRepository.AddMemberToTeam(teamToWorkWith, userToAdd);
             InterfaceUtilities.UCAdministrateTeamToPanel(systemPanel, teamToWorkWith);
             InterfaceUtilities.SuccessfulOperation();
         }

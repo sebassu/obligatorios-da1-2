@@ -1,5 +1,5 @@
 ﻿using System;
-using Exceptions;
+using System.Linq;
 using System.Globalization;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -11,11 +11,13 @@ namespace Domain
     {
         private const byte absoluteMinimumMembers = 1;
 
+        public int Id { get; set; }
+
         private string name;
-        public string Name
+        public virtual string Name
         {
             get { return name; }
-            internal set
+            set
             {
                 if (IsValidTeamName(value))
                 {
@@ -38,10 +40,10 @@ namespace Domain
         public DateTime CreationDate { get; } = DateTime.Now;
 
         private string description;
-        public string Description
+        public virtual string Description
         {
             get { return description; }
-            internal set
+            set
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
@@ -55,13 +57,13 @@ namespace Domain
         }
 
         private int maximumMembers;
-        public int MaximumMembers
+        public virtual int MaximumMembers
         {
             get { return maximumMembers; }
-            internal set
+            set
             {
                 int minimumMembersNeeded =
-                    Math.Max(absoluteMinimumMembers, members.Count);
+                    Math.Max(absoluteMinimumMembers, Members.Count);
                 if (value >= minimumMembersNeeded)
                 {
                     maximumMembers = value;
@@ -87,24 +89,19 @@ namespace Domain
             return errorMessage;
         }
 
-        private readonly List<User> members = new List<User>();
-        public IReadOnlyCollection<User> Members => members.AsReadOnly();
+        public virtual ICollection<User> Members { get; set; }
+            = new List<User>();
 
-        private readonly List<Whiteboard> createdWhiteboards = new List<Whiteboard>();
-        public IReadOnlyCollection<Whiteboard> CreatedWhiteboards
-        {
-            get
-            {
-                return createdWhiteboards.AsReadOnly();
-            }
-        }
+        public virtual ICollection<Whiteboard> CreatedWhiteboards { get; set; }
+            = new List<Whiteboard>();
 
         internal void AddMember(User userToAdd)
         {
             bool canBeMember = Utilities.IsNotNull(userToAdd) && IsPossibleToAdd(userToAdd);
             if (canBeMember)
             {
-                members.Add(userToAdd);
+                Members.Add(userToAdd);
+                userToAdd.AssociatedTeams.Add(this);
             }
             else
             {
@@ -114,7 +111,7 @@ namespace Domain
 
         private bool IsPossibleToAdd(User someUser)
         {
-            return members.Count < maximumMembers && !members.Contains(someUser);
+            return Members.Count < maximumMembers && !Members.Contains(someUser);
         }
 
         internal void RemoveMember(User userToRemove)
@@ -123,11 +120,15 @@ namespace Domain
             {
                 throw new TeamException(ErrorMessages.CannotRemoveUser);
             }
+            else
+            {
+                userToRemove.AssociatedTeams.Remove(this);
+            }
         }
 
         private bool WasRemoved(User userToRemove)
         {
-            return members.Count > absoluteMinimumMembers && members.Remove(userToRemove);
+            return Members.Count > absoluteMinimumMembers && Members.Remove(userToRemove);
         }
 
         internal void AddWhiteboard(Whiteboard whiteboardToAdd)
@@ -144,10 +145,11 @@ namespace Domain
 
         private void AddWhiteboardToCollectionIfPossible(Whiteboard whiteboardToAdd)
         {
-            bool isPossibleToAddWhiteboard = !createdWhiteboards.Contains(whiteboardToAdd);
+            bool isPossibleToAddWhiteboard = !CreatedWhiteboards.ToList()
+                .Exists(w => w.Name.Equals(whiteboardToAdd.Name));
             if (isPossibleToAddWhiteboard)
             {
-                createdWhiteboards.Add(whiteboardToAdd);
+                CreatedWhiteboards.Add(whiteboardToAdd);
             }
             else
             {
@@ -157,7 +159,7 @@ namespace Domain
 
         internal void RemoveWhiteboard(Whiteboard someWhiteboard)
         {
-            bool whiteboardWasRemoved = createdWhiteboards.Remove(someWhiteboard);
+            bool whiteboardWasRemoved = CreatedWhiteboards.Remove(someWhiteboard);
             if (!whiteboardWasRemoved)
             {
                 throw new TeamException(ErrorMessages.NotAddedWhiteboardRecieved);
@@ -169,13 +171,11 @@ namespace Domain
             return new Team();
         }
 
-        private Team()
+        protected Team()
         {
-            User defaultCreator = User.InstanceForTestingPurposes();
-            name = "Equipo inválido.";
+            name = "Equipo inválido";
             description = "Descripción inválida.";
             maximumMembers = int.MaxValue;
-            members.Add(defaultCreator);
         }
 
         internal static Team CreatorNameDescriptionMaximumMembers(User creator, string name,
@@ -189,12 +189,13 @@ namespace Domain
             Name = nameToSet;
             Description = descriptionToSet;
             MaximumMembers = maximumMembersToSet;
-            members.Add(creator);
+            AddMember(creator);
         }
 
         public override bool Equals(object obj)
         {
-            if (obj is Team teamToCompareAgainst)
+            Team teamToCompareAgainst = obj as Team;
+            if (Utilities.IsNotNull(teamToCompareAgainst))
             {
                 return HasSameName(teamToCompareAgainst);
             }

@@ -1,12 +1,13 @@
 ﻿using System;
-using Exceptions;
 
 namespace Domain
 {
     public class Comment
     {
+        public virtual int Id { get; set; }
+
         private string text;
-        public string Text
+        public virtual string Text
         {
             get { return text; }
             set
@@ -22,33 +23,23 @@ namespace Domain
             }
         }
 
-        public DateTime CreationDate { get; } = DateTime.Now;
+        public virtual DateTime CreationDate { get; set; } = DateTime.Now;
 
-        public User Creator { get; }
+        public virtual string CreatorEmail { get; set; }
 
-        internal ElementWhiteboard AssociatedElement { get; }
+        public virtual ElementWhiteboard AssociatedElement { get; set; }
 
         public Whiteboard AssociatedWhiteboard
         {
             get { return AssociatedElement.Container; }
         }
 
-        private DateTime resolutionDate;
-        public DateTime ResolutionDate()
-        {
-            if (resolutionDate != DateTime.MinValue)
-            {
-                return resolutionDate;
-            }
-            else
-            {
-                throw new CommentException(ErrorMessages.UnresolvedComment);
-            }
-        }
+        // Minimum value for database DateTime.
+        public virtual DateTime ResolutionDate { get; set; } = new DateTime(1753, 1, 1);
 
-        public User Resolver { get; private set; }
+        public virtual string ResolverEmail { get; set; }
 
-        public void Resolve(User someResolver)
+        public void Resolve(User resolver)
         {
             if (IsResolved)
             {
@@ -56,15 +47,15 @@ namespace Domain
             }
             else
             {
-                ProcessResolutionIfPossible(someResolver);
+                ProcessResolutionIfPossible(resolver);
             }
         }
 
-        private void ProcessResolutionIfPossible(User someResolver)
+        private void ProcessResolutionIfPossible(User resolver)
         {
-            if (Utilities.IsNotNull(someResolver))
+            if (Utilities.IsNotNull(resolver))
             {
-                SetResolutionAttributes(someResolver);
+                SetResolutionAttributes(resolver);
             }
             else
             {
@@ -72,40 +63,35 @@ namespace Domain
             }
         }
 
-        private void SetResolutionAttributes(User someResolver)
+        private void SetResolutionAttributes(User resolver)
         {
-            Resolver = someResolver;
-            someResolver.AddResolvedComment(this);
-            resolutionDate = DateTime.Now;
+            ResolverEmail = resolver.Email;
+            ResolutionDate = DateTime.Now;
         }
 
+        // Valid since resolutionDate will never be set to the mentioned date, which represents 
+        // a date that already passed. Usage of DateTime? (System.Nullable<DateTime>) was considered
+        // but decided against due to the boxing/unboxing overhead as well as the previous alternative.
         public bool IsResolved
         {
             get
             {
-                return ResolutionDateWasSet();
+                bool resolutionDateWasSet = ResolutionDate != new DateTime(1753, 1, 1);
+                return resolutionDateWasSet;
             }
-        }
-
-        // Valid since resolutionDate will never be set to DateTime.MinValue, which represents 
-        // a date that already passed. Usage of DateTime? (System.Nullable<DateTime>) was considered
-        // but decided against due to the boxing/unboxing overhead as well as the previous alternative.
-        private bool ResolutionDateWasSet()
-        {
-            return (resolutionDate != DateTime.MinValue);
         }
 
         public static Comment InstanceForTestingPurposes()
         {
-            return new Comment();
+            return new Comment()
+            {
+                text = "Comentario inválido.",
+                CreatorEmail = User.InstanceForTestingPurposes().Email,
+                AssociatedElement = TextBoxWhiteboard.InstanceForTestingPurposes()
+            };
         }
 
-        private Comment()
-        {
-            text = "Comentario inválido.";
-            Creator = User.InstanceForTestingPurposes();
-            AssociatedElement = TextBoxWhiteboard.InstanceForTestingPurposes();
-        }
+        protected Comment() { }
 
         public static Comment CreatorElementText(User someCreator,
             ElementWhiteboard someElement, string someText)
@@ -119,10 +105,7 @@ namespace Domain
                 && Utilities.IsNotNull(someElement);
             if (creationParametersAreValid)
             {
-                Creator = someCreator;
-                AssociatedElement = someElement;
-                Text = someText;
-                UpdateReferencesComments(someElement);
+                SetInicializationAttributes(someCreator, someElement, someText);
             }
             else
             {
@@ -130,15 +113,19 @@ namespace Domain
             }
         }
 
-        private void UpdateReferencesComments(ElementWhiteboard someElement)
+        private void SetInicializationAttributes(User someCreator,
+            ElementWhiteboard someElement, string someText)
         {
-            Creator.AddCreatedComment(this);
+            CreatorEmail = someCreator.Email;
+            AssociatedElement = someElement;
+            Text = someText;
             someElement.AddComment(this);
         }
 
         public override bool Equals(object obj)
         {
-            if (obj is Comment commentToCompareAgainst)
+            Comment commentToCompareAgainst = obj as Comment;
+            if (Utilities.IsNotNull(commentToCompareAgainst))
             {
                 return CreatorDateAndTextAreEqual(commentToCompareAgainst);
             }
@@ -150,7 +137,7 @@ namespace Domain
 
         private bool CreatorDateAndTextAreEqual(Comment commentToCompareAgainst)
         {
-            return Creator.Equals(commentToCompareAgainst.Creator) &&
+            return CreatorEmail.Equals(commentToCompareAgainst.CreatorEmail) &&
                 text.Equals(commentToCompareAgainst.text) &&
                 CreationDate.Equals(commentToCompareAgainst.CreationDate);
         }
@@ -163,7 +150,7 @@ namespace Domain
         public override string ToString()
         {
             return Text + " <" + Utilities.GetDateToShow(CreationDate) + ">"
-                + " <" + Creator.Email + ">";
+                + " <" + CreatorEmail + ">";
         }
     }
 }

@@ -70,6 +70,15 @@ namespace Domain {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to El elemento es inválido para la asociación (no se permiten asociaciones cíclicas)..
+        /// </summary>
+        internal static string AssociationElementIsInvalid {
+            get {
+                return ResourceManager.GetString("AssociationElementIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fecha de nacimiento inválida recibida: &quot;{0}&quot;..
         /// </summary>
         internal static string BirthdateIsInvalid {
@@ -160,6 +169,15 @@ namespace Domain {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to La fuente de texto recibida es inválida (nula)..
+        /// </summary>
+        internal static string FontIsNull {
+            get {
+                return ResourceManager.GetString("FontIsNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Altura inválida recibida: genera situación en los cuales elementos escapan al pizarrón..
         /// </summary>
         internal static string HeightIsInvalid {
@@ -169,11 +187,29 @@ namespace Domain {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to La imagen a mostrar es inválida (nula)..
+        /// </summary>
+        internal static string ImageIsNull {
+            get {
+                return ResourceManager.GetString("ImageIsNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ha ocurrido un error al intentar cargar la imagen, verifique que la ruta que ha introducido es válida y no se ha movido o renombrado a la misma..
         /// </summary>
         internal static string ImageLoadingError {
             get {
                 return ResourceManager.GetString("ImageLoadingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La direccionalidad recibida para la conexión no fue reconocida..
+        /// </summary>
+        internal static string InvalidDirection {
+            get {
+                return ResourceManager.GetString("InvalidDirection", resourceCulture);
             }
         }
         
@@ -201,6 +237,24 @@ namespace Domain {
         internal static string LastNameIsInvalid {
             get {
                 return ResourceManager.GetString("LastNameIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Se ha recibido un usuario inválido para el equipo ingresado: &quot;{0}&quot; no es miembro de &quot;{1}&quot;..
+        /// </summary>
+        internal static string MemberIsInvalid {
+            get {
+                return ResourceManager.GetString("MemberIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Puntaje inválido: {0} (mínimo puntaje permitido es {1})..
+        /// </summary>
+        internal static string MembersScoreIsInvalid {
+            get {
+                return ResourceManager.GetString("MembersScoreIsInvalid", resourceCulture);
             }
         }
         
@@ -282,6 +336,15 @@ namespace Domain {
         internal static string RepeatedWhiteboardName {
             get {
                 return ResourceManager.GetString("RepeatedWhiteboardName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Puntaje inválido para el evento: {0} (mínimo puntaje permitido es {1})..
+        /// </summary>
+        internal static string ScoreIsInvalid {
+            get {
+                return ResourceManager.GetString("ScoreIsInvalid", resourceCulture);
             }
         }
         

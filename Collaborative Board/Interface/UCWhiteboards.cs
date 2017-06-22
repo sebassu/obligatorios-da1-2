@@ -19,9 +19,9 @@ namespace GraphicInterface
 
         private static bool ActiveUserBelongsToAnyTeam()
         {
-            TeamRepository globalTeams = TeamRepository.GetInstance();
             User activeUser = Session.ActiveUser();
-            return globalTeams.Elements.Any(t => t.Members.Contains(activeUser));
+            UserRepository.LoadAssociatedTeams(activeUser);
+            return activeUser.AssociatedTeams.Any();
         }
 
         private void BtnAdd_MouseEnter(object sender, EventArgs e)
@@ -89,22 +89,18 @@ namespace GraphicInterface
 
         private void BtnHome_Click(object sender, EventArgs e)
         {
-            InterfaceUtilities.GoToHome(systemPanel);
+            InterfaceUtilities.GoToHomeRespectiveHome(systemPanel);
         }
 
         private void UCWhiteboards_Load(object sender, EventArgs e)
         {
-            if (!Session.HasAdministrationPrivileges())
-            {
-                btnHome.Visible = false;
-            }
             LoadRegisteredWhiteboards();
         }
 
         private void LoadRegisteredWhiteboards()
         {
             lstRegisteredWhiteboards.Clear();
-            var globalWhiteboards = WhiteboardRepository.GetInstance().Elements
+            var globalWhiteboards = WhiteboardRepository.Elements
                 .Where(w => ValidateWhiteboardIsToBeShown(w)).ToList();
             if (globalWhiteboards.Count() > 0)
             {
@@ -125,6 +121,7 @@ namespace GraphicInterface
 
         private static bool ValidateWhiteboardIsToBeShown(Whiteboard oneWhiteboard)
         {
+            TeamRepository.LoadMembers(oneWhiteboard.OwnerTeam);
             bool whiteboardTeamHasLoggedInUser = oneWhiteboard.OwnerTeam.Members.Contains(Session.ActiveUser());
             return whiteboardTeamHasLoggedInUser || Session.HasAdministrationPrivileges();
         }
@@ -177,8 +174,8 @@ namespace GraphicInterface
 
         private void DeleteWhiteboard(Whiteboard whiteboardToDelete)
         {
-            WhiteboardRepository globalWhiteboards = WhiteboardRepository.GetInstance();
-            globalWhiteboards.Remove(whiteboardToDelete);
+            TeamRepository.LoadCreatedWhiteboards(whiteboardToDelete.OwnerTeam);
+            WhiteboardRepository.Remove(whiteboardToDelete);
             LoadRegisteredWhiteboards();
             InterfaceUtilities.SuccessfulOperation();
         }

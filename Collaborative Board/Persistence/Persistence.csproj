@@ -31,8 +31,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,29 +49,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="RepositoryInMemory.cs" />
+    <Compile Include="ConnectionRepository.cs" />
+    <Compile Include="BoardContext.cs" />
+    <Compile Include="CommentRepository.cs" />
+    <Compile Include="ElementRepository.cs" />
+    <Compile Include="EntityFrameworkUtilities.cs" />
+    <Compile Include="ScoringManagerRepository.cs" />
+    <Compile Include="TeamRepository.cs" />
+    <Compile Include="UserScoresRepository.cs" />
+    <Compile Include="WhiteboardRepository.cs" />
     <Compile Include="ErrorMessages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ErrorMessages.resx</DependentUpon>
     </Compile>
     <Compile Include="Session.cs" />
-    <Compile Include="TeamRepository.cs" />
-    <Compile Include="TeamRepositoryInMemory.cs" />
     <Compile Include="UserRepository.cs" />
-    <Compile Include="UserRepositoryInMemory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WhiteboardRepository.cs" />
-    <Compile Include="WhiteboardRepositoryInMemory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj">
       <Project>{e2d4611c-b91b-4250-bab2-83fa754108d4}</Project>
       <Name>Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Exceptions\Exceptions.csproj">
-      <Project>{3dee1d1c-11b9-4470-8f2b-b2b828fd3ec6}</Project>
-      <Name>Exceptions</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -73,7 +80,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="PersistenceClassDiagram.cd" />
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

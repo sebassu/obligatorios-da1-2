@@ -21,10 +21,10 @@ namespace GraphicInterface
 
         private void LoadTeamComobox()
         {
-            var globalTeams = TeamRepository.GetInstance();
-            if (globalTeams.HasElements())
+            var elementsToAdd = TeamRepository.Elements.ToArray();
+            if (elementsToAdd.Length > 0)
             {
-                cmbTeams.Items.AddRange(globalTeams.Elements.ToArray());
+                cmbTeams.Items.AddRange(elementsToAdd);
                 cmbTeams.SelectedIndex = 0;
             }
             else
@@ -69,8 +69,7 @@ namespace GraphicInterface
         private void LoadGridViewWithWhiteboardsFilteringBy(Func<Whiteboard, bool> filteringFunction)
         {
             dgvWhiteboardsCreatedByTeam.Rows.Clear();
-            var whiteboardsToShow = WhiteboardRepository.GetInstance().Elements
-                .Where(p => filteringFunction(p)).ToList();
+            var whiteboardsToShow = WhiteboardRepository.Elements.Where(p => filteringFunction(p)).ToList();
             if (Utilities.IsEmpty(whiteboardsToShow))
             {
                 dgvWhiteboardsCreatedByTeam.Rows.Add("Sin", "datos", "a", " mostrar.");

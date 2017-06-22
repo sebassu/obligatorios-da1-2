@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Windows.Forms;
 using Persistence;
 using Domain;
+using System.Collections.Generic;
 
 namespace GraphicInterface
 {
@@ -48,10 +48,17 @@ namespace GraphicInterface
 
         private void LoadTeamComboboxWithActiveUsersTeams()
         {
-            var globalTeams = TeamRepository.GetInstance();
             var activeUser = Session.ActiveUser();
-            var teamsToShow = globalTeams.Elements.Where(t => t.Members.Contains(activeUser));
-            cmbOwnerTeam.Items.AddRange(teamsToShow.ToArray());
+            List<Team> teams = TeamRepository.Elements;
+            UserRepository.LoadAssociatedTeams(activeUser);
+            foreach (Team teamToShow in activeUser.AssociatedTeams)
+            {
+                if (teams.Contains(teamToShow))
+                {
+                    cmbOwnerTeam.Items.Add(teamToShow);
+                }
+           
+            }
         }
 
         private void BtnAccept_Click(object sender, EventArgs e)
@@ -61,19 +68,18 @@ namespace GraphicInterface
 
         private void PerformChangeAction()
         {
-            WhiteboardRepository globalWhiteboards = WhiteboardRepository.GetInstance();
             int widthToSet = (int)numWidth.Value;
             int heightToSet = (int)numHeight.Value;
             bool isForModification = Utilities.IsNotNull(whiteboardToModify);
             if (isForModification)
             {
-                globalWhiteboards.ModifyWhiteboard(whiteboardToModify, txtName.Text,
+                WhiteboardRepository.ModifyWhiteboard(whiteboardToModify, txtName.Text,
                     rtbDescription.Text, widthToSet, heightToSet);
             }
             else
             {
                 Team teamToSet = cmbOwnerTeam.SelectedItem as Team;
-                globalWhiteboards.AddNewWhiteboard(txtName.Text,
+                WhiteboardRepository.AddNewWhiteboard(txtName.Text,
                     rtbDescription.Text, teamToSet, widthToSet, heightToSet);
             }
             InterfaceUtilities.UCWhiteboardsToPanel(systemPanel);

@@ -80,7 +80,7 @@ namespace GraphicInterface
         private void LoadRegisteredUsers()
         {
             lstUsers.Clear();
-            var globalUsers = UserRepository.GetInstance().Elements.ToList();
+            var globalUsers = UserRepository.Elements;
             foreach (User oneUser in globalUsers)
             {
                 ListViewItem itemToAdd = new ListViewItem(oneUser.ToString()) { Tag = oneUser };
@@ -112,7 +112,6 @@ namespace GraphicInterface
             {
                 InterfaceUtilities.NotElementSelectedMessageBox();
             }
-
         }
 
         private void BtnDelete_Click(object sender, EventArgs e)
@@ -130,8 +129,7 @@ namespace GraphicInterface
 
         private void DeleteUser(User oneUser)
         {
-            UserRepository globalUsers = UserRepository.GetInstance();
-            globalUsers.Remove(oneUser);
+            UserRepository.Remove(oneUser);
             InterfaceUtilities.SuccessfulOperation();
             if (oneUser.Equals(Session.ActiveUser()))
             {

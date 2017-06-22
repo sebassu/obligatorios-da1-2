@@ -1,11 +1,10 @@
 ﻿using System;
 using Domain;
 using System.IO;
-using Exceptions;
+using System.Linq;
 using System.Drawing;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
 
 namespace UnitTests.DomainTests
 {
@@ -14,6 +13,8 @@ namespace UnitTests.DomainTests
     public class ImageWhiteboardTests
     {
         private static ImageWhiteboard testingImage;
+        private static readonly string testImageLocation = Directory.GetParent(
+            Directory.GetCurrentDirectory()).Parent.FullName + "\\..\\Resources\\TestImage.jpg";
 
         [TestInitialize]
         public void TestSetup()
@@ -23,9 +24,7 @@ namespace UnitTests.DomainTests
 
         private static Whiteboard GenerateNonGenericTestSituation()
         {
-            string testImageLocation = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName
-                + "\\..\\Resources\\TestImage.jpg";
-            User creator = User.NamesEmailBirthdatePassword("Emilio", "Ravenna",
+            User creator = User.CreateNewCollaborator("Emilio", "Ravenna",
                 "ravenna@simuladores.com", DateTime.Today, "HablarUnasPalabritas");
             Team ownerTeam = Team.CreatorNameDescriptionMaximumMembers(creator, "Equipo 3", "Descripción.", 5);
             Whiteboard imageContainer = Whiteboard.CreatorNameDescriptionOwnerTeamWidthHeight(creator,
@@ -66,17 +65,17 @@ namespace UnitTests.DomainTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ElementException))]
         public void ImageSetInvalidMinimumWidthZeroTest()
         {
             testingImage.Width = 0;
+            Assert.AreEqual(0, testingImage.Width);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ElementException))]
         public void ImageSetInvalidNegativeWidthTest()
         {
             testingImage.Width = -10;
+            Assert.AreEqual(-10, testingImage.Width);
         }
 
         [TestMethod]
@@ -96,17 +95,17 @@ namespace UnitTests.DomainTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ElementException))]
         public void ImageSetInvalidMinimumHeightZeroTest()
         {
             testingImage.Height = 0;
+            Assert.AreEqual(0, testingImage.Height);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ElementException))]
         public void ImageSetInvalidNegativeHeightTest()
         {
-            testingImage.Width = -10;
+            testingImage.Height = -10;
+            Assert.AreEqual(-10, testingImage.Height);
         }
 
 
@@ -200,11 +199,11 @@ namespace UnitTests.DomainTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ElementException))]
         public void ImageSetWidthConsideringContainerInvalidTest()
         {
             GenerateNonGenericTestSituation();
             testingImage.Width = 1000;
+            Assert.AreEqual(1000, testingImage.Width);
         }
 
         [TestMethod]
@@ -217,11 +216,11 @@ namespace UnitTests.DomainTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ElementException))]
         public void ImageSetHeightConsideringContainerInvalidTest()
         {
             GenerateNonGenericTestSituation();
             testingImage.Height = 3000;
+            Assert.AreEqual(3000, testingImage.Height);
         }
 
         [TestMethod]
@@ -272,8 +271,6 @@ namespace UnitTests.DomainTests
         [TestMethod]
         public void ImageParameterFactoryMethodValidTest()
         {
-            string testImageLocation = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName
-                + "\\..\\Resources\\TestImage.jpg";
             Image testImageObject = Image.FromFile(testImageLocation);
             Whiteboard imageContainer = GenerateNonGenericTestSituation();
             Assert.AreEqual(300, testingImage.Width);
@@ -293,8 +290,6 @@ namespace UnitTests.DomainTests
         [ExpectedException(typeof(ElementException))]
         public void ImageParameterFactoryMethodNullWhiteboardTest()
         {
-            string testImageLocation = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName
-                + "\\..\\Resources\\TestImage.jpg";
             testingImage = ImageWhiteboard.CreateWithContainerSource(null, testImageLocation);
         }
 
