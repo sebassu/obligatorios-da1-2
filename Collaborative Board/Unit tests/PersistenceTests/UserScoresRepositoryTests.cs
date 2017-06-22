@@ -2,10 +2,12 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Persistence;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace UnitTests.PersistenceTests
 {
     [TestClass]
+    [ExcludeFromCodeCoverage]
     public class UserScoresRepositoryTests
     {
         private static User lynott;

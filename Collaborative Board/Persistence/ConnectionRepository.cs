@@ -30,7 +30,7 @@ namespace Persistence
                     && a.Origin.Id == destination.Id));
                 if (associationAlreadyExists)
                 {
-                    throw new RepositoryException(ErrorMessages.AssociationAlreadyExists);
+                    throw new RepositoryException(ErrorMessages.ConnectionAlreadyExists);
                 }
                 else
                 {
@@ -56,18 +56,29 @@ namespace Persistence
                 }
                 catch (InvalidOperationException)
                 {
-                    throw new RepositoryException(ErrorMessages.AssociationDoesNotExist);
+                    throw new RepositoryException(ErrorMessages.ConnectionDoesNotExist);
                 }
             }
         }
 
         private static void PerformRemove(ElementWhiteboard origin, ElementWhiteboard destination, BoardContext context)
         {
-            Connection associationToRemove = context.Connections.Single(a => (a.Origin.Id == origin.Id
+            Connection connectionToRemove = context.Connections.Single(a => (a.Origin.Id == origin.Id
                     && a.Destination.Id == destination.Id) || (a.Destination.Id == origin.Id
                     && a.Origin.Id == destination.Id));
-            context.Connections.Remove(associationToRemove);
+            context.Connections.Remove(connectionToRemove);
             context.SaveChanges();
+        }
+
+        internal static void RemoveAllConectionsWith(ElementWhiteboard elementToRemove)
+        {
+            using (var context = new BoardContext())
+            {
+                var connectionsToRemove = context.Connections.Where(a => (a.Origin.Id == elementToRemove.Id)
+                    || (a.Origin.Id == elementToRemove.Id));
+                context.Connections.RemoveRange(connectionsToRemove);
+                context.SaveChanges();
+            }
         }
     }
 }

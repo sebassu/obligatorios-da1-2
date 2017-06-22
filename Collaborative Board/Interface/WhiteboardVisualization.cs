@@ -204,7 +204,7 @@ namespace GraphicInterface
         {
             ElementRepository.Remove(domainElement);
             pnlWhiteboard.Controls.Remove(interfaceContainer);
-            pnlWhiteboard.Update();
+            DeepRepaint(pnlWhiteboard);
         }
 
         private void BtnAddText_Click(object sender, EventArgs e)
@@ -250,8 +250,8 @@ namespace GraphicInterface
             {
                 if (!origin.Equals(someElement))
                 {
-					new ConnectionRegistration(origin, someElement, pnlWhiteboard).ShowDialog();
-					addAssociationItemsRemaining = 0;
+                    new ConnectionRegistration(origin, someElement, pnlWhiteboard).ShowDialog();
+                    addAssociationItemsRemaining = 0;
                 }
                 else
                 {
