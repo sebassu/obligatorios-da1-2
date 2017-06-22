@@ -13,9 +13,12 @@ namespace GraphicInterface
     public partial class Association : Form
     {
         private Association selectedAssociation;
-        public Association()
+        public Association(Association selectedAssociation)
         {
             InitializeComponent();
+            this.selectedAssociation = selectedAssociation;
         }
+
+
     }
 }

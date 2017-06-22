@@ -239,11 +239,20 @@ namespace GraphicInterface
             }
             else if (addAssociationItemsRemaining == 1)
             {
-                Domain.Association associationToAdd = AssociationRepository.AddNewAssociation(origin,
-                    someElement);
-                globalAssociations.Add(associationToAdd);
-                addAssociationItemsRemaining = 0;
-                pnlWhiteboard.Invalidate();
+                if (!origin.Equals(someElement))
+                {
+                    Domain.Association associationToAdd = AssociationRepository.AddNewAssociation(origin,
+                        someElement);
+                    globalAssociations.Add(associationToAdd);
+                    addAssociationItemsRemaining = 0;
+                    pnlWhiteboard.Invalidate();
+                }
+                else
+                {
+                    addAssociationItemsRemaining = 0;
+                    MessageBox.Show("Debe seleccionar dos elementos distintos.",
+                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -252,14 +261,23 @@ namespace GraphicInterface
             if (removeAssociationItemsRemaining == 2)
             {
                 origin = someElement;
-                addAssociationItemsRemaining -= 1;
+                removeAssociationItemsRemaining -= 1;
             }
             else if (removeAssociationItemsRemaining == 1)
             {
-                AssociationRepository.RemoveAssociation(origin, someElement);
-                globalAssociations = AssociationRepository.Elements;
-                addAssociationItemsRemaining = 0;
-                MessageBox.Show("Wololo");
+                if (!origin.Equals(someElement))
+                {
+                    AssociationRepository.RemoveAssociation(origin, someElement);
+                    globalAssociations = AssociationRepository.Elements;
+                    removeAssociationItemsRemaining = 0;
+                    pnlWhiteboard.Invalidate();
+                }
+                else
+                {
+                    removeAssociationItemsRemaining = 0;
+                    MessageBox.Show("Debe seleccionar dos elementos distintos.",
+                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -373,14 +391,32 @@ namespace GraphicInterface
 
         private void AddAssociationButton_Click(object sender, EventArgs e)
         {
-            addAssociationItemsRemaining = 2;
-            removeAssociationItemsRemaining = 0;
+            if (whiteboardShown.Contents.Count > 1)
+            {
+                addAssociationItemsRemaining = 2;
+                removeAssociationItemsRemaining = 0;
+            }
+            else
+            {
+                MessageBox.Show("Cantidad de elementos en el " +
+                    "pizarrón insuficiente para realizar acción.",
+                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void RemoveAssociationButton_Click(object sender, EventArgs e)
         {
-            addAssociationItemsRemaining = 0;
-            removeAssociationItemsRemaining = 2;
+            if (whiteboardShown.Contents.Count > 1)
+            {
+                addAssociationItemsRemaining = 0;
+                removeAssociationItemsRemaining = 2;
+            }
+            else
+            {
+                MessageBox.Show("Cantidad de elementos en el " +
+                    "pizarrón insuficiente para realizar acción.",
+                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
