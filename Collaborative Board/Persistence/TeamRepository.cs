@@ -173,7 +173,7 @@ namespace Persistence
                 context.Scores.Remove(scoringToRemove);
                 context.SaveChanges();
             }
-            catch (InvalidOperationException e)
+            catch (InvalidOperationException)
             {
                 throw new RepositoryException(ErrorMessages.InvalidElementRecieved);
             }

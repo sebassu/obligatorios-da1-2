@@ -10,20 +10,22 @@ namespace GraphicInterface
         private ElementWhiteboard origin;
         private ElementWhiteboard destination;
         private Panel whiteboardPanel;
+        private Whiteboard whiteboardShown;
 
         public ConnectionRegistration(ElementWhiteboard someOrigin,
-            ElementWhiteboard someDestination, Panel somePanel)
+            ElementWhiteboard someDestination, Panel somePanel, Whiteboard someWhiteboard)
         {
             InitializeComponent();
             origin = someOrigin;
             destination = someDestination;
             whiteboardPanel = somePanel;
+            whiteboardShown = someWhiteboard;
         }
 
         private void BtnFinalize_Click(object sender, EventArgs e)
         {
             InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(RegisterNewConection);
-            WhiteboardVisualization.DeepRepaint(whiteboardPanel);
+            WhiteboardVisualization.DeepRepaint(whiteboardPanel, whiteboardShown);
             Dispose();
         }
 

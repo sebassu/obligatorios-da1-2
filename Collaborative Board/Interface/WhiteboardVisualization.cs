@@ -36,16 +36,16 @@ namespace GraphicInterface
             }
         }
 
-        public static void DeepRepaint(Panel whiteboardPanel)
+        public static void DeepRepaint(Panel whiteboardPanel, Whiteboard someWhiteboard)
         {
-            globalAssociations = ConnectionRepository.Elements;
+            globalAssociations = ConnectionRepository.Elements(someWhiteboard);
             whiteboardPanel.Invalidate();
         }
 
         private void ControlStoppedMoving(object sender, MouseEventArgs e)
         {
             ControlMovingOrResizingHandler.StopDragOrResizing(sender, e);
-            pnlWhiteboard.Invalidate();
+            DeepRepaint(pnlWhiteboard, whiteboardShown);
         }
 
         public WhiteboardVisualization(Whiteboard someWhiteboard)
@@ -55,7 +55,7 @@ namespace GraphicInterface
             pnlWhiteboard.Width = someWhiteboard.Width;
             pnlWhiteboard.Height = someWhiteboard.Height;
             Text = "Pizarrón: " + someWhiteboard.ToString();
-            globalAssociations = ConnectionRepository.Elements;
+            globalAssociations = ConnectionRepository.Elements(someWhiteboard);
             InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(LoadWhiteboardComponentsOnInteface);
         }
 
@@ -64,13 +64,13 @@ namespace GraphicInterface
             WhiteboardRepository.LoadContents(whiteboardShown);
             foreach (var element in whiteboardShown.Contents)
             {
-                if (element is ImageWhiteboard imageToAdd)
+                if (element is ImageWhiteboard)
                 {
-                    AddPictureBoxFromWhiteboardImage(imageToAdd);
+                    AddPictureBoxFromWhiteboardImage((ImageWhiteboard)element);
                 }
-                else if (element is TextBoxWhiteboard textBoxToAdd)
+                else if (element is TextBoxWhiteboard)
                 {
-                    AddRichTextBoxFromDomainTextBoxWhiteboard(textBoxToAdd);
+                    AddRichTextBoxFromDomainTextBoxWhiteboard((TextBoxWhiteboard)element);
                 }
                 else
                 {
@@ -131,7 +131,8 @@ namespace GraphicInterface
         private void SetRightClickOptionsImage(PictureBox interfaceContainer)
         {
             ContextMenu contMenu = new ContextMenu();
-            if (interfaceContainer.Tag is ImageWhiteboard domainImage)
+            ImageWhiteboard domainImage = interfaceContainer.Tag as ImageWhiteboard;
+            if (Utilities.IsNotNull(domainImage))
             {
                 AddSeeCommentsOption(domainImage, contMenu);
                 AddModifyImageOption(interfaceContainer, contMenu, domainImage);
@@ -204,7 +205,7 @@ namespace GraphicInterface
         {
             ElementRepository.Remove(domainElement);
             pnlWhiteboard.Controls.Remove(interfaceContainer);
-            DeepRepaint(pnlWhiteboard);
+            DeepRepaint(pnlWhiteboard, whiteboardShown);
         }
 
         private void BtnAddText_Click(object sender, EventArgs e)
@@ -250,7 +251,8 @@ namespace GraphicInterface
             {
                 if (!origin.Equals(someElement))
                 {
-                    new ConnectionRegistration(origin, someElement, pnlWhiteboard).ShowDialog();
+                    new ConnectionRegistration(origin, someElement,
+                        pnlWhiteboard, whiteboardShown).ShowDialog();
                     addAssociationItemsRemaining = 0;
                 }
                 else
@@ -276,7 +278,7 @@ namespace GraphicInterface
                     Action deleteAction = delegate { ConnectionRepository.RemoveAssociation(origin, someElement); };
                     Action inCaseOfErrors = delegate { InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(deleteAction); };
                     InterfaceUtilities.AskForDeletionConfirmationAndExecute(inCaseOfErrors);
-                    globalAssociations = ConnectionRepository.Elements;
+                    globalAssociations = ConnectionRepository.Elements(whiteboardShown);
                     removeAssociationItemsRemaining = 0;
                     pnlWhiteboard.Invalidate();
                 }
@@ -292,7 +294,8 @@ namespace GraphicInterface
         private void SetRightClickOptionTextBox(RichTextBox interfaceContainer)
         {
             ContextMenu contMenu = new ContextMenu();
-            if (interfaceContainer.Tag is TextBoxWhiteboard domainTextBox)
+            TextBoxWhiteboard domainTextBox = interfaceContainer.Tag as TextBoxWhiteboard;
+            if (Utilities.IsNotNull(domainTextBox))
             {
                 AddSeeCommentsOption(domainTextBox, contMenu);
                 AddModifyFontDomainTextBox(interfaceContainer, domainTextBox, contMenu);
@@ -367,8 +370,9 @@ namespace GraphicInterface
                 Pen connection = GetCorrespondingPenForArrow(association, widthForArrow);
                 ElementWhiteboard origin = association.Origin;
                 ElementWhiteboard destination = association.Destination;
-                SetLinesOriginAndEndingPoints(origin, destination, out int startingX,
-                    out int startingY, out int endingX, out int endingY);
+                int startingX, endingX, startingY, endingY;
+                SetLinesOriginAndEndingPoints(origin, destination, out startingX,
+                    out startingY, out endingX, out endingY);
                 if (association.ConectionDirection == 1)
                 {
                     e.Graphics.DrawLine(connection, endingX, endingY, (endingX + startingX) / 2, (endingY + startingY) / 2);

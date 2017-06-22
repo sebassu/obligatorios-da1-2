@@ -8,15 +8,13 @@ namespace Persistence
     public class ConnectionRepository
     {
 
-        public static List<Connection> Elements
+        public static List<Connection> Elements(Whiteboard someWhiteboard)
         {
-            get
+            using (BoardContext context = new BoardContext())
             {
-                using (BoardContext context = new BoardContext())
-                {
-                    var elements = context.Connections.Include("Origin").Include("Destination");
-                    return elements.ToList();
-                }
+                var elements = context.Connections.Include("Origin").Include("Destination")
+                    .Where(a => a.Origin.Container.Id == someWhiteboard.Id && a.Destination.Container.Id == someWhiteboard.Id);
+                return elements.ToList();
             }
         }
 

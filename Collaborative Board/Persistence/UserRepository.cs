@@ -188,12 +188,12 @@ namespace Persistence
         {
             using (var context = new BoardContext())
             {
-                var elements = context.Users;
+                var elements = context.Users.Where(u => u.HasAdministrationPrivileges);
                 if (elements.FirstOrDefault() == null)
                 {
                     var baseUser = User.CreateNewAdministrator("The", "Administrator",
                         "administrator@tf2.com", DateTime.Today, "Victory");
-                    elements.Add(baseUser);
+                    context.Users.Add(baseUser);
                     context.SaveChanges();
                 }
             }

@@ -209,7 +209,6 @@ namespace GraphicInterface
             {
                 ElementRepository.UpdateElementPositionAndSize(boardElement, interfaceObject.Size,
                     interfaceObject.Location);
-                WhiteboardVisualization.globalAssociations = ConnectionRepository.Elements;
             }
             catch (BoardException exception)
             {
