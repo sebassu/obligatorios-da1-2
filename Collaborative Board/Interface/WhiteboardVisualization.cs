@@ -10,8 +10,9 @@ namespace GraphicInterface
 {
     public partial class WhiteboardVisualization : Form
     {
-        private const int lineWidthCoeficient = 300;
-        internal static List<Domain.Connection> globalAssociations;
+        private const int lineWidthCoeficientForArrow = 300;
+        private const int lineWidthCoeficientForFullLine = 500;
+        internal static List<Connection> globalAssociations;
 
         private Whiteboard whiteboardShown;
         private int addAssociationItemsRemaining;
@@ -23,7 +24,7 @@ namespace GraphicInterface
             ControlMovingOrResizingHandler.cursorStartPoint = Point.Empty;
             interfaceObject.MouseDown += new MouseEventHandler(ControlMovingOrResizingHandler.StartMovingOrResizing);
             interfaceObject.MouseMove += new MouseEventHandler(ControlIsMoving);
-            interfaceObject.MouseUp += new MouseEventHandler(ControlMovingOrResizingHandler.StopDragOrResizing);
+            interfaceObject.MouseUp += new MouseEventHandler(ControlStoppedMoving);
         }
 
         private void ControlIsMoving(object sender, MouseEventArgs e)
@@ -39,6 +40,12 @@ namespace GraphicInterface
         {
             globalAssociations = ConnectionRepository.Elements;
             whiteboardPanel.Invalidate();
+        }
+
+        private void ControlStoppedMoving(object sender, MouseEventArgs e)
+        {
+            ControlMovingOrResizingHandler.StopDragOrResizing(sender, e);
+            pnlWhiteboard.Invalidate();
         }
 
         public WhiteboardVisualization(Whiteboard someWhiteboard)
@@ -250,7 +257,7 @@ namespace GraphicInterface
                 {
                     addAssociationItemsRemaining = 0;
                     MessageBox.Show("Debe seleccionar dos elementos distintos.",
-                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -266,18 +273,18 @@ namespace GraphicInterface
             {
                 if (!origin.Equals(someElement))
                 {
-					Action deleteAction = delegate { ConnectionRepository.RemoveAssociation(origin, someElement); };
-					Action inCaseOfErrors = delegate { InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(deleteAction); };
-					InterfaceUtilities.AskForDeletionConfirmationAndExecute(inCaseOfErrors);
-					globalAssociations = ConnectionRepository.Elements;
-					removeAssociationItemsRemaining = 0;
-					pnlWhiteboard.Invalidate();
+                    Action deleteAction = delegate { ConnectionRepository.RemoveAssociation(origin, someElement); };
+                    Action inCaseOfErrors = delegate { InterfaceUtilities.ExcecuteActionOrThrowErrorMessageBox(deleteAction); };
+                    InterfaceUtilities.AskForDeletionConfirmationAndExecute(inCaseOfErrors);
+                    globalAssociations = ConnectionRepository.Elements;
+                    removeAssociationItemsRemaining = 0;
+                    pnlWhiteboard.Invalidate();
                 }
                 else
                 {
                     removeAssociationItemsRemaining = 0;
                     MessageBox.Show("Debe seleccionar dos elementos distintos.",
-                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -351,18 +358,31 @@ namespace GraphicInterface
 
         public void PnlWhiteboard_Paint(object sender, PaintEventArgs e)
         {
-            int width = (pnlWhiteboard.Width + pnlWhiteboard.Height) / lineWidthCoeficient;
+            int widthForArrow = (pnlWhiteboard.Width + pnlWhiteboard.Height) / lineWidthCoeficientForArrow;
+            int widthForLine = (pnlWhiteboard.Width + pnlWhiteboard.Height) / lineWidthCoeficientForFullLine;
             e.Graphics.Clear(Color.LightGray);
-            Pen line = new Pen(Color.Black, width);
+            Pen line = new Pen(Color.Black, widthForLine);
             foreach (var association in globalAssociations)
             {
-                Pen arrow = GetCorrespondingPenForArrow(association, width);
+                Pen connection = GetCorrespondingPenForArrow(association, widthForArrow);
                 ElementWhiteboard origin = association.Origin;
                 ElementWhiteboard destination = association.Destination;
                 SetLinesOriginAndEndingPoints(origin, destination, out int startingX,
                     out int startingY, out int endingX, out int endingY);
-                e.Graphics.DrawLine(arrow, startingX, startingY, (endingX + startingX) / 2, (endingY + startingY) / 2);
-                e.Graphics.DrawLine(line, startingX, startingY, endingX, endingY);
+                if (association.ConectionDirection == 1)
+                {
+                    e.Graphics.DrawLine(connection, endingX, endingY, (endingX + startingX) / 2, (endingY + startingY) / 2);
+                    e.Graphics.DrawLine(line, startingX, startingY, endingX, endingY);
+                }
+                else if (association.ConectionDirection == 3)
+                {
+                    e.Graphics.DrawLine(connection, startingX, startingY, endingX, endingY);
+                }
+                else
+                {
+                    e.Graphics.DrawLine(connection, startingX, startingY, (endingX + startingX) / 2, (endingY + startingY) / 2);
+                    e.Graphics.DrawLine(line, startingX, startingY, endingX, endingY);
+                }
                 e.Graphics.Flush();
             }
         }
@@ -372,14 +392,10 @@ namespace GraphicInterface
             switch (anAssociation.ConectionDirection)
             {
                 case 0:
-                    return new Pen(Color.Black, width)
-                    {
-                        EndCap = LineCap.ArrowAnchor
-                    };
                 case 1:
                     return new Pen(Color.Black, width)
                     {
-                        StartCap = LineCap.ArrowAnchor
+                        EndCap = LineCap.ArrowAnchor
                     };
                 case 2:
                     return new Pen(Color.Black, width)
@@ -421,7 +437,7 @@ namespace GraphicInterface
             {
                 MessageBox.Show("Cantidad de elementos en el " +
                     "pizarrón insuficiente para realizar acción.",
-                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -436,7 +452,7 @@ namespace GraphicInterface
             {
                 MessageBox.Show("Cantidad de elementos en el " +
                     "pizarrón insuficiente para realizar acción.",
-                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
