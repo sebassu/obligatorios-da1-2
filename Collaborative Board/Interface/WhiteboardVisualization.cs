@@ -250,8 +250,8 @@ namespace GraphicInterface
             {
                 if (!origin.Equals(someElement))
                 {
-                    new ConnectionRegistration(origin, someElement, pnlWhiteboard).Show();
-                    addAssociationItemsRemaining = 0;
+					new ConnectionRegistration(origin, someElement, pnlWhiteboard).ShowDialog();
+					addAssociationItemsRemaining = 0;
                 }
                 else
                 {
